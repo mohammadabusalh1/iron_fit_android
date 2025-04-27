@@ -1,0 +1,18 @@
+# Flutter build directory
+build/
+
+# Android build directory
+android/app/build/
+
+# iOS build directory
+ios/Pods/
+ios/.symlinks/
+ios/Flutter/Flutter.framework/
+ios/Flutter/Flutter.podspec
+ios/Flutter/App.framework/
+
+# Firebase service account
+assets/service_account.json
+
+.env
+.dart_tool/
