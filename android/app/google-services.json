@@ -1,0 +1,54 @@
+{
+  "project_info": {
+    "project_number": "252100398371",
+    "project_id": "ironfit-edef8",
+    "storage_bucket": "ironfit-edef8.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:252100398371:android:825063cf1fec6a529cd096",
+        "android_client_info": {
+          "package_name": "com.abusalh.ironfit"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "252100398371-1f2b9njn7fti43cv686g9n8bj5viu0r1.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.abusalh.ironfit",
+            "certificate_hash": "4c5795f2ed375d65d96ccca5d3793745c5a49f75"
+          }
+        },
+        {
+          "client_id": "252100398371-5n1eiqd8c240003e7v9igujf05vbmpku.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDGuN_Alp1xNtyhvSUPl62bey9fyLKwzdA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "252100398371-5n1eiqd8c240003e7v9igujf05vbmpku.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "252100398371-g2dqt9g2gc6mubvrvmhqis7qjal8lhmp.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.abusalh.ironfit"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
