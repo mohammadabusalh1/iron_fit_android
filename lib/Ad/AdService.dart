@@ -18,6 +18,11 @@ class AdService {
   InterstitialAd? _interstitialAd;
   int _numInterstitialLoadAttempts = 0;
   bool _isInitialized = false;
+  bool _isCurrentlyLoading = false;
+  DateTime? _lastLoadAttemptTime;
+  
+  // Min time between ad load attempts
+  static const Duration _minLoadInterval = Duration(seconds: 5);
 
   Future<void> initialize() async {
     if (_isInitialized) return;
@@ -34,8 +39,21 @@ class AdService {
       await initialize();
     }
 
-    // Check if a previous ad is still loading
-    if (_interstitialAd != null) return;
+    // Check if a previous ad is still loading or available
+    if (_interstitialAd != null || _isCurrentlyLoading) return;
+    
+    // Enforce minimum time between load attempts
+    if (_lastLoadAttemptTime != null) {
+      final timeSinceLastAttempt = DateTime.now().difference(_lastLoadAttemptTime!);
+      if (timeSinceLastAttempt < _minLoadInterval) {
+        Logger.info('Throttling ad load request. Will try again later.');
+        return;
+      }
+    }
+    
+    // Mark as loading and update last attempt time
+    _isCurrentlyLoading = true;
+    _lastLoadAttemptTime = DateTime.now();
 
     Logger.info('Loading interstitial ad for ${Platform.isIOS ? 'iOS' : 'Android'}');
     
@@ -46,11 +64,13 @@ class AdService {
         onAdLoaded: (InterstitialAd ad) {
           _interstitialAd = ad;
           _numInterstitialLoadAttempts = 0;
+          _isCurrentlyLoading = false;
           _interstitialAd!.setImmersiveMode(true);
           Logger.info('Interstitial ad loaded successfully');
         },
         onAdFailedToLoad: (LoadAdError error) {
           Logger.error('Interstitial ad failed to load: ${error.message}');
+          _isCurrentlyLoading = false;
           _handleAdFailedToLoad(error, context);
         },
       ),
@@ -62,18 +82,18 @@ class AdService {
     _interstitialAd = null;
 
     if (_numInterstitialLoadAttempts < AdConstants.maxFailedLoadAttempts) {
-      int delay = (1 << (_numInterstitialLoadAttempts - 1)) * 1000;
+      // Exponential backoff with minimum 3 seconds (3000ms)
+      int delay = max(3000, (1 << (_numInterstitialLoadAttempts - 1)) * 1000);
       Logger.info('Retrying to load ad in $delay ms. Attempt: $_numInterstitialLoadAttempts');
       Timer(Duration(milliseconds: delay), () => loadAd(context));
     } else {
       Logger.error('Failed to load interstitial ad after multiple attempts');
-      // Reset for future attempts
+      // Reset for future attempts, but wait at least 30 seconds
       _numInterstitialLoadAttempts = 0;
-      // ScaffoldMessenger.of(context).showSnackBar(
-      //   const SnackBar(
-      //     content: Text('Failed to load ad. Please try again later.'),
-      //   ),
-      // );
+      Timer(const Duration(seconds: 30), () {
+        // Reset the loading state after the timeout
+        _isCurrentlyLoading = false;
+      });
     }
   }
 
@@ -92,16 +112,27 @@ class AdService {
       onAdDismissedFullScreenContent: (InterstitialAd ad) {
         Logger.info('Interstitial ad dismissed');
         ad.dispose();
-        loadAd(context);
+        // Wait a bit before loading the next ad
+        Timer(const Duration(seconds: 2), () {
+          loadAd(context);
+        });
       },
       onAdFailedToShowFullScreenContent: (InterstitialAd ad, AdError error) {
         Logger.error('Interstitial ad failed to show: ${error.message}');
         ad.dispose();
-        loadAd(context);
+        // Wait a bit before loading the next ad
+        Timer(const Duration(seconds: 2), () {
+          loadAd(context);
+        });
       },
     );
 
     _interstitialAd!.show();
     _interstitialAd = null;
+  }
+  
+  // Helper function to get max value
+  int max(int a, int b) {
+    return a > b ? a : b;
   }
 }

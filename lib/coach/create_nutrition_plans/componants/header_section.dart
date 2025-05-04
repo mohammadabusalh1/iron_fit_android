@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:iron_fit/componants/Styles.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
+import 'package:iron_fit/utils/responsive_utils.dart';
 
 class HeaderSection extends StatelessWidget {
   final bool isEditing;
@@ -14,7 +15,7 @@ class HeaderSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 24),
+      padding: ResponsiveUtils.padding(context, horizontal: 8, vertical: 0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -30,7 +31,7 @@ class HeaderSection extends StatelessWidget {
                         .getText('i9vve0di' /* Create Nutrition Plan */),
                 style: AppStyles.textCairo(
                   context,
-                  fontSize: 20,
+                  fontSize: ResponsiveUtils.fontSize(context, 20),
                   color: FlutterFlowTheme.of(context).primaryText,
                   fontWeight: FontWeight.w600,
                 ),
@@ -46,7 +47,7 @@ class HeaderSection extends StatelessWidget {
                 child: Icon(
                   Icons.close,
                   color: FlutterFlowTheme.of(context).primaryText,
-                  size: 24.0,
+                  size: ResponsiveUtils.iconSize(context, 24.0),
                 ),
               ),
             ],
@@ -59,11 +60,11 @@ class HeaderSection extends StatelessWidget {
                     .getText('h5t7ep68' /* Create Nutrition Plan */),
             style: AppStyles.textCairo(
               context,
-              fontSize: 12,
+              fontSize: ResponsiveUtils.fontSize(context, 12),
               color: FlutterFlowTheme.of(context).secondaryText,
             ),
           ),
-        ].divide(const SizedBox(height: 4)),
+        ].divide(SizedBox(height: ResponsiveUtils.height(context, 4))),
       ),
     );
   }

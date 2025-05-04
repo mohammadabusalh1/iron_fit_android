@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:iron_fit/componants/Styles.dart';
 import 'package:iron_fit/trainee/user_enter_info/components/profile_image_uploader.dart';
+import 'package:iron_fit/utils/responsive_utils.dart';
 import 'package:iron_fit/widgets/build_text_filed.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
@@ -49,7 +50,7 @@ class PersonalInfoStep extends StatelessWidget {
                           .getText('welcome_message' /* Welcome to Iron Fit */),
                       style: AppStyles.textCairo(
                         context,
-                        fontSize: 24,
+                        fontSize: ResponsiveUtils.fontSize(context, 24),
                         fontWeight: FontWeight.bold,
                         color: FlutterFlowTheme.of(context).primaryText,
                       ),
@@ -69,7 +70,7 @@ class PersonalInfoStep extends StatelessWidget {
                 scale: value,
                 child: Center(
                   child: SizedBox(
-                    height: 130,
+                    height: ResponsiveUtils.height(context, 130),
                     child: Lottie.asset(
                       'assets/lottie/welcome_wave.json',
                       animate: true,
@@ -89,7 +90,7 @@ class PersonalInfoStep extends StatelessWidget {
             onImageSelected: onImageSelected,
           ),
 
-          const SizedBox(height: 32),
+          SizedBox(height: ResponsiveUtils.height(context, 32)),
 
           // Form Fields with Staggered Animation
           ..._buildStaggeredFormFields(context),
@@ -143,7 +144,7 @@ class PersonalInfoStep extends StatelessWidget {
           );
         },
       ),
-      const SizedBox(height: 16),
+      SizedBox(height: ResponsiveUtils.height(context, 16)),
 
       // Date of Birth Field
       TweenAnimationBuilder<double>(
@@ -197,13 +198,15 @@ class PersonalInfoStep extends StatelessWidget {
                                 ),
                               ),
                               textTheme: TextTheme(
-                                headlineMedium: const TextStyle(fontSize: 18),
+                                headlineMedium: TextStyle(
+                                  fontSize: ResponsiveUtils.fontSize(context, 18),
+                                ),
                                 bodyLarge: TextStyle(
-                                    color: FlutterFlowTheme.of(context)
-                                        .info), // Changes year color
+                                  color: FlutterFlowTheme.of(context).info,
+                                ), // Changes year color
                                 bodyMedium: TextStyle(
-                                    color: FlutterFlowTheme.of(context)
-                                        .info), // Ensure other text changes
+                                  color: FlutterFlowTheme.of(context).info,
+                                ), // Ensure other text changes
                               ),
                             ),
                             child: child!,

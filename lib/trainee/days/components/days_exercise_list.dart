@@ -6,6 +6,7 @@ import '/flutter_flow/flutter_flow_theme.dart';
 import '/componants/Styles.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/backend/backend.dart';
+import 'package:iron_fit/utils/responsive_utils.dart';
 import 'day_card.dart';
 import 'no_data_placeholder.dart';
 import '/trainee/days/days_service.dart';
@@ -174,7 +175,7 @@ class _DaysExerciseListState extends State<DaysExerciseList> {
       builder: (BuildContext context) {
         return AlertDialog(
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(16),
+            borderRadius: BorderRadius.circular(ResponsiveUtils.width(context, 16)),
           ),
           backgroundColor: FlutterFlowTheme.of(context).secondaryBackground,
           title: Row(
@@ -182,15 +183,15 @@ class _DaysExerciseListState extends State<DaysExerciseList> {
               Icon(
                 Icons.error_outline_rounded,
                 color: FlutterFlowTheme.of(context).error,
-                size: 28,
+                size: ResponsiveUtils.iconSize(context, 28),
               ),
-              const SizedBox(width: 12),
+              SizedBox(width: ResponsiveUtils.width(context, 12)),
               Expanded(
                 child: Text(
                   FFLocalizations.of(context).getText('error'),
                   style: AppStyles.textCairo(
                     context,
-                    fontSize: 18,
+                    fontSize: ResponsiveUtils.fontSize(context, 18),
                     fontWeight: FontWeight.bold,
                     color: FlutterFlowTheme.of(context).error,
                   ),
@@ -202,7 +203,7 @@ class _DaysExerciseListState extends State<DaysExerciseList> {
             message,
             style: AppStyles.textCairo(
               context,
-              fontSize: 14,
+              fontSize: ResponsiveUtils.fontSize(context, 14),
               color: FlutterFlowTheme.of(context).secondaryText,
             ),
           ),
@@ -227,37 +228,37 @@ class _DaysExerciseListState extends State<DaysExerciseList> {
   Widget _buildErrorWidget(BuildContext context, String errorMessage) {
     return Container(
       width: double.infinity,
-      padding: const EdgeInsets.all(16),
+      padding: ResponsiveUtils.padding(context, horizontal: 16, vertical: 16),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Icon(
             Icons.error_outline,
             color: FlutterFlowTheme.of(context).error,
-            size: 48,
+            size: ResponsiveUtils.iconSize(context, 48),
           ),
-          const SizedBox(height: 16),
+          SizedBox(height: ResponsiveUtils.height(context, 16)),
           Text(
             FFLocalizations.of(context).getText('dataLoadError'),
             style: AppStyles.textCairo(
               context,
-              fontSize: 18,
+              fontSize: ResponsiveUtils.fontSize(context, 18),
               fontWeight: FontWeight.bold,
               color: FlutterFlowTheme.of(context).error,
             ),
             textAlign: TextAlign.center,
           ),
-          const SizedBox(height: 8),
+          SizedBox(height: ResponsiveUtils.height(context, 8)),
           Text(
             FFLocalizations.of(context).getText('pleaseReviewYourCoach'),
             style: AppStyles.textCairo(
               context,
-              fontSize: 14,
+              fontSize: ResponsiveUtils.fontSize(context, 14),
               color: FlutterFlowTheme.of(context).secondaryText,
             ),
             textAlign: TextAlign.center,
           ),
-          const SizedBox(height: 24),
+          SizedBox(height: ResponsiveUtils.height(context, 24)),
           ElevatedButton(
             onPressed: () {
               setState(() {
@@ -319,7 +320,8 @@ class _DaysExerciseListState extends State<DaysExerciseList> {
                     'weeklyExercisesDesc') /* Your weekly exercise plan */,
                 style: AppStyles.textCairo(
                   context,
-                  color: FlutterFlowTheme.of(context).secondaryText,
+                  color: FlutterFlowTheme.of(context).info.withOpacity(0.7),
+                  fontSize: ResponsiveUtils.fontSize(context, 14),
                 ),
                 textAlign: TextAlign.center,
               ),
@@ -501,32 +503,32 @@ class _BuildErrorWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
-      padding: const EdgeInsets.all(16),
+      padding: ResponsiveUtils.padding(context, horizontal: 16, vertical: 16),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Icon(
             Icons.error_outline,
             color: FlutterFlowTheme.of(context).error,
-            size: 48,
+            size: ResponsiveUtils.iconSize(context, 48),
           ),
-          const SizedBox(height: 16),
+          SizedBox(height: ResponsiveUtils.height(context, 16)),
           Text(
             FFLocalizations.of(context).getText('dataLoadError'),
             style: AppStyles.textCairo(
               context,
-              fontSize: 18,
+              fontSize: ResponsiveUtils.fontSize(context, 18),
               fontWeight: FontWeight.bold,
               color: FlutterFlowTheme.of(context).error,
             ),
             textAlign: TextAlign.center,
           ),
-          const SizedBox(height: 8),
+          SizedBox(height: ResponsiveUtils.height(context, 8)),
           Text(
             errorMessage,
             style: AppStyles.textCairo(
               context,
-              fontSize: 14,
+              fontSize: ResponsiveUtils.fontSize(context, 14),
               color: FlutterFlowTheme.of(context).secondaryText,
             ),
             textAlign: TextAlign.center,

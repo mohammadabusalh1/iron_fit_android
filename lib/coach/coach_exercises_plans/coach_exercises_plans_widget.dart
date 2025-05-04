@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:iron_fit/Ad/AdService.dart';
 import 'package:iron_fit/componants/loading_indicator/loadingIndicator.dart';
+import 'package:iron_fit/utils/responsive_utils.dart';
 import '/auth/firebase_auth/auth_util.dart';
 import '/backend/backend.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
@@ -56,7 +57,7 @@ class CoachExercisesPlansWidget extends StatefulWidget {
 class _CoachExercisesPlansWidgetState extends State<CoachExercisesPlansWidget>
     with SingleTickerProviderStateMixin {
   final scaffoldKey = GlobalKey<ScaffoldState>();
-  final AdService _adService = AdService();
+  late AdService _adService;
   late CoachExercisesPlansModel _model;
   final String _cacheKey = 'coach_plans_cache';
   final Duration _cacheDuration = const Duration(minutes: 15);
@@ -70,7 +71,13 @@ class _CoachExercisesPlansWidgetState extends State<CoachExercisesPlansWidget>
     _isMounted = true;
     _model = createModel(context, () => CoachExercisesPlansModel());
     _tabController = TabController(length: 2, vsync: this);
-    _adService.loadAd(context);
+    
+    // Add delay to ad loading
+    Future.delayed(const Duration(seconds: 3), () {
+      if (mounted) {
+        _adService.loadAd(context);
+      }
+    });
     _loadDataWithCache();
   }
 
@@ -312,10 +319,12 @@ class _CoachExercisesPlansWidgetState extends State<CoachExercisesPlansWidget>
   }
 
   // Memoize the fixed widgets like SizedBox for better performance
-  final _divider = const SizedBox(height: 24.0);
+  Widget _divider(BuildContext context) => SizedBox(
+        height: ResponsiveUtils.height(context, 24.0),
+      );
 
   // Cache the decoration to avoid recreating it on every build
-  final _containerDecoration = const BoxDecoration(
+  BoxDecoration _containerDecoration = const BoxDecoration(
     gradient: LinearGradient(
       colors: [Color(0xFF4B39EF), Color(0xFF3700B3)],
       stops: [0.0, 1.0],
@@ -331,7 +340,11 @@ class _CoachExercisesPlansWidgetState extends State<CoachExercisesPlansWidget>
       decoration: _containerDecoration,
       child: SafeArea(
         child: Padding(
-          padding: const EdgeInsetsDirectional.fromSTEB(24.0, 24.0, 24.0, 24.0),
+          padding: ResponsiveUtils.padding(
+            context,
+            horizontal: 24.0,
+            vertical: 24.0,
+          ),
           child: Column(
             mainAxisSize: MainAxisSize.max,
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -340,7 +353,7 @@ class _CoachExercisesPlansWidgetState extends State<CoachExercisesPlansWidget>
                 coach: model.coach,
                 adService: _adService,
               ),
-              _divider,
+              _divider(context),
               _buildTabBar(),
               Expanded(
                 child: RefreshIndicator(
@@ -369,17 +382,23 @@ class _CoachExercisesPlansWidgetState extends State<CoachExercisesPlansWidget>
       decoration: BoxDecoration(
         color:
             FlutterFlowTheme.of(context).secondaryBackground.withOpacity(0.2),
-        borderRadius: BorderRadius.circular(30),
+        borderRadius: BorderRadius.circular(
+          ResponsiveUtils.width(context, 30),
+        ),
       ),
       child: TabBar(
         controller: _tabController,
         labelColor: FlutterFlowTheme.of(context).info,
         unselectedLabelColor:
             FlutterFlowTheme.of(context).info.withOpacity(0.5),
-        labelStyle: FlutterFlowTheme.of(context).titleMedium,
+        labelStyle: FlutterFlowTheme.of(context).titleMedium.copyWith(
+          fontSize: ResponsiveUtils.fontSize(context, 16),
+        ),
         indicator: BoxDecoration(
           color: FlutterFlowTheme.of(context).primary,
-          borderRadius: BorderRadius.circular(30),
+          borderRadius: BorderRadius.circular(
+            ResponsiveUtils.width(context, 30),
+          ),
         ),
         tabs: [
           Tab(
@@ -395,18 +414,25 @@ class _CoachExercisesPlansWidgetState extends State<CoachExercisesPlansWidget>
 
   Widget _buildTabBarView(CoachExercisesPlansModel model) {
     return Padding(
-      padding: const EdgeInsetsDirectional.only(top: 16.0),
+      padding: EdgeInsetsDirectional.only(
+        top: ResponsiveUtils.height(context, 16.0),
+      ),
       child: TabBarView(
         controller: _tabController,
         children: [
           // Active plans tab
           ClipRRect(
-            borderRadius: BorderRadius.circular(16),
+            borderRadius: BorderRadius.circular(
+              ResponsiveUtils.width(context, 16),
+            ),
             child: SingleChildScrollView(
               physics: const AlwaysScrollableScrollPhysics(),
               child: ConstrainedBox(
                 constraints: BoxConstraints(
-                  minHeight: MediaQuery.of(context).size.height * 0.3,
+                  minHeight: ResponsiveUtils.height(
+                    context,
+                    MediaQuery.of(context).size.height * 0.3,
+                  ),
                 ),
                 child: PlansSection(
                   plans: model.activePlans,
@@ -419,12 +445,17 @@ class _CoachExercisesPlansWidgetState extends State<CoachExercisesPlansWidget>
           ),
           // Draft plans tab
           ClipRRect(
-            borderRadius: BorderRadius.circular(16),
+            borderRadius: BorderRadius.circular(
+              ResponsiveUtils.width(context, 16),
+            ),
             child: SingleChildScrollView(
               physics: const AlwaysScrollableScrollPhysics(),
               child: ConstrainedBox(
                 constraints: BoxConstraints(
-                  minHeight: MediaQuery.of(context).size.height * 0.3,
+                  minHeight: ResponsiveUtils.height(
+                    context,
+                    MediaQuery.of(context).size.height * 0.3,
+                  ),
                 ),
                 child: PlansSection(
                   plans: model.draftPlans,

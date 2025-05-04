@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:iron_fit/componants/Styles.dart';
+import 'package:iron_fit/utils/responsive_utils.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
@@ -30,7 +31,7 @@ class ErrorDialog extends StatelessWidget {
       title: Column(
         children: [
           Container(
-            padding: const EdgeInsets.all(16),
+            padding: ResponsiveUtils.padding(context, horizontal: 16, vertical: 16),
             decoration: BoxDecoration(
               color: FlutterFlowTheme.of(context).error.withValues(alpha: 0.1),
               shape: BoxShape.circle,
@@ -38,15 +39,15 @@ class ErrorDialog extends StatelessWidget {
             child: Icon(
               Icons.error_outline_rounded,
               color: FlutterFlowTheme.of(context).error,
-              size: 32,
+              size: ResponsiveUtils.iconSize(context, 32),
             ),
           ),
-          const SizedBox(height: 16),
+          SizedBox(height: ResponsiveUtils.height(context, 16)),
           Text(
             FFLocalizations.of(context).getText('error' /* Error */),
             style: AppStyles.textCairo(
               context,
-              fontSize: 20,
+              fontSize: ResponsiveUtils.fontSize(context, 20),
               fontWeight: FontWeight.bold,
               color: FlutterFlowTheme.of(context).error,
             ),
@@ -56,13 +57,13 @@ class ErrorDialog extends StatelessWidget {
       content: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          const SizedBox(height: 8),
+          SizedBox(height: ResponsiveUtils.height(context, 8)),
           Text(
             message,
             textAlign: TextAlign.center,
             style: AppStyles.textCairo(
               context,
-              fontSize: 16,
+              fontSize: ResponsiveUtils.fontSize(context, 16),
               color: FlutterFlowTheme.of(context).secondaryText,
             ),
           ),
@@ -71,18 +72,18 @@ class ErrorDialog extends StatelessWidget {
       actions: [
         Container(
           width: double.infinity,
-          padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 8),
+          padding: ResponsiveUtils.padding(context, horizontal: 24, vertical: 8),
           child: FFButtonWidget(
             onPressed: () => Navigator.of(context).pop(),
             text: FFLocalizations.of(context).getText('ok' /* OK */),
             options: FFButtonOptions(
-              height: 50,
+              height: ResponsiveUtils.height(context, 50),
               padding: const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
               iconPadding: const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
               color: FlutterFlowTheme.of(context).primary,
               textStyle: AppStyles.textCairo(
                 context,
-                fontSize: 16,
+                fontSize: ResponsiveUtils.fontSize(context, 16),
                 color: FlutterFlowTheme.of(context).info,
                 fontWeight: FontWeight.bold,
               ),

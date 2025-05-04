@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/componants/Styles.dart';
 import '/flutter_flow/flutter_flow_util.dart';
+import '/utils/responsive_utils.dart';
 
 class SubscriptionsHeader extends StatelessWidget {
   const SubscriptionsHeader({super.key});
@@ -15,11 +16,11 @@ class SubscriptionsHeader extends StatelessWidget {
           icon: Icon(
             Icons.arrow_back,
             color: FlutterFlowTheme.of(context).secondaryText,
-            size: 24,
+            size: ResponsiveUtils.iconSize(context, 24),
           ),
           onPressed: () => Navigator.of(context).pop(),
         ),
-        const SizedBox(width: 8),
+        SizedBox(width: ResponsiveUtils.width(context, 8)),
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -29,7 +30,7 @@ class SubscriptionsHeader extends StatelessWidget {
               ),
               style: AppStyles.textCairo(
                 context,
-                fontSize: 20,
+                fontSize: ResponsiveUtils.fontSize(context, 20),
                 fontWeight: FontWeight.bold,
               ),
             ),

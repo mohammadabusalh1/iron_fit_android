@@ -6,6 +6,7 @@ import 'package:iron_fit/Ad/AdService.dart';
 import 'package:iron_fit/backend/backend.dart';
 import 'package:iron_fit/componants/Styles.dart';
 import 'package:iron_fit/services/firebase_messages.dart';
+import 'package:iron_fit/services/notification_service.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
@@ -22,9 +23,11 @@ import 'flutter_flow/internationalization.dart'; // Add this import for debug fl
 final _textStyleCache = <String, TextStyle>{};
 
 Future<void> initializeApp() async {
-  // Initialize mobile ads only on mobile platforms
+  // Initialize Firebase first, before any other Firebase services
+  await initFirebase();
+  
+  // Then initialize other services
   final initFutures = <Future<dynamic>>[
-    initFirebase(),
     FlutterFlowTheme.initialize(),
     FFLocalizations.initialize(),
     dotenv.load(fileName: '.env'),
@@ -32,12 +35,17 @@ Future<void> initializeApp() async {
 
   // Only initialize mobile ads on mobile platforms
   if (!kIsWeb) {
+    // Initialize MobileAds first before any ad service
     initFutures.add(MobileAds.instance.initialize());
-    initFutures.add(AdService().initialize());
+    
+    // Initialize AdService only after MobileAds is ready
+    // We don't want to load ads yet, just initialize the service
+    await Future.wait(initFutures);
+    await AdService().initialize();
+  } else {
+    // For web, just wait for the other initialization futures
+    await Future.wait(initFutures);
   }
-
-  // Ensure Flutter is initialized
-  await Future.wait(initFutures);
 
   usePathUrlStrategy();
 
@@ -60,10 +68,15 @@ void main() async {
   // Initialize app
   await initializeApp();
 
-  // await authManager.signOut();
-  // FFAppState().prefs.clear();
+  await authManager.signOut();
+  FFAppState().prefs.clear();
 
-  FirebaseNotificationService.instance.initialize();
+  // Initialize firebase notifications only after Firebase is fully initialized
+  await FirebaseNotificationService.instance.initialize();
+  
+  // Initialize local notifications
+  final notificationService = NotificationService();
+  await notificationService.initializeNotification();
 
   // Run the app with error boundary
   runApp(ChangeNotifierProvider(

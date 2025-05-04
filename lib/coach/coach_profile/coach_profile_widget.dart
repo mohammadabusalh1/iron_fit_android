@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:iron_fit/coach/coach_settings/componants/sevices.dart';
-import 'package:iron_fit/componants/Styles.dart';
 import 'package:iron_fit/componants/loading_indicator/loadingIndicator.dart';
 import 'package:logging/logging.dart';
 import '/auth/firebase_auth/auth_util.dart';
@@ -11,8 +10,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'components/components.dart';
 import 'package:iron_fit/navigation/page_wrapper.dart';
-import 'package:cached_network_image/cached_network_image.dart';
-import 'dart:math' as math;
+import 'package:iron_fit/utils/responsive_utils.dart';
 
 // Initialize logger
 final _logger = Logger('CoachProfileWidget');
@@ -58,7 +56,6 @@ class _CoachProfileWidgetState extends State<CoachProfileWidget>
 
   // Scroll controller for parallax effect
   final ScrollController _scrollController = ScrollController();
-  double _scrollOffset = 0;
 
   @override
   void initState() {
@@ -70,7 +67,6 @@ class _CoachProfileWidgetState extends State<CoachProfileWidget>
 
     _scrollController.addListener(() {
       setState(() {
-        _scrollOffset = _scrollController.offset;
       });
     });
 
@@ -190,13 +186,13 @@ class _CoachProfileWidgetState extends State<CoachProfileWidget>
           physics: const AlwaysScrollableScrollPhysics(),
           children: [
             SizedBox(
-              height: MediaQuery.of(context).size.height * 0.8,
+              height: ResponsiveUtils.height(context, MediaQuery.of(context).size.height * 0.8),
               child: Center(
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Container(
-                      padding: const EdgeInsets.all(20),
+                      padding: EdgeInsets.all(ResponsiveUtils.width(context, 20)),
                       decoration: BoxDecoration(
                         color:
                             FlutterFlowTheme.of(context).error.withOpacity(0.1),
@@ -204,22 +200,22 @@ class _CoachProfileWidgetState extends State<CoachProfileWidget>
                       ),
                       child: Icon(
                         Icons.error_outline_rounded,
-                        size: 48,
+                        size: ResponsiveUtils.iconSize(context, 48),
                         color: FlutterFlowTheme.of(context).error,
                       ),
                     ),
-                    const SizedBox(height: 24),
+                    SizedBox(height: ResponsiveUtils.height(context, 24)),
                     Text(
                       _errorMessage.isNotEmpty
                           ? _errorMessage
                           : 'Something went wrong',
                       style: TextStyle(
-                        fontSize: 18,
+                        fontSize: ResponsiveUtils.fontSize(context, 18),
                         fontWeight: FontWeight.bold,
                         color: FlutterFlowTheme.of(context).primaryText,
                       ),
                     ),
-                    const SizedBox(height: 16),
+                    SizedBox(height: ResponsiveUtils.height(context, 16)),
                     ElevatedButton.icon(
                       onPressed: _refreshProfile,
                       icon: const Icon(Icons.refresh_rounded),
@@ -227,8 +223,11 @@ class _CoachProfileWidgetState extends State<CoachProfileWidget>
                       style: ElevatedButton.styleFrom(
                         backgroundColor: FlutterFlowTheme.of(context).primary,
                         foregroundColor: Colors.white,
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 24, vertical: 12),
+                        padding: ResponsiveUtils.padding(
+                          context,
+                          horizontal: 24,
+                          vertical: 12,
+                        ),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(12),
                         ),
@@ -271,7 +270,6 @@ class _CoachProfileWidgetState extends State<CoachProfileWidget>
               onNotification: (notification) {
                 if (notification is ScrollUpdateNotification) {
                   setState(() {
-                    _scrollOffset = _scrollController.offset;
                   });
                 }
                 return false;
@@ -282,173 +280,23 @@ class _CoachProfileWidgetState extends State<CoachProfileWidget>
                 slivers: [
                   // App Bar with parallex effect
                   SliverAppBar(
-                    expandedHeight: 220.0,
                     floating: false,
                     pinned: true,
-                    backgroundColor: FlutterFlowTheme.of(context).primary,
+                    backgroundColor: Colors.transparent,
                     automaticallyImplyLeading: false,
-                    flexibleSpace: FlexibleSpaceBar(
-                      background: Container(
-                        decoration: BoxDecoration(
-                          gradient: LinearGradient(
-                            colors: [
-                              FlutterFlowTheme.of(context)
-                                  .primary
-                                  .withOpacity(0.9),
-                              FlutterFlowTheme.of(context)
-                                  .tertiary
-                                  .withOpacity(0.8),
-                            ],
-                            begin: Alignment.topLeft,
-                            end: Alignment.bottomRight,
-                          ),
-                        ),
-                        child: Container(
-                          decoration: BoxDecoration(
-                            gradient: LinearGradient(
-                              colors: [
-                                FlutterFlowTheme.of(context)
-                                    .primary
-                                    .withOpacity(0.9),
-                                FlutterFlowTheme.of(context)
-                                    .tertiary
-                                    .withOpacity(0.8),
-                              ],
-                              begin: Alignment.topLeft,
-                              end: Alignment.bottomRight,
-                            ),
-                          ),
-                          child: Stack(
-                            children: [
-                              // Animated background pattern
-                              ...List.generate(10, (index) {
-                                final random = math.Random(index);
-                                return Positioned(
-                                  left: random.nextDouble() *
-                                      MediaQuery.of(context).size.width,
-                                  top: random.nextDouble() * 220,
-                                  child: Container(
-                                    width: 50 + random.nextDouble() * 50,
-                                    height: 50 + random.nextDouble() * 50,
-                                    decoration: BoxDecoration(
-                                      color: const Color(0xFF57370d)
-                                          .withOpacity(0.15),
-                                      shape: BoxShape.circle,
-                                    ),
-                                  ),
-                                ).animate(
-                                  controller: _animationController,
-                                  effects: [
-                                    ScaleEffect(
-                                      delay:
-                                          Duration(milliseconds: index * 100),
-                                      duration:
-                                          const Duration(milliseconds: 1000),
-                                      curve: Curves.easeOutQuart,
-                                    ),
-                                    FadeEffect(
-                                      delay:
-                                          Duration(milliseconds: index * 100),
-                                      duration:
-                                          const Duration(milliseconds: 1000),
-                                      curve: Curves.easeOut,
-                                    ),
-                                  ],
-                                );
-                              }),
-                            ],
-                          ),
-                        ),
-                      ),
-                      titlePadding:
-                          const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
-                      title: AnimatedOpacity(
-                        opacity: _scrollOffset > 80 ? 1.0 : 0.0,
-                        duration: const Duration(milliseconds: 200),
-                        child: Padding(
-                          padding: const EdgeInsetsDirectional.fromSTEB(
-                              16, 8, 16, 8),
-                          child: Row(
-                            children: [
-                              Container(
-                                width: 36,
-                                height: 36,
-                                decoration: BoxDecoration(
-                                  shape: BoxShape.circle,
-                                  border: Border.all(
-                                    color: const Color(0xFF57370d),
-                                    width: 2,
-                                  ),
-                                ),
-                                child: ClipRRect(
-                                  borderRadius: BorderRadius.circular(18),
-                                  child: currentUserPhoto != null &&
-                                          currentUserPhoto.isNotEmpty
-                                      ? CachedNetworkImage(
-                                          imageUrl: currentUserPhoto,
-                                          width: 36,
-                                          height: 36,
-                                          fit: BoxFit.cover,
-                                          placeholder: (context, url) =>
-                                              Container(
-                                            color: FlutterFlowTheme.of(context)
-                                                .primary
-                                                .withOpacity(0.2),
-                                          ),
-                                          errorWidget: (context, url, error) =>
-                                              Container(
-                                            color: FlutterFlowTheme.of(context)
-                                                .primary
-                                                .withOpacity(0.2),
-                                            child: Icon(
-                                              Icons.person,
-                                              color:
-                                                  FlutterFlowTheme.of(context)
-                                                      .primary,
-                                              size: 18,
-                                            ),
-                                          ),
-                                        )
-                                      : Container(
-                                          color: FlutterFlowTheme.of(context)
-                                              .primary
-                                              .withOpacity(0.2),
-                                          child: Icon(
-                                            Icons.person,
-                                            color: FlutterFlowTheme.of(context)
-                                                .primaryBackground,
-                                            size: 18,
-                                          ),
-                                        ),
-                                ),
-                              ),
-                              const SizedBox(width: 12),
-                              Expanded(
-                                child: Text(
-                                  currentUserDisplayName,
-                                  style: AppStyles.textCairo(
-                                    context,
-                                    color: FlutterFlowTheme.of(context).black,
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 16,
-                                  ),
-                                  overflow: TextOverflow.ellipsis,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
                     actions: [
                       Padding(
-                        padding:
-                            const EdgeInsetsDirectional.fromSTEB(0, 8, 16, 0),
+                        padding: EdgeInsetsDirectional.fromSTEB(
+                          0, 
+                          ResponsiveUtils.height(context, 8), 
+                          ResponsiveUtils.width(context, 16), 
+                          0
+                        ),
                         child: IconButton(
                           icon: Icon(
                             Icons.settings_rounded,
-                            color: FlutterFlowTheme.of(context).black,
-                            size: 24,
+                            color: FlutterFlowTheme.of(context).info,
+                            size: ResponsiveUtils.iconSize(context, 24),
                           ),
                           onPressed: () {
                             context.pushNamed('CoachSettings');
@@ -456,13 +304,17 @@ class _CoachProfileWidgetState extends State<CoachProfileWidget>
                         ),
                       ),
                       Padding(
-                        padding:
-                            const EdgeInsetsDirectional.fromSTEB(0, 8, 16, 0),
+                        padding: EdgeInsetsDirectional.fromSTEB(
+                          0, 
+                          ResponsiveUtils.height(context, 8), 
+                          ResponsiveUtils.width(context, 16), 
+                          0
+                        ),
                         child: IconButton(
                           icon: Icon(
                             Icons.logout_rounded,
-                            color: FlutterFlowTheme.of(context).black,
-                            size: 24,
+                            color: FlutterFlowTheme.of(context).info,
+                            size: ResponsiveUtils.iconSize(context, 24),
                           ),
                           onPressed: () async {
                             HapticFeedback.mediumImpact();
@@ -486,13 +338,13 @@ class _CoachProfileWidgetState extends State<CoachProfileWidget>
                     child: Column(
                       children: [
                         Transform.translate(
-                          offset: const Offset(0, -40),
+                          offset: Offset(0, -ResponsiveUtils.height(context, 40)),
                           child: ProfileHeader(
                             coachRecord: coachProfileCoachRecord,
                           ),
                         ),
                         Transform.translate(
-                          offset: const Offset(0, -20),
+                          offset: Offset(0, -ResponsiveUtils.height(context, 20)),
                           child: _buildDetailsSection(
                               context, coachProfileCoachRecord),
                         ),
@@ -513,7 +365,12 @@ class _CoachProfileWidgetState extends State<CoachProfileWidget>
     return SizedBox(
       width: MediaQuery.sizeOf(context).width,
       child: Padding(
-        padding: const EdgeInsetsDirectional.fromSTEB(16.0, 12.0, 16.0, 56.0),
+        padding: EdgeInsetsDirectional.fromSTEB(
+          ResponsiveUtils.width(context, 16.0),
+          ResponsiveUtils.height(context, 12.0),
+          ResponsiveUtils.width(context, 16.0), 
+          ResponsiveUtils.height(context, 88.0)
+        ),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
@@ -525,11 +382,11 @@ class _CoachProfileWidgetState extends State<CoachProfileWidget>
                     end: 0,
                     duration: const Duration(milliseconds: 600),
                     curve: Curves.easeOutQuint),
-            const SizedBox(height: 24),
+            SizedBox(height: ResponsiveUtils.height(context, 24)),
 
             // Add about me section
             _buildAboutMeSection(context, coachProfileCoachRecord),
-            const SizedBox(height: 24),
+            SizedBox(height: ResponsiveUtils.height(context, 24)),
 
             // Add statistics section
             StatisticsRow(coach: coachProfileCoachRecord)
@@ -543,7 +400,7 @@ class _CoachProfileWidgetState extends State<CoachProfileWidget>
                     delay: const Duration(milliseconds: 200),
                     duration: const Duration(milliseconds: 600),
                     curve: Curves.easeOutQuint),
-            const SizedBox(height: 24),
+            SizedBox(height: ResponsiveUtils.height(context, 24)),
 
             // Add social media links or activity feed here
             _buildSocialLinks(context),
@@ -592,7 +449,7 @@ class _CoachProfileWidgetState extends State<CoachProfileWidget>
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Container(
-          padding: const EdgeInsets.all(24),
+          padding: EdgeInsets.all(ResponsiveUtils.width(context, 24)),
           decoration: BoxDecoration(
             color: FlutterFlowTheme.of(context).secondaryBackground,
             border: Border.all(
@@ -604,8 +461,8 @@ class _CoachProfileWidgetState extends State<CoachProfileWidget>
           child: Column(
             children: [
               Wrap(
-                spacing: 16,
-                runSpacing: 20,
+                spacing: ResponsiveUtils.width(context, 16),
+                runSpacing: ResponsiveUtils.height(context, 20),
                 alignment: WrapAlignment.center,
                 children: List.generate(
                   socialPlatforms.length,
@@ -625,10 +482,13 @@ class _CoachProfileWidgetState extends State<CoachProfileWidget>
                   },
                 ),
               ),
-              const SizedBox(height: 20),
+              SizedBox(height: ResponsiveUtils.height(context, 20)),
               Container(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+                padding: ResponsiveUtils.padding(
+                  context,
+                  horizontal: 20,
+                  vertical: 12,
+                ),
                 decoration: BoxDecoration(
                   color: FlutterFlowTheme.of(context).primary.withOpacity(0.08),
                   borderRadius: BorderRadius.circular(16),
@@ -644,15 +504,15 @@ class _CoachProfileWidgetState extends State<CoachProfileWidget>
                     Icon(
                       Icons.favorite_border_rounded,
                       color: FlutterFlowTheme.of(context).primary,
-                      size: 18,
+                      size: ResponsiveUtils.iconSize(context, 18),
                     ),
-                    const SizedBox(width: 8),
+                    SizedBox(width: ResponsiveUtils.width(context, 8)),
                     Text(
                       FFLocalizations.of(context).getText('shareMyProfile'),
                       style: TextStyle(
                         color: FlutterFlowTheme.of(context).primary,
                         fontWeight: FontWeight.w600,
-                        fontSize: 14,
+                        fontSize: ResponsiveUtils.fontSize(context, 14),
                       ),
                     ),
                   ],
@@ -701,12 +561,12 @@ class _CoachProfileWidgetState extends State<CoachProfileWidget>
       splashColor: color.withOpacity(0.1),
       highlightColor: color.withOpacity(0.05),
       child: Container(
-        width: 80,
+        width: ResponsiveUtils.width(context, 80),
         child: Column(
           children: [
             Container(
-              height: 54,
-              width: 54,
+              height: ResponsiveUtils.height(context, 54),
+              width: ResponsiveUtils.width(context, 54),
               decoration: BoxDecoration(
                 color: color.withOpacity(0.1),
                 borderRadius: BorderRadius.circular(16),
@@ -726,16 +586,16 @@ class _CoachProfileWidgetState extends State<CoachProfileWidget>
               child: Icon(
                 icon,
                 color: color,
-                size: 24,
+                size: ResponsiveUtils.iconSize(context, 24),
               ),
             ),
-            const SizedBox(height: 10),
+            SizedBox(height: ResponsiveUtils.height(context, 10)),
             Text(
               label,
               style: TextStyle(
                 color:
                     FlutterFlowTheme.of(context).primaryText.withOpacity(0.8),
-                fontSize: 12,
+                fontSize: ResponsiveUtils.fontSize(context, 12),
                 fontWeight: FontWeight.w500,
               ),
               textAlign: TextAlign.center,
@@ -743,21 +603,7 @@ class _CoachProfileWidgetState extends State<CoachProfileWidget>
           ],
         ),
       ),
-    )
-        .animate()
-        .scale(
-          begin: const Offset(0.85, 0.85),
-          end: const Offset(1, 1),
-          delay: delay,
-          duration: const Duration(milliseconds: 400),
-          curve: Curves.easeOutQuint,
-        )
-        .fade(
-          begin: 0,
-          end: 1,
-          delay: delay,
-          duration: const Duration(milliseconds: 400),
-        );
+    );
   }
 
   Widget _buildAboutMeSection(BuildContext context, CoachRecord coachRecord) {
@@ -791,11 +637,11 @@ class _CoachProfileWidgetState extends State<CoachProfileWidget>
           children: [
             // Decorative elements
             Positioned(
-              right: -25,
-              top: -25,
+              right: -ResponsiveUtils.width(context, 25),
+              top: -ResponsiveUtils.height(context, 25),
               child: Container(
-                width: 70,
-                height: 70,
+                width: ResponsiveUtils.width(context, 70),
+                height: ResponsiveUtils.height(context, 70),
                 decoration: BoxDecoration(
                   color: FlutterFlowTheme.of(context).primary.withOpacity(0.1),
                   shape: BoxShape.circle,
@@ -803,11 +649,11 @@ class _CoachProfileWidgetState extends State<CoachProfileWidget>
               ),
             ),
             Positioned(
-              left: -15,
-              bottom: -15,
+              left: -ResponsiveUtils.width(context, 15),
+              bottom: -ResponsiveUtils.height(context, 15),
               child: Container(
-                width: 50,
-                height: 50,
+                width: ResponsiveUtils.width(context, 50),
+                height: ResponsiveUtils.height(context, 50),
                 decoration: BoxDecoration(
                   color: FlutterFlowTheme.of(context).primary.withOpacity(0.08),
                   shape: BoxShape.circle,
@@ -815,14 +661,14 @@ class _CoachProfileWidgetState extends State<CoachProfileWidget>
               ),
             ),
             Padding(
-              padding: const EdgeInsets.all(24),
+              padding: EdgeInsets.all(ResponsiveUtils.width(context, 24)),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Row(
                     children: [
                       Container(
-                        padding: const EdgeInsets.all(10),
+                        padding: EdgeInsets.all(ResponsiveUtils.width(context, 10)),
                         decoration: BoxDecoration(
                           color: FlutterFlowTheme.of(context)
                               .primary
@@ -832,22 +678,22 @@ class _CoachProfileWidgetState extends State<CoachProfileWidget>
                         child: Icon(
                           Icons.person_outline_rounded,
                           color: FlutterFlowTheme.of(context).primary,
-                          size: 22,
+                          size: ResponsiveUtils.iconSize(context, 22),
                         ),
                       ),
-                      const SizedBox(width: 12),
+                      SizedBox(width: ResponsiveUtils.width(context, 12)),
                       Text(
                         FFLocalizations.of(context).getText('i1jyd81k'),
                         style: TextStyle(
                           color: FlutterFlowTheme.of(context).primaryText,
-                          fontSize: 18,
+                          fontSize: ResponsiveUtils.fontSize(context, 18),
                           fontWeight: FontWeight.bold,
                           letterSpacing: -0.3,
                         ),
                       ),
                     ],
                   ),
-                  const SizedBox(height: 16),
+                  SizedBox(height: ResponsiveUtils.height(context, 16)),
                   // Quote icon at the start
                   Align(
                     alignment: Alignment.centerLeft,
@@ -855,10 +701,10 @@ class _CoachProfileWidgetState extends State<CoachProfileWidget>
                       Icons.format_quote,
                       color:
                           FlutterFlowTheme.of(context).primary.withOpacity(0.4),
-                      size: 24,
+                      size: ResponsiveUtils.iconSize(context, 24),
                     ),
                   ),
-                  const SizedBox(height: 4),
+                  SizedBox(height: ResponsiveUtils.height(context, 4)),
                   ValueListenableBuilder<bool>(
                     valueListenable: isExpanded,
                     builder: (context, expanded, _) {
@@ -871,7 +717,7 @@ class _CoachProfileWidgetState extends State<CoachProfileWidget>
                               style: TextStyle(
                                 color:
                                     FlutterFlowTheme.of(context).secondaryText,
-                                fontSize: 15,
+                                fontSize: ResponsiveUtils.fontSize(context, 15),
                                 height: 1.6,
                                 letterSpacing: 0.1,
                               ),
@@ -883,7 +729,7 @@ class _CoachProfileWidgetState extends State<CoachProfileWidget>
                               style: TextStyle(
                                 color:
                                     FlutterFlowTheme.of(context).secondaryText,
-                                fontSize: 15,
+                                fontSize: ResponsiveUtils.fontSize(context, 15),
                                 height: 1.6,
                                 letterSpacing: 0.1,
                               ),
@@ -902,9 +748,15 @@ class _CoachProfileWidgetState extends State<CoachProfileWidget>
                                   HapticFeedback.lightImpact();
                                 },
                                 style: TextButton.styleFrom(
-                                  padding: const EdgeInsets.symmetric(
-                                      horizontal: 16, vertical: 8),
-                                  minimumSize: const Size(10, 10),
+                                  padding: ResponsiveUtils.padding(
+                                    context,
+                                    horizontal: 16,
+                                    vertical: 8,
+                                  ),
+                                  minimumSize: Size(
+                                    ResponsiveUtils.width(context, 10),
+                                    ResponsiveUtils.height(context, 10),
+                                  ),
                                   shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(20),
                                   ),
@@ -918,17 +770,17 @@ class _CoachProfileWidgetState extends State<CoachProfileWidget>
                                         color: FlutterFlowTheme.of(context)
                                             .primary,
                                         fontWeight: FontWeight.w600,
-                                        fontSize: 13,
+                                        fontSize: ResponsiveUtils.fontSize(context, 13),
                                       ),
                                     ),
-                                    const SizedBox(width: 4),
+                                    SizedBox(width: ResponsiveUtils.width(context, 4)),
                                     AnimatedRotation(
                                       turns: expanded ? 0.5 : 0,
                                       duration:
                                           const Duration(milliseconds: 300),
                                       child: Icon(
                                         Icons.keyboard_arrow_down,
-                                        size: 16,
+                                        size: ResponsiveUtils.iconSize(context, 16),
                                         color: FlutterFlowTheme.of(context)
                                             .primary,
                                       ),
@@ -948,7 +800,7 @@ class _CoachProfileWidgetState extends State<CoachProfileWidget>
                       Icons.format_quote,
                       color:
                           FlutterFlowTheme.of(context).primary.withOpacity(0.4),
-                      size: 24,
+                      size: ResponsiveUtils.iconSize(context, 24),
                     ),
                   ),
                 ],

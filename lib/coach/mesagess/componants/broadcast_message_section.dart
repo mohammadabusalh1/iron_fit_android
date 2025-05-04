@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:iron_fit/flutter_flow/custom_functions.dart';
 import 'package:iron_fit/services/firebase_messages.dart';
+import 'package:iron_fit/utils/responsive_utils.dart';
 import '/backend/backend.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
@@ -214,23 +215,27 @@ class _BroadcastMessageSectionState extends State<BroadcastMessageSection> {
           ),
         ),
         child: Padding(
-          padding: const EdgeInsetsDirectional.fromSTEB(16.0, 20.0, 16.0, 20.0),
+          padding: ResponsiveUtils.padding(
+            context,
+            horizontal: 16.0,
+            vertical: 20.0,
+          ),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               _buildHeader(context),
-              const SizedBox(height: 8),
+              SizedBox(height: ResponsiveUtils.height(context, 8)),
               Text(
                 FFLocalizations.of(context).getText(
                     'broadcast_messages_subtitle' /* Send a message to all your trainees at once */),
                 style: AppStyles.textCairo(
                   context,
-                  fontSize: 14,
+                  fontSize: ResponsiveUtils.fontSize(context, 14),
                   color: FlutterFlowTheme.of(context).secondaryText,
                 ),
               ),
-              const SizedBox(height: 16),
+              SizedBox(height: ResponsiveUtils.height(context, 16)),
               _buildMessageInputField(),
             ],
           ),
@@ -245,15 +250,15 @@ class _BroadcastMessageSectionState extends State<BroadcastMessageSection> {
         Icon(
           Icons.campaign_rounded,
           color: FlutterFlowTheme.of(context).primary,
-          size: 24,
+          size: ResponsiveUtils.iconSize(context, 24),
         ),
-        const SizedBox(width: 12),
+        SizedBox(width: ResponsiveUtils.width(context, 12)),
         Text(
           FFLocalizations.of(context)
               .getText('z6h7b76l' /* Send Broadcast Message */),
           style: AppStyles.textCairo(
             context,
-            fontSize: 18,
+            fontSize: ResponsiveUtils.fontSize(context, 18),
             fontWeight: FontWeight.w600,
             color: FlutterFlowTheme.of(context).primaryText,
           ),
@@ -306,9 +311,6 @@ class _BroadcastMessageSectionState extends State<BroadcastMessageSection> {
           ),
         ),
       ),
-      style: AppStyles.textCairo(context, fontSize: 14),
-      maxLines: 5,
-      minLines: 3,
     );
   }
 }

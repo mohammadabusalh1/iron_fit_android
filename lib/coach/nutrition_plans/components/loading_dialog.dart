@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import 'package:iron_fit/componants/Styles.dart';
+import 'package:iron_fit/utils/responsive_utils.dart';
 
 class LoadingDialog extends StatelessWidget {
   final String message;
@@ -28,17 +29,17 @@ class LoadingDialog extends StatelessWidget {
   Widget build(BuildContext context) {
     return Center(
       child: Container(
-        padding: const EdgeInsets.all(16),
+        padding: ResponsiveUtils.padding(context, horizontal: 16, vertical: 16),
         decoration: BoxDecoration(
           color: FlutterFlowTheme.of(context).secondaryBackground,
-          borderRadius: BorderRadius.circular(16),
+          borderRadius: BorderRadius.circular(ResponsiveUtils.width(context, 16)),
         ),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
             SizedBox(
-              height: 50,
-              width: 50,
+              height: ResponsiveUtils.height(context, 50),
+              width: ResponsiveUtils.width(context, 50),
               child: CircularProgressIndicator(
                 valueColor: AlwaysStoppedAnimation<Color>(
                   FlutterFlowTheme.of(context).primary,
@@ -46,12 +47,12 @@ class LoadingDialog extends StatelessWidget {
                 strokeWidth: 3,
               ),
             ),
-            const SizedBox(height: 16),
+            SizedBox(height: ResponsiveUtils.height(context, 16)),
             Text(
               message,
               style: AppStyles.textCairo(
                 context,
-                fontSize: 16,
+                fontSize: ResponsiveUtils.fontSize(context, 16),
                 color: FlutterFlowTheme.of(context).primaryText,
               ),
             ),

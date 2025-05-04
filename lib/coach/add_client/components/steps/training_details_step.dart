@@ -4,6 +4,7 @@ import '/flutter_flow/flutter_flow_util.dart';
 import '/componants/Styles.dart';
 import '/widgets/build_text_filed.dart';
 import '../../add_client_model.dart';
+import 'package:iron_fit/utils/responsive_utils.dart';
 
 class TrainingDetailsStep extends StatelessWidget {
   final AddClientModel model;
@@ -37,7 +38,7 @@ class TrainingDetailsStep extends StatelessWidget {
   Widget _buildHeader(BuildContext context) {
     return Container(
       width: double.infinity,
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 24),
+      padding: ResponsiveUtils.padding(context, horizontal: 16, vertical: 24),
       decoration: const BoxDecoration(
         borderRadius: BorderRadius.vertical(top: Radius.circular(12)),
       ),
@@ -47,7 +48,7 @@ class TrainingDetailsStep extends StatelessWidget {
             FFLocalizations.of(context).getText('ud6tvmoh'),
             style: AppStyles.textCairo(
               context,
-              fontSize: 20,
+              fontSize: ResponsiveUtils.fontSize(context, 20),
               fontWeight: FontWeight.bold,
               color: FlutterFlowTheme.of(context).primaryText,
             ),
@@ -57,7 +58,7 @@ class TrainingDetailsStep extends StatelessWidget {
             FFLocalizations.of(context).getText('client_details_desc'),
             style: AppStyles.textCairo(
               context,
-              fontSize: 14,
+              fontSize: ResponsiveUtils.fontSize(context, 14),
               color: FlutterFlowTheme.of(context).secondaryText,
             ),
           ),
@@ -68,14 +69,8 @@ class TrainingDetailsStep extends StatelessWidget {
 
   Widget _buildGoalField(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16),
+      padding: ResponsiveUtils.padding(context, horizontal: 16),
       child: buildTextField(
-        // onTap: () {
-        //   // Move cursor to end of text
-        //   model.goalTextController.selection = TextSelection.fromPosition(
-        //     TextPosition(offset: model.goalTextController.text.length),
-        //   );
-        // },
         controller: model.goalTextController,
         focusNode: model.goalFocusNode,
         context: context,
@@ -88,13 +83,15 @@ class TrainingDetailsStep extends StatelessWidget {
         },
         labelText: FFLocalizations.of(context).getText('label_training_goals'),
         prefixIcon: Icons.fitness_center,
+        fontSize: ResponsiveUtils.fontSize(context, 14),
+        iconSize: ResponsiveUtils.iconSize(context, 24),
       ),
     );
   }
 
   Widget _buildLevelSelection(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16),
+      padding: ResponsiveUtils.padding(context, horizontal: 16),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -106,7 +103,7 @@ class TrainingDetailsStep extends StatelessWidget {
                       .getText('label_current_fitness_level'),
                   style: AppStyles.textCairo(
                     context,
-                    fontSize: 14,
+                    fontSize: ResponsiveUtils.fontSize(context, 14),
                     fontWeight: FontWeight.bold,
                     color: FlutterFlowTheme.of(context).primaryText,
                   ),
@@ -117,14 +114,14 @@ class TrainingDetailsStep extends StatelessWidget {
                   '*',
                   style: AppStyles.textCairo(
                     context,
-                    fontSize: 18,
+                    fontSize: ResponsiveUtils.fontSize(context, 18),
                     fontWeight: FontWeight.bold,
                     color: FlutterFlowTheme.of(context).error,
                   ),
                 ),
             ],
           ),
-          const SizedBox(height: 12),
+          SizedBox(height: ResponsiveUtils.height(context, 12)),
           Column(
             children: [
               Row(
@@ -139,7 +136,7 @@ class TrainingDetailsStep extends StatelessWidget {
                       Icons.fitness_center,
                     ),
                   ),
-                  const SizedBox(width: 12),
+                  SizedBox(width: ResponsiveUtils.width(context, 12)),
                   Expanded(
                     flex: 1,
                     child: _buildLevelCard(
@@ -152,7 +149,7 @@ class TrainingDetailsStep extends StatelessWidget {
                   ),
                 ],
               ),
-              const SizedBox(height: 12),
+              SizedBox(height: ResponsiveUtils.height(context, 12)),
               _buildLevelCard(
                 context,
                 FFLocalizations.of(context).getText('ocvkm51o'),
@@ -164,9 +161,12 @@ class TrainingDetailsStep extends StatelessWidget {
               if (levelValidationError != null)
                 Container(
                   width: double.infinity,
-                  margin: const EdgeInsets.only(top: 8.0),
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                  margin: EdgeInsets.only(top: ResponsiveUtils.height(context, 8.0)),
+                  padding: ResponsiveUtils.padding(
+                    context,
+                    horizontal: 12,
+                    vertical: 8,
+                  ),
                   decoration: BoxDecoration(
                     color: FlutterFlowTheme.of(context).error.withOpacity(0.1),
                     borderRadius: BorderRadius.circular(8),
@@ -180,15 +180,15 @@ class TrainingDetailsStep extends StatelessWidget {
                       Icon(
                         Icons.error_outline,
                         color: FlutterFlowTheme.of(context).error,
-                        size: 16,
+                        size: ResponsiveUtils.iconSize(context, 16),
                       ),
-                      const SizedBox(width: 8),
+                      SizedBox(width: ResponsiveUtils.width(context, 8)),
                       Expanded(
                         child: Text(
                           levelValidationError!,
                           style: AppStyles.textCairo(
                             context,
-                            fontSize: 12,
+                            fontSize: ResponsiveUtils.fontSize(context, 12),
                             fontWeight: FontWeight.w500,
                             color: FlutterFlowTheme.of(context).error,
                           ),
@@ -227,7 +227,7 @@ class TrainingDetailsStep extends StatelessWidget {
       child: AnimatedContainer(
         width: isFullWidth ? double.infinity : null,
         duration: const Duration(milliseconds: 200),
-        padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 12),
+        padding: ResponsiveUtils.padding(context, vertical: 20, horizontal: 12),
         decoration: BoxDecoration(
           color: isSelected
               ? FlutterFlowTheme.of(context).primary
@@ -253,28 +253,24 @@ class TrainingDetailsStep extends StatelessWidget {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            AnimatedScale(
-              duration: const Duration(milliseconds: 200),
-              scale: isSelected ? 1.1 : 1.0,
-              child: Icon(
-                icon,
-                color: isSelected
-                    ? FlutterFlowTheme.of(context).black
-                    : FlutterFlowTheme.of(context).secondaryText,
-                size: 28,
-              ),
+            Icon(
+              icon,
+              color: isSelected
+                  ? FlutterFlowTheme.of(context).info
+                  : FlutterFlowTheme.of(context).secondaryText,
+              size: ResponsiveUtils.iconSize(context, 32),
             ),
-            const SizedBox(height: 12),
+            SizedBox(height: ResponsiveUtils.height(context, 8)),
             Text(
               level,
               textAlign: TextAlign.center,
               style: AppStyles.textCairo(
                 context,
+                fontSize: ResponsiveUtils.fontSize(context, 14),
+                fontWeight: FontWeight.w500,
                 color: isSelected
-                    ? FlutterFlowTheme.of(context).black
-                    : FlutterFlowTheme.of(context).secondaryText,
-                fontSize: 15,
-                fontWeight: FontWeight.bold,
+                    ? FlutterFlowTheme.of(context).info
+                    : FlutterFlowTheme.of(context).primaryText,
               ),
             ),
           ],

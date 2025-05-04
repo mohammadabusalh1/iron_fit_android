@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '/componants/Styles.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import 'theme_cache.dart';
+import '/utils/responsive_utils.dart';
 
 class ProfileTabs extends StatelessWidget {
   final TabController tabController;
@@ -18,12 +19,12 @@ class ProfileTabs extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 24),
+      padding: ResponsiveUtils.padding(context, horizontal: 16, vertical: 24),
       child: Container(
-        height: 56,
+        height: ResponsiveUtils.height(context, 56),
         decoration: BoxDecoration(
           color: themeCache.primaryColor.withValues(alpha: 0.08),
-          borderRadius: BorderRadius.circular(28),
+          borderRadius: BorderRadius.circular(ResponsiveUtils.width(context, 28)),
           boxShadow: const [
             BoxShadow(
               color: Color(0x0A000000),
@@ -33,12 +34,12 @@ class ProfileTabs extends StatelessWidget {
           ],
         ),
         child: Padding(
-          padding: const EdgeInsets.all(4),
+          padding: ResponsiveUtils.padding(context, horizontal: 4, vertical: 4),
           child: TabBar(
             onTap: onTabTap,
             controller: tabController,
             indicator: BoxDecoration(
-              borderRadius: BorderRadius.circular(24),
+              borderRadius: BorderRadius.circular(ResponsiveUtils.width(context, 24)),
               color: themeCache.primaryColor,
               boxShadow: [
                 BoxShadow(
@@ -52,12 +53,12 @@ class ProfileTabs extends StatelessWidget {
             unselectedLabelColor: themeCache.secondaryTextColor,
             labelStyle: AppStyles.textCairo(
               context,
-              fontSize: 16,
+              fontSize: ResponsiveUtils.fontSize(context, 16),
               fontWeight: FontWeight.w600,
             ),
             unselectedLabelStyle: AppStyles.textCairo(
               context,
-              fontSize: 16,
+              fontSize: ResponsiveUtils.fontSize(context, 16),
               fontWeight: FontWeight.w500,
             ),
             overlayColor: WidgetStateProperty.resolveWith<Color?>(
@@ -88,20 +89,22 @@ class ProfileTabs extends StatelessWidget {
         children: [
           Icon(
             icon,
-            size: 20,
+            size: ResponsiveUtils.iconSize(context, 20),
             color: isSelected
                 ? themeCache.infoColor
                 : themeCache.secondaryTextColor,
           ),
           FFLocalizations.of(context).languageCode == 'en'
-              ? const SizedBox(width: 4)
-              : const SizedBox(width: 8),
+              ? SizedBox(width: ResponsiveUtils.width(context, 4))
+              : SizedBox(width: ResponsiveUtils.width(context, 8)),
           Text(
             FFLocalizations.of(context).getText(textKey),
             style: AppStyles.textCairo(
               context,
               fontSize:
-                  FFLocalizations.of(context).languageCode == 'en' ? 14 : 16,
+                  FFLocalizations.of(context).languageCode == 'en' 
+                      ? ResponsiveUtils.fontSize(context, 14) 
+                      : ResponsiveUtils.fontSize(context, 16),
               fontWeight: isSelected ? FontWeight.w600 : FontWeight.w500,
               color: isSelected
                   ? themeCache.infoColor

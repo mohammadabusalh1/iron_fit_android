@@ -7,6 +7,7 @@ import '/backend/backend.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import '/flutter_flow/custom_functions.dart' as functions;
 import 'package:logging/logging.dart';
+import '/utils/responsive_utils.dart';
 
 /// A widget that memoizes a single day item to prevent unnecessary rebuilds
 class MemoizedDayItem extends StatefulWidget {
@@ -78,14 +79,14 @@ class ScheduleSection extends StatelessWidget {
           ],
         ),
         child: Padding(
-          padding: const EdgeInsetsDirectional.fromSTEB(16.0, 16.0, 16.0, 16.0),
+          padding: ResponsiveUtils.padding(context, horizontal: 16.0, vertical: 16.0),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
               _buildScheduleHeader(context),
-              const SizedBox(height: 16),
+              SizedBox(height: ResponsiveUtils.height(context, 16)),
               _buildDaysList(context),
-              const SizedBox(height: 16),
+              SizedBox(height: ResponsiveUtils.height(context, 16)),
               _buildAddDayButton(context),
             ],
           ),
@@ -98,7 +99,7 @@ class ScheduleSection extends StatelessWidget {
     return Row(
       children: [
         Container(
-          padding: const EdgeInsets.all(8),
+          padding: ResponsiveUtils.padding(context, horizontal: 8, vertical: 8),
           decoration: BoxDecoration(
             color: FlutterFlowTheme.of(context).primary.withAlpha(30),
             borderRadius: BorderRadius.circular(8),
@@ -106,10 +107,10 @@ class ScheduleSection extends StatelessWidget {
           child: Icon(
             Icons.calendar_today,
             color: FlutterFlowTheme.of(context).primary,
-            size: 24,
+            size: ResponsiveUtils.iconSize(context, 24),
           ),
         ),
-        const SizedBox(width: 12),
+        SizedBox(width: ResponsiveUtils.width(context, 12)),
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -118,7 +119,7 @@ class ScheduleSection extends StatelessWidget {
               style: AppStyles.textCairo(
                 context,
                 fontWeight: FontWeight.bold,
-                fontSize: 18,
+                fontSize: ResponsiveUtils.fontSize(context, 18),
               ),
             ),
             Text(
@@ -126,7 +127,7 @@ class ScheduleSection extends StatelessWidget {
                   'schedule_subtitle' /* Organize your training days */),
               style: AppStyles.textCairo(
                 context,
-                fontSize: 12,
+                fontSize: ResponsiveUtils.fontSize(context, 12),
                 color: FlutterFlowTheme.of(context).secondaryText,
               ),
             ),
@@ -141,7 +142,7 @@ class ScheduleSection extends StatelessWidget {
 
     if (days.isEmpty) {
       return Container(
-        height: 120,
+        height: ResponsiveUtils.height(context, 120),
         width: MediaQuery.sizeOf(context).width,
         decoration: BoxDecoration(
           color: FlutterFlowTheme.of(context).primaryBackground,
@@ -156,15 +157,15 @@ class ScheduleSection extends StatelessWidget {
             children: [
               Icon(
                 Icons.calendar_month_outlined,
-                size: 40,
+                size: ResponsiveUtils.iconSize(context, 40),
                 color: FlutterFlowTheme.of(context).secondaryText,
               ),
-              const SizedBox(height: 8),
+              SizedBox(height: ResponsiveUtils.height(context, 8)),
               Text(
                 FFLocalizations.of(context).getText('no_days_found'),
                 style: AppStyles.textCairo(
                   context,
-                  fontSize: 14,
+                  fontSize: ResponsiveUtils.fontSize(context, 14),
                   color: FlutterFlowTheme.of(context).secondaryText,
                 ),
               ),
@@ -184,12 +185,12 @@ class ScheduleSection extends StatelessWidget {
         ),
       ),
       child: ListView.separated(
-        padding: const EdgeInsets.all(16),
+        padding: ResponsiveUtils.padding(context, horizontal: 16, vertical: 16),
         shrinkWrap: true,
         physics: const NeverScrollableScrollPhysics(),
         itemCount: days.length,
-        separatorBuilder: (context, index) => const Divider(
-          height: 24,
+        separatorBuilder: (context, index) => Divider(
+          height: ResponsiveUtils.height(context, 24),
           thickness: 1,
           color:
               Color(0x26AEAEAE), // Using constant color instead of theme lookup
@@ -226,29 +227,29 @@ class ScheduleSection extends StatelessWidget {
                   daysItem.day,
                   style: AppStyles.textCairo(
                     context,
-                    fontSize: 16,
+                    fontSize: ResponsiveUtils.fontSize(context, 16),
                     fontWeight: FontWeight.bold,
                     color: FlutterFlowTheme.of(context).primaryText,
                   ),
                 ),
-                const SizedBox(height: 4),
+                SizedBox(height: ResponsiveUtils.height(context, 4)),
                 Text(
                   daysItem.title.length > 15
                       ? '${daysItem.title.substring(0, 15)}...'
                       : daysItem.title,
                   style: AppStyles.textCairo(
                     context,
-                    fontSize: 14,
+                    fontSize: ResponsiveUtils.fontSize(context, 14),
                     color: FlutterFlowTheme.of(context).secondaryText,
                   ),
                 ),
                 if (daysItem.exercises.isNotEmpty) ...[
-                  const SizedBox(height: 8),
+                  SizedBox(height: ResponsiveUtils.height(context, 8)),
                   Text(
                     '${daysItem.exercises.length} ${FFLocalizations.of(context).getText('exercises')}',
                     style: AppStyles.textCairo(
                       context,
-                      fontSize: 12,
+                      fontSize: ResponsiveUtils.fontSize(context, 12),
                       color: FlutterFlowTheme.of(context).primary,
                     ),
                   ),
@@ -262,14 +263,16 @@ class ScheduleSection extends StatelessWidget {
               Container(
                 key: draftPlan?.days.length == 1 ? dayKey : null,
                 child: _buildDayActionButton(
+                  context,
                   icon: Icons.edit,
                   color: FlutterFlowTheme.of(context).primary,
                   tooltip: 'Edit Day',
                   onTap: () => _editDay(context, daysItem, daysIndex),
                 ),
               ),
-              const SizedBox(width: 12),
+              SizedBox(width: ResponsiveUtils.width(context, 12)),
               _buildDayActionButton(
+                context,
                 icon: Icons.delete_outline_rounded,
                 color: FlutterFlowTheme.of(context).error,
                 tooltip: 'Delete Day',
@@ -282,7 +285,8 @@ class ScheduleSection extends StatelessWidget {
     ).animate().fadeIn(duration: 400.ms).slideX(begin: 0.05, end: 0);
   }
 
-  Widget _buildDayActionButton({
+  Widget _buildDayActionButton(
+    BuildContext context, {
     required IconData icon,
     required Color color,
     required String tooltip,
@@ -294,7 +298,7 @@ class ScheduleSection extends StatelessWidget {
         onTap: onTap,
         borderRadius: BorderRadius.circular(8),
         child: Container(
-          padding: const EdgeInsets.all(8),
+          padding: ResponsiveUtils.padding(context, horizontal: 8, vertical: 8),
           decoration: BoxDecoration(
             color: color.withAlpha(30),
             borderRadius: BorderRadius.circular(8),
@@ -302,7 +306,7 @@ class ScheduleSection extends StatelessWidget {
           child: Icon(
             icon,
             color: color,
-            size: 20,
+            size: ResponsiveUtils.iconSize(context, 20),
           ),
         ),
       ),
@@ -318,18 +322,18 @@ class ScheduleSection extends StatelessWidget {
       text: FFLocalizations.of(context).getText('c71ma75q' /* Add Day */),
       icon: Icon(
         Icons.add_rounded,
-        size: 20,
+        size: ResponsiveUtils.iconSize(context, 20),
         color: FlutterFlowTheme.of(context).info,
       ),
       options: FFButtonOptions(
         width: double.infinity,
-        height: 48.0,
-        padding: const EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 0.0),
-        iconPadding: const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 8.0, 0.0),
+        height: ResponsiveUtils.height(context, 48.0),
+        padding: ResponsiveUtils.padding(context, horizontal: 16.0, vertical: 0.0),
+        iconPadding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, ResponsiveUtils.width(context, 8.0), 0.0),
         color: FlutterFlowTheme.of(context).primary,
         textStyle: AppStyles.textCairo(
           context,
-          fontSize: 16,
+          fontSize: ResponsiveUtils.fontSize(context, 16),
           fontWeight: FontWeight.w600,
           color: FlutterFlowTheme.of(context).info,
         ),

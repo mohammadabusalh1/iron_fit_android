@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:iron_fit/utils/responsive_utils.dart';
 import '/componants/Styles.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
@@ -66,7 +67,7 @@ class _LogoutButtonState extends State<LogoutButton>
         },
         child: Container(
           width: double.infinity,
-          height: 58,
+          height: ResponsiveUtils.height(context, 58),
           decoration: BoxDecoration(
             gradient: LinearGradient(
               colors: [
@@ -76,7 +77,7 @@ class _LogoutButtonState extends State<LogoutButton>
               begin: Alignment.topLeft,
               end: Alignment.bottomRight,
             ),
-            borderRadius: BorderRadius.circular(16),
+            borderRadius: BorderRadius.circular(ResponsiveUtils.width(context, 16)),
             boxShadow: [
               BoxShadow(
                 color: errorColor.withOpacity(0.25),
@@ -90,11 +91,11 @@ class _LogoutButtonState extends State<LogoutButton>
             children: [
               // Decorative elements
               Positioned(
-                right: -15,
-                top: -15,
+                right: ResponsiveUtils.width(context, -15),
+                top: ResponsiveUtils.height(context, -15),
                 child: Container(
-                  width: 60,
-                  height: 60,
+                  width: ResponsiveUtils.width(context, 60),
+                  height: ResponsiveUtils.height(context, 60),
                   decoration: BoxDecoration(
                     color: Colors.white.withOpacity(0.1),
                     shape: BoxShape.circle,
@@ -102,11 +103,11 @@ class _LogoutButtonState extends State<LogoutButton>
                 ),
               ),
               Positioned(
-                left: -20,
-                bottom: -20,
+                left: ResponsiveUtils.width(context, -20),
+                bottom: ResponsiveUtils.height(context, -20),
                 child: Container(
-                  width: 70,
-                  height: 70,
+                  width: ResponsiveUtils.width(context, 70),
+                  height: ResponsiveUtils.height(context, 70),
                   decoration: BoxDecoration(
                     color: Colors.white.withOpacity(0.08),
                     shape: BoxShape.circle,
@@ -118,17 +119,17 @@ class _LogoutButtonState extends State<LogoutButton>
                 child: Row(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    const Icon(
+                    Icon(
                       Icons.logout_rounded,
                       color: Colors.white,
-                      size: 20,
+                      size: ResponsiveUtils.iconSize(context, 20),
                     ),
-                    const SizedBox(width: 10),
+                    SizedBox(width: ResponsiveUtils.width(context, 10)),
                     Text(
                       FFLocalizations.of(context).getText('logout'),
                       style: AppStyles.textCairo(
                         context,
-                        fontSize: 16,
+                        fontSize: ResponsiveUtils.fontSize(context, 16),
                         fontWeight: FontWeight.w600,
                         color: Colors.white,
                       ),

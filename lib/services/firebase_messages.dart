@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
+import 'dart:io';
 import 'package:googleapis_auth/auth_io.dart';
 import 'package:http/http.dart' as http;
 import 'package:firebase_messaging/firebase_messaging.dart';
@@ -44,7 +45,11 @@ class FirebaseNotificationService {
   }
 
   Future<void> initialize() async {
+    // Set Firebase Messaging background handler
     FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
+
+    // Initialize flutter local notifications
+    await setupFlutterNotifications();
 
     // Request permission
     await _requestPermission();
@@ -53,22 +58,37 @@ class FirebaseNotificationService {
     await _setupMessageHandlers();
 
     // Get FCM token
-    // final token = await _messaging.getToken();
-    // print('FCM Token: $token');
+    final token = await _messaging.getToken();
+    Logger.info('FCM Token: $token');
   }
 
   Future<void> _requestPermission() async {
+    // Request permissions for iOS and Android
     final settings = await _messaging.requestPermission(
       alert: true,
       badge: true,
       sound: true,
       provisional: false,
-      announcement: false,
-      carPlay: false,
-      criticalAlert: false,
+      announcement: true,
+      carPlay: true,
+      criticalAlert: true,
     );
 
-    Logger.info('Permission status: ${settings.authorizationStatus}');
+    Logger.info('Firebase Messaging permission status: ${settings.authorizationStatus}');
+
+    // Request additional permissions for iOS
+    if (Platform.isIOS) {
+      // Get APNs token for iOS
+      final apnsToken = await _messaging.getAPNSToken();
+      Logger.info('APNs Token: $apnsToken');
+      
+      // Set foreground notification presentation options for iOS
+      await FirebaseMessaging.instance.setForegroundNotificationPresentationOptions(
+        alert: true,
+        badge: true,
+        sound: true,
+      );
+    }
   }
 
   Future<void> setupFlutterNotifications() async {
@@ -76,7 +96,7 @@ class FirebaseNotificationService {
       return;
     }
 
-    // android setup
+    // Android setup
     const channel = AndroidNotificationChannel(
       'high_importance_channel',
       'High Importance Notifications',
@@ -92,11 +112,14 @@ class FirebaseNotificationService {
     const initializationSettingsAndroid =
         AndroidInitializationSettings('@mipmap/ic_launcher');
 
-    // ios setup
+    // iOS setup with enhanced options
     const initializationSettingsDarwin = DarwinInitializationSettings(
       requestAlertPermission: true,
       requestBadgePermission: true,
       requestSoundPermission: true,
+      defaultPresentSound: true,
+      defaultPresentAlert: true,
+      defaultPresentBadge: true,
     );
 
     const initializationSettings = InitializationSettings(
@@ -104,63 +127,89 @@ class FirebaseNotificationService {
       iOS: initializationSettingsDarwin,
     );
 
-    // flutter notification setup
+    // Flutter notification setup
     await _localNotifications.initialize(
       initializationSettings,
-      onDidReceiveNotificationResponse: (details) {},
+      onDidReceiveNotificationResponse: (details) {
+        _handleNotificationResponse(details);
+      },
     );
 
     _isFlutterLocalNotificationsInitialized = true;
   }
 
+  void _handleNotificationResponse(NotificationResponse details) {
+    Logger.info('Notification clicked: ${details.payload}');
+    // Handle notification clicks here
+    // You can navigate to specific screens based on the payload
+  }
+
   Future<void> showNotification(RemoteMessage message) async {
     RemoteNotification? notification = message.notification;
     AndroidNotification? android = message.notification?.android;
-    if (notification != null && android != null) {
+    AppleNotification? apple = message.notification?.apple;
+
+    if (notification != null) {
       await _localNotifications.show(
         notification.hashCode,
         notification.title,
         notification.body,
-        const NotificationDetails(
-          android: AndroidNotificationDetails(
-            'high_importance_channel',
-            'High Importance Notifications',
-            channelDescription:
-                'This channel is used for important notifications.',
-            importance: Importance.high,
-            priority: Priority.high,
-            icon: '@mipmap/ic_launcher',
-          ),
-          iOS: DarwinNotificationDetails(
+        NotificationDetails(
+          android: android != null
+              ? AndroidNotificationDetails(
+                  'high_importance_channel',
+                  'High Importance Notifications',
+                  channelDescription:
+                      'This channel is used for important notifications.',
+                  importance: Importance.high,
+                  priority: Priority.high,
+                  icon: '@mipmap/ic_launcher',
+                )
+              : null,
+          iOS: const DarwinNotificationDetails(
             presentAlert: true,
             presentBadge: true,
             presentSound: true,
+            sound: 'default',
+            badgeNumber: 1,
           ),
         ),
-        payload: message.data.toString(),
+        payload: json.encode(message.data),
       );
     }
   }
 
   Future<void> _setupMessageHandlers() async {
-    //foreground message
+    // Foreground message
     FirebaseMessaging.onMessage.listen((message) {
+      Logger.info('Received foreground message: ${message.messageId}');
       showNotification(message);
     });
 
-    // background message
+    // Background/terminated message opened app
     FirebaseMessaging.onMessageOpenedApp.listen(_handleBackgroundMessage);
 
-    // opened app
+    // App was terminated and opened from notification
     final initialMessage = await _messaging.getInitialMessage();
     if (initialMessage != null) {
+      Logger.info('App opened from terminated state via notification');
       _handleBackgroundMessage(initialMessage);
     }
   }
 
   void _handleBackgroundMessage(RemoteMessage message) {
-    if (message.data['type'] == 'chat') {
-      // open chat screen
+    Logger.info('Handling background message: ${message.messageId}');
+    
+    // Parse notification data
+    final data = message.data;
+    
+    // Handle different notification types
+    if (data['type'] == 'chat') {
+      // Navigate to chat screen with conversation ID
+      // Example: navigatorKey.currentState?.pushNamed('/chat', arguments: data['conversationId']);
+    } else if (data['type'] == 'workout') {
+      // Navigate to workout details
+      // Example: navigatorKey.currentState?.pushNamed('/workout', arguments: data['workoutId']);
     }
   }
 
@@ -210,6 +259,46 @@ class FirebaseNotificationService {
     try {
       final accessToken = await _getAccessToken();
 
+      // Prepare payload with enhanced configurations for iOS
+      final payload = {
+        'message': {
+          'token': token,
+          'notification': {
+            'title': title,
+            'body': body,
+          },
+          'data': data ?? {},
+          'android': {
+            'notification': {
+              'icon': '@mipmap/ic_launcher',
+              'channel_id': 'high_importance_channel',
+              'priority': 'high',
+              'visibility': 'public',
+              'default_sound': true,
+              'default_vibrate_timings': true,
+            }
+          },
+          'apns': {
+            'headers': {
+              'apns-priority': '10',
+            },
+            'payload': {
+              'aps': {
+                'alert': {
+                  'title': title,
+                  'body': body,
+                },
+                'sound': 'default',
+                'badge': 1,
+                'content-available': 1,
+                'mutable-content': 1,
+                'category': 'WORKOUT_CATEGORY',
+              },
+            }
+          }
+        }
+      };
+
       final response = await http.post(
         Uri.parse(
             'https://fcm.googleapis.com/v1/projects/ironfit-edef8/messages:send'),
@@ -217,30 +306,7 @@ class FirebaseNotificationService {
           'Content-Type': 'application/json',
           'Authorization': 'Bearer $accessToken',
         },
-        body: jsonEncode({
-          'message': {
-            'token': token,
-            'notification': {
-              'title': title,
-              'body': body,
-            },
-            'data': data ?? {},
-            'android': {
-              'notification': {
-                'icon': '@mipmap/ic_launcher',
-                'channel_id': 'high_importance_channel'
-              }
-            },
-            'apns': {
-              'payload': {
-                'aps': {
-                  'sound': 'default',
-                  'badge': 1,
-                }
-              }
-            }
-          }
-        }),
+        body: jsonEncode(payload),
       );
 
       if (response.statusCode != 200) {
@@ -263,6 +329,28 @@ class FirebaseNotificationService {
     } catch (e) {
       Logger.error('Error getting FCM token: $e');
       return null;
+    }
+  }
+  
+  /// Subscribe to a topic for receiving broadcast messages
+  Future<void> subscribeToTopic(String topic) async {
+    try {
+      await _messaging.subscribeToTopic(topic);
+      Logger.info('Subscribed to topic: $topic');
+    } catch (e) {
+      Logger.error('Failed to subscribe to topic $topic: $e');
+      rethrow;
+    }
+  }
+  
+  /// Unsubscribe from a topic
+  Future<void> unsubscribeFromTopic(String topic) async {
+    try {
+      await _messaging.unsubscribeFromTopic(topic);
+      Logger.info('Unsubscribed from topic: $topic');
+    } catch (e) {
+      Logger.error('Failed to unsubscribe from topic $topic: $e');
+      rethrow;
     }
   }
 }

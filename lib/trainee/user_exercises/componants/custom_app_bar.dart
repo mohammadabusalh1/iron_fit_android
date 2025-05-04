@@ -2,18 +2,19 @@ import 'package:flutter/material.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
+import '/utils/responsive_utils.dart';
 import 'package:iron_fit/componants/Styles.dart';
 
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   const CustomAppBar({super.key});
 
   @override
-  Size get preferredSize => const Size.fromHeight(88);
+  Size get preferredSize => Size.fromHeight(88);
 
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      toolbarHeight: 88,
+      toolbarHeight: ResponsiveUtils.height(context, 88),
       backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
       automaticallyImplyLeading: false,
       flexibleSpace: Container(
@@ -31,18 +32,18 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
       title: Row(
         children: [
           Container(
-            padding: const EdgeInsets.all(8),
+            padding: EdgeInsets.all(ResponsiveUtils.width(context, 8)),
             decoration: BoxDecoration(
               color: FlutterFlowTheme.of(context).primary.withAlpha(30),
-              borderRadius: BorderRadius.circular(12),
+              borderRadius: BorderRadius.circular(ResponsiveUtils.width(context, 12)),
             ),
             child: Icon(
               Icons.fitness_center,
               color: FlutterFlowTheme.of(context).primary,
-              size: 24,
+              size: ResponsiveUtils.iconSize(context, 24),
             ),
           ),
-          const SizedBox(width: 12),
+          SizedBox(width: ResponsiveUtils.width(context, 12)),
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -51,7 +52,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
                     .getText('ue602o8f'), // Today's Workout
                 style: AppStyles.textCairo(
                   context,
-                  fontSize: 20,
+                  fontSize: ResponsiveUtils.fontSize(context, 20),
                   fontWeight: FontWeight.bold,
                   color: FlutterFlowTheme.of(context).primaryText,
                 ),
@@ -60,7 +61,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
                 DateFormat('yyyy/MM/dd').format(DateTime.now()),
                 style: AppStyles.textCairo(
                   context,
-                  fontSize: 14,
+                  fontSize: ResponsiveUtils.fontSize(context, 14),
                   color: FlutterFlowTheme.of(context).secondaryText,
                 ),
               ),
@@ -70,17 +71,17 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
       ),
       actions: [
         Padding(
-          padding: const EdgeInsetsDirectional.all(16),
+          padding: EdgeInsets.all(ResponsiveUtils.width(context, 16)),
           child: FlutterFlowIconButton(
             borderColor: FlutterFlowTheme.of(context).primary.withAlpha(15),
-            borderRadius: 12,
+            borderRadius: ResponsiveUtils.width(context, 12),
             borderWidth: 1,
-            buttonSize: 48,
+            buttonSize: ResponsiveUtils.width(context, 48),
             fillColor: FlutterFlowTheme.of(context).primaryBackground,
             icon: Icon(
               Icons.close,
               color: FlutterFlowTheme.of(context).primaryText,
-              size: 24,
+              size: ResponsiveUtils.iconSize(context, 24),
             ),
             onPressed: () async {
               context.safePop();

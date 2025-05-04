@@ -37,26 +37,6 @@ class ProfileHeader extends StatelessWidget {
       alignment: Alignment.topCenter,
       clipBehavior: Clip.none,
       children: [
-        // Background container with gradient
-        Container(
-          width: double.infinity,
-          height: MediaQuery.of(context).size.height * 0.4,
-          decoration: BoxDecoration(
-            gradient: LinearGradient(
-              colors: [
-                FlutterFlowTheme.of(context).primary.withOpacity(0.9),
-                FlutterFlowTheme.of(context).tertiary.withOpacity(0.8),
-              ],
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
-            ),
-            borderRadius: const BorderRadius.only(
-              bottomLeft: Radius.circular(30),
-              bottomRight: Radius.circular(30),
-            ),
-          ),
-        ),
-
         // Content
         Column(
           children: [
@@ -84,7 +64,7 @@ class ProfileHeader extends StatelessWidget {
                   border: Border.all(
                     color:
                         FlutterFlowTheme.of(context).primary.withOpacity(0.3),
-                    width: 2,
+                    width: 1,
                   ),
                 ),
                 child: ClipRRect(

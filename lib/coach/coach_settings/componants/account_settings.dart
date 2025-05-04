@@ -7,6 +7,7 @@ import '/backend/backend.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/componants/Styles.dart';
+import '/utils/responsive_utils.dart';
 
 class AccountSettings extends StatelessWidget {
   static final _logger = Logger('AccountSettings');
@@ -29,7 +30,7 @@ class AccountSettings extends StatelessWidget {
     return AppStyles.textCairo(
       context,
       color: color ?? FlutterFlowTheme.of(context).primaryText,
-      fontSize: fontSize ?? 14,
+      fontSize: ResponsiveUtils.fontSize(context, fontSize ?? 14),
       fontWeight: fontWeight ?? FontWeight.normal,
       fontStyle: fontStyle ?? FontStyle.normal,
     );
@@ -118,9 +119,9 @@ class AccountSettings extends StatelessWidget {
               Icon(
                 Icons.settings_outlined,
                 color: FlutterFlowTheme.of(context).primary,
-                size: 24,
+                size: ResponsiveUtils.iconSize(context, 24),
               ),
-              const SizedBox(width: 12),
+              SizedBox(width: ResponsiveUtils.width(context, 12)),
               Text(
                 FFLocalizations.of(context)
                     .getText('ux9ea1rv' /* Account Settings */),
@@ -133,7 +134,7 @@ class AccountSettings extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: 16),
+          SizedBox(height: ResponsiveUtils.height(context, 16)),
           ...menuItems.map((item) => _buildSettingsItem(
                 context,
                 icon: item['icon'] as IconData,
@@ -153,38 +154,42 @@ class AccountSettings extends StatelessWidget {
   }) {
     return RepaintBoundary(
       child: Container(
-        margin: const EdgeInsets.only(bottom: 16),
+        margin: EdgeInsets.only(bottom: ResponsiveUtils.height(context, 16)),
         decoration: BoxDecoration(
           color: FlutterFlowTheme.of(context).secondaryBackground,
-          borderRadius: BorderRadius.circular(12),
+          borderRadius: BorderRadius.circular(ResponsiveUtils.width(context, 12)),
           border: Border.all(
             color: FlutterFlowTheme.of(context).primary.withAlpha(15),
           ),
         ),
         child: InkWell(
           onTap: onTap,
-          borderRadius: BorderRadius.circular(12),
+          borderRadius: BorderRadius.circular(ResponsiveUtils.width(context, 12)),
           child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+            padding: ResponsiveUtils.padding(
+              context,
+              horizontal: 16,
+              vertical: 12,
+            ),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Row(
                   children: [
                     Container(
-                      padding: const EdgeInsets.all(8),
+                      padding: EdgeInsets.all(ResponsiveUtils.width(context, 8)),
                       decoration: BoxDecoration(
                         color:
                             FlutterFlowTheme.of(context).primary.withAlpha(30),
-                        borderRadius: BorderRadius.circular(8),
+                        borderRadius: BorderRadius.circular(ResponsiveUtils.width(context, 8)),
                       ),
                       child: Icon(
                         icon,
                         color: FlutterFlowTheme.of(context).primary,
-                        size: 20,
+                        size: ResponsiveUtils.iconSize(context, 20),
                       ),
                     ),
-                    const SizedBox(width: 12),
+                    SizedBox(width: ResponsiveUtils.width(context, 12)),
                     Text(
                       FFLocalizations.of(context).getText(titleKey),
                       style: _getTextStyle(
@@ -196,7 +201,7 @@ class AccountSettings extends StatelessWidget {
                 Icon(
                   Icons.chevron_right_rounded,
                   color: FlutterFlowTheme.of(context).secondaryText,
-                  size: 24,
+                  size: ResponsiveUtils.iconSize(context, 24),
                 ),
               ],
             ),
@@ -212,13 +217,13 @@ class AccountSettings extends StatelessWidget {
       builder: (BuildContext context) {
         return Dialog(
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(16),
+            borderRadius: BorderRadius.circular(ResponsiveUtils.width(context, 16)),
           ),
           child: Container(
-            padding: const EdgeInsets.all(24),
+            padding: ResponsiveUtils.padding(context, horizontal: 24, vertical: 24),
             decoration: BoxDecoration(
               color: FlutterFlowTheme.of(context).secondaryBackground,
-              borderRadius: BorderRadius.circular(16),
+              borderRadius: BorderRadius.circular(ResponsiveUtils.width(context, 16)),
             ),
             child: Column(
               mainAxisSize: MainAxisSize.min,
@@ -226,9 +231,9 @@ class AccountSettings extends StatelessWidget {
                 Icon(
                   Icons.warning_rounded,
                   color: FlutterFlowTheme.of(context).error,
-                  size: 48,
+                  size: ResponsiveUtils.iconSize(context, 48),
                 ),
-                const SizedBox(height: 16),
+                SizedBox(height: ResponsiveUtils.height(context, 16)),
                 Text(
                   FFLocalizations.of(context).getText('delete_account_title'),
                   style: _getTextStyle(
@@ -237,7 +242,7 @@ class AccountSettings extends StatelessWidget {
                     fontSize: 20,
                   ),
                 ),
-                const SizedBox(height: 8),
+                SizedBox(height: ResponsiveUtils.height(context, 8)),
                 Text(
                   FFLocalizations.of(context).getText('delete_account_confirm'),
                   textAlign: TextAlign.center,
@@ -247,7 +252,7 @@ class AccountSettings extends StatelessWidget {
                     fontSize: 14,
                   ),
                 ),
-                const SizedBox(height: 24),
+                SizedBox(height: ResponsiveUtils.height(context, 24)),
                 Row(
                   children: [
                     Expanded(

@@ -3,6 +3,7 @@ import '/flutter_flow/flutter_flow_theme.dart';
 import '/componants/Styles.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/backend/backend.dart';
+import 'package:iron_fit/utils/responsive_utils.dart';
 
 class CurrentPlanSection extends StatelessWidget {
   final CoachRecord coachRecord;
@@ -17,10 +18,10 @@ class CurrentPlanSection extends StatelessWidget {
   Widget _buildDateInfo(
       BuildContext context, String label, String date, IconData icon) {
     return Container(
-      padding: const EdgeInsets.all(12),
+      padding: ResponsiveUtils.padding(context, horizontal: 12, vertical: 12),
       decoration: BoxDecoration(
         color: FlutterFlowTheme.of(context).primaryBackground,
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: BorderRadius.circular(ResponsiveUtils.width(context, 12)),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -30,25 +31,25 @@ class CurrentPlanSection extends StatelessWidget {
               Icon(
                 icon,
                 color: FlutterFlowTheme.of(context).secondaryText,
-                size: 16,
+                size: ResponsiveUtils.iconSize(context, 16),
               ),
-              const SizedBox(width: 4),
+              SizedBox(width: ResponsiveUtils.width(context, 4)),
               Text(
                 label,
                 style: AppStyles.textCairo(
                   context,
-                  fontSize: 10,
+                  fontSize: ResponsiveUtils.fontSize(context, 10),
                   color: FlutterFlowTheme.of(context).secondaryText,
                 ),
               ),
             ],
           ),
-          const SizedBox(height: 4),
+          SizedBox(height: ResponsiveUtils.height(context, 4)),
           Text(
             date,
             style: AppStyles.textCairo(
               context,
-              fontSize: 14,
+              fontSize: ResponsiveUtils.fontSize(context, 14),
               fontWeight: FontWeight.w600,
             ),
           ),
@@ -63,16 +64,16 @@ class CurrentPlanSection extends StatelessWidget {
       color: Colors.transparent,
       elevation: 2,
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(16),
+        borderRadius: BorderRadius.circular(ResponsiveUtils.width(context, 16)),
       ),
       child: Container(
-        width: MediaQuery.sizeOf(context).width,
+        width: ResponsiveUtils.width(context, MediaQuery.sizeOf(context).width),
         decoration: BoxDecoration(
           color: FlutterFlowTheme.of(context).primaryBackground,
-          borderRadius: BorderRadius.circular(16),
+          borderRadius: BorderRadius.circular(ResponsiveUtils.width(context, 16)),
         ),
         child: Padding(
-          padding: const EdgeInsetsDirectional.fromSTEB(20, 20, 20, 20),
+          padding: ResponsiveUtils.padding(context, horizontal: 20, vertical: 20),
           child: Column(
             mainAxisSize: MainAxisSize.max,
             children: [
@@ -82,16 +83,15 @@ class CurrentPlanSection extends StatelessWidget {
                   Text(
                     FFLocalizations.of(context).getText('currentPlan'),
                     style: AppStyles.textCairo(context,
-                        fontSize: 22, fontWeight: FontWeight.bold),
+                        fontSize: ResponsiveUtils.fontSize(context, 22), fontWeight: FontWeight.bold),
                   ),
                   Container(
-                    padding:
-                        const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                    padding: ResponsiveUtils.padding(context, horizontal: 12, vertical: 6),
                     decoration: BoxDecoration(
                       color: FlutterFlowTheme.of(context)
                           .success
                           .withValues(alpha: 0.1),
-                      borderRadius: BorderRadius.circular(20),
+                      borderRadius: BorderRadius.circular(ResponsiveUtils.width(context, 20)),
                     ),
                     child: Row(
                       mainAxisSize: MainAxisSize.min,
@@ -100,21 +100,21 @@ class CurrentPlanSection extends StatelessWidget {
                             ? Icon(
                                 Icons.close,
                                 color: FlutterFlowTheme.of(context).error,
-                                size: 16,
+                                size: ResponsiveUtils.iconSize(context, 16),
                               )
                             : Icon(
                                 Icons.check_circle,
                                 color: FlutterFlowTheme.of(context).success,
-                                size: 16,
+                                size: ResponsiveUtils.iconSize(context, 16),
                               ),
-                        const SizedBox(width: 4),
+                        SizedBox(width: ResponsiveUtils.width(context, 4)),
                         Text(
                           subscriptionsRecord.endDate!.isBefore(DateTime.now())
                               ? FFLocalizations.of(context).getText('y39376zl')
                               : FFLocalizations.of(context).getText('active'),
                           style: AppStyles.textCairo(
                             context,
-                            fontSize: 12,
+                            fontSize: ResponsiveUtils.fontSize(context, 12),
                             fontWeight: FontWeight.w600,
                             color: subscriptionsRecord.endDate!
                                     .isBefore(DateTime.now())
@@ -128,18 +128,18 @@ class CurrentPlanSection extends StatelessWidget {
                 ],
               ),
               Divider(
-                height: 24,
-                thickness: 1,
+                height: ResponsiveUtils.height(context, 24),
+                thickness: ResponsiveUtils.width(context, 1),
                 color: FlutterFlowTheme.of(context).alternate,
               ),
               Container(
-                padding: const EdgeInsets.all(16),
+                padding: ResponsiveUtils.padding(context, horizontal: 16, vertical: 16),
                 decoration: BoxDecoration(
                   color: FlutterFlowTheme.of(context).secondaryBackground,
-                  borderRadius: BorderRadius.circular(12),
+                  borderRadius: BorderRadius.circular(ResponsiveUtils.width(context, 12)),
                   border: Border.all(
                     color: FlutterFlowTheme.of(context).alternate,
-                    width: 1,
+                    width: ResponsiveUtils.width(context, 1),
                   ),
                 ),
                 child: Column(
@@ -153,7 +153,7 @@ class CurrentPlanSection extends StatelessWidget {
                             Text(
                               FFLocalizations.of(context).getText('monthlyFee'),
                               style: AppStyles.textCairo(context,
-                                  fontSize: 12,
+                                  fontSize: ResponsiveUtils.fontSize(context, 12),
                                   color: FlutterFlowTheme.of(context)
                                       .secondaryText),
                             ),
@@ -164,6 +164,7 @@ class CurrentPlanSection extends StatelessWidget {
                                   .override(
                                     fontFamily: 'Inter Tight',
                                     color: FlutterFlowTheme.of(context).primary,
+                                    fontSize: ResponsiveUtils.fontSize(context, 20),
                                     fontWeight: FontWeight.bold,
                                     letterSpacing: 0.0,
                                   ),
@@ -171,7 +172,7 @@ class CurrentPlanSection extends StatelessWidget {
                           ],
                         ),
                         Container(
-                          padding: const EdgeInsets.all(12),
+                          padding: ResponsiveUtils.padding(context, horizontal: 12, vertical: 12),
                           decoration: BoxDecoration(
                             color: FlutterFlowTheme.of(context)
                                 .primary
@@ -181,12 +182,12 @@ class CurrentPlanSection extends StatelessWidget {
                           child: Icon(
                             Icons.attach_money_rounded,
                             color: FlutterFlowTheme.of(context).primary,
-                            size: 24,
+                            size: ResponsiveUtils.iconSize(context, 24),
                           ),
                         ),
                       ],
                     ),
-                    const SizedBox(height: 16),
+                    SizedBox(height: ResponsiveUtils.height(context, 16)),
                     Column(
                       children: [
                         _buildDateInfo(
@@ -196,7 +197,7 @@ class CurrentPlanSection extends StatelessWidget {
                               .format(subscriptionsRecord.startDate!),
                           Icons.calendar_today_rounded,
                         ),
-                        const SizedBox(height: 16),
+                        SizedBox(height: ResponsiveUtils.height(context, 16)),
                         _buildDateInfo(
                           context,
                           FFLocalizations.of(context).getText('nextPayment'),
@@ -209,7 +210,7 @@ class CurrentPlanSection extends StatelessWidget {
                   ],
                 ),
               ),
-            ].divide(const SizedBox(height: 16)),
+            ].divide(SizedBox(height: ResponsiveUtils.height(context, 16))),
           ),
         ),
       ),

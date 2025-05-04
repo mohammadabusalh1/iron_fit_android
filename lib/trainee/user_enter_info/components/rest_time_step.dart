@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:iron_fit/componants/Styles.dart';
 import 'package:iron_fit/flutter_flow/flutter_flow_theme.dart';
 import 'package:iron_fit/flutter_flow/flutter_flow_util.dart';
+import 'package:iron_fit/utils/responsive_utils.dart';
 
 class RestTimeStep extends StatefulWidget {
   const RestTimeStep({
@@ -31,7 +32,7 @@ class _RestTimeStepState extends State<RestTimeStep> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 20),
+      padding: ResponsiveUtils.padding(context, horizontal: 10, vertical: 20),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -39,16 +40,19 @@ class _RestTimeStepState extends State<RestTimeStep> {
             _localizations.getText('rest_time_title'),
             style: AppStyles.textCairo(
               context,
-              fontSize: 24,
+              fontSize: ResponsiveUtils.fontSize(context, 24),
               fontWeight: FontWeight.bold,
             ),
           ),
-          const SizedBox(height: 8),
+          SizedBox(height: ResponsiveUtils.height(context, 8)),
           Text(
             _localizations.getText('rest_time_subtitle'),
-            style: AppStyles.textCairo(context),
+            style: AppStyles.textCairo(
+              context,
+              fontSize: ResponsiveUtils.fontSize(context, 14),
+            ),
           ),
-          const SizedBox(height: 24),
+          SizedBox(height: ResponsiveUtils.height(context, 24)),
           _buildRestTimeOptions(),
         ],
       ),
@@ -92,7 +96,7 @@ class _RestTimeStepState extends State<RestTimeStep> {
     final bool isRecommended = option['isRecommended'] == true;
 
     return Padding(
-      padding: const EdgeInsets.only(bottom: 12),
+      padding: EdgeInsets.only(bottom: ResponsiveUtils.height(context, 12)),
       child: Container(
         decoration: BoxDecoration(
           color: isSelected
@@ -126,12 +130,12 @@ class _RestTimeStepState extends State<RestTimeStep> {
               }
             },
             child: Padding(
-              padding: const EdgeInsets.all(16),
+              padding: ResponsiveUtils.padding(context, horizontal: 16, vertical: 16),
               child: Row(
                 children: [
                   Container(
-                    width: 24,
-                    height: 24,
+                    width: ResponsiveUtils.width(context, 24),
+                    height: ResponsiveUtils.width(context, 24),
                     decoration: BoxDecoration(
                       shape: BoxShape.circle,
                       color: isSelected
@@ -149,12 +153,12 @@ class _RestTimeStepState extends State<RestTimeStep> {
                     child: isSelected
                         ? Icon(
                             Icons.check,
-                            size: 16,
+                            size: ResponsiveUtils.iconSize(context, 16),
                             color: FlutterFlowTheme.of(context).info,
                           )
                         : null,
                   ),
-                  const SizedBox(width: 16),
+                  SizedBox(width: ResponsiveUtils.width(context, 16)),
                   Expanded(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -165,7 +169,7 @@ class _RestTimeStepState extends State<RestTimeStep> {
                               option['label'],
                               style: AppStyles.textCairo(
                                 context,
-                                fontSize: 18,
+                                fontSize: ResponsiveUtils.fontSize(context, 18),
                                 fontWeight: FontWeight.w600,
                                 color: isSelected
                                     ? FlutterFlowTheme.of(context).primary
@@ -174,9 +178,12 @@ class _RestTimeStepState extends State<RestTimeStep> {
                             ),
                             if (isRecommended)
                               Container(
-                                margin: const EdgeInsets.only(left: 8),
-                                padding: const EdgeInsets.symmetric(
-                                    horizontal: 8, vertical: 2),
+                                margin: EdgeInsets.only(left: ResponsiveUtils.width(context, 8)),
+                                padding: ResponsiveUtils.padding(
+                                  context,
+                                  horizontal: 8,
+                                  vertical: 2
+                                ),
                                 decoration: BoxDecoration(
                                   color: FlutterFlowTheme.of(context)
                                       .tertiary
@@ -187,7 +194,7 @@ class _RestTimeStepState extends State<RestTimeStep> {
                                   _localizations.getText('recommended'),
                                   style: AppStyles.textCairo(
                                     context,
-                                    fontSize: 12,
+                                    fontSize: ResponsiveUtils.fontSize(context, 12),
                                     fontWeight: FontWeight.w600,
                                     color:
                                         FlutterFlowTheme.of(context).tertiary,
@@ -196,12 +203,12 @@ class _RestTimeStepState extends State<RestTimeStep> {
                               ),
                           ],
                         ),
-                        const SizedBox(height: 4),
+                        SizedBox(height: ResponsiveUtils.height(context, 4)),
                         Text(
                           option['description'],
                           style: AppStyles.textCairo(
                             context,
-                            fontSize: 14,
+                            fontSize: ResponsiveUtils.fontSize(context, 14),
                             color: FlutterFlowTheme.of(context).secondaryText,
                           ),
                         ),
@@ -213,6 +220,7 @@ class _RestTimeStepState extends State<RestTimeStep> {
                     color: isSelected
                         ? FlutterFlowTheme.of(context).primary
                         : FlutterFlowTheme.of(context).secondaryText,
+                    size: ResponsiveUtils.iconSize(context, 24),
                   ),
                 ],
               ),

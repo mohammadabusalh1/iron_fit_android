@@ -3,6 +3,7 @@ import 'package:iron_fit/componants/Styles.dart';
 import 'package:iron_fit/flutter_flow/flutter_flow_theme.dart';
 import 'package:iron_fit/flutter_flow/flutter_flow_util.dart';
 import 'package:iron_fit/flutter_flow/flutter_flow_widgets.dart';
+import 'package:iron_fit/utils/responsive_utils.dart';
 
 class SearchBarWidget extends StatefulWidget {
   final TextEditingController controller;
@@ -72,7 +73,7 @@ class _SearchBarWidgetState extends State<SearchBarWidget>
                   },
                   style: AppStyles.textCairo(
                     context,
-                    fontSize: 16,
+                    fontSize: ResponsiveUtils.fontSize(context, 16),
                     color: FlutterFlowTheme.of(context).primaryText,
                   ),
                   decoration: InputDecoration(
@@ -80,13 +81,14 @@ class _SearchBarWidgetState extends State<SearchBarWidget>
                         FFLocalizations.of(context).getText('search_trainees'),
                     hintStyle: AppStyles.textCairo(
                       context,
-                      fontSize: 16,
+                      fontSize: ResponsiveUtils.fontSize(context, 16),
                       color: FlutterFlowTheme.of(context)
                           .secondaryText
                           .withValues(alpha: 0.6),
                     ),
                     prefixIcon: Icon(
                       Icons.search_rounded,
+                      size: ResponsiveUtils.iconSize(context, 24),
                       color: _isFocused
                           ? FlutterFlowTheme.of(context).primary
                           : FlutterFlowTheme.of(context).secondaryText,
@@ -95,6 +97,7 @@ class _SearchBarWidgetState extends State<SearchBarWidget>
                         ? IconButton(
                             icon: Icon(
                               Icons.clear_rounded,
+                              size: ResponsiveUtils.iconSize(context, 24),
                               color: FlutterFlowTheme.of(context).secondaryText,
                             ),
                             onPressed: () {
@@ -128,27 +131,35 @@ class _SearchBarWidgetState extends State<SearchBarWidget>
                     ),
                     filled: true,
                     fillColor: FlutterFlowTheme.of(context).secondaryBackground,
-                    contentPadding: const EdgeInsets.symmetric(
-                        vertical: 16, horizontal: 20),
+                    contentPadding: ResponsiveUtils.padding(
+                      context,
+                      horizontal: 20,
+                      vertical: 16,
+                    ),
                   ),
                 ),
               ),
             ),
           ),
         ),
-        const SizedBox(width: 12),
+        SizedBox(width: ResponsiveUtils.width(context, 12)),
         FFButtonWidget(
           onPressed: () {
             widget.onSearch();
           },
           text: FFLocalizations.of(context).getText('search'),
           options: FFButtonOptions(
-            height: 55.0,
-            padding: const EdgeInsetsDirectional.fromSTEB(24, 0, 24, 0),
+            height: ResponsiveUtils.height(context, 55.0),
+            padding: EdgeInsetsDirectional.fromSTEB(
+              ResponsiveUtils.width(context, 24),
+              0,
+              ResponsiveUtils.width(context, 24),
+              0,
+            ),
             color: FlutterFlowTheme.of(context).primary,
             textStyle: AppStyles.textCairo(
               context,
-              fontSize: 16,
+              fontSize: ResponsiveUtils.fontSize(context, 16),
               fontWeight: FontWeight.w600,
               color: Colors.white,
             ),

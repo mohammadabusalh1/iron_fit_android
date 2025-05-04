@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:iron_fit/componants/Styles.dart';
+import 'package:iron_fit/utils/responsive_utils.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import 'exercise_card.dart';
@@ -10,9 +11,9 @@ class AppMessageCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(16.0),
+      padding: ResponsiveUtils.padding(context, horizontal: 16.0, vertical: 16.0),
       child: Container(
-        padding: const EdgeInsets.all(16),
+        padding: ResponsiveUtils.padding(context, horizontal: 16, vertical: 16),
         decoration: BoxDecoration(
           color: FlutterFlowTheme.of(context).secondaryBackground,
           borderRadius: BorderRadius.circular(16),
@@ -22,7 +23,7 @@ class AppMessageCard extends StatelessWidget {
             Row(
               children: [
                 Container(
-                  padding: const EdgeInsets.all(12),
+                  padding: ResponsiveUtils.padding(context, horizontal: 12, vertical: 12),
                   decoration: BoxDecoration(
                     color: FlutterFlowTheme.of(context)
                         .primary
@@ -32,38 +33,39 @@ class AppMessageCard extends StatelessWidget {
                   child: Icon(
                     Icons.card_giftcard_rounded,
                     color: FlutterFlowTheme.of(context).primary,
+                    size: ResponsiveUtils.iconSize(context, 24),
                   ),
                 ),
-                const SizedBox(width: 16),
+                SizedBox(width: ResponsiveUtils.width(context, 16)),
                 Expanded(
                   child: Text(
                     FFLocalizations.of(context).getText('mc7rofba'),
                     style: AppStyles.textCairo(
                       context,
-                      fontSize: 14,
+                      fontSize: ResponsiveUtils.fontSize(context, 14),
                       color: FlutterFlowTheme.of(context).primaryText,
                     ),
                   ),
                 ),
               ],
             ),
-            const SizedBox(height: 16),
+            SizedBox(height: ResponsiveUtils.height(context, 16)),
             SizedBox(
               width: double.infinity,
               child: ElevatedButton.icon(
-                icon: const Icon(Icons.share_rounded, size: 20),
+                icon: Icon(Icons.share_rounded, size: ResponsiveUtils.iconSize(context, 20)),
                 label: Text(
                   FFLocalizations.of(context)
                       .getText(LocalizationKeys.inviteFriends),
                   style: AppStyles.textCairo(
                     context,
-                    fontSize: 14,
+                    fontSize: ResponsiveUtils.fontSize(context, 14),
                     color: FlutterFlowTheme.of(context).info,
                   ),
                 ),
                 style: ElevatedButton.styleFrom(
                   backgroundColor: FlutterFlowTheme.of(context).primary,
-                  padding: const EdgeInsets.symmetric(vertical: 12),
+                  padding: EdgeInsets.symmetric(vertical: ResponsiveUtils.height(context, 12)),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(8),
                   ),

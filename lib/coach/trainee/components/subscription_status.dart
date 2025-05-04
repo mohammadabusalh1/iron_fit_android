@@ -3,6 +3,7 @@ import 'package:iron_fit/backend/backend.dart';
 import 'package:iron_fit/componants/Styles.dart';
 import 'package:iron_fit/flutter_flow/flutter_flow_theme.dart';
 import 'package:iron_fit/flutter_flow/flutter_flow_util.dart';
+import 'package:iron_fit/utils/responsive_utils.dart';
 
 /// A widget that displays subscription status information.
 class SubscriptionStatusWidget extends StatelessWidget {
@@ -19,10 +20,10 @@ class SubscriptionStatusWidget extends StatelessWidget {
       width: MediaQuery.sizeOf(context).width * 1.0,
       decoration: BoxDecoration(
         color: FlutterFlowTheme.of(context).primaryBackground,
-        borderRadius: BorderRadius.circular(8.0),
+        borderRadius: BorderRadius.circular(ResponsiveUtils.width(context, 8.0)),
       ),
       child: Padding(
-        padding: const EdgeInsets.all(12.0),
+        padding: ResponsiveUtils.padding(context, horizontal: 12, vertical: 12),
         child: Row(
           mainAxisSize: MainAxisSize.max,
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -34,7 +35,7 @@ class SubscriptionStatusWidget extends StatelessWidget {
                 Text(
                   FFLocalizations.of(context)
                       .getText('mwejm4ar' /* Subscription Status */),
-                  style: AppStyles.textCairo(context, fontSize: 16),
+                  style: AppStyles.textCairo(context, fontSize: ResponsiveUtils.fontSize(context, 16)),
                 ),
                 Text(
                   subscription.endDate! < getCurrentTimestamp
@@ -44,7 +45,7 @@ class SubscriptionStatusWidget extends StatelessWidget {
                           .getText('0gi3i7gz' /* Active */),
                   style: AppStyles.textCairo(
                     context,
-                    fontSize: 14,
+                    fontSize: ResponsiveUtils.fontSize(context, 14),
                     color: subscription.endDate! < getCurrentTimestamp
                         ? FlutterFlowTheme.of(context).error
                         : FlutterFlowTheme.of(context).success,
@@ -58,7 +59,7 @@ class SubscriptionStatusWidget extends StatelessWidget {
                   )}',
                   style: AppStyles.textCairo(
                     context,
-                    fontSize: 12,
+                    fontSize: ResponsiveUtils.fontSize(context, 12),
                     color: FlutterFlowTheme.of(context).secondaryText,
                   ),
                 ),
@@ -99,10 +100,10 @@ class SubscriptionInfoWidget extends StatelessWidget {
     }
 
     return Container(
-      padding: const EdgeInsets.all(16),
+      padding: ResponsiveUtils.padding(context, horizontal: 16, vertical: 16),
       decoration: BoxDecoration(
         color: FlutterFlowTheme.of(context).primaryBackground,
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: BorderRadius.circular(ResponsiveUtils.width(context, 12)),
         border: Border.all(
           color: isExpired
               ? FlutterFlowTheme.of(context).error.withAlpha(120)
@@ -120,18 +121,17 @@ class SubscriptionInfoWidget extends StatelessWidget {
                 FFLocalizations.of(context).getText('subscriptionStatus'),
                 style: AppStyles.textCairo(
                   context,
-                  fontSize: 14,
+                  fontSize: ResponsiveUtils.fontSize(context, 14),
                   color: FlutterFlowTheme.of(context).secondaryText,
                 ),
               ),
               Container(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                padding: ResponsiveUtils.padding(context, horizontal: 12, vertical: 6),
                 decoration: BoxDecoration(
                   color: isExpired
                       ? FlutterFlowTheme.of(context).error.withAlpha(40)
                       : FlutterFlowTheme.of(context).success.withAlpha(40),
-                  borderRadius: BorderRadius.circular(20),
+                  borderRadius: BorderRadius.circular(ResponsiveUtils.width(context, 20)),
                 ),
                 child: Text(
                   isExpired
@@ -139,7 +139,7 @@ class SubscriptionInfoWidget extends StatelessWidget {
                       : FFLocalizations.of(context).getText('active'),
                   style: AppStyles.textCairo(
                     context,
-                    fontSize: 12,
+                    fontSize: ResponsiveUtils.fontSize(context, 12),
                     fontWeight: FontWeight.w600,
                     color: isExpired
                         ? FlutterFlowTheme.of(context).error
@@ -149,7 +149,7 @@ class SubscriptionInfoWidget extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: 12),
+          SizedBox(height: ResponsiveUtils.height(context, 12)),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -179,7 +179,7 @@ class SubscriptionInfoWidget extends StatelessWidget {
             ],
           ),
           if (!isExpired) ...[
-            const SizedBox(height: 12),
+            SizedBox(height: ResponsiveUtils.height(context, 12)),
             LinearProgressIndicator(
               value: progressValue,
               backgroundColor: FlutterFlowTheme.of(context).accent4,
@@ -187,12 +187,12 @@ class SubscriptionInfoWidget extends StatelessWidget {
                 FlutterFlowTheme.of(context).primary,
               ),
             ),
-            const SizedBox(height: 8),
+            SizedBox(height: ResponsiveUtils.height(context, 8)),
             Text(
               '$daysRemaining ${FFLocalizations.of(context).getText('daysRemaining')}',
               style: AppStyles.textCairo(
                 context,
-                fontSize: 12,
+                fontSize: ResponsiveUtils.fontSize(context, 12),
                 color: FlutterFlowTheme.of(context).primary,
               ),
             ),
@@ -216,26 +216,26 @@ class SubscriptionInfoWidget extends StatelessWidget {
           children: [
             Icon(
               icon,
-              size: 14,
+              size: ResponsiveUtils.iconSize(context, 14),
               color: FlutterFlowTheme.of(context).secondaryText,
             ),
-            const SizedBox(width: 4),
+            SizedBox(width: ResponsiveUtils.width(context, 4)),
             Text(
               label,
               style: AppStyles.textCairo(
                 context,
-                fontSize: 12,
+                fontSize: ResponsiveUtils.fontSize(context, 12),
                 color: FlutterFlowTheme.of(context).secondaryText,
               ),
             ),
           ],
         ),
-        const SizedBox(height: 4),
+        SizedBox(height: ResponsiveUtils.height(context, 4)),
         Text(
           value,
           style: AppStyles.textCairo(
             context,
-            fontSize: 14,
+            fontSize: ResponsiveUtils.fontSize(context, 14),
             fontWeight: FontWeight.w600,
             color: valueColor ?? FlutterFlowTheme.of(context).primaryText,
           ),

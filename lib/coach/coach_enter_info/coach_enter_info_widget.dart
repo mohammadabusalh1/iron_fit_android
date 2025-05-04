@@ -13,6 +13,7 @@ import 'sections/personal_info_section.dart';
 import 'sections/expertise_section.dart';
 import 'sections/pricing_section.dart';
 import 'sections/gym_info_section.dart';
+import 'package:iron_fit/utils/responsive_utils.dart';
 export 'coach_enter_info_model.dart';
 
 // State provider for coach info entry
@@ -208,7 +209,8 @@ class CoachInfoState extends ChangeNotifier {
       case 1: // Expertise
         switch (_currentSubStage) {
           case 0: // Years of Experience
-            isValid = model.yearsofExperienceTextController.text.isNotEmpty;
+            isValid = model.yearsofExperienceTextController.text.isNotEmpty &&
+                int.tryParse(model.yearsofExperienceTextController.text)! < 100;
             break;
           case 1: // About Me
             isValid = model.aboutMeTextController.text.isNotEmpty;
@@ -557,9 +559,9 @@ class _CoachEnterInfoWidgetState extends State<CoachEnterInfoWidget> {
                   ),
                   Column(
                     children: [
-                      const SizedBox(height: 16),
+                      SizedBox(height: ResponsiveUtils.height(context, 16)),
                       _buildStageIndicator(context, coachInfoState),
-                      const SizedBox(height: 16),
+                      SizedBox(height: ResponsiveUtils.height(context, 16)),
                       Expanded(
                         child: SingleChildScrollView(
                           child: Form(
@@ -583,31 +585,34 @@ class _CoachEnterInfoWidgetState extends State<CoachEnterInfoWidget> {
                   ),
                   if (isEditMode)
                     Positioned(
-                      top: 16,
-                      left: 16,
+                      top: ResponsiveUtils.height(context, 16),
+                      left: ResponsiveUtils.width(context, 16),
                       child: IconButton(
                         onPressed: () {
                           context.pop();
                         },
-                        icon: const Icon(Icons.close),
+                        icon: Icon(
+                          Icons.close,
+                          size: ResponsiveUtils.iconSize(context, 24),
+                        ),
                       ),
                     ),
                   if (isEditMode)
                     Positioned(
-                      top: 16,
-                      right: 16,
+                      top: ResponsiveUtils.height(context, 16),
+                      right: ResponsiveUtils.width(context, 16),
                       child: FFButtonWidget(
                         onPressed: () {
                           coachInfoState.updateProfile(context);
                         },
                         text: FFLocalizations.of(context).getText('finish'),
                         options: FFButtonOptions(
-                          height: 45.0,
+                          height: ResponsiveUtils.height(context, 45.0),
                           color: FlutterFlowTheme.of(context).primary,
                           textStyle: AppStyles.textCairo(context,
                               fontWeight: FontWeight.w700,
                               color: FlutterFlowTheme.of(context).black,
-                              fontSize: 12),
+                              fontSize: ResponsiveUtils.fontSize(context, 12)),
                         ),
                       ),
                     ),
@@ -622,12 +627,12 @@ class _CoachEnterInfoWidgetState extends State<CoachEnterInfoWidget> {
 
   Widget _buildStageIndicator(BuildContext context, CoachInfoState state) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16.0),
+      padding: ResponsiveUtils.padding(context, horizontal: 16.0),
       child: Text(
         '${FFLocalizations.of(context).getText('step')} ${state.total + 1} / 10',
         style: AppStyles.textCairo(
           context,
-          fontSize: 16,
+          fontSize: ResponsiveUtils.fontSize(context, 16),
           fontWeight: FontWeight.bold,
           color: FlutterFlowTheme.of(context).primary,
         ),
@@ -691,42 +696,43 @@ class _CoachEnterInfoWidgetState extends State<CoachEnterInfoWidget> {
         state.currentSubStage == state._subStagesCount[state.currentStage] - 1;
 
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
+      padding: ResponsiveUtils.padding(context, horizontal: 24, vertical: 16),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           if (state.currentStage > 0 || state.currentSubStage > 0)
             Expanded(
               child: Padding(
-                padding: const EdgeInsets.only(right: 8),
+                padding: EdgeInsets.only(right: ResponsiveUtils.width(context, 8)),
                 child: FFButtonWidget(
                   onPressed: state.previousInput,
                   text: FFLocalizations.of(context).getText('previous'),
                   options: FFButtonOptions(
-                    height: 45.0,
+                    height: ResponsiveUtils.height(context, 45.0),
                     color: FlutterFlowTheme.of(context).secondaryBackground,
                     textStyle: AppStyles.textCairo(
                       context,
                       color: FlutterFlowTheme.of(context).primary,
                       fontWeight: FontWeight.w700,
+                      fontSize: ResponsiveUtils.fontSize(context, 14),
                     ),
                     elevation: 3.0,
                     borderSide: BorderSide(
                       color: FlutterFlowTheme.of(context).primary,
                       width: 1.0,
                     ),
-                    borderRadius: BorderRadius.circular(28.0),
+                    borderRadius: BorderRadius.circular(ResponsiveUtils.width(context, 28.0)),
                   ),
                 ),
               ),
             ),
-          const SizedBox(width: 8),
+          SizedBox(width: ResponsiveUtils.width(context, 8)),
           Expanded(
             child: FFButtonWidget(
               icon: state.isDataUploading
                   ? SizedBox(
-                      width: 20,
-                      height: 20,
+                      width: ResponsiveUtils.width(context, 20),
+                      height: ResponsiveUtils.height(context, 20),
                       child: CircularProgressIndicator(
                         color: FlutterFlowTheme.of(context).black,
                         strokeWidth: 2,
@@ -758,15 +764,16 @@ class _CoachEnterInfoWidgetState extends State<CoachEnterInfoWidget> {
                       : FFLocalizations.of(context).getText('jj2o77x1')
                   : FFLocalizations.of(context).getText('next'),
               options: FFButtonOptions(
-                height: 45.0,
+                height: ResponsiveUtils.height(context, 45.0),
                 color: FlutterFlowTheme.of(context).primary,
                 textStyle: AppStyles.textCairo(
                   context,
                   fontWeight: FontWeight.w700,
                   color: FlutterFlowTheme.of(context).black,
+                  fontSize: ResponsiveUtils.fontSize(context, 14),
                 ),
                 elevation: 3.0,
-                borderRadius: BorderRadius.circular(28.0),
+                borderRadius: BorderRadius.circular(ResponsiveUtils.width(context, 28.0)),
               ),
             ),
           ),

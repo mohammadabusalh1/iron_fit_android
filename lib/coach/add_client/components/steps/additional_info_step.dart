@@ -4,6 +4,7 @@ import '/flutter_flow/flutter_flow_util.dart';
 import '/componants/Styles.dart';
 import '/widgets/build_text_filed.dart';
 import '../../add_client_model.dart';
+import 'package:iron_fit/utils/responsive_utils.dart';
 
 class AdditionalInfoStep extends StatelessWidget {
   final AddClientModel model;
@@ -30,7 +31,7 @@ class AdditionalInfoStep extends StatelessWidget {
   Widget _buildHeader(BuildContext context) {
     return Container(
       width: double.infinity,
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 24),
+      padding: ResponsiveUtils.padding(context, horizontal: 16, vertical: 24),
       decoration: const BoxDecoration(
         borderRadius: BorderRadius.vertical(top: Radius.circular(12)),
       ),
@@ -40,7 +41,7 @@ class AdditionalInfoStep extends StatelessWidget {
             FFLocalizations.of(context).getText('c11xb84v'),
             style: AppStyles.textCairo(
               context,
-              fontSize: 20,
+              fontSize: ResponsiveUtils.fontSize(context, 20),
               fontWeight: FontWeight.bold,
               color: FlutterFlowTheme.of(context).primaryText,
             ),
@@ -50,7 +51,7 @@ class AdditionalInfoStep extends StatelessWidget {
             FFLocalizations.of(context).getText('client_more_desc'),
             style: AppStyles.textCairo(
               context,
-              fontSize: 12,
+              fontSize: ResponsiveUtils.fontSize(context, 12),
               color: FlutterFlowTheme.of(context).secondaryText,
             ),
           ),
@@ -61,13 +62,13 @@ class AdditionalInfoStep extends StatelessWidget {
 
   Widget _buildFormFields(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16),
+      padding: ResponsiveUtils.padding(context, horizontal: 16),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           if (isFirstStep) ...[
             _buildPaidField(context),
-            const SizedBox(height: 12),
+            SizedBox(height: ResponsiveUtils.height(context, 12)),
             _buildDebtsField(context),
           ] else ...[
             _buildNotesField(context),
@@ -100,12 +101,8 @@ class AdditionalInfoStep extends StatelessWidget {
       },
       labelText: FFLocalizations.of(context).getText('s3kxq2nc'),
       prefixIcon: Icons.attach_money,
-      // onTap: () {
-      //   // Move cursor to end of text
-      //   model.paidTextController.selection = TextSelection.fromPosition(
-      //     TextPosition(offset: model.paidTextController.text.length),
-      //   );
-      // },
+      fontSize: ResponsiveUtils.fontSize(context, 14),
+      iconSize: ResponsiveUtils.iconSize(context, 24),
     );
   }
 
@@ -132,23 +129,13 @@ class AdditionalInfoStep extends StatelessWidget {
       },
       labelText: FFLocalizations.of(context).getText('kcmdk6wv'),
       prefixIcon: Icons.money_off,
-      // onTap: () {
-      //   // Move cursor to end of text
-      //   model.debtsTextController.selection = TextSelection.fromPosition(
-      //     TextPosition(offset: model.debtsTextController.text.length),
-      //   );
-      // },
+      fontSize: ResponsiveUtils.fontSize(context, 14),
+      iconSize: ResponsiveUtils.iconSize(context, 24),
     );
   }
 
   Widget _buildNotesField(BuildContext context) {
     return buildTextField(
-      // onTap: () {
-      //   // Move cursor to end of text
-      //   model.notesController.selection = TextSelection.fromPosition(
-      //     TextPosition(offset: model.notesController.text.length),
-      //   );
-      // },
       controller: model.notesController,
       focusNode: model.notesFocusNode,
       context: context,
@@ -160,6 +147,8 @@ class AdditionalInfoStep extends StatelessWidget {
       labelText: FFLocalizations.of(context).getText('notes'),
       prefixIcon: Icons.description_outlined,
       maxLines: 3,
+      fontSize: ResponsiveUtils.fontSize(context, 14),
+      iconSize: ResponsiveUtils.iconSize(context, 24),
     );
   }
 }

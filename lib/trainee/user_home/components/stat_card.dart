@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:iron_fit/componants/Styles.dart';
+import 'package:iron_fit/utils/responsive_utils.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 
@@ -20,8 +21,8 @@ class StatCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: FFLocalizations.of(context).languageCode == 'ar' ? 150 : 170,
-      padding: const EdgeInsets.all(16),
+      height: ResponsiveUtils.height(context, FFLocalizations.of(context).languageCode == 'ar' ? 150 : 170),
+      padding: ResponsiveUtils.padding(context, horizontal: 16, vertical: 16),
       decoration: BoxDecoration(
         color: FlutterFlowTheme.of(context).secondaryBackground,
         borderRadius: BorderRadius.circular(16),
@@ -33,12 +34,12 @@ class StatCard extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               ConstrainedBox(
-                constraints: const BoxConstraints(maxWidth: 80),
+                constraints: BoxConstraints(maxWidth: ResponsiveUtils.width(context, 80)),
                 child: Text(
                   title,
                   style: AppStyles.textCairo(
                     context,
-                    fontSize: 16,
+                    fontSize: ResponsiveUtils.fontSize(context, 16),
                     color: FlutterFlowTheme.of(context).primaryText,
                   ),
                 ),
@@ -46,15 +47,16 @@ class StatCard extends StatelessWidget {
               Icon(
                 icon,
                 color: FlutterFlowTheme.of(context).primary,
+                size: ResponsiveUtils.iconSize(context, 24),
               ),
             ],
           ),
-          const SizedBox(height: 8),
+          SizedBox(height: ResponsiveUtils.height(context, 8)),
           Text(
             value,
             style: AppStyles.textCairo(
               context,
-              fontSize: 24,
+              fontSize: ResponsiveUtils.fontSize(context, 24),
               fontWeight: FontWeight.bold,
               color: FlutterFlowTheme.of(context).primaryText,
             ),
@@ -63,7 +65,7 @@ class StatCard extends StatelessWidget {
             unit,
             style: AppStyles.textCairo(
               context,
-              fontSize: 14,
+              fontSize: ResponsiveUtils.fontSize(context, 14),
               color: FlutterFlowTheme.of(context).secondaryText,
             ),
           ),

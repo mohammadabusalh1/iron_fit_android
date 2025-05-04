@@ -4,6 +4,7 @@ import 'package:iron_fit/componants/Styles.dart';
 import 'package:iron_fit/componants/loading_indicator/loadingIndicator.dart';
 import 'package:iron_fit/flutter_flow/custom_functions.dart';
 import 'package:iron_fit/services/firebase_messages.dart';
+import 'package:iron_fit/utils/responsive_utils.dart';
 import 'package:iron_fit/widgets/date_pocker.dart';
 import '/auth/firebase_auth/auth_util.dart';
 import '/backend/backend.dart';
@@ -28,10 +29,6 @@ class _AddClientWidgetState extends State<AddClientWidget> {
   final _formKey = GlobalKey<FormState>();
   final _logger = Logger('AddClientWidget');
   late AddClientService _service;
-
-  // Add screen breakpoints
-  static const double kTabletBreakpoint = 768.0;
-  static const double kDesktopBreakpoint = 1024.0;
 
   @override
   void initState() {
@@ -79,18 +76,24 @@ class _AddClientWidgetState extends State<AddClientWidget> {
             model.selectedTrainingPlan,
             model.selectedNutritionalPlan);
 
-        // Send notification if user exists and has FCM token
-        if (user != null && user.fcmToken != null && user.fcmToken.isNotEmpty) {
-          await FirebaseNotificationService.instance.sendPushNotification(
-            token: user.fcmToken,
-            title: FFLocalizations.of(context).getText('new_subscription'),
-            body:
-                FFLocalizations.of(context).getText('new_subscription_message'),
-            data: {
-              'type': 'subscription_update',
-              'coachId': coachRecord.reference.id,
-            },
-          );
+        try {
+          // Send notification if user exists and has FCM token
+          if (user != null &&
+              user.fcmToken != null &&
+              user.fcmToken.isNotEmpty) {
+            await FirebaseNotificationService.instance.sendPushNotification(
+              token: user.fcmToken,
+              title: FFLocalizations.of(context).getText('new_subscription'),
+              body: FFLocalizations.of(context)
+                  .getText('new_subscription_message'),
+              data: {
+                'type': 'subscription_update',
+                'coachId': coachRecord.reference.id,
+              },
+            );
+          }
+        } catch (e) {
+          _logger.severe('Error in _handleSubmit: $e');
         }
 
         if (!mounted) return;
@@ -132,19 +135,23 @@ class _AddClientWidgetState extends State<AddClientWidget> {
               model.selectedNutritionalPlan);
 
           // Send notification if user has FCM token
-          if (user != null &&
-              user.fcmToken != null &&
-              user.fcmToken.isNotEmpty) {
-            await FirebaseNotificationService.instance.sendPushNotification(
-              token: user.fcmToken,
-              title: FFLocalizations.of(context).getText('new_subscription'),
-              body:
-                  '${FFLocalizations.of(context).getText('subscription_requests_from_coach')} ${currentUserDocument!.displayName} ${FFLocalizations.of(context).getText('in')} ${coachRecord.gymName}',
-              data: {
-                'type': 'new_subscription',
-                'coachId': coachRecord.reference.id,
-              },
-            );
+          try {
+            if (user != null &&
+                user.fcmToken != null &&
+                user.fcmToken.isNotEmpty) {
+              await FirebaseNotificationService.instance.sendPushNotification(
+                token: user.fcmToken,
+                title: FFLocalizations.of(context).getText('new_subscription'),
+                body:
+                    '${FFLocalizations.of(context).getText('subscription_requests_from_coach')} ${currentUserDocument!.displayName} ${FFLocalizations.of(context).getText('in')} ${coachRecord.gymName}',
+                data: {
+                  'type': 'new_subscription',
+                  'coachId': coachRecord.reference.id,
+                },
+              );
+            }
+          } catch (e) {
+            _logger.severe('Error in _handleSubmit: $e');
           }
 
           if (!mounted) return;
@@ -156,9 +163,7 @@ class _AddClientWidgetState extends State<AddClientWidget> {
       _logger.severe('Stack trace: $s');
       if (!mounted) return;
       showErrorDialog(FFLocalizations.of(context).getText('2184r6dy'), context);
-      // if (context.mounted) {
-      //   Navigator.pop(context);
-      // }
+      // context.goNamed('trainees');
     }
   }
 
@@ -194,62 +199,52 @@ class _AddClientWidgetState extends State<AddClientWidget> {
   }
 
   Widget _buildScaffold(CoachRecord coachRecord) {
+    final isDesktop = ResponsiveUtils.isDesktop(context);
+    final isTablet = ResponsiveUtils.isTablet(context);
+
     return Scaffold(
       backgroundColor: FlutterFlowTheme.of(context).info.withOpacity(0.3),
-      body: LayoutBuilder(
-        builder: (context, constraints) {
-          final isDesktop = constraints.maxWidth >= kDesktopBreakpoint;
-          final isTablet = constraints.maxWidth >= kTabletBreakpoint &&
-              constraints.maxWidth < kDesktopBreakpoint;
-
-          return Form(
-            key: _formKey,
-            child: SingleChildScrollView(
-              child: Container(
-                constraints: BoxConstraints(
-                  minHeight: MediaQuery.of(context).size.height,
-                  maxWidth: isDesktop ? 1200 : double.infinity,
-                ),
-                decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                    begin: Alignment.topCenter,
-                    end: Alignment.bottomCenter,
-                    colors: [
-                      FlutterFlowTheme.of(context)
-                          .success
-                          .withValues(alpha: 0.5),
-                      FlutterFlowTheme.of(context).primaryBackground,
-                    ],
-                  ),
-                ),
-                padding: EdgeInsets.fromLTRB(
-                  isDesktop ? 48 : (isTablet ? 32 : 24),
-                  48,
-                  isDesktop ? 48 : (isTablet ? 32 : 24),
-                  0,
-                ),
-                margin: isDesktop
-                    ? const EdgeInsets.symmetric(horizontal: 24)
-                    : null,
-                child: Center(
-                  child: ConstrainedBox(
-                    constraints: BoxConstraints(
-                      maxWidth:
-                          isDesktop ? 800 : (isTablet ? 600 : double.infinity),
-                    ),
-                    child: _buildContentArea(coachRecord, isDesktop, isTablet),
-                  ),
-                ),
+      body: Form(
+        key: _formKey,
+        child: SingleChildScrollView(
+          child: Container(
+            constraints: BoxConstraints(
+              minHeight: MediaQuery.of(context).size.height,
+              maxWidth: isDesktop ? 1200 : double.infinity,
+            ),
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+                colors: [
+                  FlutterFlowTheme.of(context).success.withValues(alpha: 0.5),
+                  FlutterFlowTheme.of(context).primaryBackground,
+                ],
               ),
             ),
-          );
-        },
+            padding: ResponsiveUtils.padding(
+              context,
+              horizontal: isDesktop ? 48 : (isTablet ? 32 : 24),
+              vertical: MediaQuery.of(context).padding.top,
+            ),
+            margin:
+                isDesktop ? const EdgeInsets.symmetric(horizontal: 24) : null,
+            child: Center(
+              child: ConstrainedBox(
+                constraints: BoxConstraints(
+                  maxWidth:
+                      isDesktop ? 800 : (isTablet ? 600 : double.infinity),
+                ),
+                child: _buildContentArea(coachRecord),
+              ),
+            ),
+          ),
+        ),
       ),
     );
   }
 
-  Widget _buildContentArea(
-      CoachRecord coachRecord, bool isDesktop, bool isTablet) {
+  Widget _buildContentArea(CoachRecord coachRecord) {
     return Consumer<AddClientModel>(
       builder: (context, model, child) {
         return Container(
@@ -376,6 +371,16 @@ class _AddClientWidgetState extends State<AddClientWidget> {
 
   // Validate the current step and show errors in snackbar if validation fails
   bool _validateCurrentStep(AddClientModel model) {
+    if (model.currentStep == 1) {
+      if (DateTime.parse(model.startDateTextController.text)
+          .isAfter(DateTime.parse(model.endDateTextController.text))) {
+        showErrorDialog(
+            FFLocalizations.of(context).getText('error_start_before_end'),
+            context);
+        return false;
+      }
+    }
+
     // Check for custom validation for level selection on step 3
     if (model.currentStep == 3) {
       if (model.levelValue == null || model.levelValue.isEmpty) {
@@ -392,14 +397,16 @@ class _AddClientWidgetState extends State<AddClientWidget> {
                     context,
                     color: FlutterFlowTheme.of(context).info,
                     fontWeight: FontWeight.bold,
+                    fontSize: ResponsiveUtils.fontSize(context, 14),
                   ),
                 ),
-                const SizedBox(height: 4),
+                SizedBox(height: ResponsiveUtils.height(context, 4)),
                 Text(
                   '• ${FFLocalizations.of(context).getText('error_level_required')}',
                   style: AppStyles.textCairo(
                     context,
                     color: FlutterFlowTheme.of(context).info,
+                    fontSize: ResponsiveUtils.fontSize(context, 12),
                   ),
                 ),
               ],
@@ -431,16 +438,19 @@ class _AddClientWidgetState extends State<AddClientWidget> {
                     context,
                     color: FlutterFlowTheme.of(context).info,
                     fontWeight: FontWeight.bold,
+                    fontSize: ResponsiveUtils.fontSize(context, 14),
                   ),
                 ),
-                const SizedBox(height: 4),
+                SizedBox(height: ResponsiveUtils.height(context, 4)),
                 ...errorMessages.map((error) => Padding(
-                      padding: const EdgeInsets.only(bottom: 2),
+                      padding: EdgeInsets.only(
+                          bottom: ResponsiveUtils.height(context, 2)),
                       child: Text(
                         '• $error',
                         style: AppStyles.textCairo(
                           context,
                           color: FlutterFlowTheme.of(context).info,
+                          fontSize: ResponsiveUtils.fontSize(context, 12),
                         ),
                       ),
                     )),

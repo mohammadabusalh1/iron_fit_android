@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:iron_fit/Ad/AdService.dart';
 import 'package:iron_fit/componants/CheckSubscribe/check_subscribe.dart';
 import 'package:iron_fit/componants/Styles.dart';
+import 'package:iron_fit/utils/responsive_utils.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
@@ -36,10 +37,10 @@ class PlansHeader extends StatelessWidget {
               child: Icon(
                 Icons.arrow_back,
                 color: theme.info,
-                size: 24,
+                size: ResponsiveUtils.iconSize(context, 24),
               ),
             ),
-            const SizedBox(width: 12),
+            SizedBox(width: ResponsiveUtils.width(context, 12)),
             Column(
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -48,7 +49,7 @@ class PlansHeader extends StatelessWidget {
                   localizations.getText('8hnaygrm'),
                   style: AppStyles.textCairo(
                     context,
-                    fontSize: 20,
+                    fontSize: ResponsiveUtils.fontSize(context, 20),
                     color: theme.info,
                     fontWeight: FontWeight.bold,
                   ),
@@ -57,6 +58,7 @@ class PlansHeader extends StatelessWidget {
                   localizations.getText('fglksp95'),
                   style: AppStyles.textCairo(
                     context,
+                    fontSize: ResponsiveUtils.fontSize(context, 14),
                     color: const Color(0xFFE0E0E0),
                   ),
                 ),
@@ -65,13 +67,13 @@ class PlansHeader extends StatelessWidget {
           ],
         ),
         FlutterFlowIconButton(
-          borderRadius: 8.0,
-          buttonSize: 45.0,
+          borderRadius: ResponsiveUtils.width(context, 8.0),
+          buttonSize: ResponsiveUtils.width(context, 45.0),
           fillColor: theme.primary,
           icon: Icon(
             Icons.add,
             color: theme.info,
-            size: 24.0,
+            size: ResponsiveUtils.iconSize(context, 24.0),
           ),
           onPressed: () => _onAddPlanPressed(context),
         ),

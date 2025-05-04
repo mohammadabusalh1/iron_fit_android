@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:iron_fit/componants/Styles.dart';
+import 'package:iron_fit/utils/responsive_utils.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 
 class StepIndicator extends StatefulWidget {
@@ -62,7 +63,7 @@ class _StepIndicatorState extends State<StepIndicator>
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.symmetric(vertical: 16.0),
+      padding: ResponsiveUtils.padding(context, vertical: 16.0),
       child: Column(
         children: [
           AnimatedBuilder(
@@ -75,7 +76,7 @@ class _StepIndicatorState extends State<StepIndicator>
                     child: Align(
                       alignment: Alignment.center,
                       child: Container(
-                        height: 3,
+                        height: ResponsiveUtils.height(context, 3),
                         color: FlutterFlowTheme.of(context).alternate,
                       ),
                     ),
@@ -91,7 +92,7 @@ class _StepIndicatorState extends State<StepIndicator>
                       child: FractionallySizedBox(
                         widthFactor: _progressAnimation.value,
                         child: Container(
-                          height: 3,
+                          height: ResponsiveUtils.height(context, 3),
                           decoration: BoxDecoration(
                             color: FlutterFlowTheme.of(context).primary,
                             borderRadius: BorderRadius.circular(1.5),
@@ -112,7 +113,7 @@ class _StepIndicatorState extends State<StepIndicator>
               );
             },
           ),
-          const SizedBox(height: 12),
+          SizedBox(height: ResponsiveUtils.height(context, 12)),
           AnimatedSwitcher(
             duration: const Duration(milliseconds: 300),
             transitionBuilder: (Widget child, Animation<double> animation) {
@@ -132,7 +133,7 @@ class _StepIndicatorState extends State<StepIndicator>
               key: ValueKey<String>(widget.stepTitles[widget.currentStep]),
               style: AppStyles.textCairo(
                 context,
-                fontSize: 18,
+                fontSize: ResponsiveUtils.fontSize(context, 18),
                 fontWeight: FontWeight.bold,
                 color: FlutterFlowTheme.of(context).primary,
               ),
@@ -148,8 +149,8 @@ class _StepIndicatorState extends State<StepIndicator>
     final isCompleted = index < widget.currentStep;
 
     return Container(
-      width: 32,
-      height: 32,
+      width: ResponsiveUtils.width(context, 32),
+      height: ResponsiveUtils.width(context, 32),
       decoration: BoxDecoration(
         color: isCompleted
             ? FlutterFlowTheme.of(context).primary
@@ -177,14 +178,14 @@ class _StepIndicatorState extends State<StepIndicator>
         child: isCompleted
             ? Icon(
                 Icons.check,
-                size: 16,
+                size: ResponsiveUtils.iconSize(context, 16),
                 color: FlutterFlowTheme.of(context).primaryBackground,
               )
             : Text(
                 '${index + 1}',
                 style: AppStyles.textCairo(
                   context,
-                  fontSize: 14,
+                  fontSize: ResponsiveUtils.fontSize(context, 14),
                   fontWeight: FontWeight.bold,
                   color: isActive
                       ? FlutterFlowTheme.of(context).primary

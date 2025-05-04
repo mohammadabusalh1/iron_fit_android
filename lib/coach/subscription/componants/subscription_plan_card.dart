@@ -6,6 +6,7 @@ import 'package:iron_fit/backend/backend.dart';
 import 'package:iron_fit/coach/subscription/componants/plan_feature_item.dart';
 import 'package:iron_fit/coach/subscription/componants/plan_header_section.dart';
 import 'package:iron_fit/utils/logger.dart';
+import 'package:iron_fit/utils/responsive_utils.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
@@ -53,21 +54,31 @@ class SubscriptionPlanCard extends StatelessWidget {
       color: Colors.transparent,
       elevation: 2,
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(16),
+        borderRadius: BorderRadius.circular(ResponsiveUtils.width(context, 16)),
       ),
       child: Container(
         width: screenWidth,
         decoration: BoxDecoration(
           color: theme.secondaryBackground,
-          borderRadius: BorderRadius.circular(16),
+          borderRadius: BorderRadius.circular(ResponsiveUtils.width(context, 16)),
         ),
         child: Padding(
-          padding: const EdgeInsetsDirectional.fromSTEB(24, 24, 24, 24),
+          padding: EdgeInsetsDirectional.fromSTEB(
+            ResponsiveUtils.width(context, 24),
+            ResponsiveUtils.height(context, 24),
+            ResponsiveUtils.width(context, 24),
+            ResponsiveUtils.height(context, 24),
+          ),
           child: Column(
             mainAxisSize: MainAxisSize.max,
             children: [
               Padding(
-                padding: const EdgeInsetsDirectional.fromSTEB(16, 0, 16, 0),
+                padding: EdgeInsetsDirectional.fromSTEB(
+                  ResponsiveUtils.width(context, 16),
+                  0,
+                  ResponsiveUtils.width(context, 16),
+                  0,
+                ),
                 child: PlanHeaderSection(
                   title: title,
                   price: price,
@@ -78,45 +89,59 @@ class SubscriptionPlanCard extends StatelessWidget {
                 ),
               ),
               Padding(
-                padding: const EdgeInsetsDirectional.fromSTEB(16, 0, 16, 0),
+                padding: EdgeInsetsDirectional.fromSTEB(
+                  ResponsiveUtils.width(context, 16),
+                  0,
+                  ResponsiveUtils.width(context, 16),
+                  0,
+                ),
                 child: Container(
                   width: screenWidth,
-                  height: 1,
+                  height: ResponsiveUtils.height(context, 1),
                   decoration: BoxDecoration(
                     color: theme.alternate,
                   ),
                 ),
               ),
               Padding(
-                padding: const EdgeInsetsDirectional.fromSTEB(16, 0, 16, 0),
+                padding: EdgeInsetsDirectional.fromSTEB(
+                  ResponsiveUtils.width(context, 16),
+                  0,
+                  ResponsiveUtils.width(context, 16),
+                  0,
+                ),
                 child: Column(
                   mainAxisSize: MainAxisSize.max,
-                  children: featureWidgets.divide(const SizedBox(height: 12)),
+                  children: featureWidgets.divide(SizedBox(height: ResponsiveUtils.height(context, 12))),
                 ),
               ),
               Padding(
-                padding: const EdgeInsetsDirectional.fromSTEB(16, 0, 16, 0),
+                padding: EdgeInsetsDirectional.fromSTEB(
+                  ResponsiveUtils.width(context, 16),
+                  0,
+                  ResponsiveUtils.width(context, 16),
+                  0,
+                ),
                 child: FFButtonWidget(
                   onPressed: () => _handleSubscription(context),
                   text: buttonText,
                   options: FFButtonOptions(
                     width: screenWidth,
-                    height: 50,
-                    padding: const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
-                    iconPadding:
-                        const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
+                    height: ResponsiveUtils.height(context, 50),
+                    padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
+                    iconPadding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
                     color: theme.primary,
                     textStyle: AppStyles.textCairo(
                       context,
-                      fontSize: 16,
+                      fontSize: ResponsiveUtils.fontSize(context, 16),
                       fontWeight: FontWeight.bold,
                     ),
                     elevation: 0,
-                    borderRadius: BorderRadius.circular(25),
+                    borderRadius: BorderRadius.circular(ResponsiveUtils.width(context, 25)),
                   ),
                 ),
               ),
-            ].divide(const SizedBox(height: 16)),
+            ].divide(SizedBox(height: ResponsiveUtils.height(context, 16))),
           ),
         ),
       ),

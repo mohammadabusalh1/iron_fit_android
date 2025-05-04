@@ -12,6 +12,7 @@ import 'package:logging/logging.dart';
 import 'create_exercise_plan_model.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'components/components.dart';
+import '/utils/responsive_utils.dart';
 export 'create_exercise_plan_model.dart';
 
 /// Widget that memoizes the header section to prevent rebuilds
@@ -329,8 +330,11 @@ class _CreateExercisePlanWidgetState extends State<CreateExercisePlanWidget> {
             ),
           ),
           child: Padding(
-            padding:
-                const EdgeInsetsDirectional.fromSTEB(24.0, 48.0, 24.0, 0.0),
+            padding: ResponsiveUtils.padding(
+              context,
+              horizontal: 24.0,
+              vertical: 48.0,
+            ),
             child: SingleChildScrollView(
               child: Form(
                 key: _formKey,
@@ -397,8 +401,8 @@ class _CreateExercisePlanWidgetState extends State<CreateExercisePlanWidget> {
                       onSaveAsDraft:
                           !_isEditMode ? () => _saveAsDraft(coachRecord) : null,
                     ),
-                    const SizedBox(height: 0.0),
-                  ].divide(const SizedBox(height: 24.0)),
+                    SizedBox(height: ResponsiveUtils.height(context, 24.0)),
+                  ].divide(SizedBox(height: ResponsiveUtils.height(context, 24.0))),
                 ),
               ),
             ),

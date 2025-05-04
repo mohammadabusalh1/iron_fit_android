@@ -1,4 +1,5 @@
 import 'package:iron_fit/componants/Styles.dart';
+import 'package:iron_fit/utils/responsive_utils.dart';
 
 import '/backend/schema/structs/index.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
@@ -48,15 +49,15 @@ class _CreateMealWidgetState extends State<CreateMealWidget> {
   }
 
   // Static constants for reusable widgets to avoid unnecessary rebuilds
-  static const _sizedBox8 = SizedBox(height: 8);
-  static const _sizedBox20 = SizedBox(height: 20.0);
-  static const _sizedBox4 = SizedBox(height: 4.0);
+  static Widget _sizedBox8(BuildContext context) => SizedBox(height: ResponsiveUtils.height(context, 8));
+  static Widget _sizedBox20(BuildContext context) => SizedBox(height: ResponsiveUtils.height(context, 20));
+  static Widget _sizedBox4(BuildContext context) => SizedBox(height: ResponsiveUtils.height(context, 4));
   static const _divider = Divider(height: 24);
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      constraints: const BoxConstraints(maxWidth: 500),
+      constraints: BoxConstraints(maxWidth: ResponsiveUtils.width(context, 500)),
       child: SingleChildScrollView(
         child: Container(
           width: double.infinity,
@@ -73,18 +74,18 @@ class _CreateMealWidgetState extends State<CreateMealWidget> {
             borderRadius: BorderRadius.circular(16.0),
           ),
           child: Padding(
-            padding: const EdgeInsetsDirectional.all(24),
+            padding: ResponsiveUtils.padding(context, horizontal: 24, vertical: 24),
             child: Form(
               key: _formKey,
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   _buildHeader(context),
-                  _sizedBox20,
+                  _sizedBox20(context),
                   _buildMealNameField(context),
-                  _sizedBox20,
+                  _sizedBox20(context),
                   _buildDescriptionField(context),
-                  _sizedBox8,
+                  _sizedBox8(context),
                   _buildCreateMealButton(context),
                 ],
               ),
@@ -108,7 +109,7 @@ class _CreateMealWidgetState extends State<CreateMealWidget> {
               ),
               style: AppStyles.textCairo(
                 context,
-                fontSize: 18,
+                fontSize: ResponsiveUtils.fontSize(context, 18),
                 fontWeight: FontWeight.w700,
               ),
             ),
@@ -123,7 +124,7 @@ class _CreateMealWidgetState extends State<CreateMealWidget> {
               child: Icon(
                 Icons.close,
                 color: FlutterFlowTheme.of(context).primaryText,
-                size: 24.0,
+                size: ResponsiveUtils.iconSize(context, 24.0),
               ),
             ),
           ],
@@ -139,17 +140,18 @@ class _CreateMealWidgetState extends State<CreateMealWidget> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Padding(
-          padding: const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 4.0),
+          padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, ResponsiveUtils.height(context, 4.0)),
           child: Text(
             FFLocalizations.of(context).getText(
               'gjl6p81h' /* Meal Name */,
             ),
             style: AppStyles.textCairo(
               context,
+              fontSize: ResponsiveUtils.fontSize(context, 14),
             ),
           ),
         ),
-        _sizedBox4,
+        _sizedBox4(context),
         TextFormField(
           onTap: () {
             // Move cursor to end of text
@@ -168,11 +170,14 @@ class _CreateMealWidgetState extends State<CreateMealWidget> {
                 FFLocalizations.of(context).getText('gjl6p81h' /* Meal Name */),
             hintText:
                 FFLocalizations.of(context).getText('sp6604fg' /* Breakfast */),
-            prefixIcon: const Icon(Icons.restaurant_menu),
+            prefixIcon: Icon(
+              Icons.restaurant_menu,
+              size: ResponsiveUtils.iconSize(context, 24),
+            ),
             hintStyle: AppStyles.textCairo(
               context,
               color: FlutterFlowTheme.of(context).secondaryText,
-              fontSize: 14,
+              fontSize: ResponsiveUtils.fontSize(context, 14),
             ),
             enabledBorder: OutlineInputBorder(
               borderSide: BorderSide(
@@ -204,10 +209,11 @@ class _CreateMealWidgetState extends State<CreateMealWidget> {
             ),
             filled: true,
             fillColor: FlutterFlowTheme.of(context).primaryBackground,
+            contentPadding: ResponsiveUtils.padding(context, horizontal: 16, vertical: 16),
           ),
           style: AppStyles.textCairo(
             context,
-            fontSize: 14,
+            fontSize: ResponsiveUtils.fontSize(context, 14),
           ),
           minLines: 1,
           validator: (value) {
@@ -227,17 +233,18 @@ class _CreateMealWidgetState extends State<CreateMealWidget> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Padding(
-          padding: const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 4.0),
+          padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, ResponsiveUtils.height(context, 4.0)),
           child: Text(
             FFLocalizations.of(context).getText(
               'vcre8yrp' /* Description */,
             ),
             style: AppStyles.textCairo(
               context,
+              fontSize: ResponsiveUtils.fontSize(context, 14),
             ),
           ),
         ),
-        _sizedBox4,
+        _sizedBox4(context),
         TextFormField(
           onTap: () {
             // Move cursor to end of text
@@ -256,10 +263,13 @@ class _CreateMealWidgetState extends State<CreateMealWidget> {
                 .getText('vcre8yrp' /* Description */),
             hintText: FFLocalizations.of(context)
                 .getText('ddf60crs' /* One loaf of bread... */),
-            prefixIcon: const Icon(Icons.description),
+            prefixIcon: Icon(
+              Icons.description,
+              size: ResponsiveUtils.iconSize(context, 24),
+            ),
             hintStyle: AppStyles.textCairo(
               context,
-              fontSize: 12,
+              fontSize: ResponsiveUtils.fontSize(context, 12),
               color: FlutterFlowTheme.of(context).secondaryText,
             ),
             enabledBorder: OutlineInputBorder(
@@ -292,10 +302,11 @@ class _CreateMealWidgetState extends State<CreateMealWidget> {
             ),
             filled: true,
             fillColor: FlutterFlowTheme.of(context).primaryBackground,
+            contentPadding: ResponsiveUtils.padding(context, horizontal: 16, vertical: 16),
           ),
           style: AppStyles.textCairo(
             context,
-            fontSize: 14,
+            fontSize: ResponsiveUtils.fontSize(context, 14),
           ),
           maxLines: 5,
           minLines: 3,
@@ -327,13 +338,13 @@ class _CreateMealWidgetState extends State<CreateMealWidget> {
       ),
       options: FFButtonOptions(
         width: double.infinity,
-        height: 56.0,
+        height: ResponsiveUtils.height(context, 56.0),
         padding: const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
         iconPadding: const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
         color: FlutterFlowTheme.of(context).primary,
         textStyle: AppStyles.textCairo(
           context,
-          fontSize: 18,
+          fontSize: ResponsiveUtils.fontSize(context, 18),
           fontWeight: FontWeight.w700,
           color: FlutterFlowTheme.of(context).info,
         ),

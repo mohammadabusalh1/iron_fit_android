@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/backend/backend.dart';
+import '/utils/responsive_utils.dart';
 import 'package:iron_fit/componants/Styles.dart';
 import 'package:iron_fit/utils/logger.dart';
 
@@ -95,7 +96,7 @@ class ExerciseProgressCard extends StatelessWidget {
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
         ),
-        borderRadius: BorderRadius.circular(16.0),
+        borderRadius: BorderRadius.circular(ResponsiveUtils.width(context, 16.0)),
         boxShadow: [
           BoxShadow(
             color: secondaryText.withAlpha(30),
@@ -106,7 +107,7 @@ class ExerciseProgressCard extends StatelessWidget {
         ],
       ),
       child: Padding(
-        padding: const EdgeInsetsDirectional.fromSTEB(20.0, 24.0, 20.0, 24.0),
+        padding: ResponsiveUtils.padding(context, horizontal: 20.0, vertical: 24.0),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
@@ -120,36 +121,36 @@ class ExerciseProgressCard extends StatelessWidget {
                       FFLocalizations.of(context).getText('rconapdq'),
                       style: AppStyles.textCairo(
                         context,
-                        fontSize: 20,
+                        fontSize: ResponsiveUtils.fontSize(context, 20),
                         fontWeight: FontWeight.bold,
                         color: primaryText,
                       ),
                     ),
-                    const SizedBox(height: 4),
+                    SizedBox(height: ResponsiveUtils.height(context, 4)),
                     Text(
                       '${traineeRecord.workoutStreak} ${FFLocalizations.of(context).getText('dayStreak')}',
                       style: AppStyles.textCairo(
                         context,
-                        fontSize: 14,
+                        fontSize: ResponsiveUtils.fontSize(context, 14),
                         color: primary,
                         fontWeight: FontWeight.w600,
                       ),
                     ),
-                    if (totalWorkoutTimeSeconds > 0) const SizedBox(height: 4),
+                    if (totalWorkoutTimeSeconds > 0) SizedBox(height: ResponsiveUtils.height(context, 4)),
                     if (totalWorkoutTimeSeconds > 0)
                       Row(
                         children: [
                           Icon(
                             Icons.access_time,
                             color: primary,
-                            size: 14,
+                            size: ResponsiveUtils.iconSize(context, 14),
                           ),
-                          const SizedBox(width: 4),
+                          SizedBox(width: ResponsiveUtils.width(context, 4)),
                           Text(
                             formattedTime,
                             style: AppStyles.textCairo(
                               context,
-                              fontSize: 14,
+                              fontSize: ResponsiveUtils.fontSize(context, 14),
                               color: primary,
                               fontWeight: FontWeight.w600,
                             ),
@@ -159,8 +160,8 @@ class ExerciseProgressCard extends StatelessWidget {
                   ],
                 ),
                 Container(
-                  width: 60.0,
-                  height: 60.0,
+                  width: ResponsiveUtils.width(context, 60.0),
+                  height: ResponsiveUtils.height(context, 60.0),
                   decoration: BoxDecoration(
                     gradient: LinearGradient(
                       colors: [
@@ -170,7 +171,7 @@ class ExerciseProgressCard extends StatelessWidget {
                       begin: Alignment.topLeft,
                       end: Alignment.bottomRight,
                     ),
-                    borderRadius: BorderRadius.circular(30.0),
+                    borderRadius: BorderRadius.circular(ResponsiveUtils.width(context, 30.0)),
                     boxShadow: [
                       BoxShadow(
                         color: primary.withAlpha(90),
@@ -185,7 +186,7 @@ class ExerciseProgressCard extends StatelessWidget {
                       '$progressPercentage%',
                       style: AppStyles.textCairo(
                         context,
-                        fontSize: 18,
+                        fontSize: ResponsiveUtils.fontSize(context, 18),
                         fontWeight: FontWeight.bold,
                         color: info,
                       ),
@@ -194,18 +195,21 @@ class ExerciseProgressCard extends StatelessWidget {
                 ),
               ],
             ),
-            const SizedBox(height: 20),
+            SizedBox(height: ResponsiveUtils.height(context, 20)),
             Container(
               decoration: BoxDecoration(
                 color: primaryBackground,
-                borderRadius: BorderRadius.circular(10),
+                borderRadius: BorderRadius.circular(ResponsiveUtils.width(context, 10)),
               ),
-              padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 4),
+              padding: EdgeInsets.symmetric(
+                horizontal: ResponsiveUtils.width(context, 4), 
+                vertical: ResponsiveUtils.height(context, 4)
+              ),
               child: SliderTheme(
-                data: const SliderThemeData(
-                  trackHeight: 8,
-                  thumbShape: RoundSliderThumbShape(enabledThumbRadius: 6),
-                  overlayShape: RoundSliderOverlayShape(overlayRadius: 20),
+                data: SliderThemeData(
+                  trackHeight: ResponsiveUtils.height(context, 8),
+                  thumbShape: RoundSliderThumbShape(enabledThumbRadius: ResponsiveUtils.width(context, 6)),
+                  overlayShape: RoundSliderOverlayShape(overlayRadius: ResponsiveUtils.width(context, 20)),
                 ),
                 child: Slider(
                   activeColor: primary,

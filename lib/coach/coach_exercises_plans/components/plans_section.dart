@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:iron_fit/componants/Styles.dart';
+import 'package:iron_fit/utils/responsive_utils.dart';
 import 'package:provider/provider.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
@@ -30,17 +31,21 @@ class PlansSection extends StatelessWidget {
     final model = context.read<CoachExercisesPlansModel>();
 
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 4),
+      padding: ResponsiveUtils.padding(
+        context, 
+        vertical: 12, 
+        horizontal: 4
+      ),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           _buildCounter(context, theme),
-          const SizedBox(height: 12.0),
+          SizedBox(height: ResponsiveUtils.height(context, 12.0)),
           plans.isEmpty
               ? _buildEmptyState(context, theme)
               : _buildPlansList(context, model),
-          const SizedBox(height: 20),
+          SizedBox(height: ResponsiveUtils.height(context, 20)),
         ],
       ),
     ).animate().fade(duration: const Duration(milliseconds: 300));
@@ -50,16 +55,22 @@ class PlansSection extends StatelessWidget {
     return Align(
       alignment: Alignment.centerRight,
       child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
+        padding: ResponsiveUtils.padding(
+          context,
+          horizontal: 12,
+          vertical: 4
+        ),
         decoration: BoxDecoration(
           color: theme.primary.withOpacity(0.1),
-          borderRadius: BorderRadius.circular(12),
+          borderRadius: BorderRadius.circular(
+            ResponsiveUtils.width(context, 12)
+          ),
         ),
         child: Text(
           '${plans.length} $countLabel',
           style: AppStyles.textCairo(
             context,
-            fontSize: 14.0,
+            fontSize: ResponsiveUtils.fontSize(context, 14.0),
             color: theme.primary,
             fontWeight: FontWeight.w600,
           ),
@@ -71,7 +82,7 @@ class PlansSection extends StatelessWidget {
   Widget _buildEmptyState(BuildContext context, FlutterFlowTheme theme) {
     return Center(
       child: Padding(
-        padding: const EdgeInsets.all(20.0),
+        padding: ResponsiveUtils.padding(context, horizontal: 20.0, vertical: 20.0),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
@@ -79,10 +90,10 @@ class PlansSection extends StatelessWidget {
               isDraft
                   ? Icons.edit_note_outlined
                   : Icons.fitness_center_outlined,
-              size: 48,
+              size: ResponsiveUtils.iconSize(context, 48),
               color: theme.secondaryText,
             ),
-            const SizedBox(height: 12),
+            SizedBox(height: ResponsiveUtils.height(context, 12)),
             Text(
               FFLocalizations.of(context).getText(
                 isDraft ? 'no_draft_plans_found' : 'no_active_plans_found',
@@ -90,25 +101,33 @@ class PlansSection extends StatelessWidget {
               textAlign: TextAlign.center,
               style: AppStyles.textCairo(
                 context,
+                fontSize: ResponsiveUtils.fontSize(context, 14),
                 color: theme.secondaryText,
               ),
             ),
-            const SizedBox(height: 16),
+            SizedBox(height: ResponsiveUtils.height(context, 16)),
             if (!isDraft)
               OutlinedButton.icon(
                 onPressed: () => context.pushNamed('createExercisePlan'),
-                icon: Icon(Icons.add, color: theme.primary),
+                icon: Icon(
+                  Icons.add, 
+                  color: theme.primary,
+                  size: ResponsiveUtils.iconSize(context, 20),
+                ),
                 label: Text(
                   FFLocalizations.of(context).getText('create_plan'),
                   style: AppStyles.textCairo(
                     context,
+                    fontSize: ResponsiveUtils.fontSize(context, 14),
                     color: theme.primary,
                   ),
                 ),
                 style: OutlinedButton.styleFrom(
                   side: BorderSide(color: theme.primary),
                   shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(8),
+                    borderRadius: BorderRadius.circular(
+                      ResponsiveUtils.width(context, 8)
+                    ),
                   ),
                 ),
               ),
@@ -127,7 +146,11 @@ class PlansSection extends StatelessWidget {
       itemBuilder: (context, index) {
         final plan = plans[index];
         return Padding(
-          padding: EdgeInsets.only(bottom: index < plans.length - 1 ? 12.0 : 0),
+          padding: EdgeInsets.only(
+            bottom: index < plans.length - 1 
+              ? ResponsiveUtils.height(context, 12.0) 
+              : 0
+          ),
           child: PlanListItem(
             key: ValueKey(plan.reference.id),
             planItem: plan,

@@ -6,6 +6,7 @@ import '/componants/Styles.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/dialogs/edit_user_info_dialog/edit_user_info_dialog_widget.dart';
 import 'theme_cache.dart';
+import '/utils/responsive_utils.dart';
 
 class UserStatsSection extends StatelessWidget {
   final TraineeRecord userProfileTraineeRecord;
@@ -32,17 +33,17 @@ class UserStatsSection extends StatelessWidget {
             Hero(
               tag: 'profileImage',
               child: Container(
-                width: 120,
-                height: 120,
+                width: ResponsiveUtils.width(context, 120),
+                height: ResponsiveUtils.width(context, 120),
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
                   border: Border.all(
                     color: themeCache.primaryColor,
-                    width: 3,
+                    width: ResponsiveUtils.width(context, 3),
                   ),
                 ),
                 child: ClipRRect(
-                  borderRadius: BorderRadius.circular(60),
+                  borderRadius: BorderRadius.circular(ResponsiveUtils.width(context, 60)),
                   child: CachedNetworkImage(
                     imageUrl: currentUserPhoto.isEmpty
                         ? 'https://via.placeholder.com/150'
@@ -54,10 +55,10 @@ class UserStatsSection extends StatelessWidget {
                       color: themeCache.primaryColor.withValues(alpha: 0.1),
                       child: Center(
                         child: SizedBox(
-                          width: 20,
-                          height: 20,
+                          width: ResponsiveUtils.width(context, 20),
+                          height: ResponsiveUtils.width(context, 20),
                           child: CircularProgressIndicator(
-                            strokeWidth: 2,
+                            strokeWidth: ResponsiveUtils.width(context, 2),
                             valueColor: AlwaysStoppedAnimation<Color>(
                               themeCache.primaryColor,
                             ),
@@ -67,7 +68,7 @@ class UserStatsSection extends StatelessWidget {
                     ),
                     errorWidget: (context, url, error) => Icon(
                       Icons.person,
-                      size: 60,
+                      size: ResponsiveUtils.iconSize(context, 60),
                       color: themeCache.primaryColor,
                     ),
                   ),
@@ -81,8 +82,8 @@ class UserStatsSection extends StatelessWidget {
               child: GestureDetector(
                 onTap: () => _openEditProfileDialog(context),
                 child: Container(
-                  width: 36,
-                  height: 36,
+                  width: ResponsiveUtils.width(context, 36),
+                  height: ResponsiveUtils.width(context, 36),
                   decoration: BoxDecoration(
                     color: themeCache.primaryColor,
                     shape: BoxShape.circle,
@@ -98,23 +99,23 @@ class UserStatsSection extends StatelessWidget {
                   child: Icon(
                     Icons.edit,
                     color: themeCache.primaryBackgroundColor,
-                    size: 20,
+                    size: ResponsiveUtils.iconSize(context, 20),
                   ),
                 ),
               ),
             ),
           ],
         ),
-        const SizedBox(height: 16),
+        SizedBox(height: ResponsiveUtils.height(context, 16)),
         Text(
           currentUserDisplayName,
           style: AppStyles.textCairo(
             context,
-            fontSize: 24,
+            fontSize: ResponsiveUtils.fontSize(context, 24),
             fontWeight: FontWeight.bold,
           ),
         ),
-        const SizedBox(height: 24),
+        SizedBox(height: ResponsiveUtils.height(context, 24)),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
@@ -173,14 +174,14 @@ class UserStatsSection extends StatelessWidget {
         Icon(
           icon,
           color: themeCache.primaryColor,
-          size: 24,
+          size: ResponsiveUtils.iconSize(context, 24),
         ),
-        const SizedBox(height: 8),
+        SizedBox(height: ResponsiveUtils.height(context, 8)),
         Text(
           value,
           style: AppStyles.textCairo(
             context,
-            fontSize: 24,
+            fontSize: ResponsiveUtils.fontSize(context, 24),
             fontWeight: FontWeight.bold,
           ),
         ),
@@ -188,7 +189,7 @@ class UserStatsSection extends StatelessWidget {
           label,
           style: AppStyles.textCairo(
             context,
-            fontSize: 14,
+            fontSize: ResponsiveUtils.fontSize(context, 14),
             color: themeCache.secondaryTextColor,
           ),
         ),

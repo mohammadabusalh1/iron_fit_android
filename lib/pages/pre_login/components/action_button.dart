@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:iron_fit/utils/responsive_utils.dart';
 import 'package:lottie/lottie.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 
@@ -42,7 +43,7 @@ class _ActionButtonState extends State<ActionButton>
   Widget build(BuildContext context) {
     // Cache the text style to avoid recreating it on every build
     final textStyle = GoogleFonts.poppins(
-      fontSize: 18,
+      fontSize: ResponsiveUtils.fontSize(context, 18),
       fontWeight: FontWeight.w600,
       color: Colors.white,
     );
@@ -81,9 +82,9 @@ class _ActionButtonState extends State<ActionButton>
             },
             child: Container(
               width: MediaQuery.sizeOf(context).width,
-              padding: const EdgeInsets.symmetric(
-                vertical: 16,
-                horizontal: 32,
+              padding: EdgeInsets.symmetric(
+                vertical: ResponsiveUtils.height(context, 16),
+                horizontal: ResponsiveUtils.width(context, 32),
               ),
               decoration: BoxDecoration(
                 gradient: const LinearGradient(
@@ -113,11 +114,11 @@ class _ActionButtonState extends State<ActionButton>
                     'Get Started',
                     style: textStyle,
                   ),
-                  const SizedBox(width: 16),
+                  SizedBox(width: ResponsiveUtils.width(context, 16)),
                   Lottie.asset(
                     'assets/lottie/arrow_right.json',
-                    width: 16,
-                    height: 16,
+                    width: ResponsiveUtils.width(context, 16),
+                    height: ResponsiveUtils.height(context, 16),
                     fit: BoxFit.cover,
                   ),
                 ],

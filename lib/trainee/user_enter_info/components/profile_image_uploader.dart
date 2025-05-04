@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:iron_fit/flutter_flow/flutter_flow_theme.dart';
 import 'package:iron_fit/componants/Styles.dart';
 import 'package:iron_fit/flutter_flow/flutter_flow_util.dart';
+import 'package:iron_fit/utils/responsive_utils.dart';
 import 'package:lottie/lottie.dart';
 
 class ProfileImageUploader extends StatelessWidget {
@@ -23,16 +24,16 @@ class ProfileImageUploader extends StatelessWidget {
       children: [
         if (isUploading)
           Container(
-            width: 150,
-            height: 150,
+            width: ResponsiveUtils.width(context, 150),
+            height: ResponsiveUtils.width(context, 150),
             decoration: BoxDecoration(
               color: FlutterFlowTheme.of(context).secondaryBackground,
               shape: BoxShape.circle,
             ),
             child: Center(
               child: SizedBox(
-                width: 40,
-                height: 40,
+                width: ResponsiveUtils.width(context, 40),
+                height: ResponsiveUtils.width(context, 40),
                 child: CircularProgressIndicator(
                   color: FlutterFlowTheme.of(context).primary,
                   strokeWidth: 3,
@@ -44,8 +45,8 @@ class ProfileImageUploader extends StatelessWidget {
           GestureDetector(
             onTap: onImageSelected,
             child: Container(
-              width: 150,
-              height: 150,
+              width: ResponsiveUtils.width(context, 150),
+              height: ResponsiveUtils.width(context, 150),
               decoration: BoxDecoration(
                 color: FlutterFlowTheme.of(context).secondaryBackground,
                 shape: BoxShape.circle,
@@ -79,12 +80,12 @@ class ProfileImageUploader extends StatelessWidget {
                   : null,
             ),
           ),
-        const SizedBox(height: 16),
+        SizedBox(height: ResponsiveUtils.height(context, 16)),
         ElevatedButton.icon(
           onPressed: isUploading ? null : onImageSelected,
           icon: Icon(
             uploadedFileUrl.isEmpty ? Icons.add_photo_alternate : Icons.edit,
-            size: 20,
+            size: ResponsiveUtils.iconSize(context, 20),
           ),
           label: Text(
             uploadedFileUrl.isEmpty
@@ -92,7 +93,7 @@ class ProfileImageUploader extends StatelessWidget {
                 : FFLocalizations.of(context).getText('change_photo'),
             style: AppStyles.textCairo(
               context,
-              fontSize: 14,
+              fontSize: ResponsiveUtils.fontSize(context, 14),
               fontWeight: FontWeight.w700,
               color: FlutterFlowTheme.of(context).black.withOpacity(0.8),
             ),
@@ -100,7 +101,7 @@ class ProfileImageUploader extends StatelessWidget {
           style: ElevatedButton.styleFrom(
             foregroundColor: FlutterFlowTheme.of(context).primaryBackground,
             backgroundColor: FlutterFlowTheme.of(context).primary,
-            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+            padding: ResponsiveUtils.padding(context, horizontal: 16, vertical: 12),
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(12),
             ),
@@ -115,9 +116,15 @@ class ProfileImageUploader extends StatelessWidget {
         //       duration: const Duration(milliseconds: 400),
         //       curve: Curves.easeOutCubic,
         //       child: Container(
-        //         margin: const EdgeInsets.only(top: 16, bottom: 8),
-        //         padding:
-        //             const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+        //         margin: EdgeInsets.only(
+        //           top: ResponsiveUtils.height(context, 16),
+        //           bottom: ResponsiveUtils.height(context, 8)
+        //         ),
+        //         padding: ResponsiveUtils.padding(
+        //           context,
+        //           horizontal: 16,
+        //           vertical: 12
+        //         ),
         //         decoration: BoxDecoration(
         //           color: FlutterFlowTheme.of(context).primaryBackground,
         //           borderRadius: BorderRadius.circular(12),
@@ -136,12 +143,12 @@ class ProfileImageUploader extends StatelessWidget {
         //         child: Row(
         //           mainAxisSize: MainAxisSize.min,
         //           children: [
-        //             const Icon(
+        //             Icon(
         //               Icons.check_circle,
         //               color: Colors.green,
-        //               size: 20,
+        //               size: ResponsiveUtils.iconSize(context, 20),
         //             ),
-        //             const SizedBox(width: 10),
+        //             SizedBox(width: ResponsiveUtils.width(context, 10)),
         //             Flexible(
         //               child: Text(
         //                 FFLocalizations.of(context)
@@ -149,12 +156,12 @@ class ProfileImageUploader extends StatelessWidget {
         //                 style: AppStyles.textCairo(
         //                   context,
         //                   color: FlutterFlowTheme.of(context).primaryText,
-        //                   fontSize: 14,
+        //                   fontSize: ResponsiveUtils.fontSize(context, 14),
         //                   fontWeight: FontWeight.w500,
         //                 ),
         //               ),
         //             ),
-        //             const SizedBox(width: 10),
+        //             SizedBox(width: ResponsiveUtils.width(context, 10)),
         //             InkWell(
         //               onTap: () {
         //                 // This would typically dismiss the notification
@@ -163,7 +170,7 @@ class ProfileImageUploader extends StatelessWidget {
         //               child: Icon(
         //                 Icons.close,
         //                 color: FlutterFlowTheme.of(context).secondaryText,
-        //                 size: 16,
+        //                 size: ResponsiveUtils.iconSize(context, 16),
         //               ),
         //             ),
         //           ],

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:iron_fit/componants/Styles.dart';
 import 'package:iron_fit/flutter_flow/flutter_flow_theme.dart';
+import 'package:iron_fit/utils/responsive_utils.dart';
 
 Widget buildTextField(
     {required TextEditingController controller,
@@ -15,7 +16,12 @@ Widget buildTextField(
     int? maxLines,
     void Function(String)? onFieldSubmitted,
     TextInputAction? textInputAction,
+    double? fontSize,
+    double? iconSize,
     required BuildContext context}) {
+  final defaultFontSize = 16.0;
+  final defaultIconSize = 24.0;
+  
   return TextFormField(
     keyboardType: keyboardType,
     maxLines: maxLines,
@@ -31,7 +37,7 @@ Widget buildTextField(
       labelText: labelText,
       labelStyle: AppStyles.textCairo(
         context,
-        fontSize: 16,
+        fontSize: fontSize ?? ResponsiveUtils.fontSize(context, defaultFontSize),
         color: focusNode.hasFocus
             ? FlutterFlowTheme.of(context).primary
             : FlutterFlowTheme.of(context).secondaryText,
@@ -39,6 +45,7 @@ Widget buildTextField(
       hintText: hintText,
       hintStyle: AppStyles.textCairo(
         context,
+        fontSize: fontSize ?? ResponsiveUtils.fontSize(context, defaultFontSize),
         color:
             FlutterFlowTheme.of(context).secondaryText.withValues(alpha: 0.7),
       ),
@@ -50,6 +57,7 @@ Widget buildTextField(
                 color: focusNode.hasFocus
                     ? FlutterFlowTheme.of(context).primary
                     : FlutterFlowTheme.of(context).secondaryText,
+                size: iconSize ?? ResponsiveUtils.iconSize(context, defaultIconSize),
               ),
             )
           : null,
@@ -83,9 +91,15 @@ Widget buildTextField(
       ),
       filled: true,
       fillColor: FlutterFlowTheme.of(context).secondaryBackground,
-      contentPadding: const EdgeInsetsDirectional.fromSTEB(20, 24, 20, 24),
+      contentPadding: ResponsiveUtils.padding(context, 
+        horizontal: 20, 
+        vertical: 24,
+      ),
     ),
-    style: AppStyles.textCairo(context, fontSize: 16),
+    style: AppStyles.textCairo(
+      context, 
+      fontSize: fontSize ?? ResponsiveUtils.fontSize(context, defaultFontSize)
+    ),
     cursorColor: FlutterFlowTheme.of(context).primary,
   );
 }

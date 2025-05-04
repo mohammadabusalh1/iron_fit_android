@@ -3,6 +3,7 @@ import 'package:iron_fit/componants/loading_indicator/loadingIndicator.dart';
 import 'package:iron_fit/flutter_flow/custom_functions.dart';
 import 'package:iron_fit/navigation/page_wrapper.dart';
 import 'package:iron_fit/utils/logger.dart';
+import 'package:iron_fit/utils/responsive_utils.dart';
 
 import '/auth/firebase_auth/auth_util.dart';
 import '/backend/backend.dart';
@@ -144,7 +145,7 @@ class _MessagesWidgetState extends State<MessagesWidget> {
               icon: Icon(
                 Icons.help_outline,
                 color: FlutterFlowTheme.of(context).primaryText,
-                size: 24,
+                size: ResponsiveUtils.iconSize(context, 24),
               ),
               onPressed: () {
                 context.pushNamed('Contact');
@@ -163,7 +164,8 @@ class _MessagesWidgetState extends State<MessagesWidget> {
                 ],
               ),
             ),
-            padding: const EdgeInsetsDirectional.symmetric(
+            padding: ResponsiveUtils.padding(
+              context,
               horizontal: 20,
               vertical: 24,
             ),
@@ -175,9 +177,9 @@ class _MessagesWidgetState extends State<MessagesWidget> {
                   children: [
                     BroadcastMessageSection(
                         coachRecord: coachRecord, onMessageSent: getMessages),
-                    const SizedBox(height: 32.0),
+                    SizedBox(height: ResponsiveUtils.height(context, 32.0)),
                     RecentMessagesSection(messages: listViewAlertRecordList),
-                    const SizedBox(height: 24.0),
+                    SizedBox(height: ResponsiveUtils.height(context, 24.0)),
                   ],
                 ),
               ),

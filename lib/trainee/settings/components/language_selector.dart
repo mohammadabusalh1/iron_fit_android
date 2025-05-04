@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:iron_fit/utils/responsive_utils.dart';
 import '/componants/Styles.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
@@ -60,7 +61,7 @@ class _LanguageSelectorState extends State<LanguageSelector>
       curve: Curves.easeInOut,
       decoration: BoxDecoration(
         color: FlutterFlowTheme.of(context).secondaryBackground,
-        borderRadius: BorderRadius.circular(16),
+        borderRadius: BorderRadius.circular(ResponsiveUtils.width(context, 16)),
         boxShadow: [
           BoxShadow(
             color: Colors.purple.withOpacity(0.08),
@@ -76,25 +77,25 @@ class _LanguageSelectorState extends State<LanguageSelector>
             color: Colors.transparent,
             child: InkWell(
               onTap: _toggleExpanded,
-              borderRadius: BorderRadius.circular(16),
+              borderRadius: BorderRadius.circular(ResponsiveUtils.width(context, 16)),
               child: Padding(
-                padding: const EdgeInsets.all(16),
+                padding: ResponsiveUtils.padding(context, horizontal: 16, vertical: 16),
                 child: Row(
                   children: [
                     Container(
-                      width: 48,
-                      height: 48,
+                      width: ResponsiveUtils.width(context, 48),
+                      height: ResponsiveUtils.height(context, 48),
                       decoration: BoxDecoration(
                         color: Colors.purple.withOpacity(0.12),
-                        borderRadius: BorderRadius.circular(14),
+                        borderRadius: BorderRadius.circular(ResponsiveUtils.width(context, 14)),
                       ),
-                      child: const Icon(
+                      child: Icon(
                         Icons.language,
                         color: Colors.purple,
-                        size: 22,
+                        size: ResponsiveUtils.iconSize(context, 22),
                       ),
                     ),
-                    const SizedBox(width: 16),
+                    SizedBox(width: ResponsiveUtils.width(context, 16)),
                     Expanded(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -103,16 +104,16 @@ class _LanguageSelectorState extends State<LanguageSelector>
                             FFLocalizations.of(context).getText('language'),
                             style: AppStyles.textCairo(
                               context,
-                              fontSize: 16,
+                              fontSize: ResponsiveUtils.fontSize(context, 16),
                               fontWeight: FontWeight.w600,
                             ),
                           ),
-                          const SizedBox(height: 4),
+                          SizedBox(height: ResponsiveUtils.height(context, 4)),
                           Text(
                             languageName,
                             style: AppStyles.textCairo(
                               context,
-                              fontSize: 13,
+                              fontSize: ResponsiveUtils.fontSize(context, 13),
                               color: FlutterFlowTheme.of(context).secondaryText,
                             ),
                           ),
@@ -129,7 +130,7 @@ class _LanguageSelectorState extends State<LanguageSelector>
                             color: FlutterFlowTheme.of(context)
                                 .secondaryText
                                 .withOpacity(0.7),
-                            size: 22,
+                            size: ResponsiveUtils.iconSize(context, 22),
                           ),
                         );
                       },
@@ -143,16 +144,16 @@ class _LanguageSelectorState extends State<LanguageSelector>
           // Language options
           AnimatedContainer(
             duration: const Duration(milliseconds: 300),
-            height: _isExpanded ? 100 : 0,
+            height: _isExpanded ? ResponsiveUtils.height(context, 100) : 0,
             curve: Curves.easeInOut,
             clipBehavior: Clip.antiAlias,
             decoration: BoxDecoration(
               color: FlutterFlowTheme.of(context)
                   .primaryBackground
                   .withOpacity(0.5),
-              borderRadius: const BorderRadius.only(
-                bottomLeft: Radius.circular(16),
-                bottomRight: Radius.circular(16),
+              borderRadius: BorderRadius.only(
+                bottomLeft: Radius.circular(ResponsiveUtils.width(context, 16)),
+                bottomRight: Radius.circular(ResponsiveUtils.width(context, 16)),
               ),
             ),
             child: SingleChildScrollView(
@@ -165,7 +166,7 @@ class _LanguageSelectorState extends State<LanguageSelector>
                     'en',
                     currentLanguage == 'en',
                   ),
-                  const Divider(height: 1, thickness: 0.5),
+                  Divider(height: 1, thickness: 0.5),
                   _buildLanguageOption(
                     context,
                     'العربية',
@@ -195,16 +196,16 @@ class _LanguageSelectorState extends State<LanguageSelector>
           _toggleExpanded();
         },
         child: Container(
-          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+          padding: ResponsiveUtils.padding(context, horizontal: 16, vertical: 12),
           child: Row(
             children: [
-              const SizedBox(width: 4),
+              SizedBox(width: ResponsiveUtils.width(context, 4)),
               Expanded(
                 child: Text(
                   name,
                   style: AppStyles.textCairo(
                     context,
-                    fontSize: 14,
+                    fontSize: ResponsiveUtils.fontSize(context, 14),
                     fontWeight:
                         isSelected ? FontWeight.w600 : FontWeight.normal,
                     color: isSelected
@@ -215,15 +216,15 @@ class _LanguageSelectorState extends State<LanguageSelector>
               ),
               if (isSelected)
                 Container(
-                  padding: const EdgeInsets.all(2),
+                  padding: ResponsiveUtils.padding(context, horizontal: 2, vertical: 2),
                   decoration: const BoxDecoration(
                     color: Colors.purple,
                     shape: BoxShape.circle,
                   ),
-                  child: const Icon(
+                  child: Icon(
                     Icons.check,
                     color: Colors.white,
-                    size: 14,
+                    size: ResponsiveUtils.iconSize(context, 14),
                   ),
                 ),
             ],

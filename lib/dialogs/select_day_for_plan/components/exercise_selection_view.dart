@@ -7,6 +7,7 @@ import 'package:iron_fit/flutter_flow/flutter_flow_theme.dart';
 import 'package:iron_fit/flutter_flow/flutter_flow_util.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:iron_fit/dialogs/select_sets/select_sets_widget.dart';
+import 'package:iron_fit/utils/responsive_utils.dart';
 
 class ExerciseSelectionView extends StatefulWidget {
   final List<ExerciseStruct> selectedExercises;
@@ -72,12 +73,12 @@ class _ExerciseSelectionViewState extends State<ExerciseSelectionView> {
           title: InkWell(
             onTap: () => _buildShowBottomSheet(),
             child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 12.0),
+              padding: ResponsiveUtils.padding(context, horizontal: 12.0),
               child: Text(
                 FFLocalizations.of(context).getText('filter'),
                 style: AppStyles.textCairo(
                   context,
-                  fontSize: 16,
+                  fontSize: ResponsiveUtils.fontSize(context, 16),
                   fontWeight: FontWeight.w600,
                 ),
               ),
@@ -88,13 +89,16 @@ class _ExerciseSelectionViewState extends State<ExerciseSelectionView> {
               onPressed: () {
                 _buildShowBottomSheet();
               },
-              icon: const Icon(Icons.filter_list_rounded),
+              icon: Icon(
+                Icons.filter_list_rounded,
+                size: ResponsiveUtils.iconSize(context, 24),
+              ),
             ),
           ],
         ),
         // Exercise list
         SliverPadding(
-          padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 8.0),
+          padding: ResponsiveUtils.padding(context, horizontal: 24.0, vertical: 8.0),
           sliver: SliverToBoxAdapter(
             child: StreamBuilder<List<ExercisesRecord>>(
               stream: widget.exercisesStream,
@@ -105,8 +109,8 @@ class _ExerciseSelectionViewState extends State<ExerciseSelectionView> {
                       mainAxisSize: MainAxisSize.min,
                       children: [
                         SizedBox(
-                          width: 40,
-                          height: 40,
+                          width: ResponsiveUtils.width(context, 40),
+                          height: ResponsiveUtils.height(context, 40),
                           child: CircularProgressIndicator(
                             strokeWidth: 3,
                             valueColor: AlwaysStoppedAnimation<Color>(
@@ -114,12 +118,12 @@ class _ExerciseSelectionViewState extends State<ExerciseSelectionView> {
                             ),
                           ),
                         ),
-                        const SizedBox(height: 16),
+                        SizedBox(height: ResponsiveUtils.height(context, 16)),
                         Text(
                           FFLocalizations.of(context).getText('loading'),
                           style: AppStyles.textCairo(
                             context,
-                            fontSize: 16,
+                            fontSize: ResponsiveUtils.fontSize(context, 16),
                             color: FlutterFlowTheme.of(context).secondaryText,
                           ),
                         ),
@@ -139,18 +143,18 @@ class _ExerciseSelectionViewState extends State<ExerciseSelectionView> {
                         children: [
                           Icon(
                             Icons.fitness_center_rounded,
-                            size: 64,
+                            size: ResponsiveUtils.iconSize(context, 64),
                             color: FlutterFlowTheme.of(context)
                                 .secondaryText
                                 .withValues(alpha: 0.5),
                           ),
-                          const SizedBox(height: 16),
+                          SizedBox(height: ResponsiveUtils.height(context, 16)),
                           Text(
                             FFLocalizations.of(context)
                                 .getText('no_exercises_found'),
                             style: AppStyles.textCairo(
                               context,
-                              fontSize: 16,
+                              fontSize: ResponsiveUtils.fontSize(context, 16),
                               color: FlutterFlowTheme.of(context).secondaryText,
                             ),
                           ),
@@ -172,11 +176,11 @@ class _ExerciseSelectionViewState extends State<ExerciseSelectionView> {
                     // Add loading indicator at the bottom for infinite scrolling
                     if (widget.isLoadingMore)
                       Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 16.0),
+                        padding: ResponsiveUtils.padding(context, vertical: 16.0),
                         child: Center(
                           child: SizedBox(
-                            width: 24,
-                            height: 24,
+                            width: ResponsiveUtils.width(context, 24),
+                            height: ResponsiveUtils.height(context, 24),
                             child: CircularProgressIndicator(
                               strokeWidth: 2,
                               valueColor: AlwaysStoppedAnimation<Color>(
@@ -222,10 +226,13 @@ class _ExerciseSelectionViewState extends State<ExerciseSelectionView> {
             children: [
               // Drag indicator
               Padding(
-                padding: const EdgeInsets.only(top: 12, bottom: 8),
+                padding: EdgeInsets.only(
+                  top: ResponsiveUtils.height(context, 12), 
+                  bottom: ResponsiveUtils.height(context, 8)
+                ),
                 child: Container(
-                  width: 40,
-                  height: 4,
+                  width: ResponsiveUtils.width(context, 40),
+                  height: ResponsiveUtils.height(context, 4),
                   decoration: BoxDecoration(
                     color:
                         FlutterFlowTheme.of(context).alternate.withOpacity(0.4),
@@ -237,7 +244,7 @@ class _ExerciseSelectionViewState extends State<ExerciseSelectionView> {
               // Header
               Padding(
                 padding:
-                    const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
+                    ResponsiveUtils.padding(context, horizontal: 24, vertical: 16),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -246,16 +253,15 @@ class _ExerciseSelectionViewState extends State<ExerciseSelectionView> {
                         Icon(
                           Icons.filter_list_rounded,
                           color: FlutterFlowTheme.of(context).black,
-                          size: 24,
+                          size: ResponsiveUtils.iconSize(context, 24),
                         ),
-                        const SizedBox(width: 8),
+                        SizedBox(width: ResponsiveUtils.width(context, 12)),
                         Text(
-                          FFLocalizations.of(context).getText('filter'),
+                          FFLocalizations.of(context).getText('filter_exercises'),
                           style: AppStyles.textCairo(
                             context,
-                            fontSize: 20,
-                            fontWeight: FontWeight.w700,
-                            color: FlutterFlowTheme.of(context).black,
+                            fontSize: ResponsiveUtils.fontSize(context, 18),
+                            fontWeight: FontWeight.bold,
                           ),
                         ),
                       ],
@@ -263,9 +269,9 @@ class _ExerciseSelectionViewState extends State<ExerciseSelectionView> {
                     IconButton(
                       onPressed: () => Navigator.pop(context),
                       icon: Icon(
-                        Icons.close_rounded,
+                        Icons.close,
                         color: FlutterFlowTheme.of(context).black,
-                        size: 24,
+                        size: ResponsiveUtils.iconSize(context, 24),
                       ),
                     ),
                   ],

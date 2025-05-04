@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:iron_fit/componants/Styles.dart';
 import 'package:iron_fit/flutter_flow/flutter_flow_theme.dart';
 import 'package:iron_fit/flutter_flow/flutter_flow_util.dart';
+import 'package:iron_fit/utils/responsive_utils.dart';
 
 class TrainingTimeStep extends StatefulWidget {
   const TrainingTimeStep({
@@ -30,7 +31,7 @@ class _TrainingTimeStepState extends State<TrainingTimeStep> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 20),
+      padding: ResponsiveUtils.padding(context, horizontal: 10, vertical: 20),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -38,18 +39,21 @@ class _TrainingTimeStepState extends State<TrainingTimeStep> {
             _localizations.getText('training_time_title'),
             style: AppStyles.textCairo(
               context,
-              fontSize: 24,
+              fontSize: ResponsiveUtils.fontSize(context, 24),
               fontWeight: FontWeight.bold,
             ),
           ),
-          const SizedBox(height: 8),
+          SizedBox(height: ResponsiveUtils.height(context, 8)),
           Text(
             _localizations.getText('training_time_subtitle'),
-            style: AppStyles.textCairo(context),
+            style: AppStyles.textCairo(
+              context, 
+              fontSize: ResponsiveUtils.fontSize(context, 14),
+            ),
           ),
-          const SizedBox(height: 24),
+          SizedBox(height: ResponsiveUtils.height(context, 24)),
           _buildTimeSelector(),
-          const SizedBox(height: 16),
+          SizedBox(height: ResponsiveUtils.height(context, 16)),
           if (_selectedTime != null) _buildSelectedTimeCard(),
         ],
       ),
@@ -75,11 +79,11 @@ class _TrainingTimeStepState extends State<TrainingTimeStep> {
           borderRadius: BorderRadius.circular(16),
           onTap: _showTimePicker,
           child: Padding(
-            padding: const EdgeInsets.all(20),
+            padding: ResponsiveUtils.padding(context, horizontal: 20, vertical: 20),
             child: Row(
               children: [
                 Container(
-                  padding: const EdgeInsets.all(12),
+                  padding: ResponsiveUtils.padding(context, horizontal: 12, vertical: 12),
                   decoration: BoxDecoration(
                     color:
                         FlutterFlowTheme.of(context).primary.withOpacity(0.1),
@@ -88,10 +92,10 @@ class _TrainingTimeStepState extends State<TrainingTimeStep> {
                   child: Icon(
                     Icons.access_time_rounded,
                     color: FlutterFlowTheme.of(context).primary,
-                    size: 28,
+                    size: ResponsiveUtils.iconSize(context, 28),
                   ),
                 ),
-                const SizedBox(width: 16),
+                SizedBox(width: ResponsiveUtils.width(context, 16)),
                 Expanded(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -100,7 +104,7 @@ class _TrainingTimeStepState extends State<TrainingTimeStep> {
                         _localizations.getText('select_training_time'),
                         style: AppStyles.textCairo(
                           context,
-                          fontSize: 16,
+                          fontSize: ResponsiveUtils.fontSize(context, 16),
                           fontWeight: FontWeight.w600,
                         ),
                       ),
@@ -111,7 +115,7 @@ class _TrainingTimeStepState extends State<TrainingTimeStep> {
                         style: AppStyles.textCairo(
                           context,
                           color: FlutterFlowTheme.of(context).secondaryText,
-                          fontSize: 14,
+                          fontSize: ResponsiveUtils.fontSize(context, 14),
                         ),
                       ),
                     ],
@@ -120,7 +124,7 @@ class _TrainingTimeStepState extends State<TrainingTimeStep> {
                 Icon(
                   Icons.arrow_forward_ios_rounded,
                   color: FlutterFlowTheme.of(context).secondaryText,
-                  size: 18,
+                  size: ResponsiveUtils.iconSize(context, 18),
                 ),
               ],
             ),
@@ -133,8 +137,8 @@ class _TrainingTimeStepState extends State<TrainingTimeStep> {
   Widget _buildSelectedTimeCard() {
     return Container(
       width: double.infinity,
-      margin: const EdgeInsets.only(top: 10),
-      padding: const EdgeInsets.all(20),
+      margin: EdgeInsets.only(top: ResponsiveUtils.height(context, 10)),
+      padding: ResponsiveUtils.padding(context, horizontal: 20, vertical: 20),
       decoration: BoxDecoration(
         color: FlutterFlowTheme.of(context).primary.withOpacity(0.1),
         borderRadius: BorderRadius.circular(16),
@@ -146,16 +150,16 @@ class _TrainingTimeStepState extends State<TrainingTimeStep> {
             _localizations.getText('selected_time'),
             style: AppStyles.textCairo(
               context,
-              fontSize: 14,
+              fontSize: ResponsiveUtils.fontSize(context, 14),
               color: FlutterFlowTheme.of(context).secondaryText,
             ),
           ),
-          const SizedBox(height: 8),
+          SizedBox(height: ResponsiveUtils.height(context, 8)),
           Text(
             _formatTime(_selectedTime!),
             style: AppStyles.textCairo(
               context,
-              fontSize: 28,
+              fontSize: ResponsiveUtils.fontSize(context, 28),
               fontWeight: FontWeight.bold,
               color: FlutterFlowTheme.of(context).primary,
             ),

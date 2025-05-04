@@ -4,6 +4,7 @@ import 'package:iron_fit/navigation/page_wrapper.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/componants/Styles.dart';
+import '/utils/responsive_utils.dart';
 
 class FeaturesPage extends StatefulWidget {
   const FeaturesPage({
@@ -36,7 +37,7 @@ class _FeaturesPageState extends State<FeaturesPage>
   @override
   Widget build(BuildContext context) {
     final mediaQuery = MediaQuery.of(context);
-    final padding = mediaQuery.size.width * 0.05;
+    final padding = ResponsiveUtils.width(context, 18.0);
 
     return Scaffold(
       backgroundColor: FlutterFlowTheme.of(context).info.withOpacity(0.2),
@@ -73,18 +74,26 @@ class _FeaturesPageState extends State<FeaturesPage>
                 : width < 900
                     ? 3
                     : 4;
-            final childAspectRatio = width < 600 ? 0.9 : 1.1;
+            final childAspectRatio = ResponsiveUtils.isPhone(context) 
+                ? 0.9 
+                : ResponsiveUtils.isTablet(context) 
+                    ? 1.1 
+                    : 1.2;
 
             return Padding(
-              padding:
-                  EdgeInsets.fromLTRB(padding, padding * 2, padding, padding),
+              padding: EdgeInsets.fromLTRB(
+                padding, 
+                ResponsiveUtils.height(context, 24), 
+                padding, 
+                padding
+              ),
               child: GridView.builder(
                 physics: const BouncingScrollPhysics(),
                 gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: crossAxisCount,
                   childAspectRatio: childAspectRatio,
-                  crossAxisSpacing: padding,
-                  mainAxisSpacing: padding,
+                  crossAxisSpacing: ResponsiveUtils.width(context, 16),
+                  mainAxisSpacing: ResponsiveUtils.height(context, 16),
                 ),
                 itemCount: 4,
                 itemBuilder: (context, index) {
@@ -182,9 +191,8 @@ class _FeaturesPageState extends State<FeaturesPage>
     required Color color,
     required VoidCallback onTap,
   }) {
-    final mediaQuery = MediaQuery.of(context);
-    final isTablet = mediaQuery.size.width >= 600;
-    final iconSize = isTablet ? 44.0 : 38.0;
+    final baseIconSize = 38.0;
+    final iconSize = ResponsiveUtils.iconSize(context, baseIconSize);
 
     return Hero(
       tag: title,
@@ -205,23 +213,21 @@ class _FeaturesPageState extends State<FeaturesPage>
                   color: color,
                   size: iconSize,
                 ),
-                SizedBox(height: isTablet ? 16 : 14),
+                SizedBox(height: ResponsiveUtils.height(context, 14)),
                 Padding(
-                  padding: EdgeInsets.symmetric(horizontal: isTablet ? 16 : 12),
+                  padding: ResponsiveUtils.padding(
+                    context, 
+                    horizontal: 12, 
+                    vertical: 0
+                  ),
                   child: Text(
                     title,
                     textAlign: TextAlign.center,
-                    style: (isTablet
-                        ? AppStyles.textCairo(
-                            context,
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold,
-                          )
-                        : AppStyles.textCairo(
-                            context,
-                            fontSize: 14,
-                            fontWeight: FontWeight.bold,
-                          )),
+                    style: AppStyles.textCairo(
+                      context,
+                      fontSize: ResponsiveUtils.fontSize(context, 14),
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                 ),
               ],

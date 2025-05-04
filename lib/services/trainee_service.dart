@@ -308,10 +308,28 @@ class TraineeService {
     String newEmail,
   ) async {
     try {
-      await subscriptionRef.update({'email': newEmail});
-      if (context.mounted) {
-        showSuccessDialog(
-            FFLocalizations.of(context).getText('emailUpdated'), context);
+      // check if there is trainee with this email
+      final trainee = await UserRecord.collection
+          .where('email', isEqualTo: newEmail)
+          .where('role', isEqualTo: 'trainee')
+          .get();
+
+      if (trainee.docs.isNotEmpty) {
+        await subscriptionRef.update({
+          'email': newEmail,
+          'isAnonymous': false,
+          'trainee': trainee.docs.first.reference
+        });
+        if (context.mounted) {
+          showSuccessDialog(
+              FFLocalizations.of(context).getText('emailUpdated'), context);
+        }
+      } else {
+        await subscriptionRef.update({'email': newEmail});
+        if (context.mounted) {
+          showSuccessDialog(
+              FFLocalizations.of(context).getText('emailUpdated'), context);
+        }
       }
     } catch (e) {
       debugPrint('Error updating trainee email: $e');

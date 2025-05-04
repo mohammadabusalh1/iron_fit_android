@@ -4,6 +4,7 @@ import '/componants/Styles.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import 'theme_cache.dart';
 import 'empty_state.dart';
+import '/utils/responsive_utils.dart';
 
 class AchievementsTab extends StatelessWidget {
   final TraineeRecord traineeRecord;
@@ -33,7 +34,7 @@ class AchievementsTab extends StatelessWidget {
     }
 
     return Padding(
-      padding: const EdgeInsets.all(20.0),
+      padding: ResponsiveUtils.padding(context, horizontal: 20, vertical: 20),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -44,7 +45,7 @@ class AchievementsTab extends StatelessWidget {
                 FFLocalizations.of(context).getText('achievements'),
                 style: AppStyles.textCairo(
                   context,
-                  fontSize: 20,
+                  fontSize: ResponsiveUtils.fontSize(context, 20),
                   fontWeight: FontWeight.bold,
                 ),
               ),
@@ -52,7 +53,7 @@ class AchievementsTab extends StatelessWidget {
                   context, totalAchievements.toString(), Icons.star_rounded),
             ],
           ),
-          const SizedBox(height: 16),
+          SizedBox(height: ResponsiveUtils.height(context, 16)),
           _buildAchievementsGrid(context, achievements),
         ],
       ),
@@ -64,10 +65,10 @@ class AchievementsTab extends StatelessWidget {
     return GridView.builder(
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),
-      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 2,
-        crossAxisSpacing: 16,
-        mainAxisSpacing: 16,
+        crossAxisSpacing: ResponsiveUtils.width(context, 16),
+        mainAxisSpacing: ResponsiveUtils.height(context, 16),
         childAspectRatio: 1.2,
       ),
       itemCount: achievements.length,
@@ -90,7 +91,7 @@ class AchievementsTab extends StatelessWidget {
     return Container(
       decoration: BoxDecoration(
         color: themeCache.secondaryBackgroundColor,
-        borderRadius: BorderRadius.circular(16),
+        borderRadius: BorderRadius.circular(ResponsiveUtils.width(context, 16)),
         boxShadow: const [
           BoxShadow(
             color: Color(0x0A000000),
@@ -105,18 +106,18 @@ class AchievementsTab extends StatelessWidget {
           onTap: () {
             // Show achievement details
           },
-          borderRadius: BorderRadius.circular(16),
+          borderRadius: BorderRadius.circular(ResponsiveUtils.width(context, 16)),
           child: Padding(
-            padding: const EdgeInsets.all(16),
+            padding: ResponsiveUtils.padding(context, horizontal: 16, vertical: 16),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Icon(
                   iconData,
-                  size: 32,
+                  size: ResponsiveUtils.iconSize(context, 32),
                   color: themeCache.primaryColor,
                 ),
-                const SizedBox(height: 12),
+                SizedBox(height: ResponsiveUtils.height(context, 12)),
                 Text(
                   title,
                   textAlign: TextAlign.center,
@@ -124,7 +125,7 @@ class AchievementsTab extends StatelessWidget {
                   overflow: TextOverflow.ellipsis,
                   style: AppStyles.textCairo(
                     context,
-                    fontSize: 14,
+                    fontSize: ResponsiveUtils.fontSize(context, 14),
                     fontWeight: FontWeight.w600,
                   ),
                 ),
@@ -138,25 +139,25 @@ class AchievementsTab extends StatelessWidget {
 
   Widget _buildCountBadge(BuildContext context, String count, IconData icon) {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+      padding: ResponsiveUtils.padding(context, horizontal: 12, vertical: 6),
       decoration: BoxDecoration(
         color: themeCache.primaryColor.withValues(alpha: 0.1),
-        borderRadius: BorderRadius.circular(20),
+        borderRadius: BorderRadius.circular(ResponsiveUtils.width(context, 20)),
       ),
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
           Icon(
             icon,
-            size: 16,
+            size: ResponsiveUtils.iconSize(context, 16),
             color: themeCache.primaryColor,
           ),
-          const SizedBox(width: 4),
+          SizedBox(width: ResponsiveUtils.width(context, 4)),
           Text(
             count,
             style: AppStyles.textCairo(
               context,
-              fontSize: 14,
+              fontSize: ResponsiveUtils.fontSize(context, 14),
               fontWeight: FontWeight.w600,
               color: themeCache.primaryColor,
             ),

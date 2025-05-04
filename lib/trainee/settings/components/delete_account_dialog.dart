@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:iron_fit/utils/responsive_utils.dart';
 import '/componants/Styles.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
@@ -52,7 +53,7 @@ class _DeleteAccountDialogState extends State<DeleteAccountDialog>
   Widget build(BuildContext context) {
     return Dialog(
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(20),
+        borderRadius: BorderRadius.circular(ResponsiveUtils.width(context, 20)),
       ),
       elevation: 0,
       backgroundColor: Colors.transparent,
@@ -61,10 +62,10 @@ class _DeleteAccountDialogState extends State<DeleteAccountDialog>
         child: FadeTransition(
           opacity: _opacityAnimation,
           child: Container(
-            padding: const EdgeInsets.all(24),
+            padding: ResponsiveUtils.padding(context, horizontal: 24, vertical: 24),
             decoration: BoxDecoration(
               color: FlutterFlowTheme.of(context).secondaryBackground,
-              borderRadius: BorderRadius.circular(20),
+              borderRadius: BorderRadius.circular(ResponsiveUtils.width(context, 20)),
               boxShadow: [
                 BoxShadow(
                   color: FlutterFlowTheme.of(context).error.withOpacity(0.15),
@@ -78,8 +79,8 @@ class _DeleteAccountDialogState extends State<DeleteAccountDialog>
               mainAxisSize: MainAxisSize.min,
               children: [
                 Container(
-                  width: 80,
-                  height: 80,
+                  width: ResponsiveUtils.width(context, 80),
+                  height: ResponsiveUtils.height(context, 80),
                   decoration: BoxDecoration(
                     color: FlutterFlowTheme.of(context).error.withOpacity(0.1),
                     shape: BoxShape.circle,
@@ -87,29 +88,29 @@ class _DeleteAccountDialogState extends State<DeleteAccountDialog>
                   child: Icon(
                     Icons.delete_forever_rounded,
                     color: FlutterFlowTheme.of(context).error,
-                    size: 40,
+                    size: ResponsiveUtils.iconSize(context, 40),
                   ),
                 ),
-                const SizedBox(height: 20),
+                SizedBox(height: ResponsiveUtils.height(context, 20)),
                 Text(
                   FFLocalizations.of(context).getText('delete_account_title'),
                   style: AppStyles.textCairo(
                     context,
                     fontWeight: FontWeight.bold,
-                    fontSize: 20,
+                    fontSize: ResponsiveUtils.fontSize(context, 20),
                   ),
                 ),
-                const SizedBox(height: 12),
+                SizedBox(height: ResponsiveUtils.height(context, 12)),
                 Text(
                   FFLocalizations.of(context).getText('delete_account_confirm'),
                   textAlign: TextAlign.center,
                   style: AppStyles.textCairo(
                     context,
                     color: FlutterFlowTheme.of(context).secondaryText,
-                    fontSize: 14,
+                    fontSize: ResponsiveUtils.fontSize(context, 14),
                   ),
                 ),
-                const SizedBox(height: 24),
+                SizedBox(height: ResponsiveUtils.height(context, 24)),
                 Row(
                   children: [
                     Expanded(
@@ -121,13 +122,13 @@ class _DeleteAccountDialogState extends State<DeleteAccountDialog>
                         },
                         text: FFLocalizations.of(context).getText('cancel'),
                         options: FFButtonOptions(
-                          height: 48,
+                          height: ResponsiveUtils.height(context, 48),
                           color:
                               FlutterFlowTheme.of(context).secondaryBackground,
                           textStyle: AppStyles.textCairo(
                             context,
                             color: FlutterFlowTheme.of(context).primaryText,
-                            fontSize: 14,
+                            fontSize: ResponsiveUtils.fontSize(context, 14),
                             fontWeight: FontWeight.w600,
                           ),
                           elevation: 0,
@@ -136,11 +137,11 @@ class _DeleteAccountDialogState extends State<DeleteAccountDialog>
                                 FlutterFlowTheme.of(context).primaryBackground,
                             width: 2,
                           ),
-                          borderRadius: BorderRadius.circular(12),
+                          borderRadius: BorderRadius.circular(ResponsiveUtils.width(context, 12)),
                         ),
                       ),
                     ),
-                    const SizedBox(width: 12),
+                    SizedBox(width: ResponsiveUtils.width(context, 12)),
                     Expanded(
                       child: FFButtonWidget(
                         onPressed: () {
@@ -150,16 +151,16 @@ class _DeleteAccountDialogState extends State<DeleteAccountDialog>
                         },
                         text: FFLocalizations.of(context).getText('delete'),
                         options: FFButtonOptions(
-                          height: 48,
+                          height: ResponsiveUtils.height(context, 48),
                           color: FlutterFlowTheme.of(context).error,
                           textStyle: AppStyles.textCairo(
                             context,
                             color: FlutterFlowTheme.of(context).info,
-                            fontSize: 14,
+                            fontSize: ResponsiveUtils.fontSize(context, 14),
                             fontWeight: FontWeight.w600,
                           ),
                           elevation: 0,
-                          borderRadius: BorderRadius.circular(12),
+                          borderRadius: BorderRadius.circular(ResponsiveUtils.width(context, 12)),
                         ),
                       ),
                     ),

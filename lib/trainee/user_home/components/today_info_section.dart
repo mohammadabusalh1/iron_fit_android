@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:iron_fit/componants/Styles.dart';
+import 'package:iron_fit/utils/responsive_utils.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 
@@ -41,7 +42,7 @@ class TodayInfoSection extends StatelessWidget {
         : dateTimeFormat('MMMM, yyyy', DateTime.now());
 
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 24),
+      padding: ResponsiveUtils.padding(context, vertical: 16, horizontal: 24),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -49,7 +50,7 @@ class TodayInfoSection extends StatelessWidget {
             FFLocalizations.of(context).getText('today_info'),
             style: AppStyles.textCairo(
               context,
-              fontSize: 24,
+              fontSize: ResponsiveUtils.fontSize(context, 24),
               fontWeight: FontWeight.bold,
               color: FlutterFlowTheme.of(context).primaryText,
             ),
@@ -58,6 +59,7 @@ class TodayInfoSection extends StatelessWidget {
             formattedDate,
             style: AppStyles.textCairo(
               context,
+              fontSize: ResponsiveUtils.fontSize(context, 14),
               color: FlutterFlowTheme.of(context).secondaryText,
             ),
           ),

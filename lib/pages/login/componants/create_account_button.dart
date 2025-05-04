@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import 'package:animate_do/animate_do.dart';
+import 'package:iron_fit/utils/responsive_utils.dart';
+
 
 class CreateAccountButton extends StatelessWidget {
   final VoidCallback onPressed;
@@ -19,7 +21,9 @@ class CreateAccountButton extends StatelessWidget {
         child: FadeIn(
           duration: const Duration(milliseconds: 400),
           child: Container(
-            padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
+            padding: EdgeInsets.symmetric(
+                vertical: ResponsiveUtils.height(context, 16),
+                horizontal: ResponsiveUtils.width(context, 16)),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(12),
               color: FlutterFlowTheme.of(context).primary,
@@ -27,7 +31,7 @@ class CreateAccountButton extends StatelessWidget {
             child: Icon(
               Icons.person_add,
               color: FlutterFlowTheme.of(context).black.withOpacity(0.8),
-              size: 20,
+              size: ResponsiveUtils.iconSize(context, 24),
             ),
           ),
         ),

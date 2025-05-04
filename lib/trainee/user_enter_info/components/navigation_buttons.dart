@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:iron_fit/componants/Styles.dart';
+import 'package:iron_fit/utils/responsive_utils.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
@@ -21,20 +22,20 @@ class NavigationButtons extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 16.0),
+      padding: ResponsiveUtils.padding(context, vertical: 16.0),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           if (currentStep > 0)
             Expanded(
               child: Padding(
-                padding: const EdgeInsets.only(right: 8.0),
+                padding: EdgeInsets.only(right: ResponsiveUtils.width(context, 8.0)),
                 child: FFButtonWidget(
                   onPressed: onPrevious,
                   text: FFLocalizations.of(context)
                       .getText('previous_step' /* Previous */),
                   options: FFButtonOptions(
-                    height: 50.0,
+                    height: ResponsiveUtils.height(context, 50.0),
                     padding: const EdgeInsetsDirectional.fromSTEB(
                         0.0, 0.0, 0.0, 0.0),
                     iconPadding: const EdgeInsetsDirectional.fromSTEB(
@@ -42,6 +43,7 @@ class NavigationButtons extends StatelessWidget {
                     color: FlutterFlowTheme.of(context).secondaryBackground,
                     textStyle: AppStyles.textCairo(
                       context,
+                      fontSize: ResponsiveUtils.fontSize(context, 14),
                       color: FlutterFlowTheme.of(context).primary,
                       fontWeight: FontWeight.bold,
                     ),
@@ -55,10 +57,10 @@ class NavigationButtons extends StatelessWidget {
                 ),
               ),
             ),
-          const SizedBox(width: 8.0),
+          SizedBox(width: ResponsiveUtils.width(context, 8.0)),
           Expanded(
             child: Padding(
-              padding: EdgeInsets.only(left: currentStep > 0 ? 8.0 : 0),
+              padding: EdgeInsets.only(left: currentStep > 0 ? ResponsiveUtils.width(context, 8.0) : 0),
               child: FFButtonWidget(
                 onPressed: onNext,
                 text: isLastStep
@@ -66,7 +68,7 @@ class NavigationButtons extends StatelessWidget {
                     : FFLocalizations.of(context)
                         .getText('next_step' /* Next */),
                 options: FFButtonOptions(
-                  height: 50.0,
+                  height: ResponsiveUtils.height(context, 50.0),
                   padding:
                       const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
                   iconPadding:
@@ -74,6 +76,7 @@ class NavigationButtons extends StatelessWidget {
                   color: FlutterFlowTheme.of(context).primary,
                   textStyle: AppStyles.textCairo(
                     context,
+                    fontSize: ResponsiveUtils.fontSize(context, 14),
                     color: FlutterFlowTheme.of(context).black,
                     fontWeight: FontWeight.bold,
                   ),

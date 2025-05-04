@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:iron_fit/componants/Styles.dart';
+import 'package:iron_fit/utils/responsive_utils.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 
 class Material3TextField extends StatelessWidget {
@@ -34,7 +35,7 @@ class Material3TextField extends StatelessWidget {
         Row(
           children: [
             Container(
-              padding: const EdgeInsets.all(8),
+              padding: ResponsiveUtils.padding(context, horizontal: 8, vertical: 8),
               decoration: BoxDecoration(
                 color:
                     FlutterFlowTheme.of(context).primary.withValues(alpha: 0.1),
@@ -43,22 +44,22 @@ class Material3TextField extends StatelessWidget {
               child: Icon(
                 prefixIcon,
                 color: FlutterFlowTheme.of(context).primary,
-                size: 20,
+                size: ResponsiveUtils.iconSize(context, 20),
               ),
             ),
-            const SizedBox(width: 8),
+            SizedBox(width: ResponsiveUtils.width(context, 8)),
             Text(
               textAlign: TextAlign.start,
               title,
               style: AppStyles.textCairo(
                 context,
-                fontSize: 16,
+                fontSize: ResponsiveUtils.fontSize(context, 16),
                 fontWeight: FontWeight.w500,
               ),
             ),
           ],
         ),
-        const SizedBox(height: 8),
+        SizedBox(height: ResponsiveUtils.height(context, 8)),
         Container(
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(16),
@@ -78,13 +79,14 @@ class Material3TextField extends StatelessWidget {
               hintText: hintText,
               labelStyle: AppStyles.textCairo(
                 context,
-                fontSize: 16,
+                fontSize: ResponsiveUtils.fontSize(context, 16),
                 color: focusNode.hasFocus
                     ? FlutterFlowTheme.of(context).primary
                     : FlutterFlowTheme.of(context).secondaryText,
               ),
               hintStyle: AppStyles.textCairo(
                 context,
+                fontSize: ResponsiveUtils.fontSize(context, 16),
                 color: FlutterFlowTheme.of(context)
                     .secondaryText
                     .withValues(alpha: 0.7),
@@ -92,7 +94,7 @@ class Material3TextField extends StatelessWidget {
               suffixText: suffixText,
               suffixStyle: AppStyles.textCairo(
                 context,
-                fontSize: 14,
+                fontSize: ResponsiveUtils.fontSize(context, 14),
                 color: FlutterFlowTheme.of(context).secondaryText,
               ),
               enabledBorder: OutlineInputBorder(
@@ -125,12 +127,15 @@ class Material3TextField extends StatelessWidget {
               ),
               filled: true,
               fillColor: FlutterFlowTheme.of(context).secondaryBackground,
-              contentPadding:
-                  const EdgeInsetsDirectional.fromSTEB(20, 24, 20, 24),
+              contentPadding: ResponsiveUtils.padding(
+                context,
+                horizontal: 20,
+                vertical: 24,
+              ),
             ),
             style: AppStyles.textCairo(
               context,
-              fontSize: 16,
+              fontSize: ResponsiveUtils.fontSize(context, 16),
             ),
             cursorColor: FlutterFlowTheme.of(context).primary,
           ),

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:iron_fit/componants/Styles.dart';
+import 'package:iron_fit/utils/responsive_utils.dart';
 import '/backend/backend.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 
@@ -15,10 +16,10 @@ class MealItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.only(bottom: 16.0),
+      margin: EdgeInsets.only(bottom: ResponsiveUtils.height(context, 16.0)),
       decoration: BoxDecoration(
         color: FlutterFlowTheme.of(context).secondaryBackground,
-        borderRadius: BorderRadius.circular(16.0),
+        borderRadius: BorderRadius.circular(ResponsiveUtils.width(context, 16.0)),
         boxShadow: [
           BoxShadow(
             color: FlutterFlowTheme.of(context).black.withAlpha(15),
@@ -31,19 +32,19 @@ class MealItem extends StatelessWidget {
         onTap: () {
           // Add meal detail navigation here if needed
         },
-        borderRadius: BorderRadius.circular(16.0),
+        borderRadius: BorderRadius.circular(ResponsiveUtils.width(context, 16.0)),
         child: Padding(
-          padding: const EdgeInsets.all(16.0),
+          padding: EdgeInsets.all(ResponsiveUtils.width(context, 16.0)),
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Hero(
                 tag: 'meal-${meal.name}',
                 child: Container(
-                  width: 65.0,
-                  height: 65.0,
+                  width: ResponsiveUtils.width(context, 65.0),
+                  height: ResponsiveUtils.height(context, 65.0),
                   decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(12.0),
+                    borderRadius: BorderRadius.circular(ResponsiveUtils.width(context, 12.0)),
                     image: const DecorationImage(
                       image: AssetImage(
                         'assets/images/meal.png',
@@ -53,7 +54,7 @@ class MealItem extends StatelessWidget {
                   ),
                 ),
               ),
-              const SizedBox(width: 16.0),
+              SizedBox(width: ResponsiveUtils.width(context, 16.0)),
               // Content section
               Expanded(
                 child: Column(
@@ -63,11 +64,11 @@ class MealItem extends StatelessWidget {
                       meal.name,
                       style: AppStyles.textCairo(
                         context,
-                        fontSize: 18,
+                        fontSize: ResponsiveUtils.fontSize(context, 18),
                         fontWeight: FontWeight.w600,
                       ),
                     ),
-                    const SizedBox(height: 8.0),
+                    SizedBox(height: ResponsiveUtils.height(context, 8.0)),
                     Text(
                       meal.desc,
                       textAlign: TextAlign.justify,
@@ -76,7 +77,7 @@ class MealItem extends StatelessWidget {
                       style: AppStyles.textCairo(
                         context,
                         color: FlutterFlowTheme.of(context).secondaryText,
-                        fontSize: 13,
+                        fontSize: ResponsiveUtils.fontSize(context, 13),
                       ),
                     ),
                   ],

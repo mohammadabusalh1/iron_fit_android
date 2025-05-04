@@ -332,8 +332,8 @@ class _TimerWidgetState extends State<TimerWidget> {
                       .getText('timer_complete_description');
 
               _notificationService.showSoundNotification(
-                timerComplete,
-                timerCompleteDescription,
+                title: timerComplete,
+                body: timerCompleteDescription,
               );
               await updateUserProgress();
               if (mounted) {

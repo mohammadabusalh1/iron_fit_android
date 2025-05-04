@@ -3,6 +3,7 @@ import 'package:iron_fit/componants/Styles.dart';
 import 'package:iron_fit/flutter_flow/flutter_flow_theme.dart';
 import 'package:iron_fit/flutter_flow/flutter_flow_util.dart';
 import 'package:iron_fit/flutter_flow/flutter_flow_widgets.dart';
+import 'package:iron_fit/utils/responsive_utils.dart';
 
 class FilterTabs extends StatelessWidget {
   final String currentFilter;
@@ -17,8 +18,8 @@ class FilterTabs extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Wrap(
-      spacing: 4,
-      runSpacing: 4,
+      spacing: ResponsiveUtils.width(context, 4),
+      runSpacing: ResponsiveUtils.height(context, 4),
       children: [
         _buildFilterButton(
             context, FFLocalizations.of(context).getText('active'), 'active'),
@@ -38,8 +39,13 @@ class FilterTabs extends StatelessWidget {
       onPressed: () => onFilterChanged(value),
       text: label,
       options: FFButtonOptions(
-        height: 35.0,
-        padding: const EdgeInsetsDirectional.fromSTEB(16, 0, 16, 0),
+        height: ResponsiveUtils.height(context, 35.0),
+        padding: EdgeInsetsDirectional.fromSTEB(
+          ResponsiveUtils.width(context, 16),
+          0,
+          ResponsiveUtils.width(context, 16),
+          0,
+        ),
         color: isSelected
             ? FlutterFlowTheme.of(context).primary
             : FlutterFlowTheme.of(context).secondaryBackground,
@@ -49,7 +55,7 @@ class FilterTabs extends StatelessWidget {
           color: isSelected
               ? FlutterFlowTheme.of(context).info
               : FlutterFlowTheme.of(context).primaryText,
-          fontSize: 12,
+          fontSize: ResponsiveUtils.fontSize(context, 12),
         ),
         elevation: 0.0,
         borderSide: BorderSide(

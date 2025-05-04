@@ -4,6 +4,9 @@ import 'package:iron_fit/componants/Styles.dart';
 import 'package:iron_fit/flutter_flow/flutter_flow_theme.dart';
 import 'package:iron_fit/flutter_flow/flutter_flow_util.dart';
 import 'package:iron_fit/utils/logger.dart';
+import 'package:iron_fit/utils/responsive_utils.dart';
+import 'package:intl/intl.dart';
+
 
 DateTime? nowDate() {
   return DateTime.now();
@@ -88,7 +91,7 @@ Widget _buildDebtsModalContent(
   );
 
   return Container(
-    height: MediaQuery.of(context).size.height * 0.85,
+    height: ResponsiveUtils.height(context, MediaQuery.of(context).size.height * 0.75),
     decoration: BoxDecoration(
       color: FlutterFlowTheme.of(context).secondaryBackground,
       borderRadius: const BorderRadius.only(
@@ -108,9 +111,9 @@ Widget _buildDebtsModalContent(
       children: [
         // Handle bar with improved design
         Container(
-          width: 40,
-          height: 4,
-          margin: const EdgeInsets.symmetric(vertical: 12),
+          width: ResponsiveUtils.width(context, 40),
+          height: ResponsiveUtils.height(context, 4),
+          margin: EdgeInsets.symmetric(vertical: ResponsiveUtils.height(context, 12)),
           decoration: BoxDecoration(
             color: FlutterFlowTheme.of(context)
                 .secondaryText
@@ -120,21 +123,20 @@ Widget _buildDebtsModalContent(
         ),
         // Header with total balance
         Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 16.0),
+          padding: ResponsiveUtils.padding(context, horizontal: 24.0, vertical: 16.0),
           child: Column(
             children: [
               Text(
                 FFLocalizations.of(context).getText('viewAllDebts'),
                 style: AppStyles.textCairo(
                   context,
-                  fontSize: 24,
+                  fontSize: ResponsiveUtils.fontSize(context, 24),
                   fontWeight: FontWeight.w700,
                 ),
               ),
-              const SizedBox(height: 8),
+              SizedBox(height: ResponsiveUtils.height(context, 8)),
               Container(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                padding: ResponsiveUtils.padding(context, horizontal: 16, vertical: 8),
                 decoration: BoxDecoration(
                   color: totalDebts >= 0
                       ? Colors.green.withOpacity(0.1)
@@ -147,14 +149,14 @@ Widget _buildDebtsModalContent(
                     Icon(
                       totalDebts >= 0 ? Icons.trending_up : Icons.trending_down,
                       color: totalDebts >= 0 ? Colors.green : Colors.red,
-                      size: 20,
+                      size: ResponsiveUtils.iconSize(context, 20),
                     ),
-                    const SizedBox(width: 8),
+                    SizedBox(width: ResponsiveUtils.width(context, 8)),
                     Text(
                       '${totalDebts >= 0 ? '+' : ''}${totalDebts.toStringAsFixed(2)}',
                       style: AppStyles.textCairo(
                         context,
-                        fontSize: 18,
+                        fontSize: ResponsiveUtils.fontSize(context, 18),
                         fontWeight: FontWeight.w600,
                         color: totalDebts >= 0 ? Colors.green : Colors.red,
                       ),
@@ -183,33 +185,33 @@ Widget _buildEmptyDebtState(BuildContext context) {
       mainAxisSize: MainAxisSize.min,
       children: [
         Container(
-          padding: const EdgeInsets.all(16),
+          padding: ResponsiveUtils.padding(context, horizontal: 16, vertical: 16),
           decoration: BoxDecoration(
             color: FlutterFlowTheme.of(context).primary.withOpacity(0.1),
             shape: BoxShape.circle,
           ),
           child: Icon(
             Icons.money_off,
-            size: 48,
+            size: ResponsiveUtils.iconSize(context, 48),
             color: FlutterFlowTheme.of(context).primary,
           ),
         ),
-        const SizedBox(height: 24),
+        SizedBox(height: ResponsiveUtils.height(context, 24)),
         Text(
           FFLocalizations.of(context).getText('noDebtsYet'),
           style: AppStyles.textCairo(
             context,
-            fontSize: 18,
+            fontSize: ResponsiveUtils.fontSize(context, 18),
             fontWeight: FontWeight.w600,
             color: FlutterFlowTheme.of(context).secondaryText,
           ),
         ),
-        const SizedBox(height: 8),
+        SizedBox(height: ResponsiveUtils.height(context, 8)),
         Text(
           'Add your first transaction to get started',
           style: AppStyles.textCairo(
             context,
-            fontSize: 14,
+            fontSize: ResponsiveUtils.fontSize(context, 14),
             color: FlutterFlowTheme.of(context).secondaryText.withOpacity(0.7),
           ),
         ),
@@ -221,7 +223,7 @@ Widget _buildEmptyDebtState(BuildContext context) {
 Widget _buildDebtsList(
     BuildContext context, List<Map<String, dynamic>> sortedDebts) {
   return ListView.builder(
-    padding: const EdgeInsets.symmetric(vertical: 16),
+    padding: ResponsiveUtils.padding(context, vertical: 16),
     itemCount: sortedDebts.length,
     itemBuilder: (context, index) {
       final debt = sortedDebts[index];
@@ -230,7 +232,7 @@ Widget _buildDebtsList(
 
       return Container(
         key: ValueKey('debt-${debt['date']}-${index}'),
-        margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+        margin: ResponsiveUtils.padding(context, horizontal: 16, vertical: 8),
         decoration: BoxDecoration(
           color: FlutterFlowTheme.of(context).secondaryBackground,
           borderRadius: BorderRadius.circular(16),
@@ -250,11 +252,11 @@ Widget _buildDebtsList(
               // Add interaction feedback if needed
             },
             child: Padding(
-              padding: const EdgeInsets.all(16),
+              padding: ResponsiveUtils.padding(context, horizontal: 16, vertical: 16),
               child: Row(
                 children: [
                   Container(
-                    padding: const EdgeInsets.all(12),
+                    padding: ResponsiveUtils.padding(context, horizontal: 12, vertical: 12),
                     decoration: BoxDecoration(
                       color: isIncome
                           ? Colors.green.withOpacity(0.1)
@@ -264,10 +266,10 @@ Widget _buildDebtsList(
                     child: Icon(
                       isIncome ? Icons.add_circle : Icons.remove_circle,
                       color: isIncome ? Colors.green : Colors.red,
-                      size: 24,
+                      size: ResponsiveUtils.iconSize(context, 24),
                     ),
                   ),
-                  const SizedBox(width: 16),
+                  SizedBox(width: ResponsiveUtils.width(context, 16)),
                   Expanded(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -276,16 +278,16 @@ Widget _buildDebtsList(
                           debt['name'],
                           style: AppStyles.textCairo(
                             context,
-                            fontSize: 16,
+                            fontSize: ResponsiveUtils.fontSize(context, 16),
                             fontWeight: FontWeight.w600,
                           ),
                         ),
-                        const SizedBox(height: 4),
+                        SizedBox(height: ResponsiveUtils.height(context, 4)),
                         Text(
                           DateFormat('MMM dd, yyyy').format(debt['date']),
                           style: AppStyles.textCairo(
                             context,
-                            fontSize: 14,
+                            fontSize: ResponsiveUtils.fontSize(context, 14),
                             color: FlutterFlowTheme.of(context).secondaryText,
                           ),
                         ),
@@ -296,7 +298,7 @@ Widget _buildDebtsList(
                     '${isIncome ? '+' : '-'}\$${amount.toStringAsFixed(2)}',
                     style: AppStyles.textCairo(
                       context,
-                      fontSize: 16,
+                      fontSize: ResponsiveUtils.fontSize(context, 16),
                       fontWeight: FontWeight.w700,
                       color: isIncome ? Colors.green : Colors.red,
                     ),
@@ -339,15 +341,15 @@ void showErrorDialog(String message, context) {
                     Icon(
                       Icons.error_outline_rounded,
                       color: FlutterFlowTheme.of(context).error,
-                      size: 28,
+                      size: ResponsiveUtils.iconSize(context, 28),
                     ),
-                    const SizedBox(width: 12),
+                    SizedBox(width: ResponsiveUtils.width(context, 12)),
                     Expanded(
                       child: Text(
                         FFLocalizations.of(context).getText('error'),
                         style: AppStyles.textCairo(
                           context,
-                          fontSize: 18,
+                          fontSize: ResponsiveUtils.fontSize(context, 18),
                           fontWeight: FontWeight.bold,
                           color: FlutterFlowTheme.of(context).error,
                         ),
@@ -363,7 +365,7 @@ void showErrorDialog(String message, context) {
                       message,
                       style: AppStyles.textCairo(
                         context,
-                        fontSize: 14,
+                        fontSize: ResponsiveUtils.fontSize(context, 14),
                         color: FlutterFlowTheme.of(context).secondaryText,
                       ),
                     ),
@@ -373,8 +375,7 @@ void showErrorDialog(String message, context) {
                   TextButton(
                     onPressed: () => Navigator.pop(context),
                     style: TextButton.styleFrom(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 20, vertical: 10),
+                      padding: ResponsiveUtils.padding(context, horizontal: 20, vertical: 10),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(8),
                       ),
@@ -383,7 +384,7 @@ void showErrorDialog(String message, context) {
                       FFLocalizations.of(context).getText('ok'),
                       style: AppStyles.textCairo(
                         context,
-                        fontSize: 14,
+                        fontSize: ResponsiveUtils.fontSize(context, 14),
                         fontWeight: FontWeight.w600,
                         color: FlutterFlowTheme.of(context).primary,
                       ),
@@ -413,6 +414,7 @@ void showSuccessDialog(String message, context) {
       style: AppStyles.textCairo(
         context,
         color: FlutterFlowTheme.of(context).info,
+        fontSize: ResponsiveUtils.fontSize(context, 14),
       ),
     ),
     backgroundColor: FlutterFlowTheme.of(context).primary,

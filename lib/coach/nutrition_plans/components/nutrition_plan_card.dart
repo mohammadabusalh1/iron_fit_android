@@ -5,6 +5,7 @@ import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import 'package:iron_fit/componants/Styles.dart';
+import 'package:iron_fit/utils/responsive_utils.dart';
 
 class NutritionPlanCard extends StatelessWidget {
   final NutPlanRecord plan;
@@ -28,101 +29,108 @@ class NutritionPlanCard extends StatelessWidget {
           color: Colors.transparent,
           elevation: 2.0,
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(16.0),
+            borderRadius: BorderRadius.circular(ResponsiveUtils.width(context, 16.0)),
           ),
           child: Container(
             width: MediaQuery.sizeOf(context).width,
             decoration: BoxDecoration(
               color: FlutterFlowTheme.of(context).secondaryBackground,
-              borderRadius: BorderRadius.circular(16.0),
+              borderRadius: BorderRadius.circular(ResponsiveUtils.width(context, 16.0)),
             ),
             child: Padding(
-              padding: const EdgeInsets.all(20.0),
+              padding: ResponsiveUtils.padding(context, horizontal: 20.0, vertical: 20.0),
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   _buildPlanHeader(context),
                   _buildPlanDetails(context),
                   _buildViewDetailsButton(context),
-                ].divide(const SizedBox(height: 16.0)),
+                ].divide(SizedBox(height: ResponsiveUtils.height(context, 16.0))),
               ),
             ),
           ),
         ),
-        const SizedBox(height: 16.0),
+        SizedBox(height: ResponsiveUtils.height(context, 16.0)),
       ],
     );
   }
-
-  Row _buildPlanHeader(BuildContext context) {
-    return Row(
-      mainAxisSize: MainAxisSize.max,
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        Column(
+Row _buildPlanHeader(BuildContext context) {
+  return Row(
+    mainAxisSize: MainAxisSize.max,
+    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    crossAxisAlignment: CrossAxisAlignment.start, // Add this for vertical alignment
+    children: [
+      Expanded( // Allow the left side to take up available space
+        child: Column(
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
               plan.nutPlan.name,
-              style: AppStyles.textCairo(context, fontSize: 16),
+              maxLines: null, // Allow unlimited lines
+              softWrap: true, // Enable wrapping
+              style: AppStyles.textCairo(
+                context,
+                fontSize: ResponsiveUtils.fontSize(context, 16),
+              ),
             ),
             Text(
               '${plan.nutPlan.numOfWeeks.toString()} ${FFLocalizations.of(context).getText('weeks' /* Weeks */)}',
               style: AppStyles.textCairo(
                 context,
-                fontSize: 14,
+                fontSize: ResponsiveUtils.fontSize(context, 14),
                 color: FlutterFlowTheme.of(context).secondaryText,
               ),
             ),
           ],
         ),
-        Row(
-          children: [
-            FlutterFlowIconButton(
-              borderRadius: 8.0,
-              buttonSize: 40.0,
-              fillColor: FlutterFlowTheme.of(context).primary,
-              icon: Icon(
-                Icons.edit_outlined,
-                color: FlutterFlowTheme.of(context).info,
-                size: 24.0,
-              ),
-              onPressed: onEdit,
+      ),
+      Row(
+        children: [
+          FlutterFlowIconButton(
+            borderRadius: ResponsiveUtils.width(context, 8.0),
+            buttonSize: ResponsiveUtils.width(context, 40.0),
+            fillColor: FlutterFlowTheme.of(context).primary,
+            icon: Icon(
+              Icons.edit_outlined,
+              color: FlutterFlowTheme.of(context).info,
+              size: ResponsiveUtils.iconSize(context, 24.0),
             ),
-            const SizedBox(width: 8),
-            FlutterFlowIconButton(
-              borderRadius: 8.0,
-              buttonSize: 40.0,
-              fillColor: FlutterFlowTheme.of(context).error,
-              icon: Icon(
-                Icons.delete_sharp,
-                color: FlutterFlowTheme.of(context).info,
-                size: 24.0,
-              ),
-              onPressed: onDelete,
+            onPressed: onEdit,
+          ),
+          SizedBox(width: ResponsiveUtils.width(context, 8)),
+          FlutterFlowIconButton(
+            borderRadius: ResponsiveUtils.width(context, 8.0),
+            buttonSize: ResponsiveUtils.width(context, 40.0),
+            fillColor: FlutterFlowTheme.of(context).error,
+            icon: Icon(
+              Icons.delete_sharp,
+              color: FlutterFlowTheme.of(context).info,
+              size: ResponsiveUtils.iconSize(context, 24.0),
             ),
-          ],
-        ),
-      ],
-    );
-  }
+            onPressed: onDelete,
+          ),
+        ],
+      ),
+    ],
+  );
+}
 
   Row _buildPlanDetails(BuildContext context) {
     return Row(
       mainAxisSize: MainAxisSize.max,
       children: [
         Container(
-          width: 60.0,
-          height: 60.0,
+          width: ResponsiveUtils.width(context, 60.0),
+          height: ResponsiveUtils.height(context, 60.0),
           decoration: BoxDecoration(
             color: FlutterFlowTheme.of(context).accent1,
-            borderRadius: BorderRadius.circular(30.0),
+            borderRadius: BorderRadius.circular(ResponsiveUtils.width(context, 30.0)),
           ),
           child: Icon(
             Icons.restaurant_menu,
             color: FlutterFlowTheme.of(context).primary,
-            size: 30.0,
+            size: ResponsiveUtils.iconSize(context, 30.0),
           ),
         ),
         Expanded(
@@ -132,20 +140,20 @@ class NutritionPlanCard extends StatelessWidget {
             children: [
               Text(
                 '${plan.nutPlan.meals.length.toString()} ${FFLocalizations.of(context).getText('meals' /* Meals */)}',
-                style: AppStyles.textCairo(context, fontSize: 14),
+                style: AppStyles.textCairo(context, fontSize: ResponsiveUtils.fontSize(context, 14)),
               ),
               Text(
                 plan.nutPlan.nots,
                 style: AppStyles.textCairo(
                   context,
-                  fontSize: 12,
+                  fontSize: ResponsiveUtils.fontSize(context, 12),
                   color: FlutterFlowTheme.of(context).secondaryText,
                 ),
               ),
             ],
           ),
         ),
-      ].divide(const SizedBox(width: 12.0)),
+      ].divide(SizedBox(width: ResponsiveUtils.width(context, 12.0))),
     );
   }
 
@@ -155,17 +163,17 @@ class NutritionPlanCard extends StatelessWidget {
       text: FFLocalizations.of(context).getText('f0lulsew' /* View Details */),
       options: FFButtonOptions(
         width: MediaQuery.sizeOf(context).width,
-        height: 40.0,
+        height: ResponsiveUtils.height(context, 40.0),
         padding: const EdgeInsets.all(0.0),
         iconPadding: const EdgeInsets.all(0.0),
         color: FlutterFlowTheme.of(context).primary,
         textStyle: AppStyles.textCairo(
           context,
-          fontSize: 14,
+          fontSize: ResponsiveUtils.fontSize(context, 14),
           color: FlutterFlowTheme.of(context).info,
         ),
         elevation: 0.0,
-        borderRadius: BorderRadius.circular(20.0),
+        borderRadius: BorderRadius.circular(ResponsiveUtils.width(context, 20.0)),
       ),
     );
   }

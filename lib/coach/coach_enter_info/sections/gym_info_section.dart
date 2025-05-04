@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:iron_fit/componants/Styles.dart';
 import 'package:iron_fit/flutter_flow/flutter_flow_util.dart';
+import 'package:iron_fit/utils/responsive_utils.dart';
 import 'package:iron_fit/widgets/build_text_filed.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '../coach_enter_info_model.dart';
@@ -42,7 +43,7 @@ class _GymInfoSectionState extends State<GymInfoSection> {
 
   Widget _buildBasicGymInfo() {
     return Padding(
-      padding: const EdgeInsets.all(16.0),
+      padding: ResponsiveUtils.padding(context, horizontal: 16.0, vertical: 16.0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -50,11 +51,11 @@ class _GymInfoSectionState extends State<GymInfoSection> {
             FFLocalizations.of(context).getText('gymBasicInfo'),
             style: AppStyles.textCairo(
               context,
-              fontSize: 22,
+              fontSize: ResponsiveUtils.fontSize(context, 22),
               fontWeight: FontWeight.bold,
             ),
           ),
-          const SizedBox(height: 24),
+          SizedBox(height: ResponsiveUtils.height(context, 24)),
           buildTextField(
             onTap: () {
               // Move cursor to end of text
@@ -78,7 +79,7 @@ class _GymInfoSectionState extends State<GymInfoSection> {
                   .requestFocus(widget.model.gymWebsiteFocusNode);
             },
           ),
-          const SizedBox(height: 16),
+          SizedBox(height: ResponsiveUtils.height(context, 16)),
           buildTextField(
             onTap: () {
               // Move cursor to end of text
@@ -125,7 +126,7 @@ class _GymInfoSectionState extends State<GymInfoSection> {
 
   Widget _buildLocationInfo() {
     return Padding(
-      padding: const EdgeInsets.all(16.0),
+      padding: ResponsiveUtils.padding(context, horizontal: 16.0, vertical: 16.0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -133,11 +134,11 @@ class _GymInfoSectionState extends State<GymInfoSection> {
             FFLocalizations.of(context).getText('gymLocation'),
             style: AppStyles.textCairo(
               context,
-              fontSize: 24,
+              fontSize: ResponsiveUtils.fontSize(context, 24),
               fontWeight: FontWeight.bold,
             ),
           ),
-          const SizedBox(height: 24),
+          SizedBox(height: ResponsiveUtils.height(context, 24)),
           buildTextField(
             maxLines: 1,
             context: context,
@@ -162,7 +163,7 @@ class _GymInfoSectionState extends State<GymInfoSection> {
                   .requestFocus(widget.model.gymCityFocusNode);
             },
           ),
-          const SizedBox(height: 16),
+          SizedBox(height: ResponsiveUtils.height(context, 16)),
           buildTextField(
             context: context,
             onTap: () {
@@ -186,7 +187,7 @@ class _GymInfoSectionState extends State<GymInfoSection> {
                   .requestFocus(widget.model.gymAddressFocusNode);
             },
           ),
-          const SizedBox(height: 16),
+          SizedBox(height: ResponsiveUtils.height(context, 16)),
           buildTextField(
             context: context,
             onTap: () {
@@ -211,7 +212,7 @@ class _GymInfoSectionState extends State<GymInfoSection> {
                   .onFieldSubmitted(context);
             },
           ),
-          const SizedBox(height: 16),
+          SizedBox(height: ResponsiveUtils.height(context, 16)),
           // Container(
           //   height: 200,
           //   decoration: BoxDecoration(
@@ -244,7 +245,7 @@ class _GymInfoSectionState extends State<GymInfoSection> {
 
   Widget _buildContactInfo() {
     return Padding(
-      padding: const EdgeInsets.all(16.0),
+      padding: ResponsiveUtils.padding(context, horizontal: 16.0, vertical: 16.0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -252,11 +253,11 @@ class _GymInfoSectionState extends State<GymInfoSection> {
             FFLocalizations.of(context).getText('gymContact'),
             style: AppStyles.textCairo(
               context,
-              fontSize: 24,
+              fontSize: ResponsiveUtils.fontSize(context, 24),
               fontWeight: FontWeight.bold,
             ),
           ),
-          const SizedBox(height: 24),
+          SizedBox(height: ResponsiveUtils.height(context, 24)),
           buildTextField(
             keyboardType: TextInputType.phone,
             context: context,
@@ -281,7 +282,7 @@ class _GymInfoSectionState extends State<GymInfoSection> {
                   .requestFocus(widget.model.gymEmailFocusNode);
             },
           ),
-          const SizedBox(height: 16),
+          SizedBox(height: ResponsiveUtils.height(context, 16)),
           buildTextField(
             keyboardType: TextInputType.emailAddress,
             context: context,
@@ -306,7 +307,7 @@ class _GymInfoSectionState extends State<GymInfoSection> {
                   .requestFocus(widget.model.gymInstagramFocusNode);
             },
           ),
-          const SizedBox(height: 16),
+          SizedBox(height: ResponsiveUtils.height(context, 16)),
           // Social Media Links
           buildTextField(
             context: context,
@@ -329,7 +330,7 @@ class _GymInfoSectionState extends State<GymInfoSection> {
                   .requestFocus(widget.model.gymFacebookFocusNode);
             },
           ),
-          const SizedBox(height: 16),
+          SizedBox(height: ResponsiveUtils.height(context, 16)),
           buildTextField(
             context: context,
             onTap: () {
@@ -359,7 +360,7 @@ class _GymInfoSectionState extends State<GymInfoSection> {
 
   Widget _buildFacilitiesInfo() {
     return Padding(
-      padding: const EdgeInsets.all(16.0),
+      padding: ResponsiveUtils.padding(context, horizontal: 16.0, vertical: 16.0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -367,14 +368,14 @@ class _GymInfoSectionState extends State<GymInfoSection> {
             FFLocalizations.of(context).getText('gymFacilities'),
             style: AppStyles.textCairo(
               context,
-              fontSize: 24,
+              fontSize: ResponsiveUtils.fontSize(context, 24),
               fontWeight: FontWeight.bold,
             ),
           ),
-          const SizedBox(height: 20),
+          SizedBox(height: ResponsiveUtils.height(context, 20)),
           Wrap(
-            spacing: 8,
-            runSpacing: 8,
+            spacing: ResponsiveUtils.width(context, 8),
+            runSpacing: ResponsiveUtils.height(context, 8),
             children: [
               _buildFacilityChip(
                   FFLocalizations.of(context).getText('cardioEquipment')),
@@ -395,16 +396,16 @@ class _GymInfoSectionState extends State<GymInfoSection> {
               _buildFacilityChip(FFLocalizations.of(context).getText('cafe')),
             ],
           ),
-          const SizedBox(height: 20),
+          SizedBox(height: ResponsiveUtils.height(context, 20)),
           Text(
             FFLocalizations.of(context).getText('workingHours'),
             style: AppStyles.textCairo(
               context,
-              fontSize: 18,
+              fontSize: ResponsiveUtils.fontSize(context, 18),
               fontWeight: FontWeight.bold,
             ),
           ),
-          const SizedBox(height: 16),
+          SizedBox(height: ResponsiveUtils.height(context, 16)),
           _buildWorkingHoursField(
               FFLocalizations.of(context).getText('duazsqnb'), 'Monday'),
           _buildWorkingHoursField(
@@ -447,10 +448,10 @@ class _GymInfoSectionState extends State<GymInfoSection> {
 
   Widget _buildWorkingHoursField(String day, String engDay) {
     return Container(
-      margin: const EdgeInsets.only(bottom: 12.0),
+      margin: EdgeInsets.only(bottom: ResponsiveUtils.height(context, 12.0)),
       decoration: BoxDecoration(
         color: FlutterFlowTheme.of(context).secondaryBackground,
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: BorderRadius.circular(ResponsiveUtils.width(context, 12)),
         boxShadow: [
           BoxShadow(
             color: FlutterFlowTheme.of(context).primaryText.withOpacity(0.05),
@@ -462,7 +463,7 @@ class _GymInfoSectionState extends State<GymInfoSection> {
       child: Material(
         color: Colors.transparent,
         child: InkWell(
-          borderRadius: BorderRadius.circular(12),
+          borderRadius: BorderRadius.circular(ResponsiveUtils.width(context, 12)),
           onTap: () {
             // Move cursor to end of text when tapped
             final controller = widget.model.workingHoursControllers[engDay];
@@ -473,26 +474,26 @@ class _GymInfoSectionState extends State<GymInfoSection> {
             }
           },
           child: Padding(
-            padding: const EdgeInsets.all(16.0),
+            padding: ResponsiveUtils.padding(context, horizontal: 16.0, vertical: 16.0),
             child: Row(
               children: [
                 Container(
-                  width: 40,
-                  height: 40,
+                  width: ResponsiveUtils.width(context, 40),
+                  height: ResponsiveUtils.height(context, 40),
                   decoration: BoxDecoration(
                     color:
                         FlutterFlowTheme.of(context).primary.withOpacity(0.1),
-                    borderRadius: BorderRadius.circular(10),
+                    borderRadius: BorderRadius.circular(ResponsiveUtils.width(context, 10)),
                   ),
                   child: Center(
                     child: Icon(
                       Icons.access_time_rounded,
                       color: FlutterFlowTheme.of(context).primary,
-                      size: 20,
+                      size: ResponsiveUtils.iconSize(context, 20),
                     ),
                   ),
                 ),
-                const SizedBox(width: 16),
+                SizedBox(width: ResponsiveUtils.width(context, 16)),
                 Expanded(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -501,18 +502,18 @@ class _GymInfoSectionState extends State<GymInfoSection> {
                         day,
                         style: AppStyles.textCairo(
                           context,
-                          fontSize: 16,
+                          fontSize: ResponsiveUtils.fontSize(context, 16),
                           fontWeight: FontWeight.w600,
                           color: FlutterFlowTheme.of(context).primaryText,
                         ),
                       ),
-                      const SizedBox(height: 4),
+                      SizedBox(height: ResponsiveUtils.height(context, 4)),
                       TextFormField(
                         controller:
                             widget.model.workingHoursControllers[engDay],
                         style: AppStyles.textCairo(
                           context,
-                          fontSize: 14,
+                          fontSize: ResponsiveUtils.fontSize(context, 14),
                           color: FlutterFlowTheme.of(context).secondaryText,
                         ),
                         decoration: InputDecoration(
@@ -522,12 +523,12 @@ class _GymInfoSectionState extends State<GymInfoSection> {
                               .getText('workingHoursHint'),
                           hintStyle: AppStyles.textCairo(
                             context,
-                            fontSize: 14,
+                            fontSize: ResponsiveUtils.fontSize(context, 14),
                             color: FlutterFlowTheme.of(context)
                                 .secondaryText
                                 .withOpacity(0.5),
                           ),
-                          contentPadding: const EdgeInsets.all(4),
+                          contentPadding: ResponsiveUtils.padding(context, horizontal: 4, vertical: 4),
                           border: InputBorder.none,
                           isDense: true,
                         ),

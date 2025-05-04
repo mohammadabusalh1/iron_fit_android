@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:iron_fit/auth/firebase_auth/auth_util.dart';
+import 'package:iron_fit/utils/responsive_utils.dart';
 import '/backend/backend.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import 'stat_card.dart';
@@ -76,7 +77,7 @@ class StatsSection extends StatelessWidget {
 
   Widget _buildStatsContent(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16.0),
+      padding: ResponsiveUtils.padding(context, horizontal: 16.0),
       child: Column(
         children: [
           Row(
@@ -104,7 +105,7 @@ class StatsSection extends StatelessWidget {
                       ),
                     );
                   }),
-              const SizedBox(width: 16),
+              SizedBox(width: ResponsiveUtils.width(context, 16)),
               Expanded(
                 child: ValueListenableBuilder<double>(
                   valueListenable: sourceNotifier,
@@ -119,7 +120,7 @@ class StatsSection extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: 16),
+          SizedBox(height: ResponsiveUtils.height(context, 16)),
           StreakStatCard(
             title: FFLocalizations.of(context).getText('workout_streak'),
             value: trainee.workoutStreak.toString(),

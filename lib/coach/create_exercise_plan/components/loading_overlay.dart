@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import 'package:lottie/lottie.dart';
+import '/utils/responsive_utils.dart';
 
 class LoadingOverlay extends StatelessWidget {
   final bool isLoading;
@@ -22,7 +23,7 @@ class LoadingOverlay extends StatelessWidget {
       color: FlutterFlowTheme.of(context).black.withAlpha(150),
       child: Center(
         child: Container(
-          padding: const EdgeInsets.all(24),
+          padding: ResponsiveUtils.padding(context, horizontal: 24, vertical: 24),
           decoration: BoxDecoration(
             color: FlutterFlowTheme.of(context).secondaryBackground,
             borderRadius: BorderRadius.circular(24),
@@ -46,15 +47,15 @@ class LoadingOverlay extends StatelessWidget {
                       'assets/lottie/success.json',
                       animate: true,
                       repeat: true,
-                      width: 80,
-                      height: 80,
+                      width: ResponsiveUtils.width(context, 80),
+                      height: ResponsiveUtils.height(context, 80),
                     ),
                     Lottie.asset(
                       'assets/lottie/cta.json',
                       animate: true,
                       repeat: false,
-                      width: 120,
-                      height: 120,
+                      width: ResponsiveUtils.width(context, 120),
+                      height: ResponsiveUtils.height(context, 120),
                     ),
                   ],
                 ),
@@ -63,8 +64,8 @@ class LoadingOverlay extends StatelessWidget {
                   'assets/lottie/create_plan.json',
                   animate: true,
                   repeat: true,
-                  width: 100,
-                  height: 100,
+                  width: ResponsiveUtils.width(context, 100),
+                  height: ResponsiveUtils.height(context, 100),
                 ),
               ],
             ],

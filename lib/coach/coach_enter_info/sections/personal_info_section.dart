@@ -6,6 +6,7 @@ import 'package:iron_fit/flutter_flow/custom_functions.dart';
 import 'package:iron_fit/flutter_flow/flutter_flow_util.dart';
 import 'package:iron_fit/flutter_flow/flutter_flow_theme.dart';
 import 'package:iron_fit/flutter_flow/upload_data.dart';
+import 'package:iron_fit/utils/responsive_utils.dart';
 import 'package:iron_fit/widgets/build_text_filed.dart';
 import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
@@ -100,6 +101,8 @@ class PersonalInfoSection extends StatelessWidget {
       } finally {
         state.setDataUploading(false);
       }
+    }else{
+      state.setDataUploading(false);
     }
   }
 
@@ -112,7 +115,7 @@ class PersonalInfoSection extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          if (isEditing) const SizedBox(height: 24),
+          if (isEditing) SizedBox(height: ResponsiveUtils.height(context, 24)),
 
           if (isEditing)
             TweenAnimationBuilder<double>(
@@ -124,13 +127,13 @@ class PersonalInfoSection extends StatelessWidget {
                   child: Transform.translate(
                     offset: Offset(0, 20 * (1 - value)),
                     child: Padding(
-                      padding: const EdgeInsets.all(16.0),
+                      padding: ResponsiveUtils.padding(context, horizontal: 16.0, vertical: 16.0),
                       child: Text(
                         FFLocalizations.of(context).getText(
                             'edit_coach_info' /* Give the Coach a Makeover! 💇‍♂️📋 */),
                         style: AppStyles.textCairo(
                           context,
-                          fontSize: 20,
+                          fontSize: ResponsiveUtils.fontSize(context, 20),
                           fontWeight: FontWeight.bold,
                           color: FlutterFlowTheme.of(context).primaryText,
                         ),
@@ -140,7 +143,7 @@ class PersonalInfoSection extends StatelessWidget {
                 );
               },
             ),
-          if (isEditing) const SizedBox(height: 24),
+          if (isEditing) SizedBox(height: ResponsiveUtils.height(context, 24)),
 
           // Welcome Message with Animation
           if (!isEditing)
@@ -158,7 +161,7 @@ class PersonalInfoSection extends StatelessWidget {
                             'welcome_message' /* Welcome to Iron Fit */),
                         style: AppStyles.textCairo(
                           context,
-                          fontSize: 24,
+                          fontSize: ResponsiveUtils.fontSize(context, 24),
                           fontWeight: FontWeight.bold,
                           color: FlutterFlowTheme.of(context).primaryText,
                         ),
@@ -179,7 +182,7 @@ class PersonalInfoSection extends StatelessWidget {
                   scale: value,
                   child: Center(
                     child: SizedBox(
-                      height: 130,
+                      height: ResponsiveUtils.height(context, 130),
                       child: Lottie.asset(
                         'assets/lottie/welcome_wave.json',
                         animate: true,
@@ -208,8 +211,8 @@ class PersonalInfoSection extends StatelessWidget {
                         child: GestureDetector(
                           onTap: () => _handleImageSelection(context),
                           child: Container(
-                            width: 160,
-                            height: 160,
+                            width: ResponsiveUtils.width(context, 160),
+                            height: ResponsiveUtils.height(context, 160),
                             decoration: BoxDecoration(
                               shape: BoxShape.circle,
                               border: Border.all(
@@ -239,7 +242,7 @@ class PersonalInfoSection extends StatelessWidget {
             ),
           ),
 
-          const SizedBox(height: 24),
+          SizedBox(height: ResponsiveUtils.height(context, 24)),
 
           ElevatedButton.icon(
             onPressed: state.isDataUploading
@@ -249,7 +252,7 @@ class PersonalInfoSection extends StatelessWidget {
               model.uploadedFileUrl.isEmpty
                   ? Icons.add_photo_alternate
                   : Icons.edit,
-              size: 20,
+              size: ResponsiveUtils.iconSize(context, 20),
             ),
             label: Text(
               model.uploadedFileUrl.isEmpty
@@ -257,7 +260,7 @@ class PersonalInfoSection extends StatelessWidget {
                   : FFLocalizations.of(context).getText('change_photo'),
               style: AppStyles.textCairo(
                 context,
-                fontSize: 14,
+                fontSize: ResponsiveUtils.fontSize(context, 14),
                 fontWeight: FontWeight.w700,
                 color: FlutterFlowTheme.of(context).black.withOpacity(0.8),
               ),
@@ -265,9 +268,9 @@ class PersonalInfoSection extends StatelessWidget {
             style: ElevatedButton.styleFrom(
               foregroundColor: FlutterFlowTheme.of(context).primaryBackground,
               backgroundColor: FlutterFlowTheme.of(context).primary,
-              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+              padding: ResponsiveUtils.padding(context, horizontal: 16, vertical: 12),
               shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(12),
+                borderRadius: BorderRadius.circular(ResponsiveUtils.width(context, 12)),
               ),
               elevation: 2,
             ),
@@ -275,8 +278,7 @@ class PersonalInfoSection extends StatelessWidget {
 
           // Profile Instructions Text
           Padding(
-            padding: const EdgeInsetsDirectional.symmetric(
-                vertical: 24, horizontal: 24),
+            padding: ResponsiveUtils.padding(context, horizontal: 24, vertical: 24),
             child: TweenAnimationBuilder<double>(
               duration: const Duration(milliseconds: 800),
               tween: Tween<double>(begin: 0, end: 1),
@@ -291,7 +293,7 @@ class PersonalInfoSection extends StatelessWidget {
                       textAlign: TextAlign.center,
                       style: AppStyles.textCairo(
                         context,
-                        fontSize: 16,
+                        fontSize: ResponsiveUtils.fontSize(context, 16),
                         color: FlutterFlowTheme.of(context).secondaryText,
                       ),
                     ),
@@ -310,16 +312,16 @@ class PersonalInfoSection extends StatelessWidget {
 
     return state.isDataUploading
         ? Container(
-            width: 160,
-            height: 160,
+            width: ResponsiveUtils.width(context, 160),
+            height: ResponsiveUtils.height(context, 160),
             decoration: BoxDecoration(
               color: FlutterFlowTheme.of(context).secondaryBackground,
             ),
             child: Center(
               child: Lottie.asset(
                 'assets/lottie/loading_avatar.json',
-                width: 100,
-                height: 100,
+                width: ResponsiveUtils.width(context, 100),
+                height: ResponsiveUtils.height(context, 100),
                 animate: true,
                 repeat: true,
                 options: LottieOptions(enableMergePaths: true),
@@ -328,8 +330,8 @@ class PersonalInfoSection extends StatelessWidget {
           )
         : model.uploadedFileUrl.isEmpty
             ? Container(
-                width: 160,
-                height: 160,
+                width: ResponsiveUtils.width(context, 160),
+                height: ResponsiveUtils.height(context, 160),
                 decoration: BoxDecoration(
                   color: FlutterFlowTheme.of(context).secondaryBackground,
                 ),
@@ -342,28 +344,28 @@ class PersonalInfoSection extends StatelessWidget {
               )
             : Image.network(
                 model.uploadedFileUrl,
-                width: 160,
-                height: 160,
+                width: ResponsiveUtils.width(context, 160),
+                height: ResponsiveUtils.height(context, 160),
                 fit: BoxFit.cover,
                 errorBuilder: (context, error, stackTrace) {
                   return Container(
-                    width: 160,
-                    height: 160,
+                    width: ResponsiveUtils.width(context, 160),
+                    height: ResponsiveUtils.height(context, 160),
                     decoration: BoxDecoration(
                       color: FlutterFlowTheme.of(context).error,
                     ),
                     child: Icon(
                       Icons.error_outline,
                       color: FlutterFlowTheme.of(context).info,
-                      size: 40,
+                      size: ResponsiveUtils.iconSize(context, 40),
                     ),
                   );
                 },
                 loadingBuilder: (context, child, loadingProgress) {
                   if (loadingProgress == null) return child;
                   return Container(
-                    width: 160,
-                    height: 160,
+                    width: ResponsiveUtils.width(context, 160),
+                    height: ResponsiveUtils.height(context, 160),
                     decoration: BoxDecoration(
                       color: FlutterFlowTheme.of(context).secondaryBackground,
                     ),
@@ -396,13 +398,13 @@ class PersonalInfoSection extends StatelessWidget {
                     child: Transform.translate(
                       offset: Offset(0, 20 * (1 - value)),
                       child: Padding(
-                        padding: const EdgeInsets.all(16.0),
+                        padding: ResponsiveUtils.padding(context, horizontal: 16.0, vertical: 16.0),
                         child: Text(
                           FFLocalizations.of(context).getText(
                               'coach_personal_info' /* Personal Info */),
                           style: AppStyles.textCairo(
                             context,
-                            fontSize: 22,
+                            fontSize: ResponsiveUtils.fontSize(context, 22),
                             fontWeight: FontWeight.bold,
                             color: FlutterFlowTheme.of(context).primaryText,
                           ),
@@ -427,7 +429,7 @@ class PersonalInfoSection extends StatelessWidget {
       _buildAnimatedFormField(
         index: 0,
         child: Padding(
-          padding: const EdgeInsetsDirectional.fromSTEB(16, 8, 16, 8),
+          padding: ResponsiveUtils.padding(context, horizontal: 16, vertical: 8),
           child: buildTextField(
             onTap: () {
               // Move cursor to end of text
@@ -457,7 +459,7 @@ class PersonalInfoSection extends StatelessWidget {
       _buildAnimatedFormField(
         index: 2,
         child: Padding(
-          padding: const EdgeInsetsDirectional.fromSTEB(16, 8, 16, 8),
+          padding: ResponsiveUtils.padding(context, horizontal: 16, vertical: 8),
           child: buildTextField(
             context: context,
             controller: model.dateOfBirthTextController,
@@ -482,7 +484,7 @@ class PersonalInfoSection extends StatelessWidget {
                       textButtonTheme: TextButtonThemeData(
                         style: TextButton.styleFrom(
                           textStyle: AppStyles.textCairo(context,
-                              fontSize: 16, fontWeight: FontWeight.w600),
+                              fontSize: ResponsiveUtils.fontSize(context, 16), fontWeight: FontWeight.w600),
                         ),
                       ),
                     ),

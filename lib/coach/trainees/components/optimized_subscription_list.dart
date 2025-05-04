@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:iron_fit/backend/backend.dart';
 import 'package:iron_fit/coach/trainees/components/trainee_card.dart';
 import 'package:flutter/foundation.dart';
+import 'package:iron_fit/utils/responsive_utils.dart';
 
 class OptimizedSubscriptionList extends StatefulWidget {
   final List<SubscriptionsRecord> subscriptions;
@@ -58,7 +59,9 @@ class _OptimizedSubscriptionListState extends State<OptimizedSubscriptionList> {
           final subscription = widget.subscriptions[index];
           return Padding(
             padding: EdgeInsets.only(
-                bottom: index < widget.subscriptions.length - 1 ? 16.0 : 0),
+                bottom: index < widget.subscriptions.length - 1 
+                    ? ResponsiveUtils.height(context, 16.0) 
+                    : 0),
             child: RepaintBoundary(
               child: TraineeCard(
                 key: ValueKey(subscription.reference.id),

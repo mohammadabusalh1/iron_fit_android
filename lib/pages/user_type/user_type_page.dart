@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:iron_fit/componants/Styles.dart';
+import 'package:iron_fit/utils/responsive_utils.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import 'package:animate_do/animate_do.dart';
@@ -75,8 +76,9 @@ class _UserTypePageState extends State<UserTypePage>
             ),
           ),
           child: Padding(
-            padding:
-                const EdgeInsets.symmetric(horizontal: 24.0, vertical: 16.0),
+            padding: EdgeInsets.symmetric(
+                horizontal: ResponsiveUtils.width(context, 24.0), 
+                vertical: ResponsiveUtils.height(context, 16.0)),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
@@ -87,12 +89,12 @@ class _UserTypePageState extends State<UserTypePage>
                     FFLocalizations.of(context).getText('selectUserTypeTitle'),
                     style: AppStyles.textCairo(
                       context,
-                      fontSize: 26,
+                      fontSize: ResponsiveUtils.fontSize(context, 26),
                       fontWeight: FontWeight.bold,
                     ),
                   ),
                 ),
-                const SizedBox(height: 8),
+                SizedBox(height: ResponsiveUtils.height(context, 8)),
                 FadeInDown(
                   duration: const Duration(milliseconds: 900),
                   child: Text(
@@ -101,12 +103,12 @@ class _UserTypePageState extends State<UserTypePage>
                         .getText('selectUserTypeDescription'),
                     style: AppStyles.textCairo(
                       context,
-                      fontSize: 14,
+                      fontSize: ResponsiveUtils.fontSize(context, 14),
                       color: FlutterFlowTheme.of(context).secondaryText,
                     ),
                   ),
                 ),
-                const SizedBox(height: 32),
+                SizedBox(height: ResponsiveUtils.height(context, 32)),
                 Expanded(
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.start,
@@ -124,7 +126,7 @@ class _UserTypePageState extends State<UserTypePage>
                           onTap: () => _handleUserTypeSelection('coach', 0),
                         ),
                       ),
-                      const SizedBox(height: 24),
+                      SizedBox(height: ResponsiveUtils.height(context, 24)),
                       FadeInUp(
                         duration: const Duration(milliseconds: 1100),
                         child: UserTypeCard(
@@ -239,7 +241,7 @@ class _UserTypeCardState extends State<UserTypeCard> {
           statesController: _statesController,
           child: Container(
             width: double.infinity,
-            padding: const EdgeInsets.all(24),
+            padding: EdgeInsets.all(ResponsiveUtils.width(context, 24)),
             decoration: BoxDecoration(
               border: Border.all(
                 color: isActive
@@ -315,8 +317,8 @@ class _UserTypeCardState extends State<UserTypeCard> {
                       child: AnimatedContainer(
                         duration: const Duration(milliseconds: 300),
                         padding: EdgeInsets.all(isActive || isPressing
-                            ? 22
-                            : (isHovered ? 20 : 16)),
+                            ? ResponsiveUtils.width(context, 22)
+                            : (isHovered ? ResponsiveUtils.width(context, 20) : ResponsiveUtils.width(context, 16))),
                         decoration: BoxDecoration(
                           color: isActive
                               ? FlutterFlowTheme.of(context)
@@ -343,14 +345,14 @@ class _UserTypeCardState extends State<UserTypeCard> {
                                   ? FlutterFlowTheme.of(context).primary
                                   : FlutterFlowTheme.of(context).primary),
                           size: isActive || isPressing
-                              ? 42
-                              : (isHovered ? 40 : 36),
+                              ? ResponsiveUtils.iconSize(context, 42)
+                              : (isHovered ? ResponsiveUtils.iconSize(context, 40) : ResponsiveUtils.iconSize(context, 36)),
                         ),
                       ),
                     );
                   },
                 ),
-                const SizedBox(height: 12),
+                SizedBox(height: ResponsiveUtils.height(context, 12)),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
@@ -367,7 +369,7 @@ class _UserTypeCardState extends State<UserTypeCard> {
                             widget.title,
                             style: AppStyles.textCairo(
                               context,
-                              fontSize: 20 + (value * 2),
+                              fontSize: ResponsiveUtils.fontSize(context, 20 + (value * 2)),
                               fontWeight: FontWeight.w600,
                               color: isActive || isPressing || isHovered
                                   ? FlutterFlowTheme.of(context).primary
@@ -377,11 +379,12 @@ class _UserTypeCardState extends State<UserTypeCard> {
                         );
                       },
                     ),
-                    const SizedBox(height: 4),
+                    SizedBox(height: ResponsiveUtils.height(context, 4)),
                     AnimatedDefaultTextStyle(
                       duration: const Duration(milliseconds: 200),
                       style: AppStyles.textCairo(
                         context,
+                        fontSize: ResponsiveUtils.fontSize(context, 14),
                         color: isActive || isPressing
                             ? FlutterFlowTheme.of(context).primary
                             : (isHovered

@@ -10,6 +10,7 @@ import 'package:iron_fit/componants/Styles.dart';
 import 'package:iron_fit/services/notification_service.dart';
 import 'package:iron_fit/services/notification_manager.dart';
 import 'package:iron_fit/utils/logger.dart';
+import 'package:iron_fit/utils/responsive_utils.dart';
 
 class NotificationButton extends StatefulWidget {
   final TraineeRecord trainee;
@@ -51,23 +52,23 @@ class _NotificationButtonState extends State<NotificationButton> {
     if (notifications.isEmpty) {
       return [
         Padding(
-          padding: const EdgeInsets.symmetric(vertical: 32),
+          padding: ResponsiveUtils.padding(context, vertical: 32),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Icon(
                 Icons.notifications_off_outlined,
-                size: 48,
+                size: ResponsiveUtils.iconSize(context, 48),
                 color: FlutterFlowTheme.of(context)
                     .secondaryText
                     .withValues(alpha: 0.5),
               ),
-              const SizedBox(height: 16),
+              SizedBox(height: ResponsiveUtils.height(context, 16)),
               Text(
                 FFLocalizations.of(context).getText('NoNotifications'),
                 style: AppStyles.textCairo(
                   context,
-                  fontSize: 16,
+                  fontSize: ResponsiveUtils.fontSize(context, 16),
                   color: FlutterFlowTheme.of(context).secondaryText,
                 ),
               ),
@@ -106,9 +107,10 @@ class _NotificationButtonState extends State<NotificationButton> {
 
                 final user = snapshot2.data!;
                 return AnimatedContainer(
-                  margin: const EdgeInsets.symmetric(vertical: 4),
+                  margin: ResponsiveUtils.padding(context, vertical: 4),
                   duration: const Duration(milliseconds: 300),
-                  padding: const EdgeInsets.all(12),
+                  padding: ResponsiveUtils.padding(context,
+                      horizontal: 12, vertical: 12),
                   decoration: BoxDecoration(
                     color: FlutterFlowTheme.of(context).secondaryBackground,
                     borderRadius: BorderRadius.circular(12),
@@ -131,27 +133,27 @@ class _NotificationButtonState extends State<NotificationButton> {
                           Icon(
                             Icons.person_add,
                             color: FlutterFlowTheme.of(context).primary,
-                            size: 20,
+                            size: ResponsiveUtils.iconSize(context, 20),
                           ),
-                          const SizedBox(width: 8),
+                          SizedBox(width: ResponsiveUtils.width(context, 8)),
                           Text(
                             FFLocalizations.of(context)
                                 .getText('SubscriptionRequest'),
                             style: AppStyles.textCairo(
                               context,
-                              fontSize: 16,
+                              fontSize: ResponsiveUtils.fontSize(context, 16),
                               fontWeight: FontWeight.bold,
                               color: FlutterFlowTheme.of(context).primaryText,
                             ),
                           ),
                         ],
                       ),
-                      const SizedBox(height: 8),
+                      SizedBox(height: ResponsiveUtils.height(context, 8)),
                       Text(
                         '${FFLocalizations.of(context).getText('coach_label')}: ${user.displayName}',
                         style: AppStyles.textCairo(
                           context,
-                          fontSize: 12,
+                          fontSize: ResponsiveUtils.fontSize(context, 12),
                           color: FlutterFlowTheme.of(context).secondaryText,
                         ),
                       ),
@@ -159,7 +161,7 @@ class _NotificationButtonState extends State<NotificationButton> {
                         '${FFLocalizations.of(context).getText('s3kxq2nc')}: ${doc.amountPaid}, ${FFLocalizations.of(context).getText('kcmdk6wv')}: ${doc.debts}',
                         style: AppStyles.textCairo(
                           context,
-                          fontSize: 12,
+                          fontSize: ResponsiveUtils.fontSize(context, 12),
                           color: FlutterFlowTheme.of(context).secondaryText,
                         ),
                       ),
@@ -167,27 +169,29 @@ class _NotificationButtonState extends State<NotificationButton> {
                         '${FFLocalizations.of(context).getText('40ue080t')}: ${dateTimeFormat('yyyy/MM/dd', doc.endDate)}',
                         style: AppStyles.textCairo(
                           context,
-                          fontSize: 12,
+                          fontSize: ResponsiveUtils.fontSize(context, 12),
                           color: FlutterFlowTheme.of(context).secondaryText,
                         ),
                       ),
-                      const SizedBox(height: 12),
+                      SizedBox(height: ResponsiveUtils.height(context, 12)),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: [
                           ElevatedButton.icon(
-                            icon: const Icon(Icons.check, size: 18),
+                            icon: Icon(Icons.check,
+                                size: ResponsiveUtils.iconSize(context, 18)),
                             label: Text(
                               FFLocalizations.of(context).getText('accept'),
                               style: AppStyles.textCairo(
                                 context,
+                                fontSize: ResponsiveUtils.fontSize(context, 14),
                                 color: FlutterFlowTheme.of(context).info,
                               ),
                             ),
                             style: ElevatedButton.styleFrom(
                               backgroundColor:
                                   FlutterFlowTheme.of(context).success,
-                              padding: const EdgeInsets.symmetric(
+                              padding: ResponsiveUtils.padding(context,
                                   horizontal: 16, vertical: 8),
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(8),
@@ -221,13 +225,15 @@ class _NotificationButtonState extends State<NotificationButton> {
                               }
                             },
                           ),
-                          const SizedBox(width: 8),
+                          SizedBox(width: ResponsiveUtils.width(context, 8)),
                           OutlinedButton.icon(
-                            icon: const Icon(Icons.close, size: 18),
+                            icon: Icon(Icons.close,
+                                size: ResponsiveUtils.iconSize(context, 18)),
                             label: Text(
                               FFLocalizations.of(context).getText('reject'),
                               style: AppStyles.textCairo(
                                 context,
+                                fontSize: ResponsiveUtils.fontSize(context, 14),
                                 color: FlutterFlowTheme.of(context).error,
                               ),
                             ),
@@ -235,7 +241,7 @@ class _NotificationButtonState extends State<NotificationButton> {
                               side: BorderSide(
                                 color: FlutterFlowTheme.of(context).error,
                               ),
-                              padding: const EdgeInsets.symmetric(
+                              padding: ResponsiveUtils.padding(context,
                                   horizontal: 16, vertical: 8),
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(8),
@@ -294,11 +300,12 @@ class _NotificationButtonState extends State<NotificationButton> {
           filter: ImageFilter.blur(sigmaX: 4, sigmaY: 4),
           child: Dialog(
             backgroundColor: Colors.transparent,
-            insetPadding:
-                const EdgeInsets.symmetric(horizontal: 16, vertical: 24),
+            insetPadding: EdgeInsets.symmetric(
+                horizontal: ResponsiveUtils.width(context, 16),
+                vertical: ResponsiveUtils.height(context, 24)),
             child: Container(
               constraints: BoxConstraints(
-                maxWidth: 400,
+                maxWidth: ResponsiveUtils.width(context, 400),
                 maxHeight: mediaQuery.height * 0.8,
               ),
               decoration: BoxDecoration(
@@ -319,22 +326,23 @@ class _NotificationButtonState extends State<NotificationButton> {
                 children: [
                   // Header
                   Padding(
-                    padding: const EdgeInsets.all(16),
+                    padding: ResponsiveUtils.padding(context,
+                        horizontal: 16, vertical: 16),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Row(
                           children: [
                             Icon(Icons.notifications,
-                                color:
-                                    FlutterFlowTheme.of(context).primaryText),
-                            const SizedBox(width: 8),
+                                color: FlutterFlowTheme.of(context).primaryText,
+                                size: ResponsiveUtils.iconSize(context, 24)),
+                            SizedBox(width: ResponsiveUtils.width(context, 8)),
                             Text(
                               FFLocalizations.of(context)
                                   .getText('Notifications'),
                               style: AppStyles.textCairo(
                                 context,
-                                fontSize: 18,
+                                fontSize: ResponsiveUtils.fontSize(context, 18),
                                 fontWeight: FontWeight.bold,
                                 color: FlutterFlowTheme.of(context).primaryText,
                               ),
@@ -342,7 +350,8 @@ class _NotificationButtonState extends State<NotificationButton> {
                           ],
                         ),
                         IconButton(
-                          icon: const Icon(Icons.close),
+                          icon: Icon(Icons.close,
+                              size: ResponsiveUtils.iconSize(context, 24)),
                           onPressed: () => Navigator.pop(context),
                           color: FlutterFlowTheme.of(context).secondaryText,
                         ),
@@ -362,14 +371,15 @@ class _NotificationButtonState extends State<NotificationButton> {
                     ),
                   ),
 
-                  const SizedBox(height: 16),
+                  SizedBox(height: ResponsiveUtils.height(context, 16)),
 
                   Column(
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       const Divider(height: 1),
                       Padding(
-                        padding: const EdgeInsets.all(12),
+                        padding: ResponsiveUtils.padding(context,
+                            horizontal: 12, vertical: 12),
                         child: TextButton(
                           onPressed: () {
                             try {
@@ -391,7 +401,7 @@ class _NotificationButtonState extends State<NotificationButton> {
                                 .getText('MarkAllAsRead'),
                             style: AppStyles.textCairo(
                               context,
-                              fontSize: 14,
+                              fontSize: ResponsiveUtils.fontSize(context, 14),
                               color: FlutterFlowTheme.of(context).primary,
                             ),
                           ),
@@ -421,15 +431,15 @@ class _NotificationButtonState extends State<NotificationButton> {
     }
   }
 
-  // Process new notifications and play sound only for new ones
+  // show sound notification for new notifications
   void _processNewNotifications(List<AlertRecord> notifications) {
     for (var notification in notifications) {
       try {
         // Only show notification if we haven't processed this ID before
         if (!ProcessedNotification.isNotificationProcessed(
             notification.reference.id)) {
-          widget.notificationService
-              .showSoundNotification(notification.name, notification.desc);
+          widget.notificationService.showSoundNotification(
+              title: notification.name, body: notification.desc);
 
           // Add this notification ID to our processed set
           ProcessedNotification.markNotificationProcessed(
@@ -441,7 +451,7 @@ class _NotificationButtonState extends State<NotificationButton> {
     }
   }
 
-  // Process new subscription notifications and play sound only for new ones
+  //  show sound notification for new subscription requests
   void _processNewSubscriptions(
       List<SubscriptionsRecord> subscriptions, BuildContext context) {
     for (var subscription in subscriptions) {
@@ -450,8 +460,8 @@ class _NotificationButtonState extends State<NotificationButton> {
         if (!ProcessedNotification.isSubscriptionProcessed(
             subscription.reference.id)) {
           widget.notificationService.showSoundNotification(
-              FFLocalizations.of(context).getText('SubscriptionRequest'),
-              FFLocalizations.of(context)
+              title: FFLocalizations.of(context).getText('SubscriptionRequest'),
+              body: FFLocalizations.of(context)
                   .getText('subscription_requests_from_coach'));
 
           // Add this subscription ID to our processed set
@@ -480,7 +490,7 @@ class _NotificationButtonState extends State<NotificationButton> {
 
         final notifications = snapshot.data!;
 
-        // Process new notifications - only play sounds for newly arrived ones
+        // show sound notification for new notifications
         _processNewNotifications(notifications);
 
         List<PopupMenuItem<dynamic>> unReadedItems = [];
@@ -532,7 +542,7 @@ class _NotificationButtonState extends State<NotificationButton> {
 
                 final subscriptionsNotifications = snapshot.data!;
 
-                // Process new subscription notifications
+                // show sound notification for new subscription requests
                 _processNewSubscriptions(subscriptionsNotifications, context);
 
                 List<PopupMenuItem<dynamic>> subscriptionsItems = [];
@@ -557,6 +567,7 @@ class _NotificationButtonState extends State<NotificationButton> {
                       icon: Icon(
                         Icons.notifications_none_rounded,
                         color: Theme.of(context).iconTheme.color,
+                        size: ResponsiveUtils.iconSize(context, 24),
                       ),
                       onPressed: () => _showNotifications(
                         context,
@@ -571,20 +582,21 @@ class _NotificationButtonState extends State<NotificationButton> {
                         right: 0,
                         top: 1,
                         child: Container(
-                          padding: const EdgeInsets.all(2),
+                          padding: ResponsiveUtils.padding(context,
+                              horizontal: 2, vertical: 2),
                           decoration: BoxDecoration(
                             color: FlutterFlowTheme.of(context).primary,
                             borderRadius: BorderRadius.circular(12),
                           ),
-                          constraints: const BoxConstraints(
-                            minWidth: 20,
-                            minHeight: 20,
+                          constraints: BoxConstraints(
+                            minWidth: ResponsiveUtils.width(context, 20),
+                            minHeight: ResponsiveUtils.height(context, 20),
                           ),
                           child: Text(
                             notificationCount.toString(),
                             style: AppStyles.textCairo(
                               context,
-                              fontSize: 9,
+                              fontSize: ResponsiveUtils.fontSize(context, 9),
                               color: FlutterFlowTheme.of(context).info,
                               fontWeight: FontWeight.bold,
                             ),

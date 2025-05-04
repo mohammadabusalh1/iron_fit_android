@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/componants/Styles.dart';
+import 'package:iron_fit/utils/responsive_utils.dart';
 import 'exercise_info_card.dart';
 
 class DayCard extends StatelessWidget {
@@ -19,7 +20,7 @@ class DayCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsetsDirectional.fromSTEB(0.0, 24.0, 0.0, 0.0),
+      padding: EdgeInsetsDirectional.fromSTEB(0.0, ResponsiveUtils.height(context, 24.0), 0.0, 0.0),
       child: InkWell(
         splashColor: Colors.transparent,
         focusColor: Colors.transparent,
@@ -30,7 +31,7 @@ class DayCard extends StatelessWidget {
           color: Colors.transparent,
           elevation: 2.0,
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(16.0),
+            borderRadius: BorderRadius.circular(ResponsiveUtils.width(context, 16.0)),
           ),
           child: Container(
             width: MediaQuery.sizeOf(context).width * 1.0,
@@ -38,15 +39,15 @@ class DayCard extends StatelessWidget {
               color: isToday
                   ? FlutterFlowTheme.of(context).primary.withOpacity(0.3)
                   : FlutterFlowTheme.of(context).secondaryBackground,
-              borderRadius: BorderRadius.circular(16.0),
+              borderRadius: BorderRadius.circular(ResponsiveUtils.width(context, 16.0)),
               border: isToday
                   ? Border.all(
-                      color: FlutterFlowTheme.of(context).primary, width: 2)
+                      color: FlutterFlowTheme.of(context).primary, 
+                      width: ResponsiveUtils.width(context, 2))
                   : null,
             ),
             child: Padding(
-              padding:
-                  const EdgeInsetsDirectional.fromSTEB(20.0, 20.0, 20.0, 20.0),
+              padding: ResponsiveUtils.padding(context, horizontal: 20.0, vertical: 20.0),
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
@@ -56,21 +57,21 @@ class DayCard extends StatelessWidget {
                       Icon(
                         Icons.calendar_month,
                         color: FlutterFlowTheme.of(context).primary,
-                        size: 24.0,
+                        size: ResponsiveUtils.iconSize(context, 24.0),
                       ),
-                      const SizedBox(width: 8.0),
+                      SizedBox(width: ResponsiveUtils.width(context, 8.0)),
                       Text(
                         daysItem.day,
                         style: AppStyles.textCairo(
                           context,
-                          fontSize: 18,
+                          fontSize: ResponsiveUtils.fontSize(context, 18),
                           fontWeight: FontWeight.bold,
                           color: FlutterFlowTheme.of(context).info,
                         ),
                       ),
                     ],
                   ),
-                  const SizedBox(height: 16.0),
+                  SizedBox(height: ResponsiveUtils.height(context, 16.0)),
                   ExerciseInfoCard(daysItem: daysItem),
                 ],
               ),

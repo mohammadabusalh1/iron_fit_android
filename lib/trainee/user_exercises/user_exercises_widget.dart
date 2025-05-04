@@ -4,6 +4,7 @@ import '/auth/firebase_auth/auth_util.dart';
 import '/backend/backend.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
+import '/utils/responsive_utils.dart';
 import 'user_exercises_model.dart';
 
 // Import the components
@@ -176,13 +177,12 @@ class _UserExercisesWidgetState extends State<UserExercisesWidget> {
           extendBodyBehindAppBar: true,
           appBar: const CustomAppBar(),
           body: Container(
-            height: MediaQuery.sizeOf(context).height,
+            height: ResponsiveUtils.screenHeight(context),
             decoration: BoxDecoration(color: secondaryBackground),
             child: SafeArea(
               top: true,
               child: Padding(
-                padding:
-                    const EdgeInsetsDirectional.fromSTEB(16.0, 16.0, 16.0, 0.0),
+                padding: ResponsiveUtils.padding(context, horizontal: 16.0, vertical: 16.0),
                 child: SingleChildScrollView(
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
@@ -199,8 +199,8 @@ class _UserExercisesWidgetState extends State<UserExercisesWidget> {
                         day: widget.day,
                         onProgressUpdated: _handleProgressUpdate,
                       ),
-                      const SizedBox(height: 24.0),
-                    ].divide(const SizedBox(height: 16.0)),
+                      SizedBox(height: ResponsiveUtils.height(context, 24.0)),
+                    ].divide(SizedBox(height: ResponsiveUtils.height(context, 16.0))),
                   ),
                 ),
               ),

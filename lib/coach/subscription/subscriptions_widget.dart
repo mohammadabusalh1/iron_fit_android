@@ -6,6 +6,7 @@ import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import 'package:flutter/material.dart';
 import 'package:iron_fit/utils/logger.dart';
+import 'package:iron_fit/utils/responsive_utils.dart';
 import 'subscriptions_model.dart';
 import 'package:iron_fit/coach/subscription/componants/subscriptions_header.dart';
 import 'package:iron_fit/coach/subscription/componants/subscription_plan_card.dart';
@@ -130,7 +131,12 @@ class _SubscriptionsWidgetState extends State<SubscriptionsWidget> {
         body: SafeArea(
           top: true,
           child: Container(
-            padding: const EdgeInsetsDirectional.fromSTEB(24, 24, 24, 0),
+            padding: EdgeInsetsDirectional.fromSTEB(
+              ResponsiveUtils.width(context, 24), 
+              ResponsiveUtils.height(context, 24),
+              ResponsiveUtils.width(context, 24),
+              0,
+            ),
             decoration: BoxDecoration(
               gradient: LinearGradient(
                 begin: Alignment.topCenter,
@@ -204,8 +210,8 @@ class _SubscriptionsWidgetState extends State<SubscriptionsWidget> {
                           updateSubscriptionDate: _updateSubscriptionDate,
                         ),
 
-                        const SizedBox(height: 24),
-                      ].divide(const SizedBox(height: 24)),
+                        SizedBox(height: ResponsiveUtils.height(context, 24)),
+                      ].divide(SizedBox(height: ResponsiveUtils.height(context, 24))),
                     ),
                   ),
           ),

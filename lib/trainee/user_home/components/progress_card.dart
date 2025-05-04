@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:iron_fit/componants/Styles.dart';
+import 'package:iron_fit/utils/responsive_utils.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import 'package:percent_indicator/percent_indicator.dart';
@@ -19,8 +20,8 @@ class ProgressCard extends StatelessWidget {
     final percentage = progress > total ? 100 : ((progress / total) * 100);
 
     return Container(
-      height: FFLocalizations.of(context).languageCode == 'ar' ? 150 : 170,
-      padding: const EdgeInsets.all(16),
+      height: ResponsiveUtils.height(context, FFLocalizations.of(context).languageCode == 'ar' ? 150 : 170),
+      padding: ResponsiveUtils.padding(context, horizontal: 16, vertical: 16),
       decoration: BoxDecoration(
         color: FlutterFlowTheme.of(context).secondaryBackground,
         borderRadius: BorderRadius.circular(16),
@@ -32,12 +33,12 @@ class ProgressCard extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               ConstrainedBox(
-                constraints: const BoxConstraints(maxWidth: 80),
+                constraints: BoxConstraints(maxWidth: ResponsiveUtils.width(context, 80)),
                 child: Text(
                   FFLocalizations.of(context).getText('rconapdq'),
                   style: AppStyles.textCairo(
                     context,
-                    fontSize: 16,
+                    fontSize: ResponsiveUtils.fontSize(context, 16),
                     color: FlutterFlowTheme.of(context).primaryText,
                   ),
                 ),
@@ -45,14 +46,15 @@ class ProgressCard extends StatelessWidget {
               Icon(
                 Icons.trending_up_rounded,
                 color: FlutterFlowTheme.of(context).primary,
+                size: ResponsiveUtils.iconSize(context, 24),
               ),
             ],
           ),
-          const SizedBox(height: 12),
+          SizedBox(height: ResponsiveUtils.height(context, 12)),
           CircularPercentIndicator(
             percent: percentage / 100,
-            radius: 35,
-            lineWidth: 8,
+            radius: ResponsiveUtils.width(context, 35),
+            lineWidth: ResponsiveUtils.width(context, 8),
             animation: true,
             animateFromLastPercent: true,
             progressColor: FlutterFlowTheme.of(context).primary,
@@ -62,7 +64,7 @@ class ProgressCard extends StatelessWidget {
               '${percentage.toStringAsFixed(0)}%',
               style: AppStyles.textCairo(
                 context,
-                fontSize: 16,
+                fontSize: ResponsiveUtils.fontSize(context, 16),
                 fontWeight: FontWeight.bold,
                 color: FlutterFlowTheme.of(context).primaryText,
               ),

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:iron_fit/coach/create_nutrition_plans/componants/form_field_components.dart';
 import 'package:iron_fit/flutter_flow/flutter_flow_util.dart';
+import 'package:iron_fit/utils/responsive_utils.dart';
 
 class PlanDetailsSection extends StatelessWidget {
   final TextEditingController nameController;
@@ -34,7 +35,7 @@ class PlanDetailsSection extends StatelessWidget {
             title: FFLocalizations.of(context)
                 .getText('jjfz2qkx' /* Create Nutrition Plan */),
           ),
-          const SizedBox(height: 24),
+          SizedBox(height: ResponsiveUtils.height(context, 24)),
           StandardTextFormField(
             controller: nameController,
             focusNode: nameFocusNode,
@@ -52,7 +53,7 @@ class PlanDetailsSection extends StatelessWidget {
               return null;
             },
           ),
-          const SizedBox(height: 16),
+          SizedBox(height: ResponsiveUtils.height(context, 16)),
           StandardTextFormField(
             controller: numOfWeeksController,
             focusNode: numOfWeeksFocusNode,
@@ -70,11 +71,11 @@ class PlanDetailsSection extends StatelessWidget {
               }
               if (int.tryParse(value) == null) {
                 return FFLocalizations.of(context)
-                    .getText('pleaseEnterValidNumber');
+                    .getText('pleaseEnterAValidNumber');
               }
               if (int.parse(value) < 1) {
                 return FFLocalizations.of(context)
-                    .getText('pleaseEnterValidNumber');
+                    .getText('pleaseEnterAValidNumber');
               }
               if (int.parse(value) > 100) {
                 return FFLocalizations.of(context)
@@ -83,7 +84,7 @@ class PlanDetailsSection extends StatelessWidget {
               return null;
             },
           ),
-          const SizedBox(height: 16),
+          SizedBox(height: ResponsiveUtils.height(context, 16)),
           StandardTextFormField(
             keyboardType: TextInputType.number,
             controller: caloriesController,
@@ -101,7 +102,15 @@ class PlanDetailsSection extends StatelessWidget {
               }
               if (int.tryParse(value) == null) {
                 return FFLocalizations.of(context)
-                    .getText('pleaseEnterValidNumber');
+                    .getText('pleaseEnterAValidNumber');
+              }
+              if (int.parse(value) < 1) {
+                return FFLocalizations.of(context)
+                    .getText('pleaseEnterAValidNumber');
+              }
+              if (int.parse(value) > 10000) {
+                return FFLocalizations.of(context)
+                    .getText('pleaseEnterAValidNumber');
               }
               return null;
             },

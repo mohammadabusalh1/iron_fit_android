@@ -9,6 +9,7 @@ import 'days_model.dart';
 import 'components/days_exercise_list.dart';
 import 'package:iron_fit/navigation/page_wrapper.dart';
 import 'package:iron_fit/componants/loading_indicator/loadingIndicator.dart';
+import 'package:iron_fit/utils/responsive_utils.dart';
 export 'days_model.dart';
 
 class DaysWidget extends StatefulWidget {
@@ -71,7 +72,7 @@ class _DaysWidgetState extends State<DaysWidget> {
               icon: Icon(
                 Icons.arrow_back,
                 color: FlutterFlowTheme.of(context).primaryText,
-                size: 24,
+                size: ResponsiveUtils.iconSize(context, 24),
               ),
               onPressed: () {
                 context.pushNamed('mySubscription');
@@ -79,9 +80,9 @@ class _DaysWidgetState extends State<DaysWidget> {
             ),
             null),
         body: Container(
-          height: MediaQuery.sizeOf(context).height,
+          height: ResponsiveUtils.screenHeight(context),
           padding: EdgeInsets.only(
-            top: MediaQuery.of(context).padding.top + 80,
+            top: MediaQuery.of(context).padding.top + ResponsiveUtils.height(context, 80),
           ),
           decoration: BoxDecoration(
             gradient: LinearGradient(

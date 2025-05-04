@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:iron_fit/componants/Styles.dart';
+import 'package:iron_fit/utils/responsive_utils.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/backend/backend.dart';
@@ -65,16 +66,16 @@ class ExercisesSection extends StatelessWidget {
         }
 
         return Padding(
-          padding: const EdgeInsets.symmetric(vertical: 16),
+          padding: ResponsiveUtils.padding(context, vertical: 16),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               _buildExercisesHeader(context),
-              const SizedBox(height: 12),
+              SizedBox(height: ResponsiveUtils.height(context, 12)),
               SizedBox(
-                height: 180,
+                height: ResponsiveUtils.height(context, 180),
                 child: ListView.builder(
-                  padding: const EdgeInsets.symmetric(horizontal: 16),
+                  padding: ResponsiveUtils.padding(context, horizontal: 16),
                   scrollDirection: Axis.horizontal,
                   itemCount: exercises.length,
                   itemBuilder: (context, index) {
@@ -129,7 +130,7 @@ class ExercisesSection extends StatelessWidget {
 
   Widget _buildExercisesHeader(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 24),
+      padding: ResponsiveUtils.padding(context, horizontal: 24),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
@@ -138,7 +139,7 @@ class ExercisesSection extends StatelessWidget {
                 .getText(LocalizationKeys.todayExercises),
             style: AppStyles.textCairo(
               context,
-              fontSize: 18,
+              fontSize: ResponsiveUtils.fontSize(context, 18),
               fontWeight: FontWeight.bold,
               color: FlutterFlowTheme.of(context).primaryText,
             ),
@@ -149,7 +150,7 @@ class ExercisesSection extends StatelessWidget {
               FFLocalizations.of(context).getText(LocalizationKeys.viewAll),
               style: AppStyles.textCairo(
                 context,
-                fontSize: 14,
+                fontSize: ResponsiveUtils.fontSize(context, 14),
                 color: FlutterFlowTheme.of(context).primary,
               ),
             ),

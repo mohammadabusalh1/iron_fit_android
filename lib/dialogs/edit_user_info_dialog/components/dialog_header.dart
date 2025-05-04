@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:iron_fit/componants/Styles.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
+import '/utils/responsive_utils.dart';
 
 class DialogHeader extends StatelessWidget {
   const DialogHeader({
@@ -22,7 +23,7 @@ class DialogHeader extends StatelessWidget {
           title,
           style: AppStyles.textCairo(
             context,
-            fontSize: 20,
+            fontSize: ResponsiveUtils.fontSize(context, 20),
             fontWeight: FontWeight.bold,
             color: FlutterFlowTheme.of(context).primaryText,
           ),
@@ -32,14 +33,14 @@ class DialogHeader extends StatelessWidget {
           child: FlutterFlowIconButton(
             borderColor:
                 FlutterFlowTheme.of(context).alternate.withValues(alpha: 0.2),
-            borderRadius: 12.0,
-            borderWidth: 1,
-            buttonSize: 40.0,
+            borderRadius: ResponsiveUtils.width(context, 12.0),
+            borderWidth: ResponsiveUtils.width(context, 1),
+            buttonSize: ResponsiveUtils.width(context, 40.0),
             fillColor: FlutterFlowTheme.of(context).secondaryBackground,
             icon: Icon(
               Icons.close_rounded,
               color: FlutterFlowTheme.of(context).secondaryText,
-              size: 20.0,
+              size: ResponsiveUtils.iconSize(context, 20.0),
             ),
             onPressed: onClose,
           ),

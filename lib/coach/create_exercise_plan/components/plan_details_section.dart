@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:iron_fit/componants/Styles.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
+import '/utils/responsive_utils.dart';
 
 class PlanDetailsSection extends StatelessWidget {
   final TextEditingController planNameController;
@@ -39,7 +40,7 @@ class PlanDetailsSection extends StatelessWidget {
           ],
         ),
         child: Padding(
-          padding: const EdgeInsetsDirectional.fromSTEB(16.0, 16.0, 16.0, 16.0),
+          padding: ResponsiveUtils.padding(context, horizontal: 16.0, vertical: 16.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.start,
@@ -50,22 +51,22 @@ class PlanDetailsSection extends StatelessWidget {
                   Icon(
                     Icons.edit_note_rounded,
                     color: FlutterFlowTheme.of(context).primary,
-                    size: 24,
+                    size: ResponsiveUtils.iconSize(context, 24),
                   ),
-                  const SizedBox(width: 8),
+                  SizedBox(width: ResponsiveUtils.width(context, 8)),
                   Text(
                     FFLocalizations.of(context)
                         .getText('itpi07oi' /* Plan Details */),
                     style: AppStyles.textCairo(
                       context,
-                      fontSize: 18,
+                      fontSize: ResponsiveUtils.fontSize(context, 18),
                       fontWeight: FontWeight.bold,
                       color: FlutterFlowTheme.of(context).primaryText,
                     ),
                   ),
                 ],
               ),
-              const SizedBox(height: 16),
+              SizedBox(height: ResponsiveUtils.height(context, 16)),
               _buildTextFormField(
                 onTap: () {
                   // Move cursor to end of text
@@ -83,7 +84,7 @@ class PlanDetailsSection extends StatelessWidget {
                 prefixIcon: Icon(
                   Icons.title_rounded,
                   color: FlutterFlowTheme.of(context).secondaryText,
-                  size: 20,
+                  size: ResponsiveUtils.iconSize(context, 20),
                 ),
                 validator: (value) {
                   if (value == null || value.isEmpty) {
@@ -93,7 +94,7 @@ class PlanDetailsSection extends StatelessWidget {
                   return null;
                 },
               ),
-              const SizedBox(height: 16),
+              SizedBox(height: ResponsiveUtils.height(context, 16)),
               _buildTextFormField(
                 onTap: () {
                   // Move cursor to end of text
@@ -111,7 +112,7 @@ class PlanDetailsSection extends StatelessWidget {
                 prefixIcon: Icon(
                   Icons.description_rounded,
                   color: FlutterFlowTheme.of(context).secondaryText,
-                  size: 20,
+                  size: ResponsiveUtils.iconSize(context, 20),
                 ),
                 validator: (value) {
                   if (value == null || value.isEmpty) {
@@ -154,12 +155,13 @@ class PlanDetailsSection extends StatelessWidget {
         labelText: labelText,
         labelStyle: AppStyles.textCairo(
           context,
-          fontSize: 14,
+          fontSize: ResponsiveUtils.fontSize(context, 14),
           color: FlutterFlowTheme.of(context).secondaryText,
         ),
         hintText: hintText,
         hintStyle: AppStyles.textCairo(context,
-            fontSize: 12, color: FlutterFlowTheme.of(context).secondaryText),
+            fontSize: ResponsiveUtils.fontSize(context, 12), 
+            color: FlutterFlowTheme.of(context).secondaryText),
         prefixIcon: prefixIcon,
         enabledBorder: OutlineInputBorder(
           borderSide: BorderSide(
@@ -191,11 +193,11 @@ class PlanDetailsSection extends StatelessWidget {
         ),
         filled: true,
         fillColor: FlutterFlowTheme.of(context).primaryBackground,
-        contentPadding: const EdgeInsetsDirectional.fromSTEB(16, 16, 16, 16),
+        contentPadding: ResponsiveUtils.padding(context, horizontal: 16, vertical: 16),
       ),
       style: AppStyles.textCairo(
         context,
-        fontSize: 16,
+        fontSize: ResponsiveUtils.fontSize(context, 16),
         color: FlutterFlowTheme.of(context).primaryText,
       ),
       validator: validator,

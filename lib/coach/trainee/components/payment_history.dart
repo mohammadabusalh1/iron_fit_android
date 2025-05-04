@@ -3,6 +3,7 @@ import 'package:iron_fit/backend/backend.dart';
 import 'package:iron_fit/componants/Styles.dart';
 import 'package:iron_fit/flutter_flow/flutter_flow_theme.dart';
 import 'package:iron_fit/flutter_flow/flutter_flow_util.dart';
+import 'package:iron_fit/utils/responsive_utils.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 
 /// A component that displays payment history including bills and debts.
@@ -28,16 +29,16 @@ class PaymentHistoryWidget extends StatelessWidget {
       color: Colors.transparent,
       elevation: 2.0,
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(16.0),
+        borderRadius: BorderRadius.circular(ResponsiveUtils.width(context, 16.0)),
       ),
       child: Container(
         width: MediaQuery.sizeOf(context).width * 1.0,
         decoration: BoxDecoration(
           color: FlutterFlowTheme.of(context).secondaryBackground,
-          borderRadius: BorderRadius.circular(16.0),
+          borderRadius: BorderRadius.circular(ResponsiveUtils.width(context, 16.0)),
         ),
         child: Padding(
-          padding: const EdgeInsets.all(20.0),
+          padding: ResponsiveUtils.padding(context, horizontal: 20, vertical: 20),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
@@ -46,15 +47,15 @@ class PaymentHistoryWidget extends StatelessWidget {
                   Icon(
                     Icons.payment_rounded,
                     color: FlutterFlowTheme.of(context).primary,
-                    size: 24,
+                    size: ResponsiveUtils.iconSize(context, 24),
                   ),
-                  const SizedBox(width: 12),
+                  SizedBox(width: ResponsiveUtils.width(context, 12)),
                   Text(
                     FFLocalizations.of(context)
                         .getText('25wwfzgl' /* Payment History */),
                     style: AppStyles.textCairo(
                       context,
-                      fontSize: 18,
+                      fontSize: ResponsiveUtils.fontSize(context, 18),
                       fontWeight: FontWeight.w600,
                       color: FlutterFlowTheme.of(context).primaryText,
                     ),
@@ -66,7 +67,7 @@ class PaymentHistoryWidget extends StatelessWidget {
                 children: [
                   _buildLastPayment(context),
                   _buildDebts(context),
-                ].divide(const SizedBox(height: 12.0)),
+                ].divide(SizedBox(height: ResponsiveUtils.height(context, 12.0))),
               ),
               Row(
                 mainAxisSize: MainAxisSize.max,
@@ -74,9 +75,9 @@ class PaymentHistoryWidget extends StatelessWidget {
                 children: [
                   _buildAddDebtsButton(context),
                   _buildDebtRemovalButton(context),
-                ].divide(const SizedBox(width: 12.0)),
+                ].divide(SizedBox(width: ResponsiveUtils.width(context, 12.0))),
               ),
-            ].divide(const SizedBox(height: 16.0)),
+            ].divide(SizedBox(height: ResponsiveUtils.height(context, 16.0))),
           ),
         ),
       ),
@@ -99,10 +100,10 @@ class PaymentHistoryWidget extends StatelessWidget {
       width: MediaQuery.sizeOf(context).width * 1.0,
       decoration: BoxDecoration(
         color: FlutterFlowTheme.of(context).primaryBackground,
-        borderRadius: BorderRadius.circular(8.0),
+        borderRadius: BorderRadius.circular(ResponsiveUtils.width(context, 8.0)),
       ),
       child: Padding(
-        padding: const EdgeInsets.all(12.0),
+        padding: ResponsiveUtils.padding(context, horizontal: 12, vertical: 12),
         child: Row(
           mainAxisSize: MainAxisSize.max,
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -114,7 +115,7 @@ class PaymentHistoryWidget extends StatelessWidget {
                 Text(
                   FFLocalizations.of(context)
                       .getText('zu4gu2ow' /* Last Payment */),
-                  style: AppStyles.textCairo(context, fontSize: 16),
+                  style: AppStyles.textCairo(context, fontSize: ResponsiveUtils.fontSize(context, 16)),
                 ),
                 if (lastBill != null) ...[
                   Text(
@@ -125,7 +126,7 @@ class PaymentHistoryWidget extends StatelessWidget {
                     ),
                     style: AppStyles.textCairo(
                       context,
-                      fontSize: 12,
+                      fontSize: ResponsiveUtils.fontSize(context, 12),
                       color: FlutterFlowTheme.of(context).secondaryText,
                     ),
                   ),
@@ -135,7 +136,7 @@ class PaymentHistoryWidget extends StatelessWidget {
                       FFLocalizations.of(context).getText('viewAllBills'),
                       style: AppStyles.textCairo(
                         context,
-                        fontSize: 11,
+                        fontSize: ResponsiveUtils.fontSize(context, 11),
                         color: FlutterFlowTheme.of(context).primary,
                       ),
                     ),
@@ -148,7 +149,7 @@ class PaymentHistoryWidget extends StatelessWidget {
                 '${lastBill['paid']} \$',
                 style: AppStyles.textCairo(
                   context,
-                  fontSize: 14,
+                  fontSize: ResponsiveUtils.fontSize(context, 14),
                   color: FlutterFlowTheme.of(context).primary,
                 ),
               )
@@ -157,7 +158,7 @@ class PaymentHistoryWidget extends StatelessWidget {
                 FFLocalizations.of(context).getText('noPaymentsYet'),
                 style: AppStyles.textCairo(
                   context,
-                  fontSize: 14,
+                  fontSize: ResponsiveUtils.fontSize(context, 14),
                   color: FlutterFlowTheme.of(context).secondaryText,
                 ),
               ),
@@ -177,14 +178,14 @@ class PaymentHistoryWidget extends StatelessWidget {
       width: MediaQuery.sizeOf(context).width * 1.0,
       decoration: BoxDecoration(
         color: FlutterFlowTheme.of(context).primaryBackground,
-        borderRadius: BorderRadius.circular(8.0),
+        borderRadius: BorderRadius.circular(ResponsiveUtils.width(context, 8.0)),
       ),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Padding(
-            padding: const EdgeInsets.all(12.0),
+            padding: ResponsiveUtils.padding(context, horizontal: 12, vertical: 12),
             child: Row(
               mainAxisSize: MainAxisSize.max,
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -196,7 +197,7 @@ class PaymentHistoryWidget extends StatelessWidget {
                     Text(
                       FFLocalizations.of(context)
                           .getText('79u0ym2f' /* Debts */),
-                      style: AppStyles.textCairo(context, fontSize: 16),
+                      style: AppStyles.textCairo(context, fontSize: ResponsiveUtils.fontSize(context, 16)),
                     ),
                   ],
                 ),
@@ -204,7 +205,7 @@ class PaymentHistoryWidget extends StatelessWidget {
                   '${subscription.debts} \$',
                   style: AppStyles.textCairo(
                     context,
-                    fontSize: 14,
+                    fontSize: ResponsiveUtils.fontSize(context, 14),
                     color: FlutterFlowTheme.of(context).error,
                   ),
                 ),
@@ -217,7 +218,7 @@ class PaymentHistoryWidget extends StatelessWidget {
               FFLocalizations.of(context).getText('viewAllDebts'),
               style: AppStyles.textCairo(
                 context,
-                fontSize: 11,
+                fontSize: ResponsiveUtils.fontSize(context, 11),
                 color: FlutterFlowTheme.of(context).primary,
               ),
             ),
@@ -233,13 +234,13 @@ class PaymentHistoryWidget extends StatelessWidget {
       child: Container(
         decoration: BoxDecoration(
           color: FlutterFlowTheme.of(context).primary,
-          borderRadius: BorderRadius.circular(12.0),
+          borderRadius: BorderRadius.circular(ResponsiveUtils.width(context, 12.0)),
         ),
         child: IconButton(
           onPressed: onAddDebtsPressed,
           icon: Icon(
             Icons.add_circle,
-            size: 24,
+            size: ResponsiveUtils.iconSize(context, 24),
             color: FlutterFlowTheme.of(context).info,
           ),
         ),
@@ -253,13 +254,13 @@ class PaymentHistoryWidget extends StatelessWidget {
       child: Container(
         decoration: BoxDecoration(
           color: FlutterFlowTheme.of(context).error,
-          borderRadius: BorderRadius.circular(12.0),
+          borderRadius: BorderRadius.circular(ResponsiveUtils.width(context, 12.0)),
         ),
         child: IconButton(
           onPressed: onRemoveDebtsPressed,
           icon: Icon(
             Icons.remove_circle,
-            size: 24,
+            size: ResponsiveUtils.iconSize(context, 24),
             color: FlutterFlowTheme.of(context).info,
           ),
         ),

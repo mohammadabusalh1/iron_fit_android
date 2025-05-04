@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:iron_fit/componants/Styles.dart';
 import 'package:iron_fit/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
+import 'package:iron_fit/utils/responsive_utils.dart';
 
 class StandardTextFormField extends StatelessWidget {
   final TextEditingController controller;
@@ -51,13 +52,13 @@ class StandardTextFormField extends StatelessWidget {
           hintStyle: AppStyles.textCairo(
             context,
             color: FlutterFlowTheme.of(context).secondaryText,
-            fontSize: 12,
+            fontSize: ResponsiveUtils.fontSize(context, 12),
           ),
           prefixIcon: prefixIcon != null
               ? Icon(
                   prefixIcon,
                   color: FlutterFlowTheme.of(context).secondaryText,
-                  size: 20,
+                  size: ResponsiveUtils.iconSize(context, 20),
                 )
               : null,
           enabledBorder: OutlineInputBorder(
@@ -90,7 +91,7 @@ class StandardTextFormField extends StatelessWidget {
           ),
           filled: true,
           fillColor: FlutterFlowTheme.of(context).primaryBackground,
-          contentPadding: const EdgeInsetsDirectional.fromSTEB(16, 16, 16, 16),
+          contentPadding: ResponsiveUtils.padding(context, horizontal: 16, vertical: 16),
         ),
         style: AppStyles.textCairo(
           context,
@@ -131,27 +132,27 @@ class MacroInputField extends StatelessWidget {
           width: 1,
         ),
       ),
-      padding: const EdgeInsets.all(12),
+      padding: ResponsiveUtils.padding(context, horizontal: 12, vertical: 12),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
           Icon(
             icon,
             color: color,
-            size: 24,
+            size: ResponsiveUtils.iconSize(context, 24),
           ),
-          const SizedBox(height: 8),
+          SizedBox(height: ResponsiveUtils.height(context, 8)),
           Text(
             labelText,
             style: AppStyles.textCairo(
               context,
-              fontSize: 12,
+              fontSize: ResponsiveUtils.fontSize(context, 12),
               color: FlutterFlowTheme.of(context).secondaryText,
               fontWeight: FontWeight.w600,
             ),
             textAlign: TextAlign.center,
           ),
-          const SizedBox(height: 8),
+          SizedBox(height: ResponsiveUtils.height(context, 8)),
           TextFormField(
             onTap: () {
               // Move cursor to end of text
@@ -165,18 +166,17 @@ class MacroInputField extends StatelessWidget {
             keyboardType: TextInputType.number,
             style: AppStyles.textCairo(
               context,
-              fontSize: 16,
+              fontSize: ResponsiveUtils.fontSize(context, 16),
               fontWeight: FontWeight.w600,
             ),
             decoration: InputDecoration(
-              contentPadding:
-                  const EdgeInsets.symmetric(vertical: 8, horizontal: 12),
+              contentPadding: ResponsiveUtils.padding(context, horizontal: 12, vertical: 8),
               hintText: '0',
               hintStyle: AppStyles.textCairo(
                 context,
                 color:
                     FlutterFlowTheme.of(context).secondaryText.withAlpha(150),
-                fontSize: 14,
+                fontSize: ResponsiveUtils.fontSize(context, 14),
               ),
               enabledBorder: OutlineInputBorder(
                 borderSide: BorderSide(
@@ -203,7 +203,7 @@ class MacroInputField extends StatelessWidget {
               fillColor: FlutterFlowTheme.of(context).primaryBackground,
               errorStyle: AppStyles.textCairo(
                 context,
-                fontSize: 11,
+                fontSize: ResponsiveUtils.fontSize(context, 11),
                 color: FlutterFlowTheme.of(context).error,
               ),
             ),
@@ -254,7 +254,7 @@ class SectionContainer extends StatelessWidget {
           ),
         ],
       ),
-      padding: padding ?? const EdgeInsetsDirectional.all(20),
+      padding: padding ?? ResponsiveUtils.padding(context, horizontal: 20, vertical: 20),
       child: child,
     );
   }
@@ -283,14 +283,14 @@ class SectionHeader extends StatelessWidget {
             Icon(
               icon,
               color: FlutterFlowTheme.of(context).primary,
-              size: 24,
+              size: ResponsiveUtils.iconSize(context, 24),
             ),
-            const SizedBox(width: 12),
+            SizedBox(width: ResponsiveUtils.width(context, 12)),
             Text(
               title,
               style: AppStyles.textCairo(
                 context,
-                fontSize: 18,
+                fontSize: ResponsiveUtils.fontSize(context, 18),
                 fontWeight: FontWeight.w600,
                 color: FlutterFlowTheme.of(context).primaryText,
               ),

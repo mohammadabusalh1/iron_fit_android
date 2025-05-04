@@ -4,6 +4,7 @@ import 'package:iron_fit/coach/coach_home/coach_home_model.dart';
 import 'package:iron_fit/coach/coach_home/coach_home_widget.dart';
 import 'package:iron_fit/componants/Styles.dart';
 import 'package:iron_fit/trainee/user_home/user_home_widget.dart';
+import 'package:iron_fit/utils/responsive_utils.dart';
 
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
@@ -25,7 +26,10 @@ class ErrorPageWidget extends StatelessWidget {
         backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
         body: Padding(
           padding: EdgeInsetsDirectional.fromSTEB(
-              24, MediaQuery.of(context).padding.top + 24, 24, 24),
+              ResponsiveUtils.width(context, 24), 
+              MediaQuery.of(context).padding.top + ResponsiveUtils.height(context, 24), 
+              ResponsiveUtils.width(context, 24), 
+              ResponsiveUtils.height(context, 24)),
           child: SingleChildScrollView(
             child: Column(
               mainAxisSize: MainAxisSize.min,
@@ -42,8 +46,8 @@ class ErrorPageWidget extends StatelessWidget {
                     borderRadius: BorderRadius.circular(16),
                     child: Image.network(
                       'https://img.freepik.com/free-vector/oops-404-error-with-broken-robot-concept-illustration_114360-5529.jpg?t=st=1733462893~exp=1733466493~hmac=ad9c2fff54f44648fb8e77b78a68ff0cc508f0b5cf53cde0a26b45b28aed1380&w=740',
-                      width: 300,
-                      height: 300,
+                      width: ResponsiveUtils.width(context, 300),
+                      height: ResponsiveUtils.height(context, 300),
                       fit: BoxFit.contain,
                     ),
                   ),
@@ -55,7 +59,7 @@ class ErrorPageWidget extends StatelessWidget {
                   textAlign: TextAlign.center,
                   style: AppStyles.textCairo(
                     context,
-                    fontSize: 24,
+                    fontSize: ResponsiveUtils.fontSize(context, 24),
                     color: FlutterFlowTheme.of(context).primaryText,
                     fontWeight: FontWeight.bold,
                   ),
@@ -67,7 +71,7 @@ class ErrorPageWidget extends StatelessWidget {
                   textAlign: TextAlign.center,
                   style: AppStyles.textCairo(
                     context,
-                    fontSize: 16,
+                    fontSize: ResponsiveUtils.fontSize(context, 16),
                     color: FlutterFlowTheme.of(context).secondaryText,
                   ),
                 ),
@@ -87,15 +91,15 @@ class ErrorPageWidget extends StatelessWidget {
                     '2ic7dbdd' /* Try Again */,
                   ),
                   options: FFButtonOptions(
-                    width: 200,
-                    height: 50,
+                    width: ResponsiveUtils.width(context, 200),
+                    height: ResponsiveUtils.height(context, 50),
                     padding: const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
                     iconPadding:
                         const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
                     color: FlutterFlowTheme.of(context).primary,
                     textStyle: AppStyles.textCairo(
                       context,
-                      fontSize: 16,
+                      fontSize: ResponsiveUtils.fontSize(context, 16),
                       color: FlutterFlowTheme.of(context).info,
                     ),
                     elevation: 0,
@@ -108,15 +112,15 @@ class ErrorPageWidget extends StatelessWidget {
                     'e1g3ko1c' /* Contact Support */,
                   ),
                   options: FFButtonOptions(
-                    width: 200,
-                    height: 50,
+                    width: ResponsiveUtils.width(context, 200),
+                    height: ResponsiveUtils.height(context, 50),
                     padding: const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
                     iconPadding:
                         const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
                     color: const Color(0x00FFFFFF),
                     textStyle: AppStyles.textCairo(
                       context,
-                      fontSize: 16,
+                      fontSize: ResponsiveUtils.fontSize(context, 16),
                       color: FlutterFlowTheme.of(context).primary,
                     ),
                     elevation: 0,
@@ -127,7 +131,7 @@ class ErrorPageWidget extends StatelessWidget {
                     borderRadius: BorderRadius.circular(25),
                   ),
                 ),
-              ].divide(const SizedBox(height: 24)),
+              ].divide(SizedBox(height: ResponsiveUtils.height(context, 24))),
             ),
           ),
         ),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:iron_fit/flutter_flow/flutter_flow_util.dart';
+import 'package:iron_fit/utils/responsive_utils.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/componants/Styles.dart';
 
@@ -28,7 +29,7 @@ class StepHeader extends StatelessWidget {
           '${FFLocalizations.of(context).getText('step')} ${currentStep + 1} / $totalSteps',
           style: AppStyles.textCairo(
             context,
-            fontSize: 16,
+            fontSize: ResponsiveUtils.fontSize(context, 16),
             color: FlutterFlowTheme.of(context).primary,
             fontWeight: FontWeight.bold,
           ),
@@ -37,14 +38,14 @@ class StepHeader extends StatelessWidget {
           onPressed: onClose,
           icon: Icon(
             Icons.close_rounded,
-            color: FlutterFlowTheme.of(context).secondaryText,
-            size: 24.0,
+            color: FlutterFlowTheme.of(context).info.withOpacity(0.7),
+            size: ResponsiveUtils.iconSize(context, 24.0),
           ),
-          splashRadius: 20,
+          splashRadius: ResponsiveUtils.iconSize(context, 20.0),
           padding: EdgeInsets.zero,
-          constraints: const BoxConstraints(
-            minWidth: 40,
-            minHeight: 40,
+          constraints: BoxConstraints(
+            minWidth: ResponsiveUtils.width(context, 40),
+            minHeight: ResponsiveUtils.height(context, 40),
           ),
         ),
       ],

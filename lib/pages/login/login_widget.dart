@@ -7,6 +7,7 @@ import 'package:iron_fit/flutter_flow/custom_functions.dart';
 import 'package:iron_fit/pages/pre_login/components/auth_service.dart';
 import 'package:iron_fit/services/firebase_messages.dart';
 import 'package:iron_fit/utils/logger.dart';
+import 'package:iron_fit/utils/responsive_utils.dart';
 import '/auth/firebase_auth/auth_util.dart';
 import '/backend/backend.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
@@ -110,24 +111,23 @@ class _LoginWidgetState extends State<LoginWidget> {
                 child: SingleChildScrollView(
                   physics: const BouncingScrollPhysics(),
                   child: Padding(
-                    padding: const EdgeInsetsDirectional.fromSTEB(
-                        24.0, 24.0, 24.0, 24.0),
+                    padding: ResponsiveUtils.padding(
+                      context,
+                      horizontal: 24.0,
+                      vertical: 24.0,
+                    ),
                     child: Column(
                       mainAxisSize: MainAxisSize.max,
                       mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        // screenHeight < 800
-                        //     ? SizedBox(height: screenHeight * 0.04)
-                        //     : SizedBox(height: screenHeight * 0.08),
-
                         // Welcome section
                         FadeInDown(
                           duration: const Duration(milliseconds: 600),
                           child: const WelcomeSection(),
                         ),
 
-                        const SizedBox(height: 36.0),
+                        SizedBox(height: ResponsiveUtils.height(context, 36.0)),
 
                         FadeInUp(
                           duration: const Duration(milliseconds: 800),
@@ -143,12 +143,12 @@ class _LoginWidgetState extends State<LoginWidget> {
                             onForgotPasswordPressed: _handleForgotPassword,
                           ),
                         ),
-                        SizedBox(height: screenHeight * 0.03),
+                        SizedBox(height: ResponsiveUtils.height(context, screenHeight * 0.03)),
                         FadeInUp(
                           duration: const Duration(milliseconds: 1000),
                           child: const OrDivider(),
                         ),
-                        const SizedBox(height: 8.0),
+                        SizedBox(height: ResponsiveUtils.height(context, 8.0)),
                         FadeInUp(
                           duration: const Duration(milliseconds: 1200),
                           child: SocialLoginButtons(
@@ -164,8 +164,8 @@ class _LoginWidgetState extends State<LoginWidget> {
             ),
 
             Positioned(
-              top: MediaQuery.of(context).padding.top + 12,
-              right: 24,
+              top: MediaQuery.of(context).padding.top + ResponsiveUtils.height(context, 12.0),
+              right: ResponsiveUtils.width(context, 24.0),
               child: FadeInDown(
                 duration: const Duration(milliseconds: 800),
                 child: CreateAccountButton(
@@ -452,21 +452,21 @@ class _LoginWidgetState extends State<LoginWidget> {
         builder: (alertDialogContext) {
           return Dialog(
             shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(16.0),
+              borderRadius: BorderRadius.circular(ResponsiveUtils.width(context, 16.0)),
             ),
             elevation: 0,
             backgroundColor: Colors.transparent,
             child: Container(
-              padding: const EdgeInsets.all(20.0),
+              padding: ResponsiveUtils.padding(context, horizontal: 20.0, vertical: 20.0),
               decoration: BoxDecoration(
                 color: FlutterFlowTheme.of(context).secondaryBackground,
                 shape: BoxShape.rectangle,
-                borderRadius: BorderRadius.circular(16.0),
+                borderRadius: BorderRadius.circular(ResponsiveUtils.width(context, 16.0)),
                 boxShadow: [
                   BoxShadow(
                     color: FlutterFlowTheme.of(context).black,
-                    blurRadius: 10.0,
-                    offset: const Offset(0.0, 10.0),
+                    blurRadius: ResponsiveUtils.width(context, 10.0),
+                    offset: Offset(0.0, ResponsiveUtils.height(context, 10.0)),
                   ),
                 ],
               ),
@@ -474,7 +474,7 @@ class _LoginWidgetState extends State<LoginWidget> {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   Container(
-                    padding: const EdgeInsets.all(16.0),
+                    padding: ResponsiveUtils.padding(context, horizontal: 16.0, vertical: 16.0),
                     decoration: BoxDecoration(
                       color: FlutterFlowTheme.of(context)
                           .primary
@@ -484,54 +484,61 @@ class _LoginWidgetState extends State<LoginWidget> {
                     child: Icon(
                       Icons.email_outlined,
                       color: FlutterFlowTheme.of(context).primary,
-                      size: 40.0,
+                      size: ResponsiveUtils.iconSize(context, 40.0),
                     ),
                   ),
-                  const SizedBox(height: 20.0),
+                  SizedBox(height: ResponsiveUtils.height(context, 20.0)),
                   Text(
                     thankYouText,
                     style: AppStyles.textCairo(
                       context,
-                      fontSize: 20,
+                      fontSize: ResponsiveUtils.fontSize(context, 20),
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-                  const SizedBox(height: 10.0),
+                  SizedBox(height: ResponsiveUtils.height(context, 10.0)),
                   Text(
                     emailSentText,
                     textAlign: TextAlign.center,
                     style: AppStyles.textCairo(
                       context,
-                      fontSize: 14,
+                      fontSize: ResponsiveUtils.fontSize(context, 14),
                       color: FlutterFlowTheme.of(context).secondaryText,
                     ),
                   ),
-                  const SizedBox(height: 10.0),
+                  SizedBox(height: ResponsiveUtils.height(context, 10.0)),
                   Text(
                     resetPasswordText,
                     textAlign: TextAlign.center,
                     style: AppStyles.textCairo(
                       context,
-                      fontSize: 12,
+                      fontSize: ResponsiveUtils.fontSize(context, 12),
                       color: FlutterFlowTheme.of(context).secondaryText,
                     ),
                   ),
-                  const SizedBox(height: 24.0),
+                  SizedBox(height: ResponsiveUtils.height(context, 24.0)),
                   SizedBox(
                     width: double.infinity,
                     child: FFButtonWidget(
                       onPressed: () => Navigator.pop(alertDialogContext),
                       text: okText,
                       options: FFButtonOptions(
-                        height: 45.0,
-                        padding: const EdgeInsetsDirectional.fromSTEB(
-                            0.0, 0.0, 0.0, 0.0),
-                        iconPadding: const EdgeInsetsDirectional.fromSTEB(
-                            0.0, 0.0, 0.0, 0.0),
+                        height: ResponsiveUtils.height(context, 45.0),
+                        padding: ResponsiveUtils.padding(
+                          context,
+                          horizontal: 0.0,
+                          vertical: 0.0,
+                        ),
+                        iconPadding: ResponsiveUtils.padding(
+                          context,
+                          horizontal: 0.0,
+                          vertical: 0.0,
+                        ),
                         color: FlutterFlowTheme.of(context).primary,
                         textStyle: AppStyles.textCairo(
                           context,
                           fontWeight: FontWeight.w700,
+                          fontSize: ResponsiveUtils.fontSize(context, 16),
                           color: FlutterFlowTheme.of(context).primaryBackground,
                         ),
                         elevation: 2.0,
@@ -539,7 +546,7 @@ class _LoginWidgetState extends State<LoginWidget> {
                           color: Colors.transparent,
                           width: 1.0,
                         ),
-                        borderRadius: BorderRadius.circular(8.0),
+                        borderRadius: BorderRadius.circular(ResponsiveUtils.width(context, 8.0)),
                       ),
                     ),
                   ),
@@ -775,14 +782,14 @@ class _FormFields extends StatelessWidget {
                 .requestFocus(parent.model.textFieldFocusNode2);
           },
         ),
-        const SizedBox(height: 12.0),
+        SizedBox(height: ResponsiveUtils.height(context, 12.0)),
         PasswordField(
           controller: parent.passwordController,
           focusNode: parent.model.textFieldFocusNode2,
           validator:
               parent.model.passwordTextControllerValidator.asValidator(context),
         ),
-        const SizedBox(height: 24.0),
+        SizedBox(height: ResponsiveUtils.height(context, 24.0)),
       ],
     );
   }

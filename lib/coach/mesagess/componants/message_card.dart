@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:iron_fit/utils/responsive_utils.dart';
 import '/backend/backend.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
@@ -18,10 +19,10 @@ class MessageCard extends StatelessWidget {
       width: MediaQuery.sizeOf(context).width * 1.0,
       decoration: BoxDecoration(
         color: FlutterFlowTheme.of(context).primaryBackground,
-        borderRadius: BorderRadius.circular(12.0),
+        borderRadius: BorderRadius.circular(ResponsiveUtils.width(context, 12.0)),
       ),
       child: Padding(
-        padding: const EdgeInsetsDirectional.fromSTEB(16.0, 16.0, 16.0, 16.0),
+        padding: ResponsiveUtils.padding(context, horizontal: 16.0, vertical: 16.0),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -34,7 +35,7 @@ class MessageCard extends StatelessWidget {
                   alertRecord.name,
                   style: AppStyles.textCairo(
                     context,
-                    fontSize: 16,
+                    fontSize: ResponsiveUtils.fontSize(context, 16),
                     fontWeight: FontWeight.w600,
                   ),
                 ),
@@ -46,7 +47,7 @@ class MessageCard extends StatelessWidget {
                   ),
                   style: AppStyles.textCairo(
                     context,
-                    fontSize: 14,
+                    fontSize: ResponsiveUtils.fontSize(context, 14),
                     color: FlutterFlowTheme.of(context).secondaryText,
                   ),
                 ),
@@ -54,7 +55,10 @@ class MessageCard extends StatelessWidget {
             ),
             Text(
               alertRecord.desc,
-              style: AppStyles.textCairo(context, fontSize: 14),
+              style: AppStyles.textCairo(
+                context, 
+                fontSize: ResponsiveUtils.fontSize(context, 14)
+              ),
             ),
             Row(
               mainAxisSize: MainAxisSize.max,
@@ -62,20 +66,20 @@ class MessageCard extends StatelessWidget {
                 Icon(
                   Icons.people,
                   color: FlutterFlowTheme.of(context).secondaryText,
-                  size: 16.0,
+                  size: ResponsiveUtils.iconSize(context, 16.0),
                 ),
                 Text(
                   FFLocalizations.of(context)
                       .getText('etu9d3wo' /* Sent to: All Members */),
                   style: AppStyles.textCairo(
                     context,
-                    fontSize: 14,
+                    fontSize: ResponsiveUtils.fontSize(context, 14),
                     color: FlutterFlowTheme.of(context).secondaryText,
                   ),
                 ),
-              ].divide(const SizedBox(width: 8.0)),
+              ].divide(SizedBox(width: ResponsiveUtils.width(context, 8.0))),
             ),
-          ].divide(const SizedBox(height: 8.0)),
+          ].divide(SizedBox(height: ResponsiveUtils.height(context, 8.0))),
         ),
       ),
     );

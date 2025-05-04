@@ -7,6 +7,7 @@ import 'package:flutter_animate/flutter_animate.dart';
 import 'dart:ui';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/services.dart';
+import 'package:iron_fit/utils/responsive_utils.dart';
 
 class PlanDetailsPage extends StatefulWidget {
   final PlansRecord plan;
@@ -100,18 +101,22 @@ class _PlanDetailsPageState extends State<PlanDetailsPage>
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
-        toolbarHeight: 80,
+        toolbarHeight: ResponsiveUtils.height(context, 80),
         title: Text(
           FFLocalizations.of(context).getText('itpi07oi'),
           style: AppStyles.textCairo(
             context,
-            fontSize: 22,
+            fontSize: ResponsiveUtils.fontSize(context, 22),
             fontWeight: FontWeight.bold,
             color: theme.primaryText,
           ),
         ),
         leading: IconButton(
-          icon: Icon(Icons.arrow_back, color: theme.primaryText),
+          icon: Icon(
+            Icons.arrow_back,
+            color: theme.primaryText,
+            size: ResponsiveUtils.iconSize(context, 24),
+          ),
           onPressed: () => Navigator.of(context).pop(),
         ),
       ),
@@ -123,7 +128,9 @@ class _PlanDetailsPageState extends State<PlanDetailsPage>
       BuildContext context, FlutterFlowTheme theme, Size size) {
     return Container(
       height: size.height,
-      padding: EdgeInsets.only(top: MediaQuery.of(context).padding.top + 80),
+      padding: EdgeInsets.only(
+          top: MediaQuery.of(context).padding.top +
+              ResponsiveUtils.height(context, 80)),
       decoration: const BoxDecoration(
         gradient: LinearGradient(
           colors: [Color(0xFF4B39EF), Color(0xFF3700B3)],
@@ -134,12 +141,12 @@ class _PlanDetailsPageState extends State<PlanDetailsPage>
       ),
       child: SingleChildScrollView(
         controller: _scrollController,
-        padding: const EdgeInsets.symmetric(horizontal: 16),
+        padding: ResponsiveUtils.padding(context, horizontal: 16, vertical: 0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             _buildProgramHeader(context, theme),
-            const SizedBox(height: 16),
+            SizedBox(height: ResponsiveUtils.height(context, 16)),
             _buildDaysTimeline(context, theme),
           ],
         ),
@@ -150,7 +157,7 @@ class _PlanDetailsPageState extends State<PlanDetailsPage>
   Widget _buildProgramHeader(BuildContext context, FlutterFlowTheme theme) {
     return Container(
       width: double.infinity,
-      padding: const EdgeInsets.all(16),
+      padding: ResponsiveUtils.padding(context),
       decoration: BoxDecoration(
         color: theme.primaryBackground.withOpacity(0.85),
         borderRadius: BorderRadius.circular(16),
@@ -162,28 +169,28 @@ class _PlanDetailsPageState extends State<PlanDetailsPage>
             widget.plan.plan.name,
             style: AppStyles.textCairo(
               context,
-              fontSize: 22,
+              fontSize: ResponsiveUtils.fontSize(context, 22),
               fontWeight: FontWeight.bold,
               color: theme.primaryText,
             ),
           ),
-          const SizedBox(height: 8),
+          SizedBox(height: ResponsiveUtils.height(context, 8)),
           Text(
             widget.plan.plan.description,
             style: AppStyles.textCairo(
               context,
-              fontSize: 14,
+              fontSize: ResponsiveUtils.fontSize(context, 14),
               color: theme.secondaryText,
             ),
           ),
-          const SizedBox(height: 12),
-          Row(
+          SizedBox(height: ResponsiveUtils.height(context, 12)),
+          Wrap(
+            spacing: ResponsiveUtils.width(context, 8),
+            runSpacing: ResponsiveUtils.height(context, 8),
             children: [
               _buildProgramTag(theme, widget.plan.plan.type),
-              const SizedBox(width: 8),
               _buildProgramTag(theme,
                   '${widget.plan.plan.days.length} ${FFLocalizations.of(context).getText('days')}'),
-              const SizedBox(width: 8),
               _buildProgramTag(theme, widget.plan.plan.level),
             ],
           ),
@@ -194,7 +201,7 @@ class _PlanDetailsPageState extends State<PlanDetailsPage>
 
   Widget _buildProgramTag(FlutterFlowTheme theme, String text) {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
+      padding: ResponsiveUtils.padding(context, horizontal: 12, vertical: 4),
       decoration: BoxDecoration(
         color: theme.primary.withOpacity(0.1),
         borderRadius: BorderRadius.circular(12),
@@ -202,7 +209,7 @@ class _PlanDetailsPageState extends State<PlanDetailsPage>
       child: Text(
         text,
         style: TextStyle(
-          fontSize: 12,
+          fontSize: ResponsiveUtils.fontSize(context, 12),
           fontWeight: FontWeight.w500,
           color: theme.primary,
         ),
@@ -214,7 +221,7 @@ class _PlanDetailsPageState extends State<PlanDetailsPage>
     return ListView.builder(
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),
-      padding: const EdgeInsets.only(bottom: 32),
+      padding: EdgeInsets.only(bottom: ResponsiveUtils.height(context, 32)),
       itemCount: widget.plan.plan.days.length,
       itemBuilder: (context, index) {
         final day = widget.plan.plan.days[index];
@@ -250,7 +257,7 @@ class _PlanDetailsPageState extends State<PlanDetailsPage>
           exerciseData.name.isNotEmpty
               ? exerciseData.name
               : 'Exercise ${index + 1}',
-          '${exercise.sets} × ${exercise.reps}',
+          '${exercise.sets} × ${exercise.time != 0 ? '${exercise.time}${exercise.timeType == 's' ? 's' : 'm'}' : '${exercise.reps}'}',
           exerciseData.gifUrl,
         );
       } else if (_isLoadingExercises) {
@@ -279,7 +286,7 @@ class _PlanDetailsPageState extends State<PlanDetailsPage>
                 exerciseData.name.isNotEmpty
                     ? exerciseData.name
                     : 'Exercise ${index + 1}',
-                '${exercise.sets} × ${exercise.reps}',
+                '${exercise.sets} × ${exercise.time != 0 ? '${exercise.time}${exercise.timeType == 's' ? 's' : 'm'}' : '${exercise.reps}'}',
                 exerciseData.gifUrl,
               );
             }
@@ -289,7 +296,7 @@ class _PlanDetailsPageState extends State<PlanDetailsPage>
               context,
               theme,
               'Exercise ${index + 1}',
-              '${exercise.sets} × ${exercise.reps}',
+              '${exercise.sets} × ${exercise.time != 0 ? '${exercise.time}${exercise.timeType == 's' ? 's' : 'm'}' : '${exercise.reps}'}',
               Icons.fitness_center,
             );
           },
@@ -301,7 +308,7 @@ class _PlanDetailsPageState extends State<PlanDetailsPage>
         context,
         theme,
         'Exercise ${index + 1}',
-        '${exercise.sets} × ${exercise.reps}',
+        '${exercise.sets} × ${exercise.time != 0 ? '${exercise.time}${exercise.timeType == 's' ? 's' : 'm'}' : '${exercise.reps}'}',
         Icons.fitness_center,
       );
     }
@@ -310,7 +317,8 @@ class _PlanDetailsPageState extends State<PlanDetailsPage>
   Widget _buildExerciseItem(BuildContext context, FlutterFlowTheme theme,
       String defaultName, String sets, IconData defaultIcon) {
     return Container(
-      padding: const EdgeInsets.symmetric(vertical: 12),
+      padding:
+          EdgeInsets.symmetric(vertical: ResponsiveUtils.height(context, 12)),
       decoration: BoxDecoration(
         border: Border(
           bottom: BorderSide(
@@ -322,21 +330,23 @@ class _PlanDetailsPageState extends State<PlanDetailsPage>
       child: Row(
         children: [
           Container(
-            width: 36,
-            height: 36,
+            width: ResponsiveUtils.width(context, 36),
+            height: ResponsiveUtils.height(context, 36),
             decoration: BoxDecoration(
               color: theme.primaryBackground,
               borderRadius: BorderRadius.circular(8),
             ),
-            child: Icon(defaultIcon, color: theme.primary, size: 18),
+            child: Icon(defaultIcon,
+                color: theme.primary,
+                size: ResponsiveUtils.iconSize(context, 18)),
           ),
-          const SizedBox(width: 12),
+          SizedBox(width: ResponsiveUtils.width(context, 12)),
           Expanded(
             child: Text(
               defaultName,
               style: AppStyles.textCairo(
                 context,
-                fontSize: 15,
+                fontSize: ResponsiveUtils.fontSize(context, 15),
                 color: theme.primaryText,
               ),
             ),
@@ -347,17 +357,18 @@ class _PlanDetailsPageState extends State<PlanDetailsPage>
                 sets,
                 style: AppStyles.textCairo(
                   context,
-                  fontSize: 14,
+                  fontSize: ResponsiveUtils.fontSize(context, 14),
                   color: theme.secondaryText,
                 ),
               ),
-              const SizedBox(width: 8),
+              SizedBox(width: ResponsiveUtils.width(context, 8)),
               GestureDetector(
                 onTap: () {
                   // No image to show
                 },
                 child: Icon(Icons.info_outline,
-                    color: theme.secondaryText, size: 16),
+                    color: theme.secondaryText,
+                    size: ResponsiveUtils.iconSize(context, 16)),
               ),
             ],
           ),
@@ -369,7 +380,8 @@ class _PlanDetailsPageState extends State<PlanDetailsPage>
   Widget _buildLoadingExerciseItem(
       BuildContext context, FlutterFlowTheme theme) {
     return Container(
-      padding: const EdgeInsets.symmetric(vertical: 12),
+      padding:
+          EdgeInsets.symmetric(vertical: ResponsiveUtils.height(context, 12)),
       decoration: BoxDecoration(
         border: Border(
           bottom: BorderSide(
@@ -381,16 +393,16 @@ class _PlanDetailsPageState extends State<PlanDetailsPage>
       child: Row(
         children: [
           Container(
-            width: 36,
-            height: 36,
+            width: ResponsiveUtils.width(context, 36),
+            height: ResponsiveUtils.height(context, 36),
             decoration: BoxDecoration(
               color: theme.primaryBackground,
               borderRadius: BorderRadius.circular(8),
             ),
             child: Center(
               child: SizedBox(
-                width: 18,
-                height: 18,
+                width: ResponsiveUtils.width(context, 18),
+                height: ResponsiveUtils.height(context, 18),
                 child: CircularProgressIndicator(
                   strokeWidth: 2,
                   color: theme.primary,
@@ -398,13 +410,13 @@ class _PlanDetailsPageState extends State<PlanDetailsPage>
               ),
             ),
           ),
-          const SizedBox(width: 12),
+          SizedBox(width: ResponsiveUtils.width(context, 12)),
           Expanded(
             child: Text(
               FFLocalizations.of(context).getText('loading'),
               style: AppStyles.textCairo(
                 context,
-                fontSize: 15,
+                fontSize: ResponsiveUtils.fontSize(context, 15),
                 color: theme.secondaryText,
               ),
             ),
@@ -423,7 +435,8 @@ class _PlanDetailsPageState extends State<PlanDetailsPage>
         }
       },
       child: Container(
-        padding: const EdgeInsets.symmetric(vertical: 12),
+        padding:
+            EdgeInsets.symmetric(vertical: ResponsiveUtils.height(context, 12)),
         decoration: BoxDecoration(
           border: Border(
             bottom: BorderSide(
@@ -435,8 +448,8 @@ class _PlanDetailsPageState extends State<PlanDetailsPage>
         child: Row(
           children: [
             Container(
-              width: 36,
-              height: 36,
+              width: ResponsiveUtils.width(context, 36),
+              height: ResponsiveUtils.height(context, 36),
               decoration: BoxDecoration(
                 color: theme.primaryBackground,
                 borderRadius: BorderRadius.circular(8),
@@ -448,16 +461,18 @@ class _PlanDetailsPageState extends State<PlanDetailsPage>
                     : null,
               ),
               child: imageUrl.isEmpty
-                  ? Icon(Icons.fitness_center, color: theme.primary, size: 18)
+                  ? Icon(Icons.fitness_center,
+                      color: theme.primary,
+                      size: ResponsiveUtils.iconSize(context, 18))
                   : null,
             ),
-            const SizedBox(width: 12),
+            SizedBox(width: ResponsiveUtils.width(context, 12)),
             Expanded(
               child: Text(
                 name,
                 style: AppStyles.textCairo(
                   context,
-                  fontSize: 15,
+                  fontSize: ResponsiveUtils.fontSize(context, 15),
                   color: theme.primaryText,
                 ),
               ),
@@ -468,11 +483,11 @@ class _PlanDetailsPageState extends State<PlanDetailsPage>
                   sets,
                   style: AppStyles.textCairo(
                     context,
-                    fontSize: 14,
+                    fontSize: ResponsiveUtils.fontSize(context, 14),
                     color: theme.secondaryText,
                   ),
                 ),
-                const SizedBox(width: 8),
+                SizedBox(width: ResponsiveUtils.width(context, 8)),
                 GestureDetector(
                   onTap: () {
                     if (imageUrl.isNotEmpty) {
@@ -480,7 +495,8 @@ class _PlanDetailsPageState extends State<PlanDetailsPage>
                     }
                   },
                   child: Icon(Icons.info_outline,
-                      color: theme.secondaryText, size: 16),
+                      color: theme.secondaryText,
+                      size: ResponsiveUtils.iconSize(context, 16)),
                 ),
               ],
             ),
@@ -496,7 +512,7 @@ class _PlanDetailsPageState extends State<PlanDetailsPage>
     _expandedDays[index] ??= true;
 
     return Container(
-      margin: const EdgeInsets.only(bottom: 16),
+      margin: EdgeInsets.only(bottom: ResponsiveUtils.height(context, 16)),
       decoration: BoxDecoration(
         color: theme.primaryBackground.withOpacity(0.85),
         borderRadius: BorderRadius.circular(16),
@@ -507,17 +523,18 @@ class _PlanDetailsPageState extends State<PlanDetailsPage>
           // Workout focus area
           if (day.hasTitle() && day.title.isNotEmpty)
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16),
+              padding:
+                  ResponsiveUtils.padding(context, horizontal: 16, vertical: 0),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Padding(
-                    padding: const EdgeInsets.all(16),
+                    padding: ResponsiveUtils.padding(context),
                     child: Text(
                       dayName,
                       style: AppStyles.textCairo(
                         context,
-                        fontSize: 20,
+                        fontSize: ResponsiveUtils.fontSize(context, 20),
                         fontWeight: FontWeight.bold,
                         color: theme.primaryText,
                       ),
@@ -526,17 +543,23 @@ class _PlanDetailsPageState extends State<PlanDetailsPage>
                   Row(
                     children: [
                       Icon(Icons.fitness_center,
-                          color: theme.primary, size: 16),
-                      const SizedBox(width: 8),
-                      Text(
-                        day.title,
-                        style: AppStyles.textCairo(
-                          context,
-                          fontSize: 16,
-                          fontWeight: FontWeight.w600,
                           color: theme.primary,
+                          size: ResponsiveUtils.iconSize(context, 16)),
+                      SizedBox(width: ResponsiveUtils.width(context, 8)),
+                      SizedBox(
+                        width: ResponsiveUtils.width(context, 120),
+                        child: Text(
+                          day.title,
+                          overflow: TextOverflow.ellipsis,
+                          maxLines: 1,
+                          style: AppStyles.textCairo(
+                            context,
+                            fontSize: ResponsiveUtils.fontSize(context, 16),
+                            fontWeight: FontWeight.w600,
+                            color: theme.primary,
+                          ),
                         ),
-                      ),
+                      )
                     ],
                   ),
                 ],
@@ -547,7 +570,8 @@ class _PlanDetailsPageState extends State<PlanDetailsPage>
           if (_expandedDays[index] == true) ...[
             // Exercise list
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16),
+              padding:
+                  ResponsiveUtils.padding(context, horizontal: 16, vertical: 0),
               child: Column(
                 children: [
                   for (final exercise in day.exercises)
@@ -558,7 +582,7 @@ class _PlanDetailsPageState extends State<PlanDetailsPage>
 
             // Workout details
             Padding(
-              padding: const EdgeInsets.all(16),
+              padding: ResponsiveUtils.padding(context),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -566,12 +590,12 @@ class _PlanDetailsPageState extends State<PlanDetailsPage>
                     FFLocalizations.of(context).getText('workout_details'),
                     style: AppStyles.textCairo(
                       context,
-                      fontSize: 12,
+                      fontSize: ResponsiveUtils.fontSize(context, 12),
                       fontWeight: FontWeight.bold,
                       color: theme.secondaryText,
                     ),
                   ),
-                  const SizedBox(height: 8),
+                  SizedBox(height: ResponsiveUtils.height(context, 8)),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
@@ -580,7 +604,7 @@ class _PlanDetailsPageState extends State<PlanDetailsPage>
                           theme,
                           FFLocalizations.of(context).getText('exercises'),
                           '${day.exercises.length}'),
-                      const SizedBox(width: 24),
+                      SizedBox(width: ResponsiveUtils.width(context, 24)),
                       _buildWorkoutStat(
                           context,
                           theme,
@@ -602,7 +626,8 @@ class _PlanDetailsPageState extends State<PlanDetailsPage>
                 });
               },
               child: Padding(
-                padding: const EdgeInsets.only(bottom: 16),
+                padding: EdgeInsets.only(
+                    bottom: ResponsiveUtils.height(context, 16)),
                 child: Row(
                   mainAxisSize: MainAxisSize.min,
                   children: [
@@ -610,14 +635,15 @@ class _PlanDetailsPageState extends State<PlanDetailsPage>
                         _expandedDays[index] == true
                             ? Icons.keyboard_arrow_up
                             : Icons.keyboard_arrow_down,
-                        color: theme.secondaryText),
+                        color: theme.secondaryText,
+                        size: ResponsiveUtils.iconSize(context, 24)),
                     Text(
                       _expandedDays[index] == true
                           ? FFLocalizations.of(context).getText('show_less')
                           : FFLocalizations.of(context).getText('show_more'),
                       style: AppStyles.textCairo(
                         context,
-                        fontSize: 14,
+                        fontSize: ResponsiveUtils.fontSize(context, 14),
                         color: theme.secondaryText,
                       ),
                     ),
@@ -639,7 +665,7 @@ class _PlanDetailsPageState extends State<PlanDetailsPage>
           value,
           style: AppStyles.textCairo(
             context,
-            fontSize: 18,
+            fontSize: ResponsiveUtils.fontSize(context, 18),
             fontWeight: FontWeight.bold,
             color: theme.primaryText,
           ),
@@ -648,7 +674,7 @@ class _PlanDetailsPageState extends State<PlanDetailsPage>
           label,
           style: AppStyles.textCairo(
             context,
-            fontSize: 14,
+            fontSize: ResponsiveUtils.fontSize(context, 14),
             color: theme.secondaryText,
           ),
         ),
@@ -675,7 +701,7 @@ class _PlanDetailsPageState extends State<PlanDetailsPage>
               children: [
                 // Top bar with exercise name and close button
                 Padding(
-                  padding: const EdgeInsets.all(16.0),
+                  padding: ResponsiveUtils.padding(context),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -684,7 +710,7 @@ class _PlanDetailsPageState extends State<PlanDetailsPage>
                           name,
                           style: AppStyles.textCairo(
                             context,
-                            fontSize: 20,
+                            fontSize: ResponsiveUtils.fontSize(context, 20),
                             fontWeight: FontWeight.bold,
                             color: Colors.white,
                           ),
@@ -695,12 +721,15 @@ class _PlanDetailsPageState extends State<PlanDetailsPage>
                       GestureDetector(
                         onTap: () => Navigator.pop(context),
                         child: Container(
-                          padding: const EdgeInsets.all(8),
+                          padding:
+                              EdgeInsets.all(ResponsiveUtils.width(context, 8)),
                           decoration: BoxDecoration(
                             color: Colors.white.withOpacity(0.2),
                             shape: BoxShape.circle,
                           ),
-                          child: const Icon(Icons.close, color: Colors.white),
+                          child: Icon(Icons.close,
+                              color: Colors.white,
+                              size: ResponsiveUtils.iconSize(context, 24)),
                         ),
                       ),
                     ],
@@ -725,18 +754,20 @@ class _PlanDetailsPageState extends State<PlanDetailsPage>
                           child: Column(
                             mainAxisSize: MainAxisSize.min,
                             children: [
-                              const Icon(
+                              Icon(
                                 Icons.error_outline,
                                 color: Colors.white,
-                                size: 40,
+                                size: ResponsiveUtils.iconSize(context, 40),
                               ),
-                              const SizedBox(height: 16),
+                              SizedBox(
+                                  height: ResponsiveUtils.height(context, 16)),
                               Text(
                                 FFLocalizations.of(context)
                                     .getText('image_load_error'),
                                 style: AppStyles.textCairo(
                                   context,
-                                  fontSize: 16,
+                                  fontSize:
+                                      ResponsiveUtils.fontSize(context, 16),
                                   color: Colors.white,
                                 ),
                               ),

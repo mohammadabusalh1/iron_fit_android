@@ -1,5 +1,6 @@
 import 'package:iron_fit/componants/Styles.dart';
 import 'package:iron_fit/navigation/navigation_service.dart';
+import 'package:iron_fit/utils/responsive_utils.dart';
 
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
@@ -92,7 +93,7 @@ class _UserNavWidgetState extends State<UserNavWidget>
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Container(
-              padding: const EdgeInsets.all(12),
+              padding: EdgeInsets.all(ResponsiveUtils.width(context, 12)),
               decoration: BoxDecoration(
                 color:
                     isSelected ? const Color(0xFFFFB800) : Colors.transparent,
@@ -110,12 +111,12 @@ class _UserNavWidgetState extends State<UserNavWidget>
                     ? FaIcon(
                         icon,
                         color: isSelected ? infoColor : secondaryTextColor,
-                        size: 20.0,
+                        size: ResponsiveUtils.iconSize(context, 20.0),
                       )
                     : Icon(
                         icon,
                         color: isSelected ? infoColor : secondaryTextColor,
-                        size: 20.0,
+                        size: ResponsiveUtils.iconSize(context, 20.0),
                       ),
               ),
             ),
@@ -124,7 +125,7 @@ class _UserNavWidgetState extends State<UserNavWidget>
                 label,
                 style: AppStyles.textCairo(
                   context,
-                  fontSize: 10,
+                  fontSize: ResponsiveUtils.fontSize(context, 10),
                   color: secondaryTextColor,
                 ),
               ),
@@ -141,7 +142,7 @@ class _UserNavWidgetState extends State<UserNavWidget>
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
-      height: 85.0,
+      height: ResponsiveUtils.height(context, 85.0),
       decoration: BoxDecoration(
         color: FlutterFlowTheme.of(context).secondaryBackground,
         boxShadow: const [
@@ -154,7 +155,11 @@ class _UserNavWidgetState extends State<UserNavWidget>
         ],
       ),
       child: Padding(
-        padding: const EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 0.0),
+        padding: ResponsiveUtils.padding(
+          context,
+          horizontal: 16.0,
+          vertical: 0.0,
+        ),
         child: Row(
           mainAxisSize: MainAxisSize.max,
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,

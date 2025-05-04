@@ -5,6 +5,7 @@ import 'package:iron_fit/componants/Styles.dart';
 import 'package:iron_fit/flutter_flow/flutter_flow_theme.dart';
 import 'package:iron_fit/flutter_flow/flutter_flow_util.dart';
 import 'package:flutter/foundation.dart';
+import 'package:iron_fit/utils/responsive_utils.dart';
 
 class TraineeCard extends StatelessWidget {
   final SubscriptionsRecord subscription;
@@ -38,7 +39,7 @@ class TraineeCard extends StatelessWidget {
           child: Padding(
             padding: EdgeInsets.symmetric(
               horizontal: constraints.maxWidth * 0.04,
-              vertical: 16.0,
+              vertical: ResponsiveUtils.height(context, 16.0),
             ),
             child: _buildCardContent(context, constraints),
           ),
@@ -84,8 +85,8 @@ class TraineeCard extends StatelessWidget {
               mainAxisSize: MainAxisSize.max,
               children: [
                 Container(
-                  width: isSmallScreen ? 40.0 : 50.0,
-                  height: isSmallScreen ? 40.0 : 50.0,
+                  width: ResponsiveUtils.width(context, isSmallScreen ? 40.0 : 50.0),
+                  height: ResponsiveUtils.height(context, isSmallScreen ? 40.0 : 50.0),
                   decoration: BoxDecoration(
                     color: FlutterFlowTheme.of(context).secondaryBackground,
                     borderRadius: BorderRadius.circular(25.0),
@@ -95,11 +96,11 @@ class TraineeCard extends StatelessWidget {
                     child: Icon(
                       Icons.person_rounded,
                       color: FlutterFlowTheme.of(context).primary,
-                      size: isSmallScreen ? 25 : 35,
+                      size: ResponsiveUtils.iconSize(context, isSmallScreen ? 25 : 35),
                     ),
                   ),
                 ),
-                SizedBox(width: constraints.maxWidth * 0.03),
+                SizedBox(width: ResponsiveUtils.width(context, constraints.maxWidth * 0.03)),
                 Expanded(
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
@@ -107,9 +108,11 @@ class TraineeCard extends StatelessWidget {
                     children: [
                       Text(
                         subscription.name,
-                        style: AppStyles.textCairo(context,
-                            fontWeight: FontWeight.w600,
-                            fontSize: isSmallScreen ? 14 : 16),
+                        style: AppStyles.textCairo(
+                          context,
+                          fontWeight: FontWeight.w600,
+                          fontSize: ResponsiveUtils.fontSize(context, isSmallScreen ? 14 : 16),
+                        ),
                         overflow: TextOverflow.ellipsis,
                         maxLines: 1,
                       ),
@@ -119,9 +122,11 @@ class TraineeCard extends StatelessWidget {
                           subscription.endDate,
                           locale: FFLocalizations.of(context).languageCode,
                         ),
-                        style: AppStyles.textCairo(context,
-                            fontSize: isSmallScreen ? 10 : 12,
-                            color: FlutterFlowTheme.of(context).secondaryText),
+                        style: AppStyles.textCairo(
+                          context,
+                          fontSize: ResponsiveUtils.fontSize(context, isSmallScreen ? 10 : 12),
+                          color: FlutterFlowTheme.of(context).secondaryText,
+                        ),
                       ),
                     ],
                   ),
@@ -136,7 +141,7 @@ class TraineeCard extends StatelessWidget {
                 Icon(
                   Icons.chevron_right,
                   color: FlutterFlowTheme.of(context).secondaryText,
-                  size: isSmallScreen ? 20.0 : 24.0,
+                  size: ResponsiveUtils.iconSize(context, isSmallScreen ? 20.0 : 24.0),
                 ),
               if (subscription.isDeleted && onRestore != null)
                 IconButton(
@@ -144,11 +149,11 @@ class TraineeCard extends StatelessWidget {
                   icon: Icon(
                     Icons.restore,
                     color: FlutterFlowTheme.of(context).primary,
-                    size: isSmallScreen ? 20.0 : 24.0,
+                    size: ResponsiveUtils.iconSize(context, isSmallScreen ? 20.0 : 24.0),
                   ),
                   constraints: BoxConstraints(
-                    minWidth: isSmallScreen ? 30.0 : 40.0,
-                    minHeight: isSmallScreen ? 30.0 : 40.0,
+                    minWidth: ResponsiveUtils.width(context, isSmallScreen ? 30.0 : 40.0),
+                    minHeight: ResponsiveUtils.height(context, isSmallScreen ? 30.0 : 40.0),
                   ),
                   padding: EdgeInsets.zero,
                 ),
@@ -158,11 +163,11 @@ class TraineeCard extends StatelessWidget {
                   icon: Icon(
                     Icons.delete,
                     color: FlutterFlowTheme.of(context).error,
-                    size: isSmallScreen ? 20.0 : 24.0,
+                    size: ResponsiveUtils.iconSize(context, isSmallScreen ? 20.0 : 24.0),
                   ),
                   constraints: BoxConstraints(
-                    minWidth: isSmallScreen ? 30.0 : 40.0,
-                    minHeight: isSmallScreen ? 30.0 : 40.0,
+                    minWidth: ResponsiveUtils.width(context, isSmallScreen ? 30.0 : 40.0),
+                    minHeight: ResponsiveUtils.height(context, isSmallScreen ? 30.0 : 40.0),
                   ),
                   padding: EdgeInsets.zero,
                 ),
@@ -186,8 +191,8 @@ class TraineeCard extends StatelessWidget {
             mainAxisSize: MainAxisSize.max,
             children: [
               Container(
-                width: isSmallScreen ? 40.0 : 50.0,
-                height: isSmallScreen ? 40.0 : 50.0,
+                width: ResponsiveUtils.width(context, isSmallScreen ? 40.0 : 50.0),
+                height: ResponsiveUtils.height(context, isSmallScreen ? 40.0 : 50.0),
                 decoration: BoxDecoration(
                   color: FlutterFlowTheme.of(context).secondaryBackground,
                   borderRadius: BorderRadius.circular(25.0),
@@ -197,11 +202,11 @@ class TraineeCard extends StatelessWidget {
                   child: Icon(
                     Icons.person_rounded,
                     color: FlutterFlowTheme.of(context).primary,
-                    size: isSmallScreen ? 25 : 35,
+                    size: ResponsiveUtils.iconSize(context, isSmallScreen ? 25 : 35),
                   ),
                 ),
               ),
-              SizedBox(width: constraints.maxWidth * 0.03),
+              SizedBox(width: ResponsiveUtils.width(context, constraints.maxWidth * 0.03)),
               Expanded(
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
@@ -212,7 +217,7 @@ class TraineeCard extends StatelessWidget {
                       style: AppStyles.textCairo(
                         context,
                         fontWeight: FontWeight.w600,
-                        fontSize: isSmallScreen ? 14 : 16,
+                        fontSize: ResponsiveUtils.fontSize(context, isSmallScreen ? 14 : 16),
                       ),
                       overflow: TextOverflow.ellipsis,
                       maxLines: 1,
@@ -225,7 +230,7 @@ class TraineeCard extends StatelessWidget {
                       ),
                       style: AppStyles.textCairo(
                         context,
-                        fontSize: isSmallScreen ? 10 : 12,
+                        fontSize: ResponsiveUtils.fontSize(context, isSmallScreen ? 10 : 12),
                         color: FlutterFlowTheme.of(context).secondaryText,
                       ),
                     ),
@@ -244,11 +249,11 @@ class TraineeCard extends StatelessWidget {
                 icon: Icon(
                   Icons.delete,
                   color: FlutterFlowTheme.of(context).error,
-                  size: isSmallScreen ? 20.0 : 24.0,
+                  size: ResponsiveUtils.iconSize(context, isSmallScreen ? 20.0 : 24.0),
                 ),
                 constraints: BoxConstraints(
-                  minWidth: isSmallScreen ? 30.0 : 40.0,
-                  minHeight: isSmallScreen ? 30.0 : 40.0,
+                  minWidth: ResponsiveUtils.width(context, isSmallScreen ? 30.0 : 40.0),
+                  minHeight: ResponsiveUtils.height(context, isSmallScreen ? 30.0 : 40.0),
                 ),
                 padding: EdgeInsets.zero,
               ),
@@ -258,11 +263,11 @@ class TraineeCard extends StatelessWidget {
                 icon: Icon(
                   Icons.restore,
                   color: FlutterFlowTheme.of(context).primary,
-                  size: isSmallScreen ? 20.0 : 24.0,
+                  size: ResponsiveUtils.iconSize(context, isSmallScreen ? 20.0 : 24.0),
                 ),
                 constraints: BoxConstraints(
-                  minWidth: isSmallScreen ? 30.0 : 40.0,
-                  minHeight: isSmallScreen ? 30.0 : 40.0,
+                  minWidth: ResponsiveUtils.width(context, isSmallScreen ? 30.0 : 40.0),
+                  minHeight: ResponsiveUtils.height(context, isSmallScreen ? 30.0 : 40.0),
                 ),
                 padding: EdgeInsets.zero,
               ),
@@ -316,8 +321,8 @@ class TraineeCard extends StatelessWidget {
                     mainAxisSize: MainAxisSize.max,
                     children: [
                       Container(
-                        width: isSmallScreen ? 40.0 : 50.0,
-                        height: isSmallScreen ? 40.0 : 50.0,
+                        width: ResponsiveUtils.width(context, isSmallScreen ? 40.0 : 50.0),
+                        height: ResponsiveUtils.height(context, isSmallScreen ? 40.0 : 50.0),
                         decoration: BoxDecoration(
                           color:
                               FlutterFlowTheme.of(context).secondaryBackground,
@@ -327,18 +332,18 @@ class TraineeCard extends StatelessWidget {
                           borderRadius: BorderRadius.circular(25.0),
                           child: Image.network(
                             userRecord.photoUrl,
-                            width: isSmallScreen ? 40.0 : 50.0,
-                            height: isSmallScreen ? 40.0 : 50.0,
+                            width: ResponsiveUtils.width(context, isSmallScreen ? 40.0 : 50.0),
+                            height: ResponsiveUtils.height(context, isSmallScreen ? 40.0 : 50.0),
                             fit: BoxFit.cover,
                             errorBuilder: (context, error, stackTrace) => Icon(
                               Icons.person_rounded,
                               color: FlutterFlowTheme.of(context).primary,
-                              size: isSmallScreen ? 25 : 35,
+                              size: ResponsiveUtils.iconSize(context, isSmallScreen ? 25 : 35),
                             ),
                           ),
                         ),
                       ),
-                      SizedBox(width: constraints.maxWidth * 0.03),
+                      SizedBox(width: ResponsiveUtils.width(context, constraints.maxWidth * 0.03)),
                       Expanded(
                         child: Column(
                           mainAxisSize: MainAxisSize.min,
@@ -349,7 +354,7 @@ class TraineeCard extends StatelessWidget {
                               style: AppStyles.textCairo(
                                 context,
                                 fontWeight: FontWeight.w600,
-                                fontSize: isSmallScreen ? 14 : 16,
+                                fontSize: ResponsiveUtils.fontSize(context, isSmallScreen ? 14 : 16),
                               ),
                               overflow: TextOverflow.ellipsis,
                               maxLines: 1,
@@ -363,7 +368,7 @@ class TraineeCard extends StatelessWidget {
                               ),
                               style: AppStyles.textCairo(
                                 context,
-                                fontSize: isSmallScreen ? 10 : 12,
+                                fontSize: ResponsiveUtils.fontSize(context, isSmallScreen ? 10 : 12),
                                 color:
                                     FlutterFlowTheme.of(context).secondaryText,
                               ),
@@ -391,7 +396,7 @@ class TraineeCard extends StatelessWidget {
                 Icon(
                   Icons.chevron_right,
                   color: FlutterFlowTheme.of(context).secondaryText,
-                  size: isSmallScreen ? 20.0 : 24.0,
+                  size: ResponsiveUtils.iconSize(context, isSmallScreen ? 20.0 : 24.0),
                 ),
               if (subscription.isDeleted && onRestore != null)
                 IconButton(
@@ -399,11 +404,11 @@ class TraineeCard extends StatelessWidget {
                   icon: Icon(
                     Icons.restore,
                     color: FlutterFlowTheme.of(context).primary,
-                    size: isSmallScreen ? 20.0 : 24.0,
+                    size: ResponsiveUtils.iconSize(context, isSmallScreen ? 20.0 : 24.0),
                   ),
                   constraints: BoxConstraints(
-                    minWidth: isSmallScreen ? 30.0 : 40.0,
-                    minHeight: isSmallScreen ? 30.0 : 40.0,
+                    minWidth: ResponsiveUtils.width(context, isSmallScreen ? 30.0 : 40.0),
+                    minHeight: ResponsiveUtils.height(context, isSmallScreen ? 30.0 : 40.0),
                   ),
                   padding: EdgeInsets.zero,
                 ),
@@ -413,11 +418,11 @@ class TraineeCard extends StatelessWidget {
                   icon: Icon(
                     Icons.delete,
                     color: FlutterFlowTheme.of(context).error,
-                    size: isSmallScreen ? 20.0 : 24.0,
+                    size: ResponsiveUtils.iconSize(context, isSmallScreen ? 20.0 : 24.0),
                   ),
                   constraints: BoxConstraints(
-                    minWidth: isSmallScreen ? 30.0 : 40.0,
-                    minHeight: isSmallScreen ? 30.0 : 40.0,
+                    minWidth: ResponsiveUtils.width(context, isSmallScreen ? 30.0 : 40.0),
+                    minHeight: ResponsiveUtils.height(context, isSmallScreen ? 30.0 : 40.0),
                   ),
                   padding: EdgeInsets.zero,
                 ),

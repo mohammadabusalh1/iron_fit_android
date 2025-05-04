@@ -53,7 +53,9 @@ final authenticatedTraineeStream = FirebaseAuth.instance
             ).handleError((_) {}),
     )
     .map((trainee) {
-  currentTraineeDocument = trainee?.firstOrNull;
+  if (trainee != null && trainee.isNotEmpty) {
+    currentTraineeDocument = trainee.first;
+  }
   return currentTraineeDocument;
 }).asBroadcastStream();
 
@@ -72,8 +74,9 @@ final authenticatedCoachStream = FirebaseAuth.instance
             ).handleError((_) {}),
     )
     .map((coach) {
-  print('Debug: coach: $coach');
-  currentCoachDocument = coach?.firstOrNull;
+  if (coach != null && coach.isNotEmpty) {
+    currentCoachDocument = coach.first;
+  }
   return currentCoachDocument;
 }).asBroadcastStream();
 

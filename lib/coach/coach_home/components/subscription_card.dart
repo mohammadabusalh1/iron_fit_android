@@ -3,6 +3,7 @@ import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/componants/Styles.dart';
 import '/backend/backend.dart';
+import '/utils/responsive_utils.dart';
 
 class SubscriptionCard extends StatelessWidget {
   final SubscriptionsRecord subscription;
@@ -17,7 +18,7 @@ class SubscriptionCard extends StatelessWidget {
     return Container(
       decoration: BoxDecoration(
         color: FlutterFlowTheme.of(context).secondaryBackground,
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: BorderRadius.circular(ResponsiveUtils.width(context, 12)),
       ),
       child: subscription.trainee == null
           ? AnonymousTraineeCard(subscription: subscription)
@@ -121,7 +122,7 @@ class UserInfoRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(16),
+      padding: ResponsiveUtils.padding(context, horizontal: 16, vertical: 16),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
@@ -129,23 +130,23 @@ class UserInfoRow extends StatelessWidget {
             child: Row(
               children: [
                 Container(
-                  width: 50,
-                  height: 50,
+                  width: ResponsiveUtils.width(context, 50),
+                  height: ResponsiveUtils.height(context, 50),
                   decoration: BoxDecoration(
                     color: FlutterFlowTheme.of(context).primary.withAlpha(30),
-                    borderRadius: BorderRadius.circular(25),
+                    borderRadius: BorderRadius.circular(ResponsiveUtils.width(context, 25)),
                     border: Border.all(
                       color: FlutterFlowTheme.of(context).primary,
                       width: 1,
                     ),
                   ),
                   child: ClipRRect(
-                    borderRadius: BorderRadius.circular(25),
+                    borderRadius: BorderRadius.circular(ResponsiveUtils.width(context, 25)),
                     child: isAnonymous
                         ? Icon(
                             Icons.person_outline,
                             color: FlutterFlowTheme.of(context).primary,
-                            size: 30,
+                            size: ResponsiveUtils.iconSize(context, 30),
                           )
                         : Image.network(
                             userRecord?.photoUrl ??
@@ -154,12 +155,12 @@ class UserInfoRow extends StatelessWidget {
                             errorBuilder: (context, error, stackTrace) => Icon(
                               Icons.person_outline,
                               color: FlutterFlowTheme.of(context).primary,
-                              size: 30,
+                              size: ResponsiveUtils.iconSize(context, 30),
                             ),
                           ),
                   ),
                 ),
-                const SizedBox(width: 12),
+                SizedBox(width: ResponsiveUtils.width(context, 12)),
                 Expanded(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -169,7 +170,7 @@ class UserInfoRow extends StatelessWidget {
                         style: AppStyles.textCairo(
                           context,
                           fontWeight: FontWeight.w600,
-                          fontSize: 16,
+                          fontSize: ResponsiveUtils.fontSize(context, 16),
                         ),
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
@@ -178,7 +179,7 @@ class UserInfoRow extends StatelessWidget {
                         goal,
                         style: AppStyles.textCairo(
                           context,
-                          fontSize: 12,
+                          fontSize: ResponsiveUtils.fontSize(context, 12),
                           color: FlutterFlowTheme.of(context).secondaryText,
                         ),
                         maxLines: 1,
@@ -191,10 +192,13 @@ class UserInfoRow extends StatelessWidget {
             ),
           ),
           Container(
-            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+            padding: EdgeInsets.symmetric(
+              horizontal: ResponsiveUtils.width(context, 12), 
+              vertical: ResponsiveUtils.height(context, 8)
+            ),
             decoration: BoxDecoration(
               color: const Color(0xFFE8F5E9),
-              borderRadius: BorderRadius.circular(20),
+              borderRadius: BorderRadius.circular(ResponsiveUtils.width(context, 20)),
             ),
             child: Row(
               mainAxisSize: MainAxisSize.min,
@@ -202,15 +206,15 @@ class UserInfoRow extends StatelessWidget {
                 Icon(
                   Icons.check_circle_outline,
                   color: FlutterFlowTheme.of(context).success,
-                  size: 16,
+                  size: ResponsiveUtils.iconSize(context, 16),
                 ),
-                const SizedBox(width: 4),
+                SizedBox(width: ResponsiveUtils.width(context, 4)),
                 Text(
                   FFLocalizations.of(context).getText('3zm1gqar'),
                   style: AppStyles.textCairo(
                     context,
                     color: FlutterFlowTheme.of(context).success,
-                    fontSize: 12,
+                    fontSize: ResponsiveUtils.fontSize(context, 12),
                     fontWeight: FontWeight.w600,
                   ),
                 ),

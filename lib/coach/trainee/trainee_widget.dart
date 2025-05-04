@@ -14,6 +14,7 @@ import 'package:iron_fit/flutter_flow/custom_functions.dart';
 import 'package:iron_fit/flutter_flow/form_field_controller.dart';
 import 'package:iron_fit/pages/error_page/error_page_widget.dart';
 import 'package:iron_fit/utils/logger.dart';
+import 'package:iron_fit/utils/responsive_utils.dart';
 import '/auth/firebase_auth/auth_util.dart';
 import '/backend/backend.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
@@ -45,7 +46,7 @@ class TraineeWidget extends StatefulWidget {
 class _TraineeWidgetState extends State<TraineeWidget> {
   late TraineeModel _model;
   final scaffoldKey = GlobalKey<ScaffoldState>();
-  final AdService _adService = AdService();
+  late AdService _adService;
   final TraineeService _traineeService = TraineeService();
   final TextEditingController _notesController = TextEditingController();
   bool _isLoadingData = true;
@@ -60,11 +61,15 @@ class _TraineeWidgetState extends State<TraineeWidget> {
     super.initState();
 
     _model = createModel(context, () => TraineeModel());
-
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      _adService.loadAd(context);
-      _loadData();
+    _adService = AdService();
+    // Add delay to ad loading
+    Future.delayed(const Duration(seconds: 5), () {
+      if (mounted) {
+        _adService.loadAd(context);
+      }
     });
+
+    _loadData();
   }
 
   @override
@@ -207,7 +212,10 @@ class _TraineeWidgetState extends State<TraineeWidget> {
               onPressed: () {
                 context.pushNamed('trainees');
               },
-              icon: const Icon(Icons.arrow_back),
+              icon: Icon(
+                Icons.arrow_back,
+                size: ResponsiveUtils.iconSize(context, 24),
+              ),
             ),
             null),
         body: _buildBody(),
@@ -233,7 +241,7 @@ class _TraineeWidgetState extends State<TraineeWidget> {
 
   Widget _buildMainContent() {
     return Container(
-      padding: EdgeInsets.only(top: MediaQuery.of(context).padding.top + 80),
+      padding: EdgeInsets.only(top: MediaQuery.of(context).padding.top + ResponsiveUtils.height(context, 80)),
       decoration: BoxDecoration(
         gradient: LinearGradient(
           begin: Alignment.topCenter,
@@ -249,7 +257,7 @@ class _TraineeWidgetState extends State<TraineeWidget> {
           mainAxisSize: MainAxisSize.max,
           children: [
             Padding(
-              padding: const EdgeInsets.all(16.0),
+              padding: ResponsiveUtils.padding(context, horizontal: 16, vertical: 16),
               child: Column(
                 children: [
                   TraineeCard(
@@ -262,7 +270,7 @@ class _TraineeWidgetState extends State<TraineeWidget> {
                     traineeService: traineeService,
                     refreshSubscription: _refreshSubscription,
                   ),
-                  const SizedBox(height: 16),
+                  SizedBox(height: ResponsiveUtils.height(context, 16)),
                   SubscriptionManagementWidget(
                     subscription: subscription!,
                     onRenewPressed: () async {
@@ -274,7 +282,7 @@ class _TraineeWidgetState extends State<TraineeWidget> {
                           context, subscription!);
                     },
                   ),
-                  const SizedBox(height: 16),
+                  SizedBox(height: ResponsiveUtils.height(context, 16)),
                   PaymentHistoryWidget(
                     subscription: subscription!,
                     onAddDebtsPressed: () async {
@@ -290,7 +298,7 @@ class _TraineeWidgetState extends State<TraineeWidget> {
                     onViewDebtsPressed: () =>
                         showDebtsModal(subscription!, context),
                   ),
-                  const SizedBox(height: 16),
+                  SizedBox(height: ResponsiveUtils.height(context, 16)),
                   if (currentCoachDocument != null)
                     TrainingPlansWidget(
                       subscription: subscription!,
@@ -331,7 +339,7 @@ class _TraineeWidgetState extends State<TraineeWidget> {
                         await _refreshSubscription();
                       },
                     ),
-                  const SizedBox(height: 16),
+                  SizedBox(height: ResponsiveUtils.height(context, 16)),
                   NotesSectionWidget(
                     controller: _notesController,
                     onSavePressed: () => TraineeHandlers.handleSaveNotes(
@@ -351,21 +359,22 @@ class _TraineeWidgetState extends State<TraineeWidget> {
     required BuildContext context,
   }) {
     return Container(
-      margin: const EdgeInsets.only(bottom: 12),
+      margin: EdgeInsets.only(bottom: ResponsiveUtils.height(context, 12)),
       decoration: BoxDecoration(
         color: FlutterFlowTheme.of(context).primaryBackground,
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: BorderRadius.circular(ResponsiveUtils.width(context, 12)),
         border: Border.all(
           color: FlutterFlowTheme.of(context).alternate.withAlpha(60),
         ),
       ),
       child: ListTile(
-        contentPadding: const EdgeInsets.symmetric(
+        contentPadding: ResponsiveUtils.padding(
+          context,
           horizontal: 16,
           vertical: 8,
         ),
         leading: Container(
-          padding: const EdgeInsets.all(8),
+          padding: ResponsiveUtils.padding(context, horizontal: 8, vertical: 8),
           decoration: BoxDecoration(
             color: FlutterFlowTheme.of(context).primary.withAlpha(20),
             shape: BoxShape.circle,
@@ -373,13 +382,14 @@ class _TraineeWidgetState extends State<TraineeWidget> {
           child: Icon(
             Icons.receipt_rounded,
             color: FlutterFlowTheme.of(context).primary,
+            size: ResponsiveUtils.iconSize(context, 24),
           ),
         ),
         title: Text(
           '${bill['paid']} \$',
           style: AppStyles.textCairo(
             context,
-            fontSize: 16,
+            fontSize: ResponsiveUtils.fontSize(context, 16),
             fontWeight: FontWeight.w600,
             color: FlutterFlowTheme.of(context).success,
           ),
@@ -392,7 +402,7 @@ class _TraineeWidgetState extends State<TraineeWidget> {
           ),
           style: AppStyles.textCairo(
             context,
-            fontSize: 14,
+            fontSize: ResponsiveUtils.fontSize(context, 14),
             color: FlutterFlowTheme.of(context).secondaryText,
           ),
         ),

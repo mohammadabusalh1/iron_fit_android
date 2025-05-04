@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:iron_fit/utils/responsive_utils.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 
 class HeaderSection extends StatefulWidget {
@@ -50,30 +51,35 @@ class _HeaderSectionState extends State<HeaderSection>
   @override
   Widget build(BuildContext context) {
     final descriptionStyle = GoogleFonts.poppins(
-      fontSize: 16,
+      fontSize: ResponsiveUtils.fontSize(context, 16),
       color: FlutterFlowTheme.of(context).info.withValues(alpha: 0.9),
       height: 1.5,
     );
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        const SizedBox(height: 40),
+        SizedBox(height: ResponsiveUtils.height(context, 40)),
         Text(
           'IRONFIT',
           style: GoogleFonts.poppins(
-            fontSize: 40,
+            fontSize: ResponsiveUtils.fontSize(context, 40),
             fontWeight: FontWeight.bold,
             color: FlutterFlowTheme.of(context).info.withValues(alpha: 0.8),
             letterSpacing: 2,
           ),
         ),
-        const SizedBox(height: 12),
+        SizedBox(height: ResponsiveUtils.height(context, 12)),
         AnimatedOpacity(
           opacity: _currentText.isEmpty ? 0.0 : 1.0,
           duration: const Duration(milliseconds: 300),
           child: Container(
-            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-            margin: const EdgeInsets.symmetric(horizontal: 8),
+            padding: EdgeInsets.symmetric(
+              horizontal: ResponsiveUtils.width(context, 16), 
+              vertical: ResponsiveUtils.height(context, 12)
+            ),
+            margin: EdgeInsets.symmetric(
+              horizontal: ResponsiveUtils.width(context, 8)
+            ),
             decoration: BoxDecoration(
               color: Colors.white.withValues(alpha: 0.1),
               borderRadius: BorderRadius.circular(12),
@@ -89,7 +95,7 @@ class _HeaderSectionState extends State<HeaderSection>
                   textAlign: TextAlign.center,
                   style: descriptionStyle,
                 ),
-                const SizedBox(height: 24),
+                SizedBox(height: ResponsiveUtils.height(context, 24)),
                 // Container(
                 //   padding: const EdgeInsets.all(6),
                 //   decoration: BoxDecoration(
@@ -118,7 +124,7 @@ class _HeaderSectionState extends State<HeaderSection>
             ),
           ),
         ),
-        const SizedBox(height: 24),
+        SizedBox(height: ResponsiveUtils.height(context, 24)),
       ],
     );
   }

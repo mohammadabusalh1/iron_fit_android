@@ -5,6 +5,7 @@ import 'package:iron_fit/componants/timer/timer_widget.dart';
 import '/backend/backend.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
+import '/utils/responsive_utils.dart';
 import 'package:iron_fit/componants/Styles.dart';
 import 'trainer_feedback_section.dart';
 
@@ -43,15 +44,15 @@ class ExerciseItem extends StatelessWidget {
     final primary = FlutterFlowTheme.of(context).primary;
 
     return Container(
-      height: 280,
+      height: ResponsiveUtils.height(context, 280),
       decoration: BoxDecoration(
         color: secondaryBackground.withAlpha(150),
-        borderRadius: BorderRadius.circular(16.0),
+        borderRadius: BorderRadius.circular(ResponsiveUtils.width(context, 16.0)),
       ),
       child: Center(
         child: SizedBox(
-          width: 40.0,
-          height: 40.0,
+          width: ResponsiveUtils.width(context, 40.0),
+          height: ResponsiveUtils.height(context, 40.0),
           child: CircularProgressIndicator(
             strokeWidth: 3,
             color: primary,
@@ -72,12 +73,12 @@ class ExerciseItem extends StatelessWidget {
     final errorColor = theme.error;
     final info = theme.info;
 
-    const double exerciseImageHeight = 230.0;
+    final double exerciseImageHeight = ResponsiveUtils.height(context, 230.0);
 
     return Container(
       decoration: BoxDecoration(
         color: primaryBackground,
-        borderRadius: BorderRadius.circular(16.0),
+        borderRadius: BorderRadius.circular(ResponsiveUtils.width(context, 16.0)),
         border: Border.all(color: info.withOpacity(0.3), width: 1),
       ),
       child: Column(
@@ -87,9 +88,9 @@ class ExerciseItem extends StatelessWidget {
           Stack(
             children: [
               ClipRRect(
-                borderRadius: const BorderRadius.only(
-                  topLeft: Radius.circular(16.0),
-                  topRight: Radius.circular(16.0),
+                borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(ResponsiveUtils.width(context, 16.0)),
+                  topRight: Radius.circular(ResponsiveUtils.width(context, 16.0)),
                 ),
                 child: CachedNetworkImage(
                   imageUrl: exerciseRecord.gifUrl,
@@ -100,8 +101,8 @@ class ExerciseItem extends StatelessWidget {
                     color: primaryBackground,
                     child: Center(
                       child: SizedBox(
-                        width: 30,
-                        height: 30,
+                        width: ResponsiveUtils.width(context, 30),
+                        height: ResponsiveUtils.height(context, 30),
                         child: CircularProgressIndicator(
                           strokeWidth: 2,
                           valueColor: AlwaysStoppedAnimation<Color>(
@@ -116,26 +117,28 @@ class ExerciseItem extends StatelessWidget {
                     child: Icon(
                       Icons.error_outline,
                       color: errorColor,
-                      size: 30,
+                      size: ResponsiveUtils.iconSize(context, 30),
                     ),
                   ),
                 ),
               ),
               Positioned(
-                top: 8,
-                right: 8,
+                top: ResponsiveUtils.height(context, 8),
+                right: ResponsiveUtils.width(context, 8),
                 child: Container(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                  padding: EdgeInsets.symmetric(
+                    horizontal: ResponsiveUtils.width(context, 12), 
+                    vertical: ResponsiveUtils.height(context, 6)
+                  ),
                   decoration: BoxDecoration(
                     color: primary.withAlpha(180),
-                    borderRadius: BorderRadius.circular(20),
+                    borderRadius: BorderRadius.circular(ResponsiveUtils.width(context, 20)),
                   ),
                   child: Text(
                     '${FFLocalizations.of(context).getText('exercise')} ${index + 1}',
                     style: AppStyles.textCairo(
                       context,
-                      fontSize: 12,
+                      fontSize: ResponsiveUtils.fontSize(context, 12),
                       color: info,
                       fontWeight: FontWeight.w600,
                     ),
@@ -145,7 +148,7 @@ class ExerciseItem extends StatelessWidget {
             ],
           ),
           Padding(
-            padding: const EdgeInsets.all(16.0),
+            padding: EdgeInsets.all(ResponsiveUtils.width(context, 16.0)),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -153,12 +156,12 @@ class ExerciseItem extends StatelessWidget {
                   exerciseRecord.name,
                   style: AppStyles.textCairo(
                     context,
-                    fontSize: 18,
+                    fontSize: ResponsiveUtils.fontSize(context, 18),
                     fontWeight: FontWeight.bold,
                     color: primaryText,
                   ),
                 ),
-                const SizedBox(height: 8),
+                SizedBox(height: ResponsiveUtils.height(context, 8)),
                 Column(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -166,17 +169,17 @@ class ExerciseItem extends StatelessWidget {
                       children: [
                         Icon(
                           Icons.fitness_center,
-                          size: 16,
+                          size: ResponsiveUtils.iconSize(context, 16),
                           color: secondaryText,
                         ),
-                        const SizedBox(width: 4),
+                        SizedBox(width: ResponsiveUtils.width(context, 4)),
                         Text(
                           exercise.reps == 0 && exercise.time != 0
                               ? '${exercise.sets} ${FFLocalizations.of(context).getText('7eljwytw')} - ${exercise.time} ${exercise.timeType == 'm' ? FFLocalizations.of(context).getText('minutes') : FFLocalizations.of(context).getText('seconds')}'
                               : '${exercise.sets} ${FFLocalizations.of(context).getText('7eljwytw')} - ${exercise.reps} ${FFLocalizations.of(context).getText('wkyczine')}',
                           style: AppStyles.textCairo(
                             context,
-                            fontSize: 12,
+                            fontSize: ResponsiveUtils.fontSize(context, 12),
                             color: secondaryText,
                           ),
                         ),

@@ -3,6 +3,7 @@ import 'package:iron_fit/componants/Styles.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
+import '/utils/responsive_utils.dart';
 
 class ActionButtons extends StatelessWidget {
   final bool isEditMode;
@@ -28,14 +29,13 @@ class ActionButtons extends StatelessWidget {
                   .getText('bj0yxoi0' /* Create Plan */),
           options: FFButtonOptions(
             width: MediaQuery.sizeOf(context).width,
-            height: 50.0,
-            padding: const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
-            iconPadding:
-                const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
+            height: ResponsiveUtils.height(context, 50.0),
+            padding: ResponsiveUtils.padding(context, horizontal: 0.0, vertical: 0.0),
+            iconPadding: ResponsiveUtils.padding(context, horizontal: 0.0, vertical: 0.0),
             color: FlutterFlowTheme.of(context).primary,
             textStyle: AppStyles.textCairo(
               context,
-              fontSize: 16,
+              fontSize: ResponsiveUtils.fontSize(context, 16),
               color: FlutterFlowTheme.of(context).info,
             ),
             elevation: 3.0,
@@ -44,22 +44,20 @@ class ActionButtons extends StatelessWidget {
         ),
         if (!isEditMode && onSaveAsDraft != null)
           Padding(
-            padding: const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 12.0),
+            padding: EdgeInsets.only(bottom: ResponsiveUtils.height(context, 12.0)),
             child: FFButtonWidget(
               onPressed: onSaveAsDraft,
               text: FFLocalizations.of(context)
                   .getText('wowhr087' /* Save as Draft */),
               options: FFButtonOptions(
                 width: MediaQuery.sizeOf(context).width,
-                height: 50.0,
-                padding:
-                    const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
-                iconPadding:
-                    const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
+                height: ResponsiveUtils.height(context, 50.0),
+                padding: ResponsiveUtils.padding(context, horizontal: 0.0, vertical: 0.0),
+                iconPadding: ResponsiveUtils.padding(context, horizontal: 0.0, vertical: 0.0),
                 color: const Color(0x00FFFFFF),
                 textStyle: AppStyles.textCairo(
                   context,
-                  fontSize: 16,
+                  fontSize: ResponsiveUtils.fontSize(context, 16),
                   color: FlutterFlowTheme.of(context).info,
                 ),
                 elevation: 0.0,
@@ -71,7 +69,7 @@ class ActionButtons extends StatelessWidget {
               ),
             ),
           ),
-      ].divide(const SizedBox(height: 12.0)),
+      ].divide(SizedBox(height: ResponsiveUtils.height(context, 12.0))),
     );
   }
 }

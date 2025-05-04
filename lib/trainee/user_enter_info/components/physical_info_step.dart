@@ -3,6 +3,7 @@ import 'package:iron_fit/componants/Styles.dart';
 import 'package:iron_fit/flutter_flow/flutter_flow_choice_chips.dart';
 import 'package:iron_fit/flutter_flow/form_field_controller.dart';
 import 'package:iron_fit/trainee/user_enter_info/components/material3_text_field.dart';
+import 'package:iron_fit/utils/responsive_utils.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import 'package:lottie/lottie.dart';
@@ -42,11 +43,11 @@ class PhysicalInfoStep extends StatelessWidget {
           children: [
             // Animated Header with Lottie
             _buildAnimatedHeader(context, theme, localizations),
-            const SizedBox(height: 12),
+            SizedBox(height: ResponsiveUtils.height(context, 12)),
 
             // Gender Selection with Enhanced Animation
             _buildGenderSelection(context, theme, localizations),
-            const SizedBox(height: 12),
+            SizedBox(height: ResponsiveUtils.height(context, 12)),
 
             // Height and Weight Fields with Enhanced Design
             _buildMeasurementsSection(context, theme, localizations),
@@ -67,7 +68,7 @@ class PhysicalInfoStep extends StatelessWidget {
           child: Opacity(
             opacity: value,
             child: Container(
-              padding: const EdgeInsets.all(12),
+              padding: ResponsiveUtils.padding(context, horizontal: 12, vertical: 12),
               decoration: BoxDecoration(
                 gradient: LinearGradient(
                   colors: [
@@ -93,9 +94,9 @@ class PhysicalInfoStep extends StatelessWidget {
                     fit: BoxFit.cover,
                     animate: true,
                     repeat: true,
-                    height: 80,
+                    height: ResponsiveUtils.height(context, 80),
                   ),
-                  const SizedBox(width: 16),
+                  SizedBox(width: ResponsiveUtils.width(context, 16)),
                   Expanded(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -105,7 +106,7 @@ class PhysicalInfoStep extends StatelessWidget {
                               'w2zhnn8t' /* Your Physical Attributes */),
                           style: AppStyles.textCairo(
                             context,
-                            fontSize: 16,
+                            fontSize: ResponsiveUtils.fontSize(context, 16),
                             fontWeight: FontWeight.bold,
                           ),
                         ),
@@ -141,7 +142,7 @@ class PhysicalInfoStep extends StatelessWidget {
             opacity: value,
             child: Container(
               width: double.infinity,
-              padding: const EdgeInsets.all(20),
+              padding: ResponsiveUtils.padding(context, horizontal: 20, vertical: 20),
               decoration: BoxDecoration(
                 color: theme.secondaryBackground,
                 borderRadius: BorderRadius.circular(20),
@@ -164,19 +165,19 @@ class PhysicalInfoStep extends StatelessWidget {
                     localizations.getText('gciphuh3' /* Gender */),
                     style: AppStyles.textCairo(
                       context,
-                      fontSize: 16,
+                      fontSize: ResponsiveUtils.fontSize(context, 16),
                       fontWeight: FontWeight.w500,
                     ),
                   ),
-                  const SizedBox(height: 16),
+                  SizedBox(height: ResponsiveUtils.height(context, 16)),
                   Row(
                     children: [
                       Icon(
                         Icons.wc_rounded,
                         color: theme.primary,
-                        size: 24,
+                        size: ResponsiveUtils.iconSize(context, 24),
                       ),
-                      const SizedBox(width: 12),
+                      SizedBox(width: ResponsiveUtils.width(context, 12)),
                       Expanded(
                         child: FlutterFlowChoiceChips(
                           options: chipOptions,
@@ -188,12 +189,15 @@ class PhysicalInfoStep extends StatelessWidget {
                               context,
                               color: theme.info,
                               fontWeight: FontWeight.w500,
-                              fontSize: 16,
+                              fontSize: ResponsiveUtils.fontSize(context, 16),
                             ),
                             iconColor: theme.info,
-                            iconSize: 20,
-                            labelPadding: const EdgeInsetsDirectional.fromSTEB(
-                                16, 8, 16, 8),
+                            iconSize: ResponsiveUtils.iconSize(context, 20),
+                            labelPadding: EdgeInsetsDirectional.fromSTEB(
+                                ResponsiveUtils.width(context, 16), 
+                                ResponsiveUtils.height(context, 8), 
+                                ResponsiveUtils.width(context, 16), 
+                                ResponsiveUtils.height(context, 8)),
                             elevation: 4,
                           ),
                           unselectedChipStyle: ChipStyle(
@@ -201,16 +205,19 @@ class PhysicalInfoStep extends StatelessWidget {
                             textStyle: AppStyles.textCairo(
                               context,
                               color: theme.secondaryText,
-                              fontSize: 16,
+                              fontSize: ResponsiveUtils.fontSize(context, 16),
                             ),
                             iconColor: theme.secondaryText,
-                            iconSize: 20,
-                            labelPadding: const EdgeInsetsDirectional.fromSTEB(
-                                16, 8, 16, 8),
+                            iconSize: ResponsiveUtils.iconSize(context, 20),
+                            labelPadding: EdgeInsetsDirectional.fromSTEB(
+                                ResponsiveUtils.width(context, 16), 
+                                ResponsiveUtils.height(context, 8), 
+                                ResponsiveUtils.width(context, 16), 
+                                ResponsiveUtils.height(context, 8)),
                             elevation: 0,
                           ),
-                          chipSpacing: 12,
-                          rowSpacing: 12,
+                          chipSpacing: ResponsiveUtils.width(context, 12),
+                          rowSpacing: ResponsiveUtils.height(context, 12),
                           multiselect: false,
                           alignment: WrapAlignment.start,
                         ),
@@ -237,8 +244,8 @@ class PhysicalInfoStep extends StatelessWidget {
           child: Opacity(
             opacity: value,
             child: Container(
-              margin: const EdgeInsets.only(bottom: 24),
-              padding: const EdgeInsets.all(20),
+              margin: EdgeInsets.only(bottom: ResponsiveUtils.height(context, 24)),
+              padding: ResponsiveUtils.padding(context, horizontal: 20, vertical: 20),
               decoration: BoxDecoration(
                 color: theme.secondaryBackground,
                 borderRadius: BorderRadius.circular(20),
@@ -297,11 +304,11 @@ class _MeasurementFields extends StatelessWidget {
           localizations.getText('body_metrics' /* Body Measurements */),
           style: AppStyles.textCairo(
             context,
-            fontSize: 16,
+            fontSize: ResponsiveUtils.fontSize(context, 16),
             fontWeight: FontWeight.w500,
           ),
         ),
-        const SizedBox(height: 20),
+        SizedBox(height: ResponsiveUtils.height(context, 20)),
 
         // Height Field
         _buildMeasurementField(
@@ -314,7 +321,7 @@ class _MeasurementFields extends StatelessWidget {
           suffixText: 'cm',
           context: context,
         ),
-        const SizedBox(height: 16),
+        SizedBox(height: ResponsiveUtils.height(context, 16)),
 
         // Weight Field
         _buildMeasurementField(

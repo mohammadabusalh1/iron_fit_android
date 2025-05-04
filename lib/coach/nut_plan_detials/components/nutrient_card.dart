@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:iron_fit/componants/Styles.dart';
+import 'package:iron_fit/utils/responsive_utils.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 
@@ -21,13 +22,16 @@ class NutrientCard extends StatelessWidget {
       flex: 1,
       child: Container(
         alignment: Alignment.center,
-        padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
-        constraints: const BoxConstraints(
-          maxHeight: 100,
+        padding: EdgeInsets.symmetric(
+          horizontal: ResponsiveUtils.width(context, 16.0), 
+          vertical: ResponsiveUtils.height(context, 8.0)
+        ),
+        constraints: BoxConstraints(
+          maxHeight: ResponsiveUtils.height(context, 100),
         ),
         decoration: BoxDecoration(
           color: FlutterFlowTheme.of(context).primaryBackground,
-          borderRadius: BorderRadius.circular(12.0),
+          borderRadius: BorderRadius.circular(ResponsiveUtils.width(context, 12.0)),
           boxShadow: [
             BoxShadow(
               color: FlutterFlowTheme.of(context).black.withAlpha(15),
@@ -40,13 +44,17 @@ class NutrientCard extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Icon(icon, size: 20, color: FlutterFlowTheme.of(context).primary),
-            const SizedBox(height: 4),
+            Icon(
+              icon, 
+              size: ResponsiveUtils.iconSize(context, 20), 
+              color: FlutterFlowTheme.of(context).primary
+            ),
+            SizedBox(height: ResponsiveUtils.height(context, 4)),
             Text(
               valueOrDefault<String>(value?.toString(), '0'),
               style: AppStyles.textCairo(
                 context,
-                fontSize: 16,
+                fontSize: ResponsiveUtils.fontSize(context, 16),
                 fontWeight: FontWeight.bold,
               ),
             ),
@@ -54,7 +62,7 @@ class NutrientCard extends StatelessWidget {
               FFLocalizations.of(context).getText(localizationKey),
               style: AppStyles.textCairo(
                 context,
-                fontSize: 12,
+                fontSize: ResponsiveUtils.fontSize(context, 12),
                 color: FlutterFlowTheme.of(context).secondaryText,
               ),
             ),

@@ -3,6 +3,7 @@ import 'package:iron_fit/coach/create_nutrition_plans/componants/form_field_comp
 import 'package:iron_fit/componants/Styles.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
+import 'package:iron_fit/utils/responsive_utils.dart';
 
 class AdditionalNotesSection extends StatelessWidget {
   final TextEditingController notesController;
@@ -26,17 +27,17 @@ class AdditionalNotesSection extends StatelessWidget {
             title: FFLocalizations.of(context)
                 .getText('3menqg1v' /* Additional Notes */),
           ),
-          const SizedBox(height: 16),
+          SizedBox(height: ResponsiveUtils.height(context, 16)),
           Text(
             FFLocalizations.of(context).getText(
                 'notesDescription' /* Add any special instructions or additional information about the nutrition plan */),
             style: AppStyles.textCairo(
               context,
               color: FlutterFlowTheme.of(context).secondaryText,
-              fontSize: 14,
+              fontSize: ResponsiveUtils.fontSize(context, 14),
             ),
           ),
-          const SizedBox(height: 16),
+          SizedBox(height: ResponsiveUtils.height(context, 16)),
           Container(
             decoration: BoxDecoration(
               color: FlutterFlowTheme.of(context).primaryBackground,
@@ -59,7 +60,7 @@ class AdditionalNotesSection extends StatelessWidget {
               minLines: 4,
               style: AppStyles.textCairo(
                 context,
-                fontSize: 14,
+                fontSize: ResponsiveUtils.fontSize(context, 14),
                 color: FlutterFlowTheme.of(context).primaryText,
               ),
               decoration: InputDecoration(
@@ -69,9 +70,9 @@ class AdditionalNotesSection extends StatelessWidget {
                   context,
                   color:
                       FlutterFlowTheme.of(context).secondaryText.withAlpha(150),
-                  fontSize: 14,
+                  fontSize: ResponsiveUtils.fontSize(context, 14),
                 ),
-                contentPadding: const EdgeInsets.all(16),
+                contentPadding: ResponsiveUtils.padding(context, horizontal: 16, vertical: 16),
                 border: InputBorder.none,
               ),
               textCapitalization: TextCapitalization.sentences,
@@ -88,20 +89,20 @@ class AdditionalNotesSection extends StatelessWidget {
               },
             ),
           ),
-          const SizedBox(height: 8),
+          SizedBox(height: ResponsiveUtils.height(context, 8)),
           Text(
             FFLocalizations.of(context).getText(
                 'notesOptional' /* Optional: Add any relevant details about meal timing, preparation, or special considerations */),
             style: AppStyles.textCairo(
               context,
               color: FlutterFlowTheme.of(context).secondaryText,
-              fontSize: 12,
+              fontSize: ResponsiveUtils.fontSize(context, 12),
               fontStyle: FontStyle.italic,
             ),
           ),
           if (notesFocusNode.hasFocus)
             Padding(
-              padding: const EdgeInsets.only(top: 8),
+              padding: EdgeInsets.only(top: ResponsiveUtils.height(context, 8)),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
@@ -110,7 +111,7 @@ class AdditionalNotesSection extends StatelessWidget {
                     style: AppStyles.textCairo(
                       context,
                       color: FlutterFlowTheme.of(context).secondaryText,
-                      fontSize: 12,
+                      fontSize: ResponsiveUtils.fontSize(context, 12),
                     ),
                   ),
                 ],

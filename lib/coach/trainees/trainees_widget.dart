@@ -12,6 +12,7 @@ import 'package:iron_fit/componants/coach_appbar/coach_appbar.dart';
 import 'package:iron_fit/componants/loading_indicator/loadingIndicator.dart';
 import 'package:iron_fit/flutter_flow/custom_functions.dart';
 import 'package:iron_fit/utils/logger.dart';
+import 'package:iron_fit/utils/responsive_utils.dart';
 import 'package:lottie/lottie.dart';
 import '/auth/firebase_auth/auth_util.dart';
 import '/backend/backend.dart';
@@ -71,7 +72,7 @@ class _TraineesWidgetState extends State<TraineesWidget>
     with AutomaticKeepAliveClientMixin {
   late TraineesModel _model;
   final scaffoldKey = GlobalKey<ScaffoldState>();
-  final AdService _adService = AdService();
+  late AdService _adService;
   final TextEditingController _searchController = TextEditingController();
 
   // Move these into ValueNotifiers for more efficient state management
@@ -109,8 +110,15 @@ class _TraineesWidgetState extends State<TraineesWidget>
     WidgetsBinding.instance.addPostFrameCallback((_) {
       _loadCoachData();
     });
-    _adService.loadAd(context);
     _model = createModel(context, () => TraineesModel());
+    _adService = AdService();
+    
+    // Add delay to ad loading
+    Future.delayed(const Duration(seconds: 6), () {
+      if (mounted) {
+        _adService.loadAd(context);
+      }
+    });
 
     // Add listeners
     _searchController.addListener(_onSearchChanged);
@@ -300,9 +308,13 @@ class _TraineesWidgetState extends State<TraineesWidget>
   }
 
   Widget _buildScaffold(CoachRecord coachRecord, Size screenSize) {
-    final isTablet = screenSize.width >= 600;
-    final isDesktop = screenSize.width >= 1200;
-    final horizontalPadding = isDesktop ? 32.0 : (isTablet ? 24.0 : 16.0);
+    final isTablet = ResponsiveUtils.isTablet(context);
+    final isDesktop = ResponsiveUtils.isDesktop(context);
+    final horizontalPadding = ResponsiveUtils.padding(
+      context,
+      horizontal: isDesktop ? 32.0 : (isTablet ? 24.0 : 16.0),
+      vertical: 0,
+    ).horizontal / 2;
 
     return GestureDetector(
       child: Scaffold(
@@ -317,7 +329,7 @@ class _TraineesWidgetState extends State<TraineesWidget>
             icon: Icon(
               Icons.arrow_back,
               color: FlutterFlowTheme.of(context).primaryText,
-              size: 24,
+              size: ResponsiveUtils.iconSize(context, 24),
             ),
             onPressed: () {
               context.pushNamed('coachFeatures');
@@ -327,7 +339,7 @@ class _TraineesWidgetState extends State<TraineesWidget>
             icon: Icon(
               Icons.help_outline,
               color: FlutterFlowTheme.of(context).primaryText,
-              size: 24,
+              size: ResponsiveUtils.iconSize(context, 24),
             ),
             onPressed: () {
               context.pushNamed('Contact');
@@ -357,7 +369,7 @@ class _TraineesWidgetState extends State<TraineesWidget>
                   _buildBodyContent(coachRecord, screenSize, orientation),
                   Positioned(
                     left: horizontalPadding,
-                    bottom: 24,
+                    bottom: ResponsiveUtils.height(context, 24),
                     child: _buildFloatingActionButton(coachRecord),
                   ),
                 ],
@@ -371,11 +383,19 @@ class _TraineesWidgetState extends State<TraineesWidget>
 
   Widget _buildBodyContent(
       CoachRecord coachRecord, Size screenSize, Orientation orientation) {
-    final isTablet = screenSize.width >= 600;
-    final isDesktop = screenSize.width >= 1200;
-    final horizontalPadding = isDesktop ? 32.0 : (isTablet ? 24.0 : 16.0);
-    final verticalPadding = isDesktop ? 24.0 : (isTablet ? 20.0 : 16.0);
-    final spacing = isDesktop ? 32.0 : (isTablet ? 24.0 : 16.0);
+    final isTablet = ResponsiveUtils.isTablet(context);
+    final isDesktop = ResponsiveUtils.isDesktop(context);
+    
+    final padding = ResponsiveUtils.padding(
+      context,
+      horizontal: isDesktop ? 32.0 : (isTablet ? 24.0 : 16.0),
+      vertical: isDesktop ? 24.0 : (isTablet ? 20.0 : 16.0),
+    );
+    
+    final spacing = ResponsiveUtils.height(
+      context, 
+      isDesktop ? 32.0 : (isTablet ? 24.0 : 16.0)
+    );
 
     return RefreshIndicator(
       onRefresh: () async {
@@ -392,10 +412,10 @@ class _TraineesWidgetState extends State<TraineesWidget>
       displacement: 40,
       child: Container(
         padding: EdgeInsetsDirectional.fromSTEB(
-          horizontalPadding,
-          verticalPadding,
-          horizontalPadding,
-          24.0,
+          padding.horizontal / 2,
+          padding.vertical / 2,
+          padding.horizontal / 2,
+          ResponsiveUtils.height(context, 24.0),
         ),
         height: MediaQuery.of(context).size.height,
         child: SingleChildScrollView(
@@ -404,7 +424,7 @@ class _TraineesWidgetState extends State<TraineesWidget>
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              SizedBox(height: MediaQuery.of(context).padding.top + 80),
+              SizedBox(height: MediaQuery.of(context).padding.top + ResponsiveUtils.height(context, 80)),
               LayoutBuilder(
                 builder: (context, constraints) {
                   if (orientation == Orientation.landscape && isTablet) {
@@ -463,7 +483,7 @@ class _TraineesWidgetState extends State<TraineesWidget>
                   }
                 },
               ),
-              SizedBox(height: spacing + 16),
+              SizedBox(height: spacing + ResponsiveUtils.height(context, 16)),
               ValueListenableBuilder<String>(
                 valueListenable: _filterStatusNotifier,
                 builder: (context, filterStatus, _) {
@@ -488,9 +508,12 @@ class _TraineesWidgetState extends State<TraineesWidget>
     String filterStatus,
     Size screenSize,
   ) {
-    final isTablet = screenSize.width >= 600;
-    final isDesktop = screenSize.width >= 1200;
-    final spacing = isDesktop ? 32.0 : (isTablet ? 24.0 : 16.0);
+    final spacing = ResponsiveUtils.height(
+      context, 
+      ResponsiveUtils.isDesktop(context) 
+          ? 32.0 
+          : (ResponsiveUtils.isTablet(context) ? 24.0 : 16.0)
+    );
 
     // Only include the needed section based on current filter status
     // This prevents unnecessary widget creation and comparison
@@ -599,11 +622,15 @@ class _TraineesWidgetState extends State<TraineesWidget>
 
   Widget _buildFloatingActionButton(CoachRecord coachRecord) {
     return FloatingActionButton(
+      
       backgroundColor: FlutterFlowTheme.of(context).primary,
       onPressed: () {
         _onAddClientPressed(coachRecord);
       },
-      child: const Icon(Icons.add),
+      child: Icon(
+        Icons.add,
+        size: ResponsiveUtils.iconSize(context, 24),
+      ),
     );
   }
 
@@ -703,14 +730,14 @@ class _TraineesWidgetState extends State<TraineesWidget>
               Icon(
                 Icons.restore,
                 color: FlutterFlowTheme.of(context).primary,
-                size: 28,
+                size: ResponsiveUtils.iconSize(context, 28),
               ),
-              const SizedBox(width: 12),
+              SizedBox(width: ResponsiveUtils.width(context, 12)),
               Text(
                 FFLocalizations.of(context).getText('confirm_restore'),
                 style: AppStyles.textCairo(
                   context,
-                  fontSize: 20,
+                  fontSize: ResponsiveUtils.fontSize(context, 20),
                   fontWeight: FontWeight.w600,
                   color: FlutterFlowTheme.of(context).primaryText,
                 ),
@@ -721,7 +748,7 @@ class _TraineesWidgetState extends State<TraineesWidget>
             FFLocalizations.of(context).getText('are_you_sure_restore'),
             style: AppStyles.textCairo(
               context,
-              fontSize: 16,
+              fontSize: ResponsiveUtils.fontSize(context, 16),
               color: FlutterFlowTheme.of(context).secondaryText,
             ),
           ),
@@ -732,7 +759,7 @@ class _TraineesWidgetState extends State<TraineesWidget>
                 FFLocalizations.of(context).getText('cancel'),
                 style: AppStyles.textCairo(
                   context,
-                  fontSize: 16,
+                  fontSize: ResponsiveUtils.fontSize(context, 16),
                   color: FlutterFlowTheme.of(context).secondaryText,
                 ),
               ),
@@ -749,7 +776,7 @@ class _TraineesWidgetState extends State<TraineesWidget>
                 FFLocalizations.of(context).getText('confirm'),
                 style: AppStyles.textCairo(
                   context,
-                  fontSize: 16,
+                  fontSize: ResponsiveUtils.fontSize(context, 16),
                   color: FlutterFlowTheme.of(context).info,
                   fontWeight: FontWeight.w600,
                 ),
@@ -775,14 +802,14 @@ class _TraineesWidgetState extends State<TraineesWidget>
               Icon(
                 Icons.warning_rounded,
                 color: FlutterFlowTheme.of(context).error,
-                size: 28,
+                size: ResponsiveUtils.iconSize(context, 28),
               ),
-              const SizedBox(width: 12),
+              SizedBox(width: ResponsiveUtils.width(context, 12)),
               Text(
                 FFLocalizations.of(context).getText('confirm'),
                 style: AppStyles.textCairo(
                   context,
-                  fontSize: 20,
+                  fontSize: ResponsiveUtils.fontSize(context, 20),
                   fontWeight: FontWeight.w600,
                   color: FlutterFlowTheme.of(context).primaryText,
                 ),
@@ -797,16 +824,16 @@ class _TraineesWidgetState extends State<TraineesWidget>
                 FFLocalizations.of(context).getText('areYouSure'),
                 style: AppStyles.textCairo(
                   context,
-                  fontSize: 16,
+                  fontSize: ResponsiveUtils.fontSize(context, 16),
                   color: FlutterFlowTheme.of(context).secondaryText,
                 ),
               ),
-              const SizedBox(height: 8),
+              SizedBox(height: ResponsiveUtils.height(context, 8)),
               Text(
                 FFLocalizations.of(context).getText('thisActionCannot'),
                 style: AppStyles.textCairo(
                   context,
-                  fontSize: 14,
+                  fontSize: ResponsiveUtils.fontSize(context, 14),
                   color: FlutterFlowTheme.of(context).error,
                 ),
               ),
@@ -819,7 +846,7 @@ class _TraineesWidgetState extends State<TraineesWidget>
                 FFLocalizations.of(context).getText('cancel'),
                 style: AppStyles.textCairo(
                   context,
-                  fontSize: 16,
+                  fontSize: ResponsiveUtils.fontSize(context, 16),
                   color: FlutterFlowTheme.of(context).secondaryText,
                 ),
               ),
@@ -841,7 +868,7 @@ class _TraineesWidgetState extends State<TraineesWidget>
                 FFLocalizations.of(context).getText('confirm'),
                 style: AppStyles.textCairo(
                   context,
-                  fontSize: 16,
+                  fontSize: ResponsiveUtils.fontSize(context, 16),
                   color: FlutterFlowTheme.of(context).info,
                   fontWeight: FontWeight.w600,
                 ),
@@ -867,15 +894,15 @@ class _TraineesWidgetState extends State<TraineesWidget>
               Icon(
                 Icons.warning_rounded,
                 color: FlutterFlowTheme.of(context).error,
-                size: 28,
+                size: ResponsiveUtils.iconSize(context, 28),
               ),
-              const SizedBox(width: 12),
+              SizedBox(width: ResponsiveUtils.width(context, 12)),
               Expanded(
                 child: Text(
                   FFLocalizations.of(context).getText('permanent_delete'),
                   style: AppStyles.textCairo(
                     context,
-                    fontSize: 20,
+                    fontSize: ResponsiveUtils.fontSize(context, 20),
                     fontWeight: FontWeight.w600,
                     color: FlutterFlowTheme.of(context).error,
                   ),
@@ -891,16 +918,16 @@ class _TraineesWidgetState extends State<TraineesWidget>
                 FFLocalizations.of(context).getText('permanent_delete_confirm'),
                 style: AppStyles.textCairo(
                   context,
-                  fontSize: 16,
+                  fontSize: ResponsiveUtils.fontSize(context, 16),
                   color: FlutterFlowTheme.of(context).secondaryText,
                 ),
               ),
-              const SizedBox(height: 8),
+              SizedBox(height: ResponsiveUtils.height(context, 8)),
               Text(
                 FFLocalizations.of(context).getText('permanent_delete_warning'),
                 style: AppStyles.textCairo(
                   context,
-                  fontSize: 14,
+                  fontSize: ResponsiveUtils.fontSize(context, 14),
                   color: FlutterFlowTheme.of(context).error,
                 ),
               ),
@@ -913,7 +940,7 @@ class _TraineesWidgetState extends State<TraineesWidget>
                 FFLocalizations.of(context).getText('cancel'),
                 style: AppStyles.textCairo(
                   context,
-                  fontSize: 16,
+                  fontSize: ResponsiveUtils.fontSize(context, 16),
                   color: FlutterFlowTheme.of(context).secondaryText,
                 ),
               ),
@@ -954,7 +981,7 @@ class _TraineesWidgetState extends State<TraineesWidget>
                 FFLocalizations.of(context).getText('delete'),
                 style: AppStyles.textCairo(
                   context,
-                  fontSize: 16,
+                  fontSize: ResponsiveUtils.fontSize(context, 16),
                   color: FlutterFlowTheme.of(context).info,
                   fontWeight: FontWeight.w600,
                 ),
@@ -979,7 +1006,7 @@ class _TraineesWidgetState extends State<TraineesWidget>
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                const SizedBox(height: 16),
+                SizedBox(height: ResponsiveUtils.height(context, 16)),
                 // Success animation
                 TweenAnimationBuilder(
                   duration: const Duration(milliseconds: 800),
@@ -988,7 +1015,7 @@ class _TraineesWidgetState extends State<TraineesWidget>
                     return Transform.scale(
                       scale: value,
                       child: Container(
-                        padding: const EdgeInsets.all(16),
+                        padding: ResponsiveUtils.padding(context, horizontal: 16, vertical: 16),
                         decoration: const BoxDecoration(
                           shape: BoxShape.circle,
                         ),
@@ -997,36 +1024,36 @@ class _TraineesWidgetState extends State<TraineesWidget>
                           fit: BoxFit.cover,
                           animate: true,
                           repeat: true,
-                          width: 64,
-                          height: 64,
+                          width: ResponsiveUtils.width(context, 64),
+                          height: ResponsiveUtils.height(context, 64),
                         ),
                       ),
                     );
                   },
                 ),
-                const SizedBox(height: 24),
+                SizedBox(height: ResponsiveUtils.height(context, 24)),
                 // Success title
                 Text(
                   FFLocalizations.of(context).getText('success'),
                   style: AppStyles.textCairo(
                     context,
-                    fontSize: 24,
+                    fontSize: ResponsiveUtils.fontSize(context, 24),
                     fontWeight: FontWeight.bold,
                     color: FlutterFlowTheme.of(context).primary,
                   ),
                 ),
-                const SizedBox(height: 16),
+                SizedBox(height: ResponsiveUtils.height(context, 16)),
                 // Success message
                 Text(
                   message,
                   textAlign: TextAlign.center,
                   style: AppStyles.textCairo(
                     context,
-                    fontSize: 16,
+                    fontSize: ResponsiveUtils.fontSize(context, 16),
                     color: FlutterFlowTheme.of(context).secondaryText,
                   ),
                 ),
-                const SizedBox(height: 24),
+                SizedBox(height: ResponsiveUtils.height(context, 24)),
                 // OK Button
                 SizedBox(
                   width: double.infinity,
@@ -1042,7 +1069,7 @@ class _TraineesWidgetState extends State<TraineesWidget>
                     style: ElevatedButton.styleFrom(
                       backgroundColor: FlutterFlowTheme.of(context).primary,
                       foregroundColor: FlutterFlowTheme.of(context).info,
-                      padding: const EdgeInsets.symmetric(vertical: 16),
+                      padding: ResponsiveUtils.padding(context, horizontal: 0, vertical: 16),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(12),
                       ),
@@ -1052,7 +1079,7 @@ class _TraineesWidgetState extends State<TraineesWidget>
                       FFLocalizations.of(context).getText('ok'),
                       style: AppStyles.textCairo(
                         context,
-                        fontSize: 16,
+                        fontSize: ResponsiveUtils.fontSize(context, 16),
                         fontWeight: FontWeight.w600,
                         color: FlutterFlowTheme.of(context).info,
                       ),

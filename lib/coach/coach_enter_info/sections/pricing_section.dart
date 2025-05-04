@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:iron_fit/componants/Styles.dart';
 import 'package:iron_fit/flutter_flow/flutter_flow_util.dart';
 import 'package:iron_fit/flutter_flow/flutter_flow_theme.dart';
+import 'package:iron_fit/utils/responsive_utils.dart';
 import 'package:iron_fit/widgets/build_text_filed.dart';
 import '../coach_enter_info_model.dart';
 import 'package:provider/provider.dart';
@@ -52,7 +53,7 @@ class _PricingSectionState extends State<PricingSection>
 
   Widget _buildPricingUI() {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
+      padding: ResponsiveUtils.padding(context, horizontal: 24, vertical: 16),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -70,7 +71,7 @@ class _PricingSectionState extends State<PricingSection>
                     FFLocalizations.of(context).getText('pricing_step'),
                     style: AppStyles.textCairo(
                       context,
-                      fontSize: 22,
+                      fontSize: ResponsiveUtils.fontSize(context, 22),
                       fontWeight: FontWeight.bold,
                       color: FlutterFlowTheme.of(context).primaryText,
                     ),
@@ -79,7 +80,7 @@ class _PricingSectionState extends State<PricingSection>
               );
             },
           ),
-          const SizedBox(height: 24),
+          SizedBox(height: ResponsiveUtils.height(context, 24)),
           // Price Input with Animation
           TweenAnimationBuilder<double>(
             duration: const Duration(milliseconds: 800),

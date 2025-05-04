@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:iron_fit/coach/create_nutrition_plans/componants/form_field_components.dart';
 import '/flutter_flow/flutter_flow_util.dart';
+import 'package:iron_fit/utils/responsive_utils.dart';
 
 class DailyMacrosSection extends StatelessWidget {
   final TextEditingController proteinController;
@@ -31,7 +32,7 @@ class DailyMacrosSection extends StatelessWidget {
             title: FFLocalizations.of(context)
                 .getText('v6nv5qtk' /* Daily Macros Target */),
           ),
-          const SizedBox(height: 24),
+          SizedBox(height: ResponsiveUtils.height(context, 24)),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [

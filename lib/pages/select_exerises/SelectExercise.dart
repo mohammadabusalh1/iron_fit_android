@@ -4,6 +4,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:iron_fit/backend/backend.dart';
 import 'package:iron_fit/componants/styles.dart';
+import 'package:iron_fit/utils/responsive_utils.dart';
 
 import '/flutter_flow/flutter_flow_theme.dart';
 
@@ -47,7 +48,7 @@ class _SelectExerciseState extends State<SelectExercise> {
                   children: [
                     Expanded(
                       child: ListView.builder(
-                        padding: EdgeInsets.all(0.8),
+                        padding: EdgeInsets.all(ResponsiveUtils.width(context, 0.8)),
                         itemCount: exercisesRecord.length,
                         itemBuilder: (context, _index) {
                           final exercisesRecord = snapshot.data![_index];
@@ -63,45 +64,45 @@ class _SelectExerciseState extends State<SelectExercise> {
                                 decoration: BoxDecoration(
                                   color: FlutterFlowTheme.of(context).accent1,
                                 ),
-                                padding: const EdgeInsets.all(8),
-                                margin: const EdgeInsets.all(8),
+                                padding: EdgeInsets.all(ResponsiveUtils.width(context, 8)),
+                                margin: EdgeInsets.all(ResponsiveUtils.width(context, 8)),
                                 child: Column(
                                   children: [
                                     SizedBox(
-                                      width: 100,
-                                      height: 100,
+                                      width: ResponsiveUtils.width(context, 100),
+                                      height: ResponsiveUtils.height(context, 100),
                                       child: CachedNetworkImage(
                                         imageUrl: exercisesRecord.gifUrl!,
                                       ),
                                     ),
-                                    const SizedBox(
-                                      height: 24,
+                                    SizedBox(
+                                      height: ResponsiveUtils.height(context, 24),
                                     ),
                                     Text(
                                       exercisesRecord.name!,
                                       style: AppStyles.textCairo(
                                         context,
-                                        fontSize: 24,
+                                        fontSize: ResponsiveUtils.fontSize(context, 24),
                                         fontWeight: FontWeight.bold,
                                       ),
                                     ),
-                                    const SizedBox(
-                                      height: 24,
+                                    SizedBox(
+                                      height: ResponsiveUtils.height(context, 24),
                                     ),
                                     Text(
                                       exercisesRecord.equipment,
                                       style: AppStyles.textCairo(
                                         context,
-                                        fontSize: 24,
+                                        fontSize: ResponsiveUtils.fontSize(context, 24),
                                         fontWeight: FontWeight.bold,
                                       ),
                                     ),
-                                    const SizedBox(
-                                      height: 24,
+                                    SizedBox(
+                                      height: ResponsiveUtils.height(context, 24),
                                     ),
                                     Wrap(
                                       alignment: WrapAlignment.center,
-                                      spacing: 12,
+                                      spacing: ResponsiveUtils.width(context, 12),
                                       children: [
                                         TextButton(
                                             style: ButtonStyle(
@@ -117,10 +118,11 @@ class _SelectExerciseState extends State<SelectExercise> {
                                               exercisesRecord.reference.update(
                                                   {'equipment': 'barbell'});
                                             },
-                                            child: const Text(
+                                            child: Text(
                                               'barbell',
                                               style: TextStyle(
-                                                  color: Colors.white),
+                                                  color: Colors.white, 
+                                                  fontSize: ResponsiveUtils.fontSize(context, 14)),
                                             )),
                                         TextButton(
                                             style: ButtonStyle(
@@ -136,10 +138,11 @@ class _SelectExerciseState extends State<SelectExercise> {
                                               exercisesRecord.reference.update(
                                                   {'equipment': 'dumbbells'});
                                             },
-                                            child: const Text(
+                                            child: Text(
                                               'dumbbell',
                                               style: TextStyle(
-                                                  color: Colors.white),
+                                                  color: Colors.white, 
+                                                  fontSize: ResponsiveUtils.fontSize(context, 14)),
                                             )),
                                         TextButton(
                                             style: ButtonStyle(
@@ -155,10 +158,11 @@ class _SelectExerciseState extends State<SelectExercise> {
                                               exercisesRecord.reference.update(
                                                   {'equipment': 'machine'});
                                             },
-                                            child: const Text(
+                                            child: Text(
                                               'machine',
                                               style: TextStyle(
-                                                  color: Colors.white),
+                                                  color: Colors.white, 
+                                                  fontSize: ResponsiveUtils.fontSize(context, 14)),
                                             )),
                                         TextButton(
                                             style: ButtonStyle(
@@ -174,10 +178,11 @@ class _SelectExerciseState extends State<SelectExercise> {
                                               exercisesRecord.reference.update(
                                                   {'equipment': 'cable'});
                                             },
-                                            child: const Text(
+                                            child: Text(
                                               'cable',
                                               style: TextStyle(
-                                                  color: Colors.white),
+                                                  color: Colors.white, 
+                                                  fontSize: ResponsiveUtils.fontSize(context, 14)),
                                             )),
                                         TextButton(
                                             style: ButtonStyle(
@@ -193,10 +198,11 @@ class _SelectExerciseState extends State<SelectExercise> {
                                               exercisesRecord.reference.update(
                                                   {'equipment': 'other'});
                                             },
-                                            child: const Text(
+                                            child: Text(
                                               'other',
                                               style: TextStyle(
-                                                  color: Colors.white),
+                                                  color: Colors.white, 
+                                                  fontSize: ResponsiveUtils.fontSize(context, 14)),
                                             )),
                                       ],
                                     )

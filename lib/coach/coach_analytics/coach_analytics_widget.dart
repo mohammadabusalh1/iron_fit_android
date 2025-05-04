@@ -2,6 +2,7 @@ import 'package:iron_fit/componants/Styles.dart';
 import 'package:iron_fit/componants/coach_appbar/coach_appbar.dart';
 import 'package:iron_fit/componants/loading_indicator/LoadingIndicator.dart';
 import 'package:iron_fit/navigation/page_wrapper.dart';
+import 'package:iron_fit/utils/responsive_utils.dart';
 
 import '/auth/firebase_auth/auth_util.dart';
 import '/backend/backend.dart';
@@ -203,7 +204,7 @@ class _CoachAnalyticsWidgetState extends State<CoachAnalyticsWidget> {
               icon: Icon(
                 Icons.arrow_back,
                 color: FlutterFlowTheme.of(context).primaryText,
-                size: 24,
+                size: ResponsiveUtils.iconSize(context, 24),
               ),
               onPressed: () {
                 context.pushNamed('coachFeatures');
@@ -213,7 +214,7 @@ class _CoachAnalyticsWidgetState extends State<CoachAnalyticsWidget> {
               icon: Icon(
                 Icons.help_outline,
                 color: FlutterFlowTheme.of(context).primaryText,
-                size: 24,
+                size: ResponsiveUtils.iconSize(context, 24),
               ),
               onPressed: () {
                 context.pushNamed('Contact');
@@ -221,7 +222,7 @@ class _CoachAnalyticsWidgetState extends State<CoachAnalyticsWidget> {
             )),
         body: Container(
           padding:
-              EdgeInsets.only(top: MediaQuery.of(context).padding.top + 80),
+              EdgeInsets.only(top: MediaQuery.of(context).padding.top + ResponsiveUtils.height(context, 48)),
           height: MediaQuery.of(context).size.height,
           decoration: BoxDecoration(
             gradient: LinearGradient(
@@ -238,16 +239,16 @@ class _CoachAnalyticsWidgetState extends State<CoachAnalyticsWidget> {
               RefreshIndicator(
                 onRefresh: () => _initializeData(false),
                 child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16),
+                  padding: ResponsiveUtils.padding(context),
                   child: SingleChildScrollView(
                     physics: const AlwaysScrollableScrollPhysics(),
                     child: Column(
                       children: [
-                        const SizedBox(height: 16.0),
+                        SizedBox(height: ResponsiveUtils.height(context, 16.0)),
                         _buildTimePeriodSelector(),
-                        const SizedBox(height: 16.0),
+                        SizedBox(height: ResponsiveUtils.height(context, 16.0)),
                         performanceOverviewCard(coachRecord: coach),
-                        const SizedBox(height: 16.0),
+                        SizedBox(height: ResponsiveUtils.height(context, 16.0)),
                         ValueListenableBuilder<List<TraineeRecord>>(
                           valueListenable: traineeRecords,
                           builder: (context, trainees, _) => clientAgeChart(
@@ -256,12 +257,12 @@ class _CoachAnalyticsWidgetState extends State<CoachAnalyticsWidget> {
                             coachRecord: coach,
                           ),
                         ),
-                        const SizedBox(height: 16.0),
+                        SizedBox(height: ResponsiveUtils.height(context, 16.0)),
                         traineeStatusChart(
                           colorsList: chartColors,
                           coachRecord: coach,
                         ),
-                        const SizedBox(height: 16.0),
+                        SizedBox(height: ResponsiveUtils.height(context, 16.0)),
                         ValueListenableBuilder<List<SubscriptionsRecord>>(
                           valueListenable: subscriptionsRecords,
                           builder: (context, subscriptions, _) =>
@@ -271,7 +272,7 @@ class _CoachAnalyticsWidgetState extends State<CoachAnalyticsWidget> {
                             coachRecord: coach,
                           ),
                         ),
-                        const SizedBox(height: 100.0),
+                        SizedBox(height: ResponsiveUtils.height(context, 100.0)),
                       ],
                     ),
                   ),
@@ -293,16 +294,16 @@ class _CoachAnalyticsWidgetState extends State<CoachAnalyticsWidget> {
         color: Colors.transparent,
         elevation: 2.0,
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(16.0),
+          borderRadius: BorderRadius.circular(ResponsiveUtils.width(context, 16.0)),
         ),
         child: Container(
           width: MediaQuery.sizeOf(context).width,
           decoration: BoxDecoration(
             color: FlutterFlowTheme.of(context).secondaryBackground,
-            borderRadius: BorderRadius.circular(16.0),
+            borderRadius: BorderRadius.circular(ResponsiveUtils.width(context, 16.0)),
           ),
           child: Padding(
-            padding: const EdgeInsets.all(20.0),
+            padding: EdgeInsets.all(ResponsiveUtils.width(context, 20.0)),
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
@@ -310,11 +311,11 @@ class _CoachAnalyticsWidgetState extends State<CoachAnalyticsWidget> {
                   FFLocalizations.of(context).getText('lknc4121'),
                   style: AppStyles.textCairo(
                     context,
-                    fontSize: 16,
+                    fontSize: ResponsiveUtils.fontSize(context, 16),
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-                const SizedBox(height: 16.0),
+                SizedBox(height: ResponsiveUtils.height(context, 16.0)),
                 _buildStatisticsRow(context, coachRecord),
               ],
             ),
@@ -338,7 +339,7 @@ class _CoachAnalyticsWidgetState extends State<CoachAnalyticsWidget> {
             _buildProfitColumn(context, coachRecord),
           ],
         ),
-        const SizedBox(height: 20.0),
+        SizedBox(height: ResponsiveUtils.height(context, 20.0)),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
@@ -363,7 +364,7 @@ class _CoachAnalyticsWidgetState extends State<CoachAnalyticsWidget> {
             ),
             style: AppStyles.textCairo(
               context,
-              fontSize: 32,
+              fontSize: ResponsiveUtils.fontSize(context, 32),
               fontWeight: FontWeight.bold,
             ),
           ),
@@ -371,6 +372,7 @@ class _CoachAnalyticsWidgetState extends State<CoachAnalyticsWidget> {
             FFLocalizations.of(context).getText('xvveezgw'),
             style: AppStyles.textCairo(
               context,
+              fontSize: ResponsiveUtils.fontSize(context, 14),
             ),
           ),
         ],
@@ -410,7 +412,7 @@ class _CoachAnalyticsWidgetState extends State<CoachAnalyticsWidget> {
             ),
             style: AppStyles.textCairo(
               context,
-              fontSize: 32,
+              fontSize: ResponsiveUtils.fontSize(context, 32),
               fontWeight: FontWeight.bold,
             ),
           ),
@@ -418,6 +420,7 @@ class _CoachAnalyticsWidgetState extends State<CoachAnalyticsWidget> {
             FFLocalizations.of(context).getText('p0eikzd9'),
             style: AppStyles.textCairo(
               context,
+              fontSize: ResponsiveUtils.fontSize(context, 14),
             ),
           ),
         ],
@@ -442,7 +445,7 @@ class _CoachAnalyticsWidgetState extends State<CoachAnalyticsWidget> {
                 : totalDebt.toString(),
             style: AppStyles.textCairo(
               context,
-              fontSize: 32,
+              fontSize: ResponsiveUtils.fontSize(context, 32),
               fontWeight: FontWeight.bold,
             ),
           ),
@@ -450,6 +453,7 @@ class _CoachAnalyticsWidgetState extends State<CoachAnalyticsWidget> {
             FFLocalizations.of(context).getText('remainingDebt'),
             style: AppStyles.textCairo(
               context,
+              fontSize: ResponsiveUtils.fontSize(context, 14),
             ),
           ),
         ],
@@ -482,7 +486,7 @@ class _CoachAnalyticsWidgetState extends State<CoachAnalyticsWidget> {
             ),
             style: AppStyles.textCairo(
               context,
-              fontSize: 32,
+              fontSize: ResponsiveUtils.fontSize(context, 32),
               fontWeight: FontWeight.bold,
             ),
           ),
@@ -490,6 +494,7 @@ class _CoachAnalyticsWidgetState extends State<CoachAnalyticsWidget> {
             FFLocalizations.of(context).getText('avgRevenue'),
             style: AppStyles.textCairo(
               context,
+              fontSize: ResponsiveUtils.fontSize(context, 14),
             ),
           ),
         ],
@@ -552,16 +557,16 @@ class _CoachAnalyticsWidgetState extends State<CoachAnalyticsWidget> {
         color: Colors.transparent,
         elevation: 2.0,
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(16.0),
+          borderRadius: BorderRadius.circular(ResponsiveUtils.width(context, 16.0)),
         ),
         child: Container(
           width: MediaQuery.sizeOf(context).width,
           decoration: BoxDecoration(
             color: FlutterFlowTheme.of(context).secondaryBackground,
-            borderRadius: BorderRadius.circular(16.0),
+            borderRadius: BorderRadius.circular(ResponsiveUtils.width(context, 16.0)),
           ),
           child: Padding(
-            padding: const EdgeInsets.all(20.0),
+            padding: EdgeInsets.all(ResponsiveUtils.width(context, 20.0)),
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
@@ -569,16 +574,16 @@ class _CoachAnalyticsWidgetState extends State<CoachAnalyticsWidget> {
                   FFLocalizations.of(context).getText('6ckgtnyk'),
                   style: AppStyles.textCairo(
                     context,
-                    fontSize: 16,
+                    fontSize: ResponsiveUtils.fontSize(context, 16),
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-                const SizedBox(height: 16.0),
+                SizedBox(height: ResponsiveUtils.height(context, 16.0)),
                 Container(
                   decoration: const BoxDecoration(),
                   child: SizedBox(
-                    width: 370.0,
-                    height: 230.0,
+                    width: ResponsiveUtils.width(context, 370.0),
+                    height: ResponsiveUtils.height(context, 230.0),
                     child: traineeRecords.isEmpty
                         ? _buildNoDataWidget(context)
                         : PieChart(
@@ -598,7 +603,7 @@ class _CoachAnalyticsWidgetState extends State<CoachAnalyticsWidget> {
                                               .toList()
                                               .indexOf(title) %
                                           colorsList.length],
-                                  radius: 100.0,
+                                  radius: ResponsiveUtils.width(context, 100.0),
                                 );
                               }).toList(),
                             ),
@@ -630,14 +635,15 @@ class _CoachAnalyticsWidgetState extends State<CoachAnalyticsWidget> {
       children: [
         Icon(
           Icons.bar_chart,
-          size: 48,
+          size: ResponsiveUtils.iconSize(context, 48),
           color: FlutterFlowTheme.of(context).secondaryText,
         ),
-        const SizedBox(height: 8),
+        SizedBox(height: ResponsiveUtils.height(context, 8)),
         Text(
           FFLocalizations.of(context).getText('noData'),
           style: AppStyles.textCairo(
             context,
+            fontSize: ResponsiveUtils.fontSize(context, 14),
             color: FlutterFlowTheme.of(context).secondaryText,
           ),
         ),
@@ -652,13 +658,13 @@ class _CoachAnalyticsWidgetState extends State<CoachAnalyticsWidget> {
   }) {
     if (subscriptionsRecords.value.isEmpty) {
       return SizedBox(
-        width: 370.0,
-        height: 230.0,
+        width: ResponsiveUtils.width(context, 370.0),
+        height: ResponsiveUtils.height(context, 230.0),
         child: Container(
-            padding: const EdgeInsets.all(20.0),
+            padding: EdgeInsets.all(ResponsiveUtils.width(context, 20.0)),
             decoration: BoxDecoration(
               color: FlutterFlowTheme.of(context).secondaryBackground,
-              borderRadius: BorderRadius.circular(16.0),
+              borderRadius: BorderRadius.circular(ResponsiveUtils.width(context, 16.0)),
             ),
             child: Column(
               mainAxisSize: MainAxisSize.min,
@@ -666,12 +672,12 @@ class _CoachAnalyticsWidgetState extends State<CoachAnalyticsWidget> {
                 Text(FFLocalizations.of(context).getText('traineeStatus'),
                     style: AppStyles.textCairo(
                       context,
-                      fontSize: 16,
+                      fontSize: ResponsiveUtils.fontSize(context, 16),
                       fontWeight: FontWeight.bold,
                     )),
                 SizedBox(
-                  width: 370.0,
-                  height: 160.0,
+                  width: ResponsiveUtils.width(context, 370.0),
+                  height: ResponsiveUtils.height(context, 160.0),
                   child: _buildNoDataWidget(context),
                 )
               ],
@@ -697,13 +703,13 @@ class _CoachAnalyticsWidgetState extends State<CoachAnalyticsWidget> {
     if (colorsList.length < 2) {
       debugPrint('Error: colorsList must contain at least two colors.');
       return SizedBox(
-        width: 370.0,
-        height: 230.0,
+        width: ResponsiveUtils.width(context, 370.0),
+        height: ResponsiveUtils.height(context, 230.0),
         child: Container(
-            padding: const EdgeInsets.all(20.0),
+            padding: EdgeInsets.all(ResponsiveUtils.width(context, 20.0)),
             decoration: BoxDecoration(
               color: FlutterFlowTheme.of(context).secondaryBackground,
-              borderRadius: BorderRadius.circular(16.0),
+              borderRadius: BorderRadius.circular(ResponsiveUtils.width(context, 16.0)),
             ),
             child: Column(
               mainAxisSize: MainAxisSize.min,
@@ -711,12 +717,12 @@ class _CoachAnalyticsWidgetState extends State<CoachAnalyticsWidget> {
                 Text(FFLocalizations.of(context).getText('traineeStatus'),
                     style: AppStyles.textCairo(
                       context,
-                      fontSize: 16,
+                      fontSize: ResponsiveUtils.fontSize(context, 16),
                       fontWeight: FontWeight.bold,
                     )),
                 SizedBox(
-                  width: 370.0,
-                  height: 160.0,
+                  width: ResponsiveUtils.width(context, 370.0),
+                  height: ResponsiveUtils.height(context, 160.0),
                   child: _buildNoDataWidget(context),
                 )
               ],
@@ -729,16 +735,16 @@ class _CoachAnalyticsWidgetState extends State<CoachAnalyticsWidget> {
         color: Colors.transparent,
         elevation: 2.0,
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(16.0),
+          borderRadius: BorderRadius.circular(ResponsiveUtils.width(context, 16.0)),
         ),
         child: Container(
           width: MediaQuery.sizeOf(context).width,
           decoration: BoxDecoration(
             color: FlutterFlowTheme.of(context).secondaryBackground,
-            borderRadius: BorderRadius.circular(16.0),
+            borderRadius: BorderRadius.circular(ResponsiveUtils.width(context, 16.0)),
           ),
           child: Padding(
-            padding: const EdgeInsets.all(20.0),
+            padding: EdgeInsets.all(ResponsiveUtils.width(context, 20.0)),
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
@@ -746,14 +752,14 @@ class _CoachAnalyticsWidgetState extends State<CoachAnalyticsWidget> {
                   FFLocalizations.of(context).getText('traineeStatus'),
                   style: AppStyles.textCairo(
                     context,
-                    fontSize: 16,
+                    fontSize: ResponsiveUtils.fontSize(context, 16),
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-                const SizedBox(height: 16.0),
+                SizedBox(height: ResponsiveUtils.height(context, 16.0)),
                 SizedBox(
-                  width: 370.0,
-                  height: 230.0,
+                  width: ResponsiveUtils.width(context, 370.0),
+                  height: ResponsiveUtils.height(context, 230.0),
                   child: PieChart(
                     PieChartData(
                       sections: [
@@ -762,14 +768,14 @@ class _CoachAnalyticsWidgetState extends State<CoachAnalyticsWidget> {
                           title:
                               '${FFLocalizations.of(context).getText('0gi3i7gz')} ($activeCount)',
                           color: colorsList[0],
-                          radius: 100.0,
+                          radius: ResponsiveUtils.width(context, 100.0),
                         ),
                         PieChartSectionData(
                           value: inactiveCount.toDouble(),
                           title:
                               '${FFLocalizations.of(context).getText('inactive')} ($inactiveCount)',
                           color: colorsList[1],
-                          radius: 100.0,
+                          radius: ResponsiveUtils.width(context, 100.0),
                         ),
                       ],
                     ),
@@ -818,16 +824,16 @@ class _CoachAnalyticsWidgetState extends State<CoachAnalyticsWidget> {
         color: Colors.transparent,
         elevation: 2.0,
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(16.0),
+          borderRadius: BorderRadius.circular(ResponsiveUtils.width(context, 16.0)),
         ),
         child: Container(
           width: MediaQuery.sizeOf(context).width,
           decoration: BoxDecoration(
             color: FlutterFlowTheme.of(context).secondaryBackground,
-            borderRadius: BorderRadius.circular(16.0),
+            borderRadius: BorderRadius.circular(ResponsiveUtils.width(context, 16.0)),
           ),
           child: Padding(
-            padding: const EdgeInsets.all(20.0),
+            padding: EdgeInsets.all(ResponsiveUtils.width(context, 20.0)),
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
@@ -835,20 +841,20 @@ class _CoachAnalyticsWidgetState extends State<CoachAnalyticsWidget> {
                   FFLocalizations.of(context).getText('goalTypes'),
                   style: AppStyles.textCairo(
                     context,
-                    fontSize: 16,
+                    fontSize: ResponsiveUtils.fontSize(context, 16),
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-                const SizedBox(height: 16.0),
+                SizedBox(height: ResponsiveUtils.height(context, 16.0)),
                 Container(
                   decoration: const BoxDecoration(),
                   child: SizedBox(
-                    width: 370.0,
-                    height: 230.0,
+                    width: ResponsiveUtils.width(context, 370.0),
+                    height: ResponsiveUtils.height(context, 230.0),
                     child: subscriptions.isEmpty
                         ? SizedBox(
-                            width: 370.0,
-                            height: 230.0,
+                            width: ResponsiveUtils.width(context, 370.0),
+                            height: ResponsiveUtils.height(context, 230.0),
                             child: _buildNoDataWidget(context),
                           )
                         : PieChart(
@@ -869,7 +875,7 @@ class _CoachAnalyticsWidgetState extends State<CoachAnalyticsWidget> {
                                                   .toList()
                                                   .indexOf(entry.key) %
                                               colorsList.length],
-                                      radius: 100.0,
+                                      radius: ResponsiveUtils.width(context, 100.0),
                                     );
                                   })
                                   .toList()
@@ -900,10 +906,10 @@ class _CoachAnalyticsWidgetState extends State<CoachAnalyticsWidget> {
 
   Widget _buildTimePeriodSelector() {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 16),
+      padding: ResponsiveUtils.padding(context, horizontal: 16, vertical: 12),
       decoration: BoxDecoration(
         color: FlutterFlowTheme.of(context).secondaryBackground,
-        borderRadius: BorderRadius.circular(8),
+        borderRadius: BorderRadius.circular(ResponsiveUtils.width(context, 8)),
         border: Border.all(
           color: FlutterFlowTheme.of(context).primary.withOpacity(0.2),
         ),
@@ -912,6 +918,11 @@ class _CoachAnalyticsWidgetState extends State<CoachAnalyticsWidget> {
         child: DropdownButton<String>(
           value: selectedTimePeriod,
           isExpanded: true,
+          iconSize: ResponsiveUtils.iconSize(context, 24),
+          style: TextStyle(
+            fontSize: ResponsiveUtils.fontSize(context, 14),
+            color: FlutterFlowTheme.of(context).primaryText,
+          ),
           items: [
             DropdownMenuItem(
               value: 'all',

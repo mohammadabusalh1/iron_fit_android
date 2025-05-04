@@ -6,6 +6,7 @@ import 'package:iron_fit/flutter_flow/custom_functions.dart';
 import 'package:iron_fit/flutter_flow/flutter_flow_widgets.dart';
 import 'package:iron_fit/trainee/user_profile/user_profile_widget.dart';
 import 'package:iron_fit/utils/logger.dart';
+import 'package:iron_fit/utils/responsive_utils.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '/auth/firebase_auth/auth_util.dart';
@@ -41,9 +42,10 @@ class _TraineeSettingsWidgetState extends State<TraineeSettingsWidget>
   late Animation<double> _fadeAnimation;
 
   // Create constant widgets that don't need to be recreated on each build
-  static const SizedBox _sizedBox16 = SizedBox(height: 16);
-  static const SizedBox _sizedBox20 = SizedBox(height: 20);
-  static const SizedBox _sizedBox24 = SizedBox(height: 24);
+  // Using late initialization for SizedBox widgets to make them responsive
+  late final SizedBox _sizedBox16;
+  late final SizedBox _sizedBox20;
+  late final SizedBox _sizedBox24;
 
   @override
   void initState() {
@@ -57,6 +59,15 @@ class _TraineeSettingsWidgetState extends State<TraineeSettingsWidget>
       curve: Curves.easeOut,
     );
     _animationController.forward();
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    // Initialize sized boxes with responsive heights
+    _sizedBox16 = SizedBox(height: ResponsiveUtils.height(context, 16));
+    _sizedBox20 = SizedBox(height: ResponsiveUtils.height(context, 20));
+    _sizedBox24 = SizedBox(height: ResponsiveUtils.height(context, 24));
   }
 
   @override
@@ -90,7 +101,7 @@ class _TraineeSettingsWidgetState extends State<TraineeSettingsWidget>
                 FFLocalizations.of(context).getText('deleting_account'),
                 style: AppStyles.textCairo(
                   context,
-                  fontSize: 16,
+                  fontSize: ResponsiveUtils.fontSize(context, 16),
                   color: FlutterFlowTheme.of(context).primaryText,
                 ),
               ),
@@ -123,14 +134,14 @@ class _TraineeSettingsWidgetState extends State<TraineeSettingsWidget>
               icon: Icon(
                 Icons.arrow_back_ios_rounded,
                 color: FlutterFlowTheme.of(context).primaryText,
-                size: 22,
+                size: ResponsiveUtils.iconSize(context, 22),
               )),
           IconButton(
               onPressed: () {},
               icon: Icon(
                 Icons.info_outline_rounded,
                 color: FlutterFlowTheme.of(context).primaryText,
-                size: 22,
+                size: ResponsiveUtils.iconSize(context, 22),
               )),
         ),
         body: Container(
@@ -184,7 +195,11 @@ class _TraineeSettingsWidgetState extends State<TraineeSettingsWidget>
                   SingleChildScrollView(
                     physics: const BouncingScrollPhysics(),
                     child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 20),
+                      padding: ResponsiveUtils.padding(
+                        context,
+                        horizontal: 20,
+                        vertical: 0,
+                      ),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
@@ -207,7 +222,7 @@ class _TraineeSettingsWidgetState extends State<TraineeSettingsWidget>
                               'v1.0.0',
                               style: AppStyles.textCairo(
                                 context,
-                                fontSize: 12,
+                                fontSize: ResponsiveUtils.fontSize(context, 12),
                                 color: FlutterFlowTheme.of(context)
                                     .secondaryText
                                     .withOpacity(0.5),
@@ -338,15 +353,15 @@ class _TraineeSettingsWidgetState extends State<TraineeSettingsWidget>
           builder: (BuildContext context) {
             return Dialog(
               shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(16),
+                borderRadius: BorderRadius.circular(ResponsiveUtils.width(context, 16)),
               ),
               elevation: 0,
               backgroundColor: Colors.transparent,
               child: Container(
-                padding: const EdgeInsets.all(24),
+                padding: ResponsiveUtils.padding(context, horizontal: 24, vertical: 24),
                 decoration: BoxDecoration(
                   color: FlutterFlowTheme.of(context).secondaryBackground,
-                  borderRadius: BorderRadius.circular(16),
+                  borderRadius: BorderRadius.circular(ResponsiveUtils.width(context, 16)),
                   boxShadow: [
                     BoxShadow(
                       color:
@@ -360,7 +375,7 @@ class _TraineeSettingsWidgetState extends State<TraineeSettingsWidget>
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     Container(
-                      padding: const EdgeInsets.all(16),
+                      padding: ResponsiveUtils.padding(context, horizontal: 16, vertical: 16),
                       decoration: BoxDecoration(
                         color:
                             FlutterFlowTheme.of(context).error.withOpacity(0.1),
@@ -369,7 +384,7 @@ class _TraineeSettingsWidgetState extends State<TraineeSettingsWidget>
                       child: Icon(
                         Icons.logout_rounded,
                         color: FlutterFlowTheme.of(context).error,
-                        size: 32,
+                        size: ResponsiveUtils.iconSize(context, 32),
                       ),
                     ),
                     _sizedBox16,
@@ -378,17 +393,17 @@ class _TraineeSettingsWidgetState extends State<TraineeSettingsWidget>
                       style: AppStyles.textCairo(
                         context,
                         fontWeight: FontWeight.bold,
-                        fontSize: 20,
+                        fontSize: ResponsiveUtils.fontSize(context, 20),
                       ),
                     ),
-                    const SizedBox(height: 12),
+                    SizedBox(height: ResponsiveUtils.height(context, 12)),
                     Text(
                       FFLocalizations.of(context).getText('logout_confirm'),
                       textAlign: TextAlign.center,
                       style: AppStyles.textCairo(
                         context,
                         color: FlutterFlowTheme.of(context).secondaryText,
-                        fontSize: 14,
+                        fontSize: ResponsiveUtils.fontSize(context, 14),
                         fontWeight: FontWeight.w400,
                       ),
                     ),
@@ -400,13 +415,13 @@ class _TraineeSettingsWidgetState extends State<TraineeSettingsWidget>
                             onPressed: () => Navigator.of(context).pop(false),
                             text: FFLocalizations.of(context).getText('cancel'),
                             options: FFButtonOptions(
-                              height: 48,
+                              height: ResponsiveUtils.height(context, 48),
                               color: FlutterFlowTheme.of(context)
                                   .secondaryBackground,
                               textStyle: AppStyles.textCairo(
                                 context,
                                 color: FlutterFlowTheme.of(context).primaryText,
-                                fontSize: 14,
+                                fontSize: ResponsiveUtils.fontSize(context, 14),
                                 fontWeight: FontWeight.w600,
                               ),
                               elevation: 0,
@@ -415,26 +430,26 @@ class _TraineeSettingsWidgetState extends State<TraineeSettingsWidget>
                                     .primaryBackground,
                                 width: 2,
                               ),
-                              borderRadius: BorderRadius.circular(12),
+                              borderRadius: BorderRadius.circular(ResponsiveUtils.width(context, 12)),
                             ),
                           ),
                         ),
-                        const SizedBox(width: 12),
+                        SizedBox(width: ResponsiveUtils.width(context, 12)),
                         Expanded(
                           child: FFButtonWidget(
                             onPressed: () => Navigator.of(context).pop(true),
                             text: FFLocalizations.of(context).getText('logout'),
                             options: FFButtonOptions(
-                              height: 48,
+                              height: ResponsiveUtils.height(context, 48),
                               color: FlutterFlowTheme.of(context).error,
                               textStyle: AppStyles.textCairo(
                                 context,
                                 color: FlutterFlowTheme.of(context).info,
-                                fontSize: 14,
+                                fontSize: ResponsiveUtils.fontSize(context, 14),
                                 fontWeight: FontWeight.w600,
                               ),
                               elevation: 0,
-                              borderRadius: BorderRadius.circular(12),
+                              borderRadius: BorderRadius.circular(ResponsiveUtils.width(context, 12)),
                             ),
                           ),
                         ),

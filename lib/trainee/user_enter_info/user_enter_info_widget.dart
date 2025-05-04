@@ -11,6 +11,7 @@ import 'package:iron_fit/trainee/user_enter_info/components/rest_time_step.dart'
 import 'package:iron_fit/trainee/user_enter_info/components/step_indicator.dart';
 import 'package:iron_fit/trainee/user_enter_info/components/training_time_step.dart';
 import 'package:iron_fit/trainee/user_enter_info/components/profile_image_uploader.dart';
+import 'package:iron_fit/utils/responsive_utils.dart';
 import '/auth/firebase_auth/auth_util.dart';
 import '/backend/backend.dart';
 import '/backend/firebase_storage/storage.dart';
@@ -113,7 +114,7 @@ class _UserEnterInfoWidgetState extends State<UserEnterInfoWidget> {
                 ),
               ),
               Padding(
-                padding: const EdgeInsetsDirectional.symmetric(horizontal: 16),
+                padding: ResponsiveUtils.padding(context, horizontal: 16),
                 child: Column(
                   children: [
                     StepIndicator(
@@ -174,7 +175,7 @@ class _UserEnterInfoWidgetState extends State<UserEnterInfoWidget> {
         // Profile Image Step
         return Container(
           key: const ValueKey('profile_image_step'),
-          padding: const EdgeInsets.symmetric(vertical: 20),
+          padding: ResponsiveUtils.padding(context, vertical: 20),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
@@ -183,27 +184,32 @@ class _UserEnterInfoWidgetState extends State<UserEnterInfoWidget> {
                 children: [
                   Text(
                     _localizations.getText('profile_image_title'),
-                    style: FlutterFlowTheme.of(context).headlineMedium,
+                    style: FlutterFlowTheme.of(context).headlineMedium.copyWith(
+                          fontSize: ResponsiveUtils.fontSize(context, 24),
+                        ),
                   ),
-                  const SizedBox(height: 8),
+                  SizedBox(height: ResponsiveUtils.height(context, 8)),
                   Text(
                     '${_localizations.getText('profile_image_description')}.',
-                    style: FlutterFlowTheme.of(context).bodyMedium,
+                    style: FlutterFlowTheme.of(context).bodyMedium.copyWith(
+                          fontSize: ResponsiveUtils.fontSize(context, 14),
+                        ),
                   ),
                 ],
               ),
-              const SizedBox(height: 30),
+              SizedBox(height: ResponsiveUtils.height(context, 30)),
               ProfileImageUploader(
                 uploadedFileUrl: _model.uploadedFileUrl,
                 isUploading: _model.isDataUploading,
                 onImageSelected: _handleProfileImageUpload,
               ),
-              const SizedBox(height: 30),
+              SizedBox(height: ResponsiveUtils.height(context, 30)),
               Text(
                 textAlign: TextAlign.center,
                 '${_localizations.getText('uploadImageText')}.',
                 style: AppStyles.textCairo(context,
-                    fontSize: 16, fontWeight: FontWeight.w600),
+                    fontSize: ResponsiveUtils.fontSize(context, 16),
+                    fontWeight: FontWeight.w600),
               ),
             ],
           ),
@@ -213,20 +219,24 @@ class _UserEnterInfoWidgetState extends State<UserEnterInfoWidget> {
         // Full Name Step
         return Container(
           key: const ValueKey('full_name_step'),
-          padding: const EdgeInsets.symmetric(vertical: 20),
+          padding: ResponsiveUtils.padding(context, vertical: 20),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
                 _localizations.getText('name_title'),
-                style: FlutterFlowTheme.of(context).headlineMedium,
+                style: FlutterFlowTheme.of(context).headlineMedium.copyWith(
+                      fontSize: ResponsiveUtils.fontSize(context, 24),
+                    ),
               ),
-              const SizedBox(height: 8),
+              SizedBox(height: ResponsiveUtils.height(context, 8)),
               Text(
                 _localizations.getText('name_description'),
-                style: FlutterFlowTheme.of(context).bodyMedium,
+                style: FlutterFlowTheme.of(context).bodyMedium.copyWith(
+                      fontSize: ResponsiveUtils.fontSize(context, 14),
+                    ),
               ),
-              const SizedBox(height: 30),
+              SizedBox(height: ResponsiveUtils.height(context, 30)),
               TextFormField(
                 controller: _model.fullNameTextController,
                 focusNode: _model.fullNameFocusNode,
@@ -234,9 +244,13 @@ class _UserEnterInfoWidgetState extends State<UserEnterInfoWidget> {
                 obscureText: false,
                 decoration: InputDecoration(
                   labelText: _localizations.getText('9vr3ekng'),
-                  labelStyle: FlutterFlowTheme.of(context).labelMedium,
+                  labelStyle: FlutterFlowTheme.of(context).labelMedium.copyWith(
+                        fontSize: ResponsiveUtils.fontSize(context, 14),
+                      ),
                   hintText: _localizations.getText('name_hint'),
-                  hintStyle: FlutterFlowTheme.of(context).labelMedium,
+                  hintStyle: FlutterFlowTheme.of(context).labelMedium.copyWith(
+                        fontSize: ResponsiveUtils.fontSize(context, 14),
+                      ),
                   enabledBorder: OutlineInputBorder(
                     borderSide: BorderSide(
                       color: FlutterFlowTheme.of(context).alternate,
@@ -267,14 +281,20 @@ class _UserEnterInfoWidgetState extends State<UserEnterInfoWidget> {
                   ),
                   filled: true,
                   fillColor: FlutterFlowTheme.of(context).secondaryBackground,
-                  contentPadding:
-                      const EdgeInsetsDirectional.fromSTEB(16, 24, 16, 24),
+                  contentPadding: ResponsiveUtils.padding(
+                    context,
+                    horizontal: 16,
+                    vertical: 24,
+                  ),
                   prefixIcon: Icon(
                     Icons.person_outline,
                     color: FlutterFlowTheme.of(context).secondaryText,
+                    size: ResponsiveUtils.iconSize(context, 24),
                   ),
                 ),
-                style: FlutterFlowTheme.of(context).bodyMedium,
+                style: FlutterFlowTheme.of(context).bodyMedium.copyWith(
+                      fontSize: ResponsiveUtils.fontSize(context, 14),
+                    ),
                 maxLength: 50,
                 validator: (val) {
                   if (val == null || val.isEmpty) {
@@ -291,20 +311,24 @@ class _UserEnterInfoWidgetState extends State<UserEnterInfoWidget> {
         // Date of Birth Step
         return Container(
           key: const ValueKey('date_of_birth_step'),
-          padding: const EdgeInsets.symmetric(vertical: 20),
+          padding: ResponsiveUtils.padding(context, vertical: 20),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
                 _localizations.getText('birthdate_title'),
-                style: FlutterFlowTheme.of(context).headlineMedium,
+                style: FlutterFlowTheme.of(context).headlineMedium.copyWith(
+                      fontSize: ResponsiveUtils.fontSize(context, 24),
+                    ),
               ),
-              const SizedBox(height: 8),
+              SizedBox(height: ResponsiveUtils.height(context, 8)),
               Text(
                 _localizations.getText('birthdate_description'),
-                style: FlutterFlowTheme.of(context).bodyMedium,
+                style: FlutterFlowTheme.of(context).bodyMedium.copyWith(
+                      fontSize: ResponsiveUtils.fontSize(context, 14),
+                    ),
               ),
-              const SizedBox(height: 30),
+              SizedBox(height: ResponsiveUtils.height(context, 30)),
               TextFormField(
                 controller: _model.dateOfBirthTextController,
                 focusNode: _model.dateOfBirthFocusNode,
@@ -312,9 +336,13 @@ class _UserEnterInfoWidgetState extends State<UserEnterInfoWidget> {
                 obscureText: false,
                 decoration: InputDecoration(
                   labelText: _localizations.getText('glzsjd4b'),
-                  labelStyle: FlutterFlowTheme.of(context).labelMedium,
+                  labelStyle: FlutterFlowTheme.of(context).labelMedium.copyWith(
+                        fontSize: ResponsiveUtils.fontSize(context, 14),
+                      ),
                   hintText: _localizations.getText('dateOfBirth_hint'),
-                  hintStyle: FlutterFlowTheme.of(context).labelMedium,
+                  hintStyle: FlutterFlowTheme.of(context).labelMedium.copyWith(
+                        fontSize: ResponsiveUtils.fontSize(context, 14),
+                      ),
                   enabledBorder: OutlineInputBorder(
                     borderSide: BorderSide(
                       color: FlutterFlowTheme.of(context).alternate,
@@ -345,14 +373,20 @@ class _UserEnterInfoWidgetState extends State<UserEnterInfoWidget> {
                   ),
                   filled: true,
                   fillColor: FlutterFlowTheme.of(context).secondaryBackground,
-                  contentPadding:
-                      const EdgeInsetsDirectional.fromSTEB(16, 24, 16, 24),
+                  contentPadding: ResponsiveUtils.padding(
+                    context,
+                    horizontal: 16,
+                    vertical: 24,
+                  ),
                   prefixIcon: Icon(
                     Icons.calendar_today,
                     color: FlutterFlowTheme.of(context).secondaryText,
+                    size: ResponsiveUtils.iconSize(context, 24),
                   ),
                 ),
-                style: FlutterFlowTheme.of(context).bodyMedium,
+                style: FlutterFlowTheme.of(context).bodyMedium.copyWith(
+                      fontSize: ResponsiveUtils.fontSize(context, 14),
+                    ),
                 validator: (val) {
                   if (val == null || val.isEmpty) {
                     return _localizations.getText('dateOfBirth_required');
@@ -372,12 +406,15 @@ class _UserEnterInfoWidgetState extends State<UserEnterInfoWidget> {
                           colorScheme: ColorScheme.fromSeed(
                               seedColor: FlutterFlowTheme.of(context).primary),
                           textTheme: TextTheme(
-                            bodyMedium: FlutterFlowTheme.of(context).bodyMedium,
+                            bodyMedium: FlutterFlowTheme.of(context).bodyMedium.copyWith(
+                                  fontSize: ResponsiveUtils.fontSize(context, 14),
+                                ),
                           ),
                           textButtonTheme: TextButtonThemeData(
                             style: TextButton.styleFrom(
                               textStyle: AppStyles.textCairo(context,
-                                  fontSize: 16, fontWeight: FontWeight.w600),
+                                  fontSize: ResponsiveUtils.fontSize(context, 16),
+                                  fontWeight: FontWeight.w600),
                             ),
                           ),
                         ),
@@ -401,20 +438,24 @@ class _UserEnterInfoWidgetState extends State<UserEnterInfoWidget> {
         // Gender Step
         return Container(
           key: const ValueKey('gender_step'),
-          padding: const EdgeInsets.symmetric(vertical: 20),
+          padding: ResponsiveUtils.padding(context, vertical: 20),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
                 _localizations.getText('gender_title'),
-                style: FlutterFlowTheme.of(context).headlineMedium,
+                style: FlutterFlowTheme.of(context).headlineMedium.copyWith(
+                      fontSize: ResponsiveUtils.fontSize(context, 24),
+                    ),
               ),
-              const SizedBox(height: 8),
+              SizedBox(height: ResponsiveUtils.height(context, 8)),
               Text(
                 _localizations.getText('gender_description'),
-                style: FlutterFlowTheme.of(context).bodyMedium,
+                style: FlutterFlowTheme.of(context).bodyMedium.copyWith(
+                      fontSize: ResponsiveUtils.fontSize(context, 14),
+                    ),
               ),
-              const SizedBox(height: 30),
+              SizedBox(height: ResponsiveUtils.height(context, 30)),
               Column(
                 children: [
                   FFLocalizations.of(context).getText('of3kkd2s'),
@@ -422,7 +463,8 @@ class _UserEnterInfoWidgetState extends State<UserEnterInfoWidget> {
                 ]
                     .map(
                       (gender) => Container(
-                        margin: const EdgeInsets.only(bottom: 16),
+                        margin: EdgeInsets.only(
+                            bottom: ResponsiveUtils.height(context, 16)),
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(12),
                           color: _model.genderValue == gender
@@ -442,7 +484,10 @@ class _UserEnterInfoWidgetState extends State<UserEnterInfoWidget> {
                           onTap: () => setState(() =>
                               _model.genderValueController!.value = [gender]),
                           child: Padding(
-                            padding: const EdgeInsets.all(16),
+                            padding: ResponsiveUtils.padding(context, 
+                              horizontal: 16, 
+                              vertical: 16
+                            ),
                             child: Row(
                               children: [
                                 Icon(
@@ -451,14 +496,15 @@ class _UserEnterInfoWidgetState extends State<UserEnterInfoWidget> {
                                       ? FlutterFlowTheme.of(context).primary
                                       : FlutterFlowTheme.of(context)
                                           .secondaryText,
-                                  size: 24,
+                                  size: ResponsiveUtils.iconSize(context, 24),
                                 ),
-                                const SizedBox(width: 12),
+                                SizedBox(width: ResponsiveUtils.width(context, 12)),
                                 Text(
                                   gender,
                                   style: FlutterFlowTheme.of(context)
                                       .bodyLarge
                                       .copyWith(
+                                        fontSize: ResponsiveUtils.fontSize(context, 16),
                                         color: _model.genderValue == gender
                                             ? FlutterFlowTheme.of(context)
                                                 .primary
@@ -474,7 +520,7 @@ class _UserEnterInfoWidgetState extends State<UserEnterInfoWidget> {
                                   Icon(
                                     Icons.check_circle,
                                     color: FlutterFlowTheme.of(context).primary,
-                                    size: 24,
+                                    size: ResponsiveUtils.iconSize(context, 24),
                                   ),
                               ],
                             ),
@@ -492,29 +538,37 @@ class _UserEnterInfoWidgetState extends State<UserEnterInfoWidget> {
         // Height Step
         return Container(
           key: const ValueKey('height_step'),
-          padding: const EdgeInsets.symmetric(vertical: 20),
+          padding: ResponsiveUtils.padding(context, vertical: 20),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
                 _localizations.getText('height_title'),
-                style: FlutterFlowTheme.of(context).headlineMedium,
+                style: FlutterFlowTheme.of(context).headlineMedium.copyWith(
+                      fontSize: ResponsiveUtils.fontSize(context, 24),
+                    ),
               ),
-              const SizedBox(height: 8),
+              SizedBox(height: ResponsiveUtils.height(context, 8)),
               Text(
                 _localizations.getText('height_description'),
-                style: FlutterFlowTheme.of(context).bodyMedium,
+                style: FlutterFlowTheme.of(context).bodyMedium.copyWith(
+                      fontSize: ResponsiveUtils.fontSize(context, 14),
+                    ),
               ),
-              const SizedBox(height: 30),
+              SizedBox(height: ResponsiveUtils.height(context, 30)),
               TextFormField(
                 controller: _model.hightTextController,
                 focusNode: _model.hightFocusNode,
                 keyboardType: TextInputType.number,
                 decoration: InputDecoration(
                   labelText: _localizations.getText('ipep4d7i'),
-                  labelStyle: FlutterFlowTheme.of(context).labelMedium,
+                  labelStyle: FlutterFlowTheme.of(context).labelMedium.copyWith(
+                        fontSize: ResponsiveUtils.fontSize(context, 14),
+                      ),
                   hintText: _localizations.getText('height_hint'),
-                  hintStyle: FlutterFlowTheme.of(context).labelMedium,
+                  hintStyle: FlutterFlowTheme.of(context).labelMedium.copyWith(
+                        fontSize: ResponsiveUtils.fontSize(context, 14),
+                      ),
                   enabledBorder: OutlineInputBorder(
                     borderSide: BorderSide(
                       color: FlutterFlowTheme.of(context).alternate,
@@ -545,18 +599,25 @@ class _UserEnterInfoWidgetState extends State<UserEnterInfoWidget> {
                   ),
                   filled: true,
                   fillColor: FlutterFlowTheme.of(context).secondaryBackground,
-                  contentPadding:
-                      const EdgeInsetsDirectional.fromSTEB(16, 24, 16, 24),
+                  contentPadding: ResponsiveUtils.padding(
+                    context,
+                    horizontal: 16,
+                    vertical: 24,
+                  ),
                   prefixIcon: Icon(
                     Icons.height,
                     color: FlutterFlowTheme.of(context).secondaryText,
+                    size: ResponsiveUtils.iconSize(context, 24),
                   ),
                   suffixText: 'cm',
                   suffixStyle: FlutterFlowTheme.of(context).bodyMedium.copyWith(
+                        fontSize: ResponsiveUtils.fontSize(context, 14),
                         color: FlutterFlowTheme.of(context).secondaryText,
                       ),
                 ),
-                style: FlutterFlowTheme.of(context).bodyMedium,
+                style: FlutterFlowTheme.of(context).bodyMedium.copyWith(
+                      fontSize: ResponsiveUtils.fontSize(context, 14),
+                    ),
                 validator: (val) {
                   if (val == null || val.isEmpty) {
                     return _localizations.getText('height_required');
@@ -576,29 +637,37 @@ class _UserEnterInfoWidgetState extends State<UserEnterInfoWidget> {
         // Weight Step
         return Container(
           key: const ValueKey('weight_step'),
-          padding: const EdgeInsets.symmetric(vertical: 20),
+          padding: ResponsiveUtils.padding(context, vertical: 20),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
                 _localizations.getText('kt2idkx2'),
-                style: FlutterFlowTheme.of(context).headlineMedium,
+                style: FlutterFlowTheme.of(context).headlineMedium.copyWith(
+                      fontSize: ResponsiveUtils.fontSize(context, 24),
+                    ),
               ),
-              const SizedBox(height: 8),
+              SizedBox(height: ResponsiveUtils.height(context, 8)),
               Text(
                 _localizations.getText('weight_description'),
-                style: FlutterFlowTheme.of(context).bodyMedium,
+                style: FlutterFlowTheme.of(context).bodyMedium.copyWith(
+                      fontSize: ResponsiveUtils.fontSize(context, 14),
+                    ),
               ),
-              const SizedBox(height: 30),
+              SizedBox(height: ResponsiveUtils.height(context, 30)),
               TextFormField(
                 controller: _model.weightTextController,
                 focusNode: _model.weightFocusNode,
                 keyboardType: TextInputType.number,
                 decoration: InputDecoration(
                   labelText: _localizations.getText('kt2idkx2'),
-                  labelStyle: FlutterFlowTheme.of(context).labelMedium,
+                  labelStyle: FlutterFlowTheme.of(context).labelMedium.copyWith(
+                        fontSize: ResponsiveUtils.fontSize(context, 14),
+                      ),
                   hintText: _localizations.getText('weight_hint'),
-                  hintStyle: FlutterFlowTheme.of(context).labelMedium,
+                  hintStyle: FlutterFlowTheme.of(context).labelMedium.copyWith(
+                        fontSize: ResponsiveUtils.fontSize(context, 14),
+                      ),
                   enabledBorder: OutlineInputBorder(
                     borderSide: BorderSide(
                       color: FlutterFlowTheme.of(context).alternate,
@@ -629,18 +698,25 @@ class _UserEnterInfoWidgetState extends State<UserEnterInfoWidget> {
                   ),
                   filled: true,
                   fillColor: FlutterFlowTheme.of(context).secondaryBackground,
-                  contentPadding:
-                      const EdgeInsetsDirectional.fromSTEB(16, 24, 16, 24),
+                  contentPadding: ResponsiveUtils.padding(
+                    context,
+                    horizontal: 16,
+                    vertical: 24,
+                  ),
                   prefixIcon: Icon(
                     Icons.monitor_weight_outlined,
                     color: FlutterFlowTheme.of(context).secondaryText,
+                    size: ResponsiveUtils.iconSize(context, 24),
                   ),
                   suffixText: 'kg',
                   suffixStyle: FlutterFlowTheme.of(context).bodyMedium.copyWith(
+                        fontSize: ResponsiveUtils.fontSize(context, 14),
                         color: FlutterFlowTheme.of(context).secondaryText,
                       ),
                 ),
-                style: FlutterFlowTheme.of(context).bodyMedium,
+                style: FlutterFlowTheme.of(context).bodyMedium.copyWith(
+                      fontSize: ResponsiveUtils.fontSize(context, 14),
+                    ),
                 validator: (val) {
                   if (val == null || val.isEmpty) {
                     return _localizations.getText('weight_required');

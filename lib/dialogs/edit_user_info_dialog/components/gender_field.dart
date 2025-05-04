@@ -5,6 +5,7 @@ import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_choice_chips.dart';
 import '/flutter_flow/form_field_controller.dart';
+import '/utils/responsive_utils.dart';
 
 class GenderField extends StatefulWidget {
   const GenderField({
@@ -24,6 +25,7 @@ class _GenderFieldState extends State<GenderField>
     with SingleTickerProviderStateMixin {
   late FormFieldController<List<String>> _genderController;
   late List<ChipData> _chipOptions;
+  String? _selectedChoice;
 
   @override
   void initState() {
@@ -36,6 +38,21 @@ class _GenderFieldState extends State<GenderField>
             : [];
 
     _genderController = FormFieldController<List<String>>(initialValue);
+  }
+
+  @override
+  void didUpdateWidget(GenderField oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.initialGender != widget.initialGender) {
+      _initSelectedChoice();
+    }
+  }
+
+  void _initSelectedChoice() {
+    if (widget.initialGender != null && widget.initialGender!.isNotEmpty) {
+      _genderController.value = [widget.initialGender!];
+      _selectedChoice = widget.initialGender;
+    }
   }
 
   @override
@@ -58,19 +75,19 @@ class _GenderFieldState extends State<GenderField>
           localizations.getText('gciphuh3' /* Gender */),
           style: AppStyles.textCairo(
             context,
-            fontSize: 16,
+            fontSize: ResponsiveUtils.fontSize(context, 16),
             fontWeight: FontWeight.w500,
           ),
         ),
-        const SizedBox(height: 12),
+        SizedBox(height: ResponsiveUtils.height(context, 12)),
         Row(
           children: [
             Icon(
               Icons.wc_rounded,
               color: theme.primary,
-              size: 24,
+              size: ResponsiveUtils.iconSize(context, 24),
             ),
-            const SizedBox(width: 12),
+            SizedBox(width: ResponsiveUtils.width(context, 12)),
             Expanded(
               child: FlutterFlowChoiceChips(
                 options: _chipOptions,
@@ -79,6 +96,7 @@ class _GenderFieldState extends State<GenderField>
                     // Trigger haptic feedback on selection
                     HapticFeedback.selectionClick();
                     widget.onGenderSelected(val.first);
+                    _selectedChoice = val.first;
                   }
                 },
                 controller: _genderController,
@@ -88,32 +106,44 @@ class _GenderFieldState extends State<GenderField>
                     context,
                     color: theme.info,
                     fontWeight: FontWeight.w500,
-                    fontSize: 16,
+                    fontSize: ResponsiveUtils.fontSize(context, 16),
                   ),
                   iconColor: theme.info,
-                  iconSize: 20,
-                  labelPadding:
-                      const EdgeInsetsDirectional.fromSTEB(16, 8, 16, 8),
+                  iconSize: ResponsiveUtils.iconSize(context, 20),
+                  labelPadding: EdgeInsetsDirectional.fromSTEB(
+                    ResponsiveUtils.width(context, 16),
+                    ResponsiveUtils.height(context, 8),
+                    ResponsiveUtils.width(context, 16),
+                    ResponsiveUtils.height(context, 8),
+                  ),
                   elevation: 4,
-                  borderRadius: BorderRadius.circular(16),
+                  borderRadius: BorderRadius.circular(ResponsiveUtils.width(context, 16)),
                 ),
                 unselectedChipStyle: ChipStyle(
-                  backgroundColor: theme.primaryBackground,
+                  backgroundColor: theme.secondaryBackground,
                   textStyle: AppStyles.textCairo(
                     context,
                     color: theme.secondaryText,
-                    fontSize: 16,
+                    fontWeight: FontWeight.w500,
+                    fontSize: ResponsiveUtils.fontSize(context, 16),
                   ),
                   iconColor: theme.secondaryText,
-                  iconSize: 20,
-                  labelPadding:
-                      const EdgeInsetsDirectional.fromSTEB(16, 8, 16, 8),
-                  elevation: 0,
-                  borderRadius: BorderRadius.circular(16),
+                  iconSize: ResponsiveUtils.iconSize(context, 20),
+                  labelPadding: EdgeInsetsDirectional.fromSTEB(
+                    ResponsiveUtils.width(context, 16),
+                    ResponsiveUtils.height(context, 8),
+                    ResponsiveUtils.width(context, 16),
+                    ResponsiveUtils.height(context, 8),
+                  ),
+                  elevation: 1,
+                  borderRadius: BorderRadius.circular(ResponsiveUtils.width(context, 16)),
+                  borderColor: theme.alternate,
+                  borderWidth: ResponsiveUtils.width(context, 1),
                 ),
-                chipSpacing: 12,
-                rowSpacing: 12,
+                chipSpacing: ResponsiveUtils.width(context, 12),
+                rowSpacing: ResponsiveUtils.height(context, 8),
                 multiselect: false,
+                initialized: _selectedChoice != null,
                 alignment: WrapAlignment.start,
               ),
             ),

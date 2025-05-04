@@ -16,6 +16,7 @@ import 'package:iron_fit/dialogs/select_day_for_plan/components/selected_exercis
 
 // Import our utils file
 import 'package:iron_fit/utils/training_day_utils.dart';
+import 'package:iron_fit/utils/responsive_utils.dart';
 
 class SelectDayForPlan extends StatefulWidget {
   SelectDayForPlan({
@@ -294,6 +295,7 @@ class _SelectDayForPlanState extends State<SelectDayForPlan> {
                   icon: Icon(
                     Icons.arrow_back_rounded,
                     color: FlutterFlowTheme.of(context).primaryText,
+                    size: ResponsiveUtils.iconSize(context, 24),
                   ),
                   onPressed: _previousPage,
                 ),
@@ -305,7 +307,7 @@ class _SelectDayForPlanState extends State<SelectDayForPlan> {
                       : FFLocalizations.of(context).getText('add_training_day'),
                   style: AppStyles.textCairo(
                     context,
-                    fontSize: 20,
+                    fontSize: ResponsiveUtils.fontSize(context, 20),
                     fontWeight: FontWeight.bold,
                   ),
                 ),
@@ -388,16 +390,20 @@ class _SelectDayForPlanState extends State<SelectDayForPlan> {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.fromLTRB(24, 12, 24, 16),
+              padding: ResponsiveUtils.padding(context, vertical: 12, horizontal: 24),
               child: Column(
                 children: [
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: List.generate(3, (index) {
                       return Container(
-                        width: index == _currentPage ? 16 : 8,
-                        height: 8,
-                        margin: const EdgeInsets.symmetric(horizontal: 4),
+                        width: index == _currentPage ? 
+                          ResponsiveUtils.width(context, 16) : 
+                          ResponsiveUtils.width(context, 8),
+                        height: ResponsiveUtils.height(context, 8),
+                        margin: EdgeInsets.symmetric(
+                          horizontal: ResponsiveUtils.width(context, 4),
+                        ),
                         decoration: BoxDecoration(
                           color: index == _currentPage
                               ? FlutterFlowTheme.of(context).primary
@@ -407,15 +413,18 @@ class _SelectDayForPlanState extends State<SelectDayForPlan> {
                       );
                     }),
                   ),
-                  const SizedBox(height: 16),
+                  SizedBox(height: ResponsiveUtils.height(context, 16)),
 
                   // Show configure button on exercise selection page
                   if (_currentPage == 1 && _selectedExercises.isNotEmpty)
                     Padding(
-                      padding: const EdgeInsets.only(bottom: 16),
+                      padding: EdgeInsets.only(
+                        bottom: ResponsiveUtils.height(context, 16),
+                      ),
                       child: Container(
                         width: double.infinity,
-                        padding: const EdgeInsets.symmetric(
+                        padding: ResponsiveUtils.padding(
+                          context,
                           vertical: 12,
                           horizontal: 16,
                         ),
@@ -450,31 +459,34 @@ class _SelectDayForPlanState extends State<SelectDayForPlan> {
                           child: Row(
                             children: [
                               Container(
-                                padding: const EdgeInsets.all(8),
+                                padding: EdgeInsets.all(
+                                  ResponsiveUtils.width(context, 8),
+                                ),
                                 decoration: BoxDecoration(
                                   color: Colors.white.withValues(alpha: 0.2),
                                   shape: BoxShape.circle,
                                 ),
-                                child: const Icon(
+                                child: Icon(
                                   Icons.fitness_center,
                                   color: Colors.white,
-                                  size: 20,
+                                  size: ResponsiveUtils.iconSize(context, 20),
                                 ),
                               ),
-                              const SizedBox(width: 12),
+                              SizedBox(width: ResponsiveUtils.width(context, 12)),
                               Expanded(
                                 child: Text(
                                   '${_selectedExercises.length} ${FFLocalizations.of(context).getText('exercises_selected')}',
                                   style: AppStyles.textCairo(
                                     context,
-                                    fontSize: 16,
+                                    fontSize: ResponsiveUtils.fontSize(context, 16),
                                     color: Colors.white,
                                     fontWeight: FontWeight.w600,
                                   ),
                                 ),
                               ),
                               Container(
-                                padding: const EdgeInsets.symmetric(
+                                padding: ResponsiveUtils.padding(
+                                  context,
                                   horizontal: 12,
                                   vertical: 6,
                                 ),
@@ -487,7 +499,7 @@ class _SelectDayForPlanState extends State<SelectDayForPlan> {
                                       .getText('configure'),
                                   style: AppStyles.textCairo(
                                     context,
-                                    fontSize: 14,
+                                    fontSize: ResponsiveUtils.fontSize(context, 14),
                                     color: FlutterFlowTheme.of(context).primary,
                                     fontWeight: FontWeight.w600,
                                   ),
@@ -508,11 +520,11 @@ class _SelectDayForPlanState extends State<SelectDayForPlan> {
                         : FFLocalizations.of(context).getText('next'),
                     options: FFButtonOptions(
                       width: double.infinity,
-                      height: 50,
+                      height: ResponsiveUtils.height(context, 50),
                       color: FlutterFlowTheme.of(context).primary,
                       textStyle: AppStyles.textCairo(
                         context,
-                        fontSize: 16,
+                        fontSize: ResponsiveUtils.fontSize(context, 16),
                         color: Colors.white,
                         fontWeight: FontWeight.w600,
                       ),

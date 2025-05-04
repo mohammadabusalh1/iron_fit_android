@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:iron_fit/componants/Styles.dart';
 import 'package:iron_fit/utils/logger.dart';
+import 'package:iron_fit/utils/responsive_utils.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/backend/backend.dart';
@@ -31,23 +32,38 @@ class PlanListItem extends StatelessWidget {
     return Hero(
       tag: 'plan-${planItem.reference.id}',
       child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 4.0),
+        padding: ResponsiveUtils.padding(
+          context,
+          vertical: 8.0,
+          horizontal: 4.0,
+        ),
         child: Material(
           color: Colors.transparent,
           child: ClipRRect(
-            borderRadius: BorderRadius.circular(24.0),
+            borderRadius: BorderRadius.circular(
+              ResponsiveUtils.width(context, 24.0),
+            ),
             child: BackdropFilter(
               filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
               child: InkWell(
                 onTap: () => _navigateToCreatePlan(context),
-                borderRadius: BorderRadius.circular(24.0),
+                borderRadius: BorderRadius.circular(
+                  ResponsiveUtils.width(context, 24.0),
+                ),
                 splashColor: theme.primary.withOpacity(0.1),
                 highlightColor: theme.primary.withOpacity(0.05),
                 child: Container(
-                  padding: const EdgeInsetsDirectional.fromSTEB(20, 16, 20, 16),
+                  padding: EdgeInsetsDirectional.fromSTEB(
+                    ResponsiveUtils.width(context, 20),
+                    ResponsiveUtils.height(context, 16),
+                    ResponsiveUtils.width(context, 20),
+                    ResponsiveUtils.height(context, 16),
+                  ),
                   decoration: BoxDecoration(
                     color: theme.primaryBackground.withOpacity(0.85),
-                    borderRadius: BorderRadius.circular(24.0),
+                    borderRadius: BorderRadius.circular(
+                      ResponsiveUtils.width(context, 24.0),
+                    ),
                     border: Border.all(
                       color: theme.primary.withAlpha(40),
                       width: 1.5,
@@ -85,7 +101,7 @@ class PlanListItem extends StatelessWidget {
                                         planName,
                                         style: AppStyles.textCairo(
                                           context,
-                                          fontSize: 18,
+                                          fontSize: ResponsiveUtils.fontSize(context, 18),
                                           fontWeight: FontWeight.bold,
                                           color: theme.primaryText,
                                         ),
@@ -95,11 +111,16 @@ class PlanListItem extends StatelessWidget {
                                 ),
                               ),
                               Container(
-                                padding: const EdgeInsets.symmetric(
-                                    horizontal: 12, vertical: 6),
+                                padding: ResponsiveUtils.padding(
+                                  context,
+                                  horizontal: 12,
+                                  vertical: 6,
+                                ),
                                 decoration: BoxDecoration(
                                   color: theme.primaryBackground,
-                                  borderRadius: BorderRadius.circular(16),
+                                  borderRadius: BorderRadius.circular(
+                                    ResponsiveUtils.width(context, 16),
+                                  ),
                                   border: Border.all(
                                     color: theme.primary.withAlpha(30),
                                     width: 1.5,
@@ -110,15 +131,15 @@ class PlanListItem extends StatelessWidget {
                                   children: [
                                     Icon(
                                       Icons.calendar_today_rounded,
-                                      size: 14,
+                                      size: ResponsiveUtils.iconSize(context, 14),
                                       color: theme.primary,
                                     ),
-                                    const SizedBox(width: 4),
+                                    SizedBox(width: ResponsiveUtils.width(context, 4)),
                                     Text(
                                       '$numOfDays ${FFLocalizations.of(context).getText("days")}',
                                       style: AppStyles.textCairo(
                                         context,
-                                        fontSize: 13,
+                                        fontSize: ResponsiveUtils.fontSize(context, 13),
                                         fontWeight: FontWeight.w600,
                                         color: theme.primaryText,
                                       ),
@@ -128,21 +149,21 @@ class PlanListItem extends StatelessWidget {
                               ),
                             ],
                           ),
-                          const SizedBox(height: 12),
+                          SizedBox(height: ResponsiveUtils.height(context, 12)),
 
                           // Description
                           Text(
                             planDescription,
                             style: AppStyles.textCairo(
                               context,
-                              fontSize: 14,
+                              fontSize: ResponsiveUtils.fontSize(context, 14),
                               color: theme.secondaryText,
                             ),
                             maxLines: 5,
                             overflow: TextOverflow.ellipsis,
                           ),
 
-                          const SizedBox(height: 16),
+                          SizedBox(height: ResponsiveUtils.height(context, 16)),
 
                           // Action buttons in a more modern layout
                           Row(
@@ -160,14 +181,16 @@ class PlanListItem extends StatelessWidget {
                                     onTap: () =>
                                         _navigateToPlanDetails(context),
                                   ),
-                                  const SizedBox(width: 8),
+                                  SizedBox(width: ResponsiveUtils.width(context, 8)),
                                   _buildIconButton(
+                                    context,
                                     Icons.edit_rounded,
                                     theme.primary,
                                     () => _navigateToCreatePlan(context),
                                   ),
-                                  const SizedBox(width: 8),
+                                  SizedBox(width: ResponsiveUtils.width(context, 8)),
                                   _buildIconButton(
+                                    context,
                                     Icons.delete_outline_rounded,
                                     theme.error,
                                     () => _confirmAndDelete(context),
@@ -202,14 +225,20 @@ class PlanListItem extends StatelessWidget {
   }
 
   // Status badge widget
-  Widget _buildStatusBadge(FlutterFlowTheme theme, bool isDraft) {
+  Widget _buildStatusBadge(BuildContext context, FlutterFlowTheme theme, bool isDraft) {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+      padding: ResponsiveUtils.padding(
+        context,
+        horizontal: 10,
+        vertical: 5,
+      ),
       decoration: BoxDecoration(
         color: isDraft
             ? theme.warning.withOpacity(0.15)
             : theme.success.withOpacity(0.15),
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: BorderRadius.circular(
+          ResponsiveUtils.width(context, 12),
+        ),
         border: Border.all(
           color: isDraft ? theme.warning : theme.success,
           width: 1.5,
@@ -220,14 +249,14 @@ class PlanListItem extends StatelessWidget {
         children: [
           Icon(
             isDraft ? Icons.edit_note : Icons.fitness_center,
-            size: 14,
+            size: ResponsiveUtils.iconSize(context, 14),
             color: isDraft ? theme.warning : theme.success,
           ),
-          const SizedBox(width: 4),
+          SizedBox(width: ResponsiveUtils.width(context, 4)),
           Text(
             isDraft ? 'Draft' : 'Active',
             style: TextStyle(
-              fontSize: 12,
+              fontSize: ResponsiveUtils.fontSize(context, 12),
               fontWeight: FontWeight.bold,
               color: isDraft ? theme.warning : theme.success,
             ),
@@ -251,33 +280,31 @@ class PlanListItem extends StatelessWidget {
       color: Colors.transparent,
       child: InkWell(
         onTap: onTap,
-        borderRadius: BorderRadius.circular(12),
-        child: Container(
-          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-          decoration: BoxDecoration(
-            color: color.withOpacity(0.1),
-            borderRadius: BorderRadius.circular(12),
-            border: Border.all(
-              color: color.withOpacity(0.3),
-              width: 1.5,
-            ),
+        borderRadius: BorderRadius.circular(
+          ResponsiveUtils.width(context, 8),
+        ),
+        child: Padding(
+          padding: ResponsiveUtils.padding(
+            context,
+            horizontal: 10,
+            vertical: 6,
           ),
           child: Row(
             mainAxisSize: MainAxisSize.min,
             children: [
               Icon(
                 icon,
-                size: 16,
+                size: ResponsiveUtils.iconSize(context, 16),
                 color: color,
               ),
-              const SizedBox(width: 6),
+              SizedBox(width: ResponsiveUtils.width(context, 4)),
               Text(
                 label,
                 style: AppStyles.textCairo(
                   context,
-                  fontSize: 13,
-                  fontWeight: FontWeight.w600,
+                  fontSize: ResponsiveUtils.fontSize(context, 14),
                   color: color,
+                  fontWeight: FontWeight.w500,
                 ),
               ),
             ],
@@ -287,26 +314,28 @@ class PlanListItem extends StatelessWidget {
     );
   }
 
-  // Icon button for actions
-  Widget _buildIconButton(IconData icon, Color color, VoidCallback onTap) {
+  // Icon button for editing and deleting
+  Widget _buildIconButton(
+    BuildContext context,
+    IconData icon,
+    Color color,
+    VoidCallback onTap,
+  ) {
     return Material(
       color: Colors.transparent,
+      shape: const CircleBorder(),
       child: InkWell(
         onTap: onTap,
-        borderRadius: BorderRadius.circular(10),
-        child: Container(
-          padding: const EdgeInsets.all(8),
-          decoration: BoxDecoration(
-            color: color.withOpacity(0.1),
-            borderRadius: BorderRadius.circular(10),
-            border: Border.all(
-              color: color.withOpacity(0.3),
-              width: 1.5,
-            ),
+        customBorder: const CircleBorder(),
+        child: Padding(
+          padding: ResponsiveUtils.padding(
+            context,
+            horizontal: 8,
+            vertical: 8,
           ),
           child: Icon(
             icon,
-            size: 20,
+            size: ResponsiveUtils.iconSize(context, 20),
             color: color,
           ),
         ),

@@ -3,6 +3,7 @@ import '/flutter_flow/flutter_flow_theme.dart';
 import '/componants/Styles.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/backend/backend.dart';
+import 'package:iron_fit/utils/responsive_utils.dart';
 
 class TrainerAccountSection extends StatelessWidget {
   final CoachRecord coachRecord;
@@ -20,16 +21,16 @@ class TrainerAccountSection extends StatelessWidget {
       color: Colors.transparent,
       elevation: 2,
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(16),
+        borderRadius: BorderRadius.circular(ResponsiveUtils.width(context, 16)),
       ),
       child: Container(
-        width: MediaQuery.sizeOf(context).width,
+        width: ResponsiveUtils.width(context, MediaQuery.sizeOf(context).width),
         decoration: BoxDecoration(
           color: FlutterFlowTheme.of(context).primaryBackground,
-          borderRadius: BorderRadius.circular(16),
+          borderRadius: BorderRadius.circular(ResponsiveUtils.width(context, 16)),
         ),
         child: Padding(
-          padding: const EdgeInsetsDirectional.all(16),
+          padding: ResponsiveUtils.padding(context, horizontal: 16, vertical: 16),
           child: Column(
             mainAxisSize: MainAxisSize.max,
             children: [
@@ -39,75 +40,75 @@ class TrainerAccountSection extends StatelessWidget {
                   Text(
                     FFLocalizations.of(context).getText('trainerAccount'),
                     style: AppStyles.textCairo(context,
-                        fontSize: 22, fontWeight: FontWeight.bold),
+                        fontSize: ResponsiveUtils.fontSize(context, 22), fontWeight: FontWeight.bold),
                   ),
                   Container(
-                    padding: const EdgeInsets.all(8),
+                    padding: ResponsiveUtils.padding(context, horizontal: 8, vertical: 8),
                     decoration: BoxDecoration(
                       color: FlutterFlowTheme.of(context)
                           .primary
                           .withValues(alpha: 0.1),
-                      borderRadius: BorderRadius.circular(12),
+                      borderRadius: BorderRadius.circular(ResponsiveUtils.width(context, 12)),
                     ),
                     child: Icon(
                       Icons.person_outline_rounded,
                       color: FlutterFlowTheme.of(context).primary,
-                      size: 20,
+                      size: ResponsiveUtils.iconSize(context, 20),
                     ),
                   ),
                 ],
               ),
               Container(
-                padding: const EdgeInsets.all(16),
+                padding: ResponsiveUtils.padding(context, horizontal: 16, vertical: 16),
                 decoration: BoxDecoration(
                   color: FlutterFlowTheme.of(context).secondaryBackground,
-                  borderRadius: BorderRadius.circular(12),
+                  borderRadius: BorderRadius.circular(ResponsiveUtils.width(context, 12)),
                   border: Border.all(
                     color: FlutterFlowTheme.of(context).alternate,
-                    width: 1,
+                    width: ResponsiveUtils.width(context, 1),
                   ),
                 ),
                 child: Row(
                   children: [
                     Container(
                       decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(12),
+                        borderRadius: BorderRadius.circular(ResponsiveUtils.width(context, 12)),
                         border: Border.all(
                           color: FlutterFlowTheme.of(context).primary,
-                          width: 2,
+                          width: ResponsiveUtils.width(context, 2),
                         ),
                       ),
                       child: ClipRRect(
-                        borderRadius: BorderRadius.circular(10),
+                        borderRadius: BorderRadius.circular(ResponsiveUtils.width(context, 10)),
                         child: Image.network(
                           userCoachRecord.photoUrl,
-                          width: 70,
-                          height: 70,
+                          width: ResponsiveUtils.width(context, 70),
+                          height: ResponsiveUtils.height(context, 70),
                           fit: BoxFit.cover,
                           errorBuilder: (context, error, stackTrace) =>
                               Container(
-                            width: 70,
-                            height: 70,
+                            width: ResponsiveUtils.width(context, 70),
+                            height: ResponsiveUtils.height(context, 70),
                             decoration: BoxDecoration(
                               color: FlutterFlowTheme.of(context)
                                   .secondaryBackground,
-                              borderRadius: BorderRadius.circular(10),
+                              borderRadius: BorderRadius.circular(ResponsiveUtils.width(context, 10)),
                             ),
                             child: Icon(
                               Icons.person_outline,
                               color: FlutterFlowTheme.of(context).primary,
-                              size: 30,
+                              size: ResponsiveUtils.iconSize(context, 30),
                             ),
                           ),
                           loadingBuilder: (context, child, loadingProgress) {
                             if (loadingProgress == null) return child;
                             return Container(
-                              width: 70,
-                              height: 70,
+                              width: ResponsiveUtils.width(context, 70),
+                              height: ResponsiveUtils.height(context, 70),
                               decoration: BoxDecoration(
                                 color: FlutterFlowTheme.of(context)
                                     .secondaryBackground,
-                                borderRadius: BorderRadius.circular(10),
+                                borderRadius: BorderRadius.circular(ResponsiveUtils.width(context, 10)),
                               ),
                               child: Center(
                                 child: CircularProgressIndicator(
@@ -124,7 +125,7 @@ class TrainerAccountSection extends StatelessWidget {
                         ),
                       ),
                     ),
-                    const SizedBox(width: 16),
+                    SizedBox(width: ResponsiveUtils.width(context, 16)),
                     Expanded(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -134,13 +135,15 @@ class TrainerAccountSection extends StatelessWidget {
                             style: AppStyles.textCairo(
                               context,
                               fontWeight: FontWeight.w700,
+                              fontSize: ResponsiveUtils.fontSize(context, 16),
                             ),
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
                           ),
-                          const SizedBox(height: 4),
+                          SizedBox(height: ResponsiveUtils.height(context, 4)),
                           Container(
-                            padding: const EdgeInsets.symmetric(
+                            padding: ResponsiveUtils.padding(
+                              context,
                               horizontal: 8,
                               vertical: 4,
                             ),
@@ -148,7 +151,7 @@ class TrainerAccountSection extends StatelessWidget {
                               color: FlutterFlowTheme.of(context)
                                   .primary
                                   .withValues(alpha: 0.1),
-                              borderRadius: BorderRadius.circular(8),
+                              borderRadius: BorderRadius.circular(ResponsiveUtils.width(context, 8)),
                             ),
                             child: Text(
                               coachRecord.specialization.isEmpty
@@ -157,26 +160,26 @@ class TrainerAccountSection extends StatelessWidget {
                                   : coachRecord.specialization,
                               style: AppStyles.textCairo(
                                 context,
-                                fontSize: 12,
+                                fontSize: ResponsiveUtils.fontSize(context, 12),
                                 color: FlutterFlowTheme.of(context).primary,
                                 fontWeight: FontWeight.w600,
                               ),
                             ),
                           ),
-                          const SizedBox(height: 4),
+                          SizedBox(height: ResponsiveUtils.height(context, 4)),
                           Row(
                             children: [
-                              const Icon(
+                              Icon(
                                 Icons.star_rounded,
                                 color: Colors.amber,
-                                size: 16,
+                                size: ResponsiveUtils.iconSize(context, 16),
                               ),
-                              const SizedBox(width: 4),
+                              SizedBox(width: ResponsiveUtils.width(context, 4)),
                               Text(
                                 '${coachRecord.experience} ${FFLocalizations.of(context).getText('t70b45uz')}',
                                 style: AppStyles.textCairo(
                                   context,
-                                  fontSize: 12,
+                                  fontSize: ResponsiveUtils.fontSize(context, 12),
                                   color: FlutterFlowTheme.of(context)
                                       .secondaryText,
                                 ),
@@ -189,7 +192,7 @@ class TrainerAccountSection extends StatelessWidget {
                   ],
                 ),
               ),
-            ].divide(const SizedBox(height: 16)),
+            ].divide(SizedBox(height: ResponsiveUtils.height(context, 16))),
           ),
         ),
       ),

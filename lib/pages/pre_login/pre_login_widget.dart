@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:iron_fit/flutter_flow/flutter_flow_theme.dart';
+import 'package:iron_fit/utils/responsive_utils.dart';
 import 'package:provider/provider.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 
@@ -58,14 +59,15 @@ class PreLoginWidget extends StatelessWidget {
                             constraints: BoxConstraints(
                               minHeight: constraints.maxHeight,
                             ),
-                            child: const IntrinsicHeight(
+                            child: IntrinsicHeight(
                               child: SingleChildScrollView(
                                 child: Column(
                                   children: [
                                     Padding(
                                       padding: EdgeInsets.symmetric(
-                                          vertical: 12.0, horizontal: 24.0),
-                                      child: Column(
+                                          vertical: ResponsiveUtils.height(context, 12.0), 
+                                          horizontal: ResponsiveUtils.width(context, 24.0)),
+                                      child: const Column(
                                         crossAxisAlignment:
                                             CrossAxisAlignment.center,
                                         children: [
@@ -79,10 +81,11 @@ class PreLoginWidget extends StatelessWidget {
                             ),
                           ),
                         ),
-                        const Padding(
+                        Padding(
                           padding: EdgeInsets.symmetric(
-                              vertical: 16.0, horizontal: 24.0),
-                          child: ActionButton(),
+                              vertical: ResponsiveUtils.height(context, 16.0), 
+                              horizontal: ResponsiveUtils.width(context, 24.0)),
+                          child: const ActionButton(),
                         ),
                       ],
                     ),
@@ -92,7 +95,7 @@ class PreLoginWidget extends StatelessWidget {
             ),
           ),
           bottomNavigationBar: BottomAnimatedSection(
-              maxHeight: MediaQuery.of(context).size.height * 0.8),
+              maxHeight: ResponsiveUtils.height(context, MediaQuery.of(context).size.height * 0.8)),
         ),
       ),
     );

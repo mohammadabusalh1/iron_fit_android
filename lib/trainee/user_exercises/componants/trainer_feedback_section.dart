@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
+import '/utils/responsive_utils.dart';
 import 'package:iron_fit/componants/Styles.dart';
 
 class TrainerFeedbackSection extends StatelessWidget {
@@ -20,11 +21,11 @@ class TrainerFeedbackSection extends StatelessWidget {
     }
 
     return Container(
-      margin: const EdgeInsets.all(16),
-      padding: const EdgeInsets.all(12),
+      margin: EdgeInsets.all(ResponsiveUtils.width(context, 16)),
+      padding: EdgeInsets.all(ResponsiveUtils.width(context, 12)),
       decoration: BoxDecoration(
         color: FlutterFlowTheme.of(context).primary.withAlpha(15),
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: BorderRadius.circular(ResponsiveUtils.width(context, 12)),
         border: Border.all(
           color: FlutterFlowTheme.of(context).primary.withAlpha(30),
         ),
@@ -36,59 +37,59 @@ class TrainerFeedbackSection extends StatelessWidget {
             children: [
               Icon(
                 Icons.comment,
-                size: 16,
+                size: ResponsiveUtils.iconSize(context, 16),
                 color: FlutterFlowTheme.of(context).primary,
               ),
-              const SizedBox(width: 8),
+              SizedBox(width: ResponsiveUtils.width(context, 8)),
               Text(
                 FFLocalizations.of(context).getText('trainer_feedback'),
                 style: AppStyles.textCairo(
                   context,
-                  fontSize: 14,
+                  fontSize: ResponsiveUtils.fontSize(context, 14),
                   fontWeight: FontWeight.w600,
                   color: FlutterFlowTheme.of(context).primary,
                 ),
               ),
             ],
           ),
-          const SizedBox(height: 8),
+          SizedBox(height: ResponsiveUtils.height(context, 8)),
           Text(
             feedback,
             style: AppStyles.textCairo(
               context,
-              fontSize: 12,
+              fontSize: ResponsiveUtils.fontSize(context, 12),
               color: FlutterFlowTheme.of(context).secondaryText,
             ),
           ),
           if (adjustments != null && adjustments!.isNotEmpty) ...[
-            const SizedBox(height: 8),
+            SizedBox(height: ResponsiveUtils.height(context, 8)),
             Text(
               FFLocalizations.of(context).getText('suggested_adjustments'),
               style: AppStyles.textCairo(
                 context,
-                fontSize: 12,
+                fontSize: ResponsiveUtils.fontSize(context, 12),
                 fontWeight: FontWeight.w600,
                 color: FlutterFlowTheme.of(context).primary,
               ),
             ),
-            const SizedBox(height: 4),
+            SizedBox(height: ResponsiveUtils.height(context, 4)),
             ...adjustments!.map(
               (adjustment) => Padding(
-                padding: const EdgeInsets.only(bottom: 4),
+                padding: EdgeInsets.only(bottom: ResponsiveUtils.height(context, 4)),
                 child: Row(
                   children: [
                     Icon(
                       Icons.adjust,
-                      size: 12,
+                      size: ResponsiveUtils.iconSize(context, 12),
                       color: FlutterFlowTheme.of(context).primary,
                     ),
-                    const SizedBox(width: 4),
+                    SizedBox(width: ResponsiveUtils.width(context, 4)),
                     Expanded(
                       child: Text(
                         adjustment,
                         style: AppStyles.textCairo(
                           context,
-                          fontSize: 12,
+                          fontSize: ResponsiveUtils.fontSize(context, 12),
                           color: FlutterFlowTheme.of(context).secondaryText,
                         ),
                       ),

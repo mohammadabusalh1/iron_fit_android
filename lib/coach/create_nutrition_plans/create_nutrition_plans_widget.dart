@@ -5,6 +5,7 @@ import '/backend/backend.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import 'package:iron_fit/utils/logger.dart';
+import 'package:iron_fit/utils/responsive_utils.dart';
 
 // Import components
 import 'componants/header_section.dart';
@@ -153,12 +154,12 @@ class _CreateNutritionPlansWidgetState
             child: Form(
               key: _formKey,
               child: Padding(
-                padding: const EdgeInsetsDirectional.all(16),
+                padding: ResponsiveUtils.padding(context, horizontal: 16, vertical: 16),
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const SizedBox(height: 24.0),
+                    SizedBox(height: ResponsiveUtils.height(context, 24.0)),
                     HeaderSection(isEditing: isEditing),
                     PlanDetailsSection(
                       nameController: _model.nameTextController!,
@@ -190,7 +191,7 @@ class _CreateNutritionPlansWidgetState
                       isEditing: isEditing,
                       onPressed: isEditing ? _updatePlan : _createPlan,
                     ),
-                  ].divide(const SizedBox(height: 24.0)),
+                  ].divide(SizedBox(height: ResponsiveUtils.height(context, 24.0))),
                 ),
               ),
             ),
@@ -265,7 +266,7 @@ class _CreateNutritionPlansWidgetState
         barrierDismissible: false,
         builder: (context) => Center(
           child: Container(
-            padding: const EdgeInsets.all(16),
+            padding: ResponsiveUtils.padding(context, horizontal: 16, vertical: 16),
             decoration: BoxDecoration(
               color: FlutterFlowTheme.of(context).secondaryBackground,
               borderRadius: BorderRadius.circular(16),
@@ -274,8 +275,8 @@ class _CreateNutritionPlansWidgetState
               mainAxisSize: MainAxisSize.min,
               children: [
                 SizedBox(
-                  height: 50,
-                  width: 50,
+                  height: ResponsiveUtils.height(context, 50),
+                  width: ResponsiveUtils.width(context, 50),
                   child: CircularProgressIndicator(
                     valueColor: AlwaysStoppedAnimation<Color>(
                       FlutterFlowTheme.of(context).primary,
@@ -283,13 +284,13 @@ class _CreateNutritionPlansWidgetState
                     strokeWidth: 3,
                   ),
                 ),
-                const SizedBox(height: 16),
+                SizedBox(height: ResponsiveUtils.height(context, 16)),
                 Text(
                   FFLocalizations.of(context)
                       .getText('updatingPlan' /* Updating plan... */),
                   style: AppStyles.textCairo(
                     context,
-                    fontSize: 16,
+                    fontSize: ResponsiveUtils.fontSize(context, 16),
                     color: FlutterFlowTheme.of(context).primaryText,
                   ),
                 ),

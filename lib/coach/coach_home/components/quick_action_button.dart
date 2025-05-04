@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/componants/Styles.dart';
+import '/utils/responsive_utils.dart';
 
 class QuickActionButton extends StatelessWidget {
   final IconData icon;
@@ -22,20 +23,20 @@ class QuickActionButton extends StatelessWidget {
       color: Colors.transparent,
       child: InkWell(
         onTap: onTap,
-        borderRadius: BorderRadius.circular(20.0),
+        borderRadius: BorderRadius.circular(ResponsiveUtils.width(context, 20.0)),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
             Container(
-              width: 60.0,
-              height: 60.0,
+              width: ResponsiveUtils.width(context, 60.0),
+              height: ResponsiveUtils.height(context, 60.0),
               decoration: BoxDecoration(
                 gradient: LinearGradient(
                   colors: gradient,
                   begin: Alignment.topLeft,
                   end: Alignment.bottomRight,
                 ),
-                borderRadius: BorderRadius.circular(20.0),
+                borderRadius: BorderRadius.circular(ResponsiveUtils.width(context, 20.0)),
                 boxShadow: [
                   BoxShadow(
                     color: gradient.first.withAlpha(90),
@@ -47,17 +48,17 @@ class QuickActionButton extends StatelessWidget {
               child: Icon(
                 icon,
                 color: FlutterFlowTheme.of(context).info,
-                size: 28.0,
+                size: ResponsiveUtils.iconSize(context, 28.0),
               ),
             ),
-            const SizedBox(height: 8.0),
+            SizedBox(height: ResponsiveUtils.height(context, 8.0)),
             SizedBox(
-              width: 90,
+              width: ResponsiveUtils.width(context, 90),
               child: Text(
                 label,
                 style: AppStyles.textCairo(
                   context,
-                  fontSize: 12,
+                  fontSize: ResponsiveUtils.fontSize(context, 12),
                   fontWeight: FontWeight.w500,
                   color: FlutterFlowTheme.of(context).primaryText,
                 ),

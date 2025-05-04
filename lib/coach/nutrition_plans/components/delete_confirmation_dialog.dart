@@ -3,6 +3,7 @@ import 'package:flutter_animate/flutter_animate.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import 'package:iron_fit/componants/Styles.dart';
+import 'package:iron_fit/utils/responsive_utils.dart';
 
 class DeleteConfirmationDialog extends StatelessWidget {
   final Function(bool) onConfirm;
@@ -17,11 +18,11 @@ class DeleteConfirmationDialog extends StatelessWidget {
     return AlertDialog(
       backgroundColor: FlutterFlowTheme.of(context).secondaryBackground,
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(16.0),
+        borderRadius: BorderRadius.circular(ResponsiveUtils.width(context, 16.0)),
       ),
       contentPadding: EdgeInsets.zero,
       content: Container(
-        padding: const EdgeInsets.all(24),
+        padding: ResponsiveUtils.padding(context, horizontal: 24, vertical: 24),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
@@ -33,7 +34,7 @@ class DeleteConfirmationDialog extends StatelessWidget {
                 return Transform.scale(
                   scale: value,
                   child: Container(
-                    padding: const EdgeInsets.all(16),
+                    padding: ResponsiveUtils.padding(context, horizontal: 16, vertical: 16),
                     decoration: BoxDecoration(
                       color: FlutterFlowTheme.of(context).error.withAlpha(20),
                       shape: BoxShape.circle,
@@ -41,24 +42,24 @@ class DeleteConfirmationDialog extends StatelessWidget {
                     child: Icon(
                       Icons.delete_outline_rounded,
                       color: FlutterFlowTheme.of(context).error,
-                      size: 48,
+                      size: ResponsiveUtils.iconSize(context, 48),
                     ),
                   ),
                 );
               },
             ),
-            const SizedBox(height: 24),
+            SizedBox(height: ResponsiveUtils.height(context, 24)),
             // Title
             Text(
               FFLocalizations.of(context).getText('confirmDelete'),
               style: AppStyles.textCairo(
                 context,
-                fontSize: 24,
+                fontSize: ResponsiveUtils.fontSize(context, 24),
                 fontWeight: FontWeight.bold,
                 color: FlutterFlowTheme.of(context).error,
               ),
             ),
-            const SizedBox(height: 16),
+            SizedBox(height: ResponsiveUtils.height(context, 16)),
             // Warning Message
             Text(
               FFLocalizations.of(context)
@@ -66,22 +67,22 @@ class DeleteConfirmationDialog extends StatelessWidget {
               textAlign: TextAlign.center,
               style: AppStyles.textCairo(
                 context,
-                fontSize: 16,
+                fontSize: ResponsiveUtils.fontSize(context, 16),
                 color: FlutterFlowTheme.of(context).secondaryText,
               ),
             ),
-            const SizedBox(height: 8),
+            SizedBox(height: ResponsiveUtils.height(context, 8)),
             Text(
               FFLocalizations.of(context).getText('thisActionCannot'),
               textAlign: TextAlign.center,
               style: AppStyles.textCairo(
                 context,
-                fontSize: 14,
+                fontSize: ResponsiveUtils.fontSize(context, 14),
                 color: FlutterFlowTheme.of(context).error,
                 fontWeight: FontWeight.w600,
               ),
             ),
-            const SizedBox(height: 24),
+            SizedBox(height: ResponsiveUtils.height(context, 24)),
             // Action Buttons
             Row(
               children: [
@@ -90,22 +91,22 @@ class DeleteConfirmationDialog extends StatelessWidget {
                   child: TextButton(
                     onPressed: () => onConfirm(false),
                     style: TextButton.styleFrom(
-                      padding: const EdgeInsets.symmetric(vertical: 12),
+                      padding: EdgeInsets.symmetric(vertical: ResponsiveUtils.height(context, 12)),
                       shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(12),
+                        borderRadius: BorderRadius.circular(ResponsiveUtils.width(context, 12)),
                       ),
                     ),
                     child: Text(
                       FFLocalizations.of(context).getText('cancel'),
                       style: AppStyles.textCairo(
                         context,
-                        fontSize: 16,
+                        fontSize: ResponsiveUtils.fontSize(context, 16),
                         color: FlutterFlowTheme.of(context).secondaryText,
                       ),
                     ),
                   ),
                 ),
-                const SizedBox(width: 16),
+                SizedBox(width: ResponsiveUtils.width(context, 16)),
                 // Delete Button
                 Expanded(
                   child: ElevatedButton(
@@ -113,9 +114,9 @@ class DeleteConfirmationDialog extends StatelessWidget {
                     style: ElevatedButton.styleFrom(
                       backgroundColor: FlutterFlowTheme.of(context).error,
                       foregroundColor: FlutterFlowTheme.of(context).info,
-                      padding: const EdgeInsets.symmetric(vertical: 12),
+                      padding: EdgeInsets.symmetric(vertical: ResponsiveUtils.height(context, 12)),
                       shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(12),
+                        borderRadius: BorderRadius.circular(ResponsiveUtils.width(context, 12)),
                       ),
                       elevation: 0,
                     ),
@@ -123,7 +124,7 @@ class DeleteConfirmationDialog extends StatelessWidget {
                       FFLocalizations.of(context).getText('delete'),
                       style: AppStyles.textCairo(
                         context,
-                        fontSize: 16,
+                        fontSize: ResponsiveUtils.fontSize(context, 16),
                         color: FlutterFlowTheme.of(context).info,
                         fontWeight: FontWeight.w600,
                       ),

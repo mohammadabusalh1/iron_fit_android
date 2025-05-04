@@ -15,6 +15,7 @@ import 'components/payment_history_section.dart';
 import 'components/subscription_empty_state.dart';
 import 'package:iron_fit/utils/logger.dart';
 import 'package:flutter/services.dart';
+import 'package:iron_fit/utils/responsive_utils.dart';
 
 /// Create a page for me that displays subscription information: amount paid,
 /// debts, trainer account, start date and end date.
@@ -197,7 +198,7 @@ class _SubscriptionWidgetState extends State<SubscriptionWidget>
 
     // Show subscription content
     return Container(
-      height: MediaQuery.sizeOf(context).height,
+      height: ResponsiveUtils.screenHeight(context),
       decoration: BoxDecoration(
         gradient: LinearGradient(
           begin: Alignment.topCenter,
@@ -216,9 +217,9 @@ class _SubscriptionWidgetState extends State<SubscriptionWidget>
           children: [
             const SubscriptionHeader(),
             SizedBox(
-              width: MediaQuery.sizeOf(context).width,
+              width: ResponsiveUtils.width(context, MediaQuery.sizeOf(context).width),
               child: Padding(
-                padding: const EdgeInsetsDirectional.fromSTEB(20, 24, 20, 24),
+                padding: ResponsiveUtils.padding(context, horizontal: 20, vertical: 24),
                 child: Column(
                   mainAxisSize: MainAxisSize.max,
                   children: [
@@ -234,11 +235,11 @@ class _SubscriptionWidgetState extends State<SubscriptionWidget>
                     PaymentHistorySection(
                       subscriptionsRecord: _subscriptionRecord!,
                     ),
-                  ].divide(const SizedBox(height: 24)),
+                  ].divide(SizedBox(height: ResponsiveUtils.height(context, 24))),
                 ),
               ),
             ),
-            const SizedBox(height: 20),
+            SizedBox(height: ResponsiveUtils.height(context, 20)),
           ],
         ),
       ),

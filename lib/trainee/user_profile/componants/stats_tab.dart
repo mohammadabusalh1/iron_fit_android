@@ -4,6 +4,7 @@ import '/componants/Styles.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import 'theme_cache.dart';
 import 'empty_state.dart';
+import '/utils/responsive_utils.dart';
 
 class StatsTab extends StatelessWidget {
   final TraineeRecord traineeRecord;
@@ -35,7 +36,7 @@ class StatsTab extends StatelessWidget {
     }
 
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 20.0),
+      padding: ResponsiveUtils.padding(context, horizontal: 20, vertical: 0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -46,7 +47,7 @@ class StatsTab extends StatelessWidget {
                 FFLocalizations.of(context).getText('lknc4121'),
                 style: AppStyles.textCairo(
                   context,
-                  fontSize: 20,
+                  fontSize: ResponsiveUtils.fontSize(context, 20),
                   fontWeight: FontWeight.bold,
                 ),
               ),
@@ -54,7 +55,7 @@ class StatsTab extends StatelessWidget {
                   Icons.fitness_center),
             ],
           ),
-          const SizedBox(height: 20),
+          SizedBox(height: ResponsiveUtils.height(context, 20)),
           _buildExerciseStatsList(context, limitedHistory),
         ],
       ),
@@ -79,10 +80,10 @@ class StatsTab extends StatelessWidget {
     final weight = stats['weight']?.toString() ?? '0';
 
     return Container(
-      margin: const EdgeInsets.only(bottom: 16),
+      margin: EdgeInsets.only(bottom: ResponsiveUtils.height(context, 16)),
       decoration: BoxDecoration(
         color: themeCache.secondaryBackgroundColor,
-        borderRadius: BorderRadius.circular(16),
+        borderRadius: BorderRadius.circular(ResponsiveUtils.width(context, 16)),
         boxShadow: const [
           BoxShadow(
             color: Color(0x0A000000),
@@ -97,9 +98,9 @@ class StatsTab extends StatelessWidget {
           onTap: () {
             // Show exercise details
           },
-          borderRadius: BorderRadius.circular(16),
+          borderRadius: BorderRadius.circular(ResponsiveUtils.width(context, 16)),
           child: Padding(
-            padding: const EdgeInsets.all(16),
+            padding: ResponsiveUtils.padding(context, horizontal: 16, vertical: 16),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -111,25 +112,26 @@ class StatsTab extends StatelessWidget {
                         exerciseName.replaceAll('qft_', '').toUpperCase(),
                         style: AppStyles.textCairo(
                           context,
-                          fontSize: 16,
+                          fontSize: ResponsiveUtils.fontSize(context, 16),
                           fontWeight: FontWeight.w600,
                         ),
                       ),
                     ),
                     Container(
-                      padding: const EdgeInsets.symmetric(
+                      padding: ResponsiveUtils.padding(
+                        context,
                         horizontal: 8,
                         vertical: 4,
                       ),
                       decoration: BoxDecoration(
                         color: themeCache.primaryColor.withValues(alpha: 0.1),
-                        borderRadius: BorderRadius.circular(12),
+                        borderRadius: BorderRadius.circular(ResponsiveUtils.width(context, 12)),
                       ),
                       child: Text(
                         '$weight ${FFLocalizations.of(context).getText('maximum_weight')}',
                         style: AppStyles.textCairo(
                           context,
-                          fontSize: 12,
+                          fontSize: ResponsiveUtils.fontSize(context, 12),
                           fontWeight: FontWeight.w500,
                           color: themeCache.primaryColor,
                         ),
@@ -147,25 +149,25 @@ class StatsTab extends StatelessWidget {
 
   Widget _buildCountBadge(BuildContext context, String count, IconData icon) {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+      padding: ResponsiveUtils.padding(context, horizontal: 12, vertical: 6),
       decoration: BoxDecoration(
         color: themeCache.primaryColor.withValues(alpha: 0.1),
-        borderRadius: BorderRadius.circular(20),
+        borderRadius: BorderRadius.circular(ResponsiveUtils.width(context, 20)),
       ),
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
           Icon(
             icon,
-            size: 16,
+            size: ResponsiveUtils.iconSize(context, 16),
             color: themeCache.primaryColor,
           ),
-          const SizedBox(width: 4),
+          SizedBox(width: ResponsiveUtils.width(context, 4)),
           Text(
             count,
             style: AppStyles.textCairo(
               context,
-              fontSize: 14,
+              fontSize: ResponsiveUtils.fontSize(context, 14),
               fontWeight: FontWeight.w600,
               color: themeCache.primaryColor,
             ),

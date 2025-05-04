@@ -7,6 +7,7 @@ import '/flutter_flow/flutter_flow_widgets.dart';
 import '/backend/backend.dart';
 import '/auth/firebase_auth/auth_util.dart';
 import '/utils/logger.dart';
+import 'package:iron_fit/utils/responsive_utils.dart';
 
 class SubscriptionActions extends StatelessWidget {
   const SubscriptionActions({super.key});
@@ -96,20 +97,20 @@ class SubscriptionActions extends StatelessWidget {
           icon: Icon(
             Icons.restaurant_menu,
             color: FlutterFlowTheme.of(context).info,
-            size: 20,
+            size: ResponsiveUtils.iconSize(context, 20),
           ),
           options: FFButtonOptions(
-            width: MediaQuery.sizeOf(context).width,
-            height: 56,
-            padding: const EdgeInsets.all(8),
-            iconPadding: const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
+            width: ResponsiveUtils.width(context, MediaQuery.sizeOf(context).width),
+            height: ResponsiveUtils.height(context, 56),
+            padding: ResponsiveUtils.padding(context, horizontal: 8, vertical: 8),
+            iconPadding: ResponsiveUtils.padding(context, horizontal: 0, vertical: 0),
             color: FlutterFlowTheme.of(context).primary,
             textStyle: AppStyles.textCairo(context,
-                fontSize: 18,
+                fontSize: ResponsiveUtils.fontSize(context, 18),
                 fontWeight: FontWeight.w600,
                 color: FlutterFlowTheme.of(context).info),
             elevation: 3,
-            borderRadius: BorderRadius.circular(28),
+            borderRadius: BorderRadius.circular(ResponsiveUtils.width(context, 28)),
           ),
         ),
         FFButtonWidget(
@@ -131,27 +132,27 @@ class SubscriptionActions extends StatelessWidget {
           icon: Icon(
             Icons.fitness_center,
             color: FlutterFlowTheme.of(context).primary,
-            size: 20,
+            size: ResponsiveUtils.iconSize(context, 20),
           ),
           options: FFButtonOptions(
-            width: MediaQuery.sizeOf(context).width,
-            height: 56,
-            padding: const EdgeInsets.all(8),
-            iconPadding: const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
+            width: ResponsiveUtils.width(context, MediaQuery.sizeOf(context).width),
+            height: ResponsiveUtils.height(context, 56),
+            padding: ResponsiveUtils.padding(context, horizontal: 8, vertical: 8),
+            iconPadding: ResponsiveUtils.padding(context, horizontal: 0, vertical: 0),
             color: const Color(0x00FFFFFF),
             textStyle: AppStyles.textCairo(context,
-                fontSize: 18,
+                fontSize: ResponsiveUtils.fontSize(context, 18),
                 fontWeight: FontWeight.w600,
                 color: FlutterFlowTheme.of(context).primary),
             elevation: 0,
             borderSide: BorderSide(
               color: FlutterFlowTheme.of(context).primary,
-              width: 2,
+              width: ResponsiveUtils.width(context, 2),
             ),
-            borderRadius: BorderRadius.circular(28),
+            borderRadius: BorderRadius.circular(ResponsiveUtils.width(context, 28)),
           ),
         ),
-      ].divide(const SizedBox(height: 16)),
+      ].divide(SizedBox(height: ResponsiveUtils.height(context, 16))),
     );
   }
 }

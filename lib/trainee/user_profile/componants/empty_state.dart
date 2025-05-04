@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '/componants/Styles.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import 'theme_cache.dart';
+import '/utils/responsive_utils.dart';
 
 class EmptyState extends StatelessWidget {
   final IconData icon;
@@ -25,25 +26,25 @@ class EmptyState extends StatelessWidget {
         children: [
           Icon(
             icon,
-            size: 64,
+            size: ResponsiveUtils.iconSize(context, 64),
             color: themeCache.secondaryTextColor.withValues(alpha: 0.5),
           ),
-          const SizedBox(height: 16),
+          SizedBox(height: ResponsiveUtils.height(context, 16)),
           Text(
             FFLocalizations.of(context).getText(titleKey),
             style: AppStyles.textCairo(
               context,
-              fontSize: 18,
+              fontSize: ResponsiveUtils.fontSize(context, 18),
               color: themeCache.secondaryTextColor,
             ),
           ),
-          const SizedBox(height: 8),
+          SizedBox(height: ResponsiveUtils.height(context, 8)),
           Text(
             FFLocalizations.of(context).getText(subtitleKey),
             textAlign: TextAlign.center,
             style: AppStyles.textCairo(
               context,
-              fontSize: 14,
+              fontSize: ResponsiveUtils.fontSize(context, 14),
               color: themeCache.secondaryTextColor.withValues(alpha: 0.7),
             ),
           ),

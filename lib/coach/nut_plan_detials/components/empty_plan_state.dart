@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:iron_fit/componants/Styles.dart';
 import 'package:iron_fit/componants/user_nav/user_nav_widget.dart';
+import 'package:iron_fit/utils/responsive_utils.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 
@@ -27,27 +28,27 @@ class EmptyPlanState extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 SizedBox(
-                  height: mediaQueryHeight * 0.7,
+                  height: ResponsiveUtils.height(context, mediaQueryHeight * 0.7),
                   child: Center(
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Icon(
                           Icons.no_meals_outlined,
-                          size: 64,
+                          size: ResponsiveUtils.iconSize(context, 64),
                           color: FlutterFlowTheme.of(context).secondaryText,
                         )
                             .animate()
                             .scale(duration: 400.ms)
                             .then()
                             .shake(duration: 400.ms),
-                        const SizedBox(height: 16),
+                        SizedBox(height: ResponsiveUtils.height(context, 16)),
                         Text(
                           FFLocalizations.of(context)
                               .getText('no_active_plans_found'),
                           style: AppStyles.textCairo(
                             context,
-                            fontSize: 18,
+                            fontSize: ResponsiveUtils.fontSize(context, 18),
                             fontWeight: FontWeight.w600,
                           ),
                         )

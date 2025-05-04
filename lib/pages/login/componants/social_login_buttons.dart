@@ -2,9 +2,9 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:iron_fit/componants/Styles.dart';
+import 'package:iron_fit/utils/responsive_utils.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
-import '/flutter_flow/flutter_flow_widgets.dart';
 import 'package:animate_do/animate_do.dart';
 
 class SocialLoginButtons extends StatelessWidget {
@@ -23,14 +23,28 @@ class SocialLoginButtons extends StatelessWidget {
       children: [
         FadeInUp(
           duration: const Duration(milliseconds: 400),
-          child: GoogleSignInButton(onPressed: onGooglePressed),
+          child: _SocialButton(
+            icon: Image.asset(
+              'assets/images/google-logo.png',
+              width: ResponsiveUtils.width(context, 24),
+              height: ResponsiveUtils.height(context, 24),
+            ),
+            text: FFLocalizations.of(context).getText('m4fuhw1y' /* Continue with Google */),
+            onPressed: onGooglePressed,
+          ),
         ),
+        SizedBox(height: ResponsiveUtils.height(context, 12)),
         if (Platform.isIOS || Platform.isMacOS)
           FadeInUp(
             duration: const Duration(milliseconds: 600),
-            child: Padding(
-              padding: const EdgeInsets.only(top: 16.0),
-              child: AppleSignInButton(onPressed: onApplePressed),
+            child: _SocialButton(
+              icon: Icon(
+                Icons.apple,
+                size: ResponsiveUtils.iconSize(context, 26),
+                color: FlutterFlowTheme.of(context).primaryText,
+              ),
+              text: FFLocalizations.of(context).getText('continueWithApple' /* Continue with Apple */),
+              onPressed: onApplePressed,
             ),
           ),
       ],
@@ -38,12 +52,14 @@ class SocialLoginButtons extends StatelessWidget {
   }
 }
 
-// Extracted Google Sign In Button
-class GoogleSignInButton extends StatelessWidget {
+class _SocialButton extends StatelessWidget {
+  final Widget icon;
+  final String text;
   final VoidCallback onPressed;
 
-  const GoogleSignInButton({
-    super.key,
+  const _SocialButton({
+    required this.icon,
+    required this.text,
     required this.onPressed,
   });
 
@@ -51,105 +67,47 @@ class GoogleSignInButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(16.0),
+        borderRadius: BorderRadius.circular(ResponsiveUtils.width(context, 16.0)),
         boxShadow: [
           BoxShadow(
             color: FlutterFlowTheme.of(context).primaryText.withOpacity(0.08),
             spreadRadius: 0,
-            blurRadius: 10,
-            offset: const Offset(0, 4),
+            blurRadius: ResponsiveUtils.width(context, 10),
+            offset: Offset(0, ResponsiveUtils.height(context, 4)),
           ),
         ],
       ),
-      child: FFButtonWidget(
-        onPressed: onPressed,
-        text: FFLocalizations.of(context)
-            .getText('m4fuhw1y' /* Continue with Google */),
-        icon: Image.asset(
-          'assets/images/google-logo.png',
-          width: 24,
-          height: 24,
-        ),
-        options: FFButtonOptions(
+      child: InkWell(
+        onTap: onPressed,
+        borderRadius: BorderRadius.circular(ResponsiveUtils.width(context, 16.0)),
+        child: Container(
           width: double.infinity,
-          height: 55.0,
-          padding: const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
-          iconPadding:
-              const EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 0.0, 0.0),
-          color: FlutterFlowTheme.of(context).secondaryBackground,
-          textStyle: AppStyles.textCairo(
-            context,
-            fontSize: 15,
-            fontWeight: FontWeight.w600,
-            letterSpacing: 0.3,
-            color: FlutterFlowTheme.of(context).primaryText,
+          height: ResponsiveUtils.height(context, 55),
+          decoration: BoxDecoration(
+            color: FlutterFlowTheme.of(context).secondaryBackground,
+            borderRadius: BorderRadius.circular(ResponsiveUtils.width(context, 16)),
+            border: Border.all(
+              color: FlutterFlowTheme.of(context).alternate.withOpacity(0.6),
+              width: 1,
+            ),
           ),
-          elevation: 0.0,
-          borderSide: BorderSide(
-            color: FlutterFlowTheme.of(context).alternate.withOpacity(0.6),
-            width: 1.0,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              icon,
+              SizedBox(width: ResponsiveUtils.width(context, 12)),
+              Text(
+                text,
+                style: AppStyles.textCairo(
+                  context,
+                  fontSize: ResponsiveUtils.fontSize(context, 15),
+                  fontWeight: FontWeight.w600,
+                  letterSpacing: 0.3,
+                  color: FlutterFlowTheme.of(context).primaryText,
+                ),
+              ),
+            ],
           ),
-          borderRadius: BorderRadius.circular(16.0),
-          hoverColor: FlutterFlowTheme.of(context).primaryBackground,
-        ),
-      ),
-    );
-  }
-}
-
-// Extracted Apple Sign In Button
-class AppleSignInButton extends StatelessWidget {
-  final VoidCallback onPressed;
-
-  const AppleSignInButton({
-    super.key,
-    required this.onPressed,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(16.0),
-        boxShadow: [
-          BoxShadow(
-            color: FlutterFlowTheme.of(context).primaryText.withOpacity(0.08),
-            spreadRadius: 0,
-            blurRadius: 10,
-            offset: const Offset(0, 4),
-          ),
-        ],
-      ),
-      child: FFButtonWidget(
-        onPressed: onPressed,
-        text: FFLocalizations.of(context)
-            .getText('continueWithApple' /* Continue with Apple */),
-        icon: Icon(
-          Icons.apple,
-          size: 26,
-          color: FlutterFlowTheme.of(context).primaryText,
-        ),
-        options: FFButtonOptions(
-          width: double.infinity,
-          height: 55.0,
-          padding: const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
-          iconPadding:
-              const EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 0.0, 0.0),
-          color: FlutterFlowTheme.of(context).secondaryBackground,
-          textStyle: AppStyles.textCairo(
-            context,
-            fontSize: 15,
-            fontWeight: FontWeight.w600,
-            letterSpacing: 0.3,
-            color: FlutterFlowTheme.of(context).primaryText,
-          ),
-          elevation: 0.0,
-          borderSide: BorderSide(
-            color: FlutterFlowTheme.of(context).alternate.withOpacity(0.6),
-            width: 1.0,
-          ),
-          borderRadius: BorderRadius.circular(16.0),
-          hoverColor: FlutterFlowTheme.of(context).primaryBackground,
         ),
       ),
     );

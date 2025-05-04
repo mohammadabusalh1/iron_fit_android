@@ -11,6 +11,7 @@ import 'package:iron_fit/auth/firebase_auth/auth_util.dart';
 import 'package:logging/logging.dart';
 import 'componants/account_settings.dart';
 import '/componants/loading_indicator/loadingIndicator.dart';
+import '/utils/responsive_utils.dart';
 
 // Initialize logger
 final _logger = Logger('CoachSettingsWidget');
@@ -79,7 +80,7 @@ class _CoachSettingsWidgetState extends State<CoachSettingsWidget> {
         body: Center(
           child: Text(
             'Unable to load settings',
-            style: AppStyles.textCairo(context, fontSize: 16),
+            style: AppStyles.textCairo(context, fontSize: ResponsiveUtils.fontSize(context, 16)),
           ),
         ),
       );
@@ -98,14 +99,17 @@ class _CoachSettingsWidgetState extends State<CoachSettingsWidget> {
                   onPressed: () {
                     Navigator.pop(context);
                   },
-                  icon: const Icon(Icons.arrow_back)),
+                  icon: Icon(
+                    Icons.arrow_back,
+                    size: ResponsiveUtils.iconSize(context, 24),
+                  )),
               null),
           body: Container(
             height: MediaQuery.of(context).size.height,
             padding: EdgeInsets.only(
-                top: MediaQuery.of(context).padding.top + 12,
-                left: 20,
-                right: 20),
+                top: MediaQuery.of(context).padding.top + ResponsiveUtils.height(context, 12),
+                left: ResponsiveUtils.width(context, 20),
+                right: ResponsiveUtils.width(context, 20)),
             decoration: BoxDecoration(
               gradient: LinearGradient(
                 colors: [
@@ -125,7 +129,7 @@ class _CoachSettingsWidgetState extends State<CoachSettingsWidget> {
                     AccountSettings(
                       onDeleteAccount: _handleDeleteAccount,
                     ),
-                    const SizedBox(height: 24),
+                    SizedBox(height: ResponsiveUtils.height(context, 24)),
                     SignOutButton(onPressed: () {
                       logout(context);
                     }),

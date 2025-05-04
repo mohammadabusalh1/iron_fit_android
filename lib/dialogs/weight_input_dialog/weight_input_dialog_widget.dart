@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
+import '/utils/responsive_utils.dart';
 import 'package:iron_fit/componants/Styles.dart';
 
 class WeightInputDialog extends StatefulWidget {
@@ -53,10 +54,10 @@ class _WeightInputDialogState extends State<WeightInputDialog> {
     return Dialog(
       backgroundColor: theme.secondaryBackground,
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(16),
+        borderRadius: BorderRadius.circular(ResponsiveUtils.width(context, 16)),
       ),
       child: Padding(
-        padding: const EdgeInsets.all(24),
+        padding: ResponsiveUtils.padding(context, horizontal: 24, vertical: 24),
         child: Form(
           key: _formKey,
           child: Column(
@@ -67,20 +68,20 @@ class _WeightInputDialogState extends State<WeightInputDialog> {
                 FFLocalizations.of(context).getText('weight_input_title'),
                 style: AppStyles.textCairo(
                   context,
-                  fontSize: 20,
+                  fontSize: ResponsiveUtils.fontSize(context, 20),
                   fontWeight: FontWeight.bold,
                 ),
               ),
-              const SizedBox(height: 16),
+              SizedBox(height: ResponsiveUtils.height(context, 16)),
               Text(
                 '${FFLocalizations.of(context).getText('weight_input_subtitle')} ${widget.exerciseName}',
                 style: AppStyles.textCairo(
                   context,
-                  fontSize: 16,
+                  fontSize: ResponsiveUtils.fontSize(context, 16),
                   color: theme.secondaryText,
                 ),
               ),
-              const SizedBox(height: 24),
+              SizedBox(height: ResponsiveUtils.height(context, 24)),
               TextFormField(
                 controller: _weightController,
                 keyboardType: TextInputType.number,
@@ -89,7 +90,7 @@ class _WeightInputDialogState extends State<WeightInputDialog> {
                       FFLocalizations.of(context).getText('weight_input_label'),
                   suffixText: 'kg',
                   border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(12),
+                    borderRadius: BorderRadius.circular(ResponsiveUtils.width(context, 12)),
                   ),
                 ),
                 validator: (value) {
@@ -105,7 +106,7 @@ class _WeightInputDialogState extends State<WeightInputDialog> {
                   return null;
                 },
               ),
-              const SizedBox(height: 24),
+              SizedBox(height: ResponsiveUtils.height(context, 24)),
               Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
@@ -120,26 +121,27 @@ class _WeightInputDialogState extends State<WeightInputDialog> {
                       FFLocalizations.of(context).getText('cancel'),
                       style: AppStyles.textCairo(
                         context,
+                        fontSize: ResponsiveUtils.fontSize(context, 14),
                         color: theme.secondaryText,
                       ),
                     ),
                   ),
-                  const SizedBox(width: 16),
+                  SizedBox(width: ResponsiveUtils.width(context, 16)),
                   FFButtonWidget(
                     onPressed: _isSubmitting ? null : _submitWeight,
                     text: FFLocalizations.of(context).getText('submit'),
                     options: FFButtonOptions(
-                      width: 120,
-                      height: 40,
+                      width: ResponsiveUtils.width(context, 120),
+                      height: ResponsiveUtils.height(context, 40),
                       color: theme.primary,
                       textStyle: AppStyles.textCairo(
                         context,
-                        fontSize: 16,
+                        fontSize: ResponsiveUtils.fontSize(context, 16),
                         color: Colors.white,
                         fontWeight: FontWeight.w600,
                       ),
                       elevation: 2,
-                      borderRadius: BorderRadius.circular(12),
+                      borderRadius: BorderRadius.circular(ResponsiveUtils.width(context, 12)),
                     ),
                   ),
                 ],

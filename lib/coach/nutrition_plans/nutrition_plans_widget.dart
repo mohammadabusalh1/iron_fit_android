@@ -7,6 +7,7 @@ import 'package:flutter_animate/flutter_animate.dart';
 import 'package:iron_fit/flutter_flow/custom_functions.dart';
 import 'package:iron_fit/pages/error_page/error_page_widget.dart';
 import 'package:iron_fit/utils/logger.dart';
+import 'package:iron_fit/utils/responsive_utils.dart';
 
 import '/auth/firebase_auth/auth_util.dart';
 import '/backend/backend.dart';
@@ -26,17 +27,20 @@ class NutritionPlansWidget extends StatefulWidget {
 class _NutritionPlansWidgetState extends State<NutritionPlansWidget> {
   late NutritionPlansModel _model;
   final scaffoldKey = GlobalKey<ScaffoldState>();
-  final AdService _adService = AdService();
+  late AdService _adService;
 
   @override
   void initState() {
     super.initState();
-    try {
-      _adService.loadAd(context);
-      _model = createModel(context, () => NutritionPlansModel());
-    } catch (e, stackTrace) {
-      Logger.error('Error initializing nutrition plans widget', e, stackTrace);
-    }
+    _model = createModel(context, () => NutritionPlansModel());
+    _adService = AdService();
+    
+    // Add delay to ad loading
+    Future.delayed(const Duration(seconds: 4), () {
+      if (mounted) {
+        _adService.loadAd(context);
+      }
+    });
   }
 
   @override
@@ -72,7 +76,7 @@ class _NutritionPlansWidgetState extends State<NutritionPlansWidget> {
       backgroundColor: FlutterFlowTheme.of(context).info.withOpacity(0.2),
       extendBodyBehindAppBar: true,
       body: Container(
-          padding: EdgeInsets.only(top: MediaQuery.of(context).padding.top),
+          // padding: EdgeInsets.only(top: MediaQuery.of(context).padding.top),
           height: MediaQuery.of(context).size.height,
           decoration: BoxDecoration(
             gradient: LinearGradient(
@@ -91,7 +95,7 @@ class _NutritionPlansWidgetState extends State<NutritionPlansWidget> {
                 child: SafeArea(
                   top: true,
                   child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 24.0),
+                    padding: ResponsiveUtils.padding(context, horizontal: 24.0),
                     child: RefreshIndicator(
                       onRefresh: () async {
                         if (mounted) {
@@ -108,15 +112,15 @@ class _NutritionPlansWidgetState extends State<NutritionPlansWidget> {
                 ),
               ),
               Positioned(
-                bottom: 24,
-                left: 24,
+                bottom: ResponsiveUtils.height(context, 24),
+                left: ResponsiveUtils.width(context, 24),
                 child: GestureDetector(
                   onTap: _onAddPlanPressed,
                   child: AnimatedContainer(
                     duration: const Duration(milliseconds: 200),
                     curve: Curves.easeOut,
-                    height: 64,
-                    width: 64,
+                    height: ResponsiveUtils.height(context, 64),
+                    width: ResponsiveUtils.width(context, 64),
                     decoration: BoxDecoration(
                       color: FlutterFlowTheme.of(context).primary,
                       borderRadius: BorderRadius.circular(32),
@@ -133,7 +137,7 @@ class _NutritionPlansWidgetState extends State<NutritionPlansWidget> {
                     child: Center(
                       child: Icon(
                         Icons.add_rounded,
-                        size: 28,
+                        size: ResponsiveUtils.iconSize(context, 28),
                         color: FlutterFlowTheme.of(context).black,
                       ),
                     ),

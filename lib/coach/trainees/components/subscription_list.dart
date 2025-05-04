@@ -5,6 +5,7 @@ import 'package:iron_fit/flutter_flow/flutter_flow_theme.dart';
 import 'package:iron_fit/flutter_flow/flutter_flow_util.dart';
 import 'package:iron_fit/flutter_flow/flutter_flow_widgets.dart';
 import 'package:iron_fit/coach/trainees/components/optimized_subscription_list.dart';
+import 'package:iron_fit/utils/responsive_utils.dart';
 
 class SubscriptionList extends StatelessWidget {
   final List<SubscriptionsRecord> subscriptions;
@@ -36,7 +37,7 @@ class SubscriptionList extends StatelessWidget {
       mainAxisSize: MainAxisSize.min,
       children: [
         _buildHeader(context),
-        const SizedBox(height: 16),
+        SizedBox(height: ResponsiveUtils.height(context, 16)),
         OptimizedSubscriptionList(
           subscriptions: subscriptions,
           isRequests: isRequests,
@@ -58,8 +59,11 @@ class SubscriptionList extends StatelessWidget {
       children: [
         Text(
           FFLocalizations.of(context).getText(titleKey),
-          style: AppStyles.textCairo(context,
-              fontWeight: FontWeight.bold, fontSize: 20),
+          style: AppStyles.textCairo(
+            context,
+            fontWeight: FontWeight.bold, 
+            fontSize: ResponsiveUtils.fontSize(context, 20),
+          ),
         ),
         Row(
           children: [
@@ -72,16 +76,20 @@ class SubscriptionList extends StatelessWidget {
                   '946kavdj' /* Send Alert */,
                 ),
                 options: FFButtonOptions(
-                  height: 35.0,
-                  padding: const EdgeInsetsDirectional.fromSTEB(
-                      16.0, 0.0, 16.0, 0.0),
+                  height: ResponsiveUtils.height(context, 35.0),
+                  padding: EdgeInsetsDirectional.fromSTEB(
+                    ResponsiveUtils.width(context, 16.0),
+                    0.0,
+                    ResponsiveUtils.width(context, 16.0),
+                    0.0,
+                  ),
                   iconPadding:
                       const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
                   color: FlutterFlowTheme.of(context).primary,
                   textStyle: FlutterFlowTheme.of(context).titleSmall.override(
                         fontFamily: 'Inter Tight',
                         color: FlutterFlowTheme.of(context).info,
-                        fontSize: 12.0,
+                        fontSize: ResponsiveUtils.fontSize(context, 12.0),
                         letterSpacing: 0.0,
                       ),
                   elevation: 0.0,
@@ -102,20 +110,24 @@ class SubscriptionList extends StatelessWidget {
                 ],
               ),
               child: Padding(
-                padding:
-                    const EdgeInsetsDirectional.fromSTEB(12.0, 8.0, 12.0, 8.0),
+                padding: EdgeInsetsDirectional.fromSTEB(
+                  ResponsiveUtils.width(context, 12.0),
+                  ResponsiveUtils.height(context, 8.0),
+                  ResponsiveUtils.width(context, 12.0),
+                  ResponsiveUtils.height(context, 8.0),
+                ),
                 child: Text(
                   '${subscriptions.length} ${FFLocalizations.of(context).getText('traineeWord')}',
                   style: AppStyles.textCairo(
                     context,
-                    fontSize: 12,
+                    fontSize: ResponsiveUtils.fontSize(context, 12),
                     fontWeight: FontWeight.w700,
                     color: const Color(0xFF2E7D32),
                   ),
                 ),
               ),
             ),
-          ].divide(const SizedBox(width: 8.0)),
+          ].divide(SizedBox(width: ResponsiveUtils.width(context, 8.0))),
         ),
       ],
     );
@@ -138,7 +150,7 @@ class SubscriptionList extends StatelessWidget {
                 style: AppStyles.textCairo(
                   context,
                   fontWeight: FontWeight.bold,
-                  fontSize: 20,
+                  fontSize: ResponsiveUtils.fontSize(context, 20),
                 ),
               ),
               Container(
@@ -155,13 +167,17 @@ class SubscriptionList extends StatelessWidget {
                   ],
                 ),
                 child: Padding(
-                  padding: const EdgeInsetsDirectional.fromSTEB(
-                      12.0, 8.0, 12.0, 8.0),
+                  padding: EdgeInsetsDirectional.fromSTEB(
+                    ResponsiveUtils.width(context, 12.0),
+                    ResponsiveUtils.height(context, 8.0),
+                    ResponsiveUtils.width(context, 12.0),
+                    ResponsiveUtils.height(context, 8.0),
+                  ),
                   child: Text(
                     '0 ${FFLocalizations.of(context).getText('traineeWord')}',
                     style: AppStyles.textCairo(
                       context,
-                      fontSize: 12,
+                      fontSize: ResponsiveUtils.fontSize(context, 12),
                       fontWeight: FontWeight.w700,
                       color: const Color(0xFF2E7D32),
                     ),
@@ -174,13 +190,16 @@ class SubscriptionList extends StatelessWidget {
         Center(
           child: _buildEmptyState(context),
         ),
-      ].divide(const SizedBox(height: 24.0)),
+      ].divide(SizedBox(height: ResponsiveUtils.height(context, 24.0))),
     );
   }
 
   Widget _buildEmptyState(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 32.0, horizontal: 24.0),
+      padding: EdgeInsets.symmetric(
+        vertical: ResponsiveUtils.height(context, 32.0),
+        horizontal: ResponsiveUtils.width(context, 24.0),
+      ),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -196,7 +215,7 @@ class SubscriptionList extends StatelessWidget {
                 child: Transform.scale(
                   scale: value,
                   child: Container(
-                    padding: const EdgeInsets.all(20),
+                    padding: EdgeInsets.all(ResponsiveUtils.width(context, 20)),
                     decoration: BoxDecoration(
                       color: FlutterFlowTheme.of(context)
                           .primary
@@ -205,7 +224,7 @@ class SubscriptionList extends StatelessWidget {
                     ),
                     child: Icon(
                       Icons.people_outline_rounded,
-                      size: 48,
+                      size: ResponsiveUtils.iconSize(context, 48),
                       color: FlutterFlowTheme.of(context).primary,
                     ),
                   ),
@@ -213,7 +232,7 @@ class SubscriptionList extends StatelessWidget {
               );
             },
           ),
-          const SizedBox(height: 12),
+          SizedBox(height: ResponsiveUtils.height(context, 12)),
           // Animated text with fade and slide effect
           TweenAnimationBuilder(
             duration: const Duration(milliseconds: 800),
@@ -233,18 +252,18 @@ class SubscriptionList extends StatelessWidget {
                           context,
                           color: FlutterFlowTheme.of(context).primaryText,
                           fontWeight: FontWeight.w600,
-                          fontSize: 16,
+                          fontSize: ResponsiveUtils.fontSize(context, 16),
                         ),
                         textAlign: TextAlign.center,
                       ),
-                      const SizedBox(height: 12),
+                      SizedBox(height: ResponsiveUtils.height(context, 12)),
                       Text(
                         FFLocalizations.of(context)
                             .getText('try_different_search'),
                         style: AppStyles.textCairo(
                           context,
                           color: FlutterFlowTheme.of(context).secondaryText,
-                          fontSize: 14,
+                          fontSize: ResponsiveUtils.fontSize(context, 14),
                         ),
                         textAlign: TextAlign.center,
                       ),

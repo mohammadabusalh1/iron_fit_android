@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:iron_fit/componants/Styles.dart';
+import 'package:iron_fit/utils/responsive_utils.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/backend/backend.dart';
@@ -32,8 +33,8 @@ class ExerciseCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 160,
-      margin: const EdgeInsets.only(right: 12),
+      width: ResponsiveUtils.width(context, 160),
+      margin: EdgeInsets.only(right: ResponsiveUtils.width(context, 12)),
       decoration: BoxDecoration(
         color: FlutterFlowTheme.of(context).secondaryBackground,
         borderRadius: BorderRadius.circular(16),
@@ -82,14 +83,14 @@ class ExerciseCard extends StatelessWidget {
 
     final errorWidget = Icon(
       Icons.fitness_center,
-      size: 40,
+      size: ResponsiveUtils.iconSize(context, 40),
       color: FlutterFlowTheme.of(context).primary,
     );
 
     return Stack(
       children: [
         Container(
-          height: 100,
+          height: ResponsiveUtils.height(context, 100),
           width: double.infinity,
           decoration: BoxDecoration(
             color: FlutterFlowTheme.of(context).primary.withValues(alpha: 0.1),
@@ -103,10 +104,10 @@ class ExerciseCard extends StatelessWidget {
           ),
         ),
         Positioned(
-          top: 8,
-          left: 8,
+          top: ResponsiveUtils.height(context, 8),
+          left: ResponsiveUtils.width(context, 8),
           child: Container(
-            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+            padding: ResponsiveUtils.padding(context, horizontal: 8, vertical: 4),
             decoration: BoxDecoration(
               color: FlutterFlowTheme.of(context).primary,
               borderRadius: BorderRadius.circular(12),
@@ -115,7 +116,7 @@ class ExerciseCard extends StatelessWidget {
               FFLocalizations.of(context).getText(LocalizationKeys.today),
               style: AppStyles.textCairo(
                 context,
-                fontSize: 10,
+                fontSize: ResponsiveUtils.fontSize(context, 10),
                 fontWeight: FontWeight.bold,
                 color: FlutterFlowTheme.of(context).info,
               ),
@@ -132,7 +133,7 @@ class ExerciseCard extends StatelessWidget {
         '$sets ${FFLocalizations.of(context).getText(LocalizationKeys.sets)} × $reps ${FFLocalizations.of(context).getText(LocalizationKeys.reps)}';
 
     return Padding(
-      padding: const EdgeInsets.all(12),
+      padding: ResponsiveUtils.padding(context, horizontal: 12, vertical: 12),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -140,27 +141,27 @@ class ExerciseCard extends StatelessWidget {
             exerciseTitle,
             style: AppStyles.textCairo(
               context,
-              fontSize: 14,
+              fontSize: ResponsiveUtils.fontSize(context, 14),
               fontWeight: FontWeight.bold,
               color: FlutterFlowTheme.of(context).primaryText,
             ),
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
           ),
-          const SizedBox(height: 4),
+          SizedBox(height: ResponsiveUtils.height(context, 4)),
           Row(
             children: [
               Icon(
                 Icons.repeat,
-                size: 14,
+                size: ResponsiveUtils.iconSize(context, 14),
                 color: FlutterFlowTheme.of(context).primary,
               ),
-              const SizedBox(width: 4),
+              SizedBox(width: ResponsiveUtils.width(context, 4)),
               Text(
                 exerciseInfo,
                 style: AppStyles.textCairo(
                   context,
-                  fontSize: 12,
+                  fontSize: ResponsiveUtils.fontSize(context, 12),
                   color: FlutterFlowTheme.of(context).secondaryText,
                 ),
               ),
@@ -178,8 +179,8 @@ class ExerciseCardSkeleton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 160,
-      margin: const EdgeInsets.only(right: 12),
+      width: ResponsiveUtils.width(context, 160),
+      margin: EdgeInsets.only(right: ResponsiveUtils.width(context, 12)),
       decoration: BoxDecoration(
         color: FlutterFlowTheme.of(context).secondaryBackground,
         borderRadius: BorderRadius.circular(16),
@@ -195,7 +196,7 @@ class ExerciseCardSkeleton extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Container(
-            height: 100,
+            height: ResponsiveUtils.height(context, 100),
             width: double.infinity,
             decoration: BoxDecoration(
               color: FlutterFlowTheme.of(context).primaryBackground,
@@ -206,8 +207,8 @@ class ExerciseCardSkeleton extends StatelessWidget {
             ),
             child: Center(
               child: SizedBox(
-                width: 30,
-                height: 30,
+                width: ResponsiveUtils.width(context, 30),
+                height: ResponsiveUtils.height(context, 30),
                 child: CircularProgressIndicator(
                   strokeWidth: 2,
                   valueColor: AlwaysStoppedAnimation<Color>(
@@ -218,22 +219,22 @@ class ExerciseCardSkeleton extends StatelessWidget {
             ),
           ),
           Padding(
-            padding: const EdgeInsets.all(12),
+            padding: ResponsiveUtils.padding(context, horizontal: 12, vertical: 12),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Container(
-                  height: 14,
-                  width: 100,
+                  height: ResponsiveUtils.height(context, 14),
+                  width: ResponsiveUtils.width(context, 100),
                   decoration: BoxDecoration(
                     color: FlutterFlowTheme.of(context).primaryBackground,
                     borderRadius: BorderRadius.circular(4),
                   ),
                 ),
-                const SizedBox(height: 8),
+                SizedBox(height: ResponsiveUtils.height(context, 8)),
                 Container(
-                  height: 10,
-                  width: 80,
+                  height: ResponsiveUtils.height(context, 10),
+                  width: ResponsiveUtils.width(context, 80),
                   decoration: BoxDecoration(
                     color: FlutterFlowTheme.of(context).primaryBackground,
                     borderRadius: BorderRadius.circular(4),

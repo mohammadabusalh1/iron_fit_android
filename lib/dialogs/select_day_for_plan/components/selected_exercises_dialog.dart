@@ -9,6 +9,7 @@ import 'package:iron_fit/flutter_flow/flutter_flow_util.dart';
 import 'package:iron_fit/flutter_flow/flutter_flow_widgets.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:iron_fit/dialogs/select_sets/select_sets_widget.dart';
+import 'package:iron_fit/utils/responsive_utils.dart';
 
 class SelectedExercisesDialog extends StatefulWidget {
   final List<ExerciseStruct> selectedExercises;
@@ -39,7 +40,9 @@ class _SelectedExercisesDialogState extends State<SelectedExercisesDialog> {
   Widget build(BuildContext context) {
     return Dialog(
         backgroundColor: Colors.transparent,
-        insetPadding: const EdgeInsets.symmetric(horizontal: 16),
+        insetPadding: EdgeInsets.symmetric(
+          horizontal: ResponsiveUtils.width(context, 16),
+        ),
         child: SingleChildScrollView(
           child: Container(
             decoration: BoxDecoration(
@@ -69,8 +72,7 @@ class _SelectedExercisesDialogState extends State<SelectedExercisesDialog> {
             child: BackdropFilter(
               filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
               child: Padding(
-                padding:
-                    const EdgeInsets.symmetric(vertical: 24, horizontal: 20),
+                padding: ResponsiveUtils.padding(context, vertical: 24, horizontal: 20),
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -91,7 +93,7 @@ class _SelectedExercisesDialogState extends State<SelectedExercisesDialog> {
                       child: Row(
                         children: [
                           Container(
-                            padding: const EdgeInsets.all(12),
+                            padding: EdgeInsets.all(ResponsiveUtils.width(context, 12)),
                             decoration: BoxDecoration(
                               gradient: LinearGradient(
                                 colors: [
@@ -114,13 +116,13 @@ class _SelectedExercisesDialogState extends State<SelectedExercisesDialog> {
                                 ),
                               ],
                             ),
-                            child: const Icon(
+                            child: Icon(
                               Icons.fitness_center_rounded,
                               color: Colors.white,
-                              size: 24,
+                              size: ResponsiveUtils.iconSize(context, 24),
                             ),
                           ),
-                          const SizedBox(width: 16),
+                          SizedBox(width: ResponsiveUtils.width(context, 16)),
                           Expanded(
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
@@ -130,7 +132,7 @@ class _SelectedExercisesDialogState extends State<SelectedExercisesDialog> {
                                       .getText('selected_exercises'),
                                   style: AppStyles.textCairo(
                                     context,
-                                    fontSize: 20,
+                                    fontSize: ResponsiveUtils.fontSize(context, 20),
                                     fontWeight: FontWeight.bold,
                                   ),
                                 ),
@@ -138,7 +140,7 @@ class _SelectedExercisesDialogState extends State<SelectedExercisesDialog> {
                                   '${selectedExercises.length} ${FFLocalizations.of(context).getText('exercises_selected')}',
                                   style: AppStyles.textCairo(
                                     context,
-                                    fontSize: 14,
+                                    fontSize: ResponsiveUtils.fontSize(context, 14),
                                     color: FlutterFlowTheme.of(context)
                                         .secondaryText,
                                   ),
@@ -157,7 +159,7 @@ class _SelectedExercisesDialogState extends State<SelectedExercisesDialog> {
                                 Navigator.pop(context);
                               },
                               child: Container(
-                                padding: const EdgeInsets.all(8),
+                                padding: EdgeInsets.all(ResponsiveUtils.width(context, 8)),
                                 decoration: BoxDecoration(
                                   color: FlutterFlowTheme.of(context)
                                       .alternate
@@ -168,7 +170,7 @@ class _SelectedExercisesDialogState extends State<SelectedExercisesDialog> {
                                   Icons.close_rounded,
                                   color: FlutterFlowTheme.of(context)
                                       .secondaryText,
-                                  size: 24,
+                                  size: ResponsiveUtils.iconSize(context, 24),
                                 ),
                               ),
                             ),
@@ -176,7 +178,7 @@ class _SelectedExercisesDialogState extends State<SelectedExercisesDialog> {
                         ],
                       ),
                     ),
-                    const SizedBox(height: 24),
+                    SizedBox(height: ResponsiveUtils.height(context, 24)),
 
                     // Instructions with microinteraction
                     TweenAnimationBuilder<double>(
@@ -192,8 +194,11 @@ class _SelectedExercisesDialogState extends State<SelectedExercisesDialog> {
                         );
                       },
                       child: Container(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 16, vertical: 12),
+                        padding: ResponsiveUtils.padding(
+                          context, 
+                          horizontal: 16, 
+                          vertical: 12
+                        ),
                         decoration: BoxDecoration(
                           gradient: LinearGradient(
                             colors: [
@@ -219,17 +224,17 @@ class _SelectedExercisesDialogState extends State<SelectedExercisesDialog> {
                           children: [
                             Icon(
                               Icons.info_outline_rounded,
-                              size: 20,
+                              size: ResponsiveUtils.iconSize(context, 20),
                               color: FlutterFlowTheme.of(context).primary,
                             ),
-                            const SizedBox(width: 12),
+                            SizedBox(width: ResponsiveUtils.width(context, 12)),
                             Expanded(
                               child: Text(
                                 FFLocalizations.of(context)
                                     .getText('tap_to_edit_exercise'),
                                 style: AppStyles.textCairo(
                                   context,
-                                  fontSize: 14,
+                                  fontSize: ResponsiveUtils.fontSize(context, 14),
                                   color: FlutterFlowTheme.of(context)
                                       .secondaryText,
                                 ),
@@ -239,7 +244,7 @@ class _SelectedExercisesDialogState extends State<SelectedExercisesDialog> {
                         ),
                       ),
                     ),
-                    const SizedBox(height: 16),
+                    SizedBox(height: ResponsiveUtils.height(context, 16)),
 
                     // List with staggered animation
                     ConstrainedBox(
@@ -250,8 +255,9 @@ class _SelectedExercisesDialogState extends State<SelectedExercisesDialog> {
                         shrinkWrap: true,
                         physics: const BouncingScrollPhysics(),
                         itemCount: selectedExercises.length,
-                        separatorBuilder: (context, index) =>
-                            const Divider(height: 24),
+                        separatorBuilder: (context, index) => SizedBox(
+                          height: ResponsiveUtils.height(context, 12),
+                        ),
                         itemBuilder: (context, index) {
                           final exercise = selectedExercises[index];
                           return _buildExerciseItem(context, exercise, index);

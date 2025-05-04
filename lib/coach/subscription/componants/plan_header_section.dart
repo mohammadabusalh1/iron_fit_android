@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/componants/Styles.dart';
+import '/utils/responsive_utils.dart';
 
 class PlanHeaderSection extends StatelessWidget {
   final String title;
@@ -27,18 +28,20 @@ class PlanHeaderSection extends StatelessWidget {
     // Create text styles once
     final titleStyle = AppStyles.textCairo(
       context,
-      fontSize: 16,
+      fontSize: ResponsiveUtils.fontSize(context, 16),
       fontWeight: FontWeight.bold,
     );
 
     final descriptionStyle = AppStyles.textCairo(
       context,
+      fontSize: ResponsiveUtils.fontSize(context, 14),
       color: theme.secondaryText,
     );
 
     final saveStyle = saveText != null
         ? AppStyles.textCairo(
             context,
+            fontSize: ResponsiveUtils.fontSize(context, 14),
             color: saveTextColor ?? const Color(0xFF1565C0),
           )
         : null;
@@ -56,21 +59,31 @@ class PlanHeaderSection extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Padding(
-                    padding: const EdgeInsetsDirectional.fromSTEB(4, 0, 4, 0),
+                    padding: EdgeInsetsDirectional.fromSTEB(
+                      ResponsiveUtils.width(context, 4),
+                      0,
+                      ResponsiveUtils.width(context, 4),
+                      0,
+                    ),
                     child: Text(
                       title,
                       style: titleStyle,
                     ),
                   ),
                   Padding(
-                    padding: const EdgeInsetsDirectional.fromSTEB(4, 8, 4, 8),
+                    padding: EdgeInsetsDirectional.fromSTEB(
+                      ResponsiveUtils.width(context, 4),
+                      ResponsiveUtils.height(context, 8),
+                      ResponsiveUtils.width(context, 4),
+                      ResponsiveUtils.height(context, 8),
+                    ),
                     child: Container(
                       decoration: BoxDecoration(
                         color: saveBackgroundColor ?? const Color(0xFFE3F2FD),
-                        borderRadius: BorderRadius.circular(12),
+                        borderRadius: BorderRadius.circular(ResponsiveUtils.width(context, 12)),
                       ),
                       child: Padding(
-                        padding: const EdgeInsets.all(8),
+                        padding: EdgeInsets.all(ResponsiveUtils.width(context, 8)),
                         child: Text(
                           saveText!,
                           style: saveStyle,
@@ -92,7 +105,12 @@ class PlanHeaderSection extends StatelessWidget {
           ],
         ),
         Padding(
-          padding: const EdgeInsetsDirectional.fromSTEB(0, 8, 0, 0),
+          padding: EdgeInsetsDirectional.fromSTEB(
+            0,
+            ResponsiveUtils.height(context, 8),
+            0,
+            0,
+          ),
           child: Text(
             description,
             style: descriptionStyle,

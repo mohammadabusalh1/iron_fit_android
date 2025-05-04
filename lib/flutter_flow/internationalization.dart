@@ -4682,5 +4682,9 @@ final kTranslationsMap = <Map<String, Map<String, String>>>[
     "plan_description": {"en": "Plan Description", "ar": "وصف الخطة"},
     "workout_details": {"en": "WORKOUT DETAILS", "ar": "تفاصيل التمرين"},
     "show_less": {"en": "Show Less", "ar": "إخفاء"},
+    "pleaseEnterCalories": {
+      "en": "Please enter calories",
+      "ar": "الرجاء إدخال السعرات الحرارية"
+    },
   }
 ].reduce((a, b) => a..addAll(b));

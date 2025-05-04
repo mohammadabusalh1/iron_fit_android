@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:iron_fit/componants/Styles.dart';
+import 'package:iron_fit/utils/responsive_utils.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 
@@ -27,7 +28,7 @@ class GoalsStep extends StatelessWidget {
           children: [
             // Animated Header Section
             _buildAnimatedHeader(context, localizations),
-            const SizedBox(height: 24),
+            SizedBox(height: ResponsiveUtils.height(context, 24)),
 
             // Goals Grid with improved rebuild control
             _GoalsGrid(
@@ -35,7 +36,7 @@ class GoalsStep extends StatelessWidget {
               onGoalSelected: onGoalSelected,
               localizations: localizations,
             ),
-            const SizedBox(height: 32),
+            SizedBox(height: ResponsiveUtils.height(context, 32)),
           ],
         ),
       ),
@@ -53,7 +54,7 @@ class GoalsStep extends StatelessWidget {
           child: Opacity(
             opacity: value,
             child: Container(
-              padding: const EdgeInsets.all(24),
+              padding: ResponsiveUtils.padding(context, horizontal: 24, vertical: 24),
               decoration: BoxDecoration(
                 gradient: LinearGradient(
                   colors: [
@@ -81,7 +82,7 @@ class GoalsStep extends StatelessWidget {
                   Row(
                     children: [
                       Container(
-                        padding: const EdgeInsets.all(12),
+                        padding: ResponsiveUtils.padding(context, horizontal: 12, vertical: 12),
                         decoration: BoxDecoration(
                           color: FlutterFlowTheme.of(context)
                               .primary
@@ -91,10 +92,10 @@ class GoalsStep extends StatelessWidget {
                         child: Icon(
                           Icons.flag_rounded,
                           color: FlutterFlowTheme.of(context).primary,
-                          size: 28,
+                          size: ResponsiveUtils.iconSize(context, 28),
                         ),
                       ),
-                      const SizedBox(width: 16),
+                      SizedBox(width: ResponsiveUtils.width(context, 16)),
                       Expanded(
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
@@ -104,17 +105,17 @@ class GoalsStep extends StatelessWidget {
                                   'set_your_goals' /* Set Your Goals */),
                               style: AppStyles.textCairo(
                                 context,
-                                fontSize: 24,
+                                fontSize: ResponsiveUtils.fontSize(context, 24),
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
-                            const SizedBox(height: 4),
+                            SizedBox(height: ResponsiveUtils.height(context, 4)),
                             Text(
                               localizations.getText(
                                   'goal_subtitle' /* Choose a goal that matches your fitness journey */),
                               style: AppStyles.textCairo(
                                 context,
-                                fontSize: 14,
+                                fontSize: ResponsiveUtils.fontSize(context, 14),
                                 color:
                                     FlutterFlowTheme.of(context).secondaryText,
                               ),
@@ -174,10 +175,10 @@ class _GoalsGrid extends StatelessWidget {
     return GridView.builder(
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),
-      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 2,
-        mainAxisSpacing: 16,
-        crossAxisSpacing: 16,
+        mainAxisSpacing: ResponsiveUtils.height(context, 16),
+        crossAxisSpacing: ResponsiveUtils.width(context, 16),
         childAspectRatio: 0.85,
       ),
       itemCount: 4,
@@ -251,13 +252,13 @@ class _GoalCard extends StatelessWidget {
               child: Stack(
                 children: [
                   Padding(
-                    padding: const EdgeInsets.all(16),
+                    padding: ResponsiveUtils.padding(context, horizontal: 16, vertical: 16),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Container(
-                          padding: const EdgeInsets.all(12),
+                          padding: ResponsiveUtils.padding(context, horizontal: 12, vertical: 12),
                           decoration: BoxDecoration(
                             color: isSelected
                                 ? FlutterFlowTheme.of(context)
@@ -273,16 +274,16 @@ class _GoalCard extends StatelessWidget {
                             color: isSelected
                                 ? FlutterFlowTheme.of(context).primary
                                 : FlutterFlowTheme.of(context).secondaryText,
-                            size: 32,
+                            size: ResponsiveUtils.iconSize(context, 32),
                           ),
                         ),
-                        const SizedBox(height: 16),
+                        SizedBox(height: ResponsiveUtils.height(context, 16)),
                         Text(
                           title,
                           textAlign: TextAlign.center,
                           style: AppStyles.textCairo(
                             context,
-                            fontSize: 16,
+                            fontSize: ResponsiveUtils.fontSize(context, 16),
                             fontWeight: FontWeight.bold,
                             color: isSelected
                                 ? FlutterFlowTheme.of(context).primary
@@ -294,10 +295,10 @@ class _GoalCard extends StatelessWidget {
                   ),
                   if (isSelected)
                     Positioned(
-                      top: 8,
-                      right: 8,
+                      top: ResponsiveUtils.height(context, 8),
+                      right: ResponsiveUtils.width(context, 8),
                       child: Container(
-                        padding: const EdgeInsets.all(4),
+                        padding: ResponsiveUtils.padding(context, horizontal: 4, vertical: 4),
                         decoration: BoxDecoration(
                           color: FlutterFlowTheme.of(context).primary,
                           shape: BoxShape.circle,
@@ -305,7 +306,7 @@ class _GoalCard extends StatelessWidget {
                         child: Icon(
                           Icons.check_rounded,
                           color: FlutterFlowTheme.of(context).info,
-                          size: 16,
+                          size: ResponsiveUtils.iconSize(context, 16),
                         ),
                       ),
                     ),

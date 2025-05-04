@@ -6,6 +6,7 @@ import '/dialogs/create_meal/create_meal_widget.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
+import 'package:iron_fit/utils/responsive_utils.dart';
 
 class MealScheduleSection extends StatefulWidget {
   final NutPlanStruct? nutPlan;
@@ -123,15 +124,15 @@ class _MealScheduleSectionState extends State<MealScheduleSection> {
               Icon(
                 Icons.warning_rounded,
                 color: FlutterFlowTheme.of(context).error,
-                size: 28,
+                size: ResponsiveUtils.iconSize(context, 28),
               ),
-              const SizedBox(width: 12),
+              SizedBox(width: ResponsiveUtils.width(context, 12)),
               Expanded(
                 child: Text(
                   FFLocalizations.of(context).getText('confirmDelete'),
                   style: AppStyles.textCairo(
                     context,
-                    fontSize: 20,
+                    fontSize: ResponsiveUtils.fontSize(context, 20),
                     fontWeight: FontWeight.w600,
                     color: FlutterFlowTheme.of(context).primaryText,
                   ),
@@ -148,13 +149,14 @@ class _MealScheduleSectionState extends State<MealScheduleSection> {
                     .getText('areYouSureYouWantToDeleteThisMeal'),
                 style: AppStyles.textCairo(
                   context,
-                  fontSize: 16,
+                  fontSize: ResponsiveUtils.fontSize(context, 16),
                   color: FlutterFlowTheme.of(context).secondaryText,
                 ),
               ),
-              const SizedBox(height: 12),
+              SizedBox(height: ResponsiveUtils.height(context, 12)),
               Container(
-                padding: const EdgeInsets.all(12),
+                padding: ResponsiveUtils.padding(context,
+                    horizontal: 12, vertical: 12),
                 decoration: BoxDecoration(
                   color: FlutterFlowTheme.of(context).primaryBackground,
                   borderRadius: BorderRadius.circular(8),
@@ -168,15 +170,15 @@ class _MealScheduleSectionState extends State<MealScheduleSection> {
                     Icon(
                       Icons.lunch_dining_rounded,
                       color: FlutterFlowTheme.of(context).primary,
-                      size: 20,
+                      size: ResponsiveUtils.iconSize(context, 20),
                     ),
-                    const SizedBox(width: 8),
+                    SizedBox(width: ResponsiveUtils.width(context, 8)),
                     Expanded(
                       child: Text(
                         meal.name,
                         style: AppStyles.textCairo(
                           context,
-                          fontSize: 16,
+                          fontSize: ResponsiveUtils.fontSize(context, 16),
                           fontWeight: FontWeight.w600,
                           color: FlutterFlowTheme.of(context).primaryText,
                         ),
@@ -191,14 +193,14 @@ class _MealScheduleSectionState extends State<MealScheduleSection> {
             TextButton(
               onPressed: () => Navigator.of(context).pop(),
               style: TextButton.styleFrom(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                padding: ResponsiveUtils.padding(context,
+                    horizontal: 16, vertical: 8),
               ),
               child: Text(
                 FFLocalizations.of(context).getText('cancel'),
                 style: AppStyles.textCairo(
                   context,
-                  fontSize: 16,
+                  fontSize: ResponsiveUtils.fontSize(context, 16),
                   color: FlutterFlowTheme.of(context).secondaryText,
                 ),
               ),
@@ -255,8 +257,8 @@ class _MealScheduleSectionState extends State<MealScheduleSection> {
                 }
               },
               style: TextButton.styleFrom(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                padding: ResponsiveUtils.padding(context,
+                    horizontal: 16, vertical: 8),
                 backgroundColor:
                     FlutterFlowTheme.of(context).error.withValues(alpha: 0.1),
               ),
@@ -264,7 +266,7 @@ class _MealScheduleSectionState extends State<MealScheduleSection> {
                 FFLocalizations.of(context).getText('delete'),
                 style: AppStyles.textCairo(
                   context,
-                  fontSize: 16,
+                  fontSize: ResponsiveUtils.fontSize(context, 16),
                   color: FlutterFlowTheme.of(context).error,
                   fontWeight: FontWeight.w600,
                 ),
@@ -416,14 +418,19 @@ class _MealScheduleSectionState extends State<MealScheduleSection> {
                           size: 20,
                         ),
                         const SizedBox(width: 12),
-                        Text(
-                          meal.name,
-                          style: AppStyles.textCairo(
-                            context,
-                            fontSize: 16,
-                            fontWeight: FontWeight.w600,
+                        SizedBox(
+                          width: ResponsiveUtils.width(context, 150),
+                          child: Text(
+                            meal.name,
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            style: AppStyles.textCairo(
+                              context,
+                              fontSize: 16,
+                              fontWeight: FontWeight.w600,
+                            ),
                           ),
-                        ),
+                        )
                       ],
                     ),
                     Row(

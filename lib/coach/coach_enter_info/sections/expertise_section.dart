@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:iron_fit/componants/Styles.dart';
 import 'package:iron_fit/flutter_flow/flutter_flow_util.dart';
 import 'package:iron_fit/flutter_flow/flutter_flow_theme.dart';
+import 'package:iron_fit/utils/responsive_utils.dart';
 import 'package:iron_fit/widgets/build_text_filed.dart';
 import '../coach_enter_info_model.dart';
 import 'package:provider/provider.dart';
@@ -88,7 +89,7 @@ class _ExpertiseSectionState extends State<ExpertiseSection>
 
   Widget _buildExperienceInput() {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
+      padding: ResponsiveUtils.padding(context, horizontal: 24, vertical: 16),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -105,7 +106,7 @@ class _ExpertiseSectionState extends State<ExpertiseSection>
                         .getText('expertise_step' /* Expertise */),
                     style: AppStyles.textCairo(
                       context,
-                      fontSize: 24,
+                      fontSize: ResponsiveUtils.fontSize(context, 24),
                       fontWeight: FontWeight.bold,
                       color: FlutterFlowTheme.of(context).primaryText,
                     ),
@@ -114,7 +115,7 @@ class _ExpertiseSectionState extends State<ExpertiseSection>
               );
             },
           ),
-          const SizedBox(height: 24),
+          SizedBox(height: ResponsiveUtils.height(context, 24)),
           buildTextField(
             context: context,
             controller: widget.model.yearsofExperienceTextController,
@@ -139,7 +140,7 @@ class _ExpertiseSectionState extends State<ExpertiseSection>
 
   Widget _buildAboutMeInput() {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
+      padding: ResponsiveUtils.padding(context, horizontal: 24, vertical: 16),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -156,7 +157,7 @@ class _ExpertiseSectionState extends State<ExpertiseSection>
                         .getText('i1jyd81k' /* About Me */),
                     style: AppStyles.textCairo(
                       context,
-                      fontSize: 24,
+                      fontSize: ResponsiveUtils.fontSize(context, 24),
                       fontWeight: FontWeight.bold,
                       color: FlutterFlowTheme.of(context).primaryText,
                     ),
@@ -165,7 +166,7 @@ class _ExpertiseSectionState extends State<ExpertiseSection>
               );
             },
           ),
-          const SizedBox(height: 24),
+          SizedBox(height: ResponsiveUtils.height(context, 24)),
           buildTextField(
             context: context,
             controller: widget.model.aboutMeTextController,
@@ -188,7 +189,7 @@ class _ExpertiseSectionState extends State<ExpertiseSection>
 
   Widget _buildSpecializationsInput() {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
+      padding: ResponsiveUtils.padding(context, horizontal: 24, vertical: 16),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -206,7 +207,7 @@ class _ExpertiseSectionState extends State<ExpertiseSection>
                         .getText('expertise_step' /* Expertise */),
                     style: AppStyles.textCairo(
                       context,
-                      fontSize: 24,
+                      fontSize: ResponsiveUtils.fontSize(context, 24),
                       fontWeight: FontWeight.bold,
                       color: FlutterFlowTheme.of(context).primaryText,
                     ),
@@ -215,15 +216,15 @@ class _ExpertiseSectionState extends State<ExpertiseSection>
               );
             },
           ),
-          const SizedBox(height: 24),
+          SizedBox(height: ResponsiveUtils.height(context, 24)),
 
           // Specializations Grid
           GridView.count(
             shrinkWrap: true,
             physics: const NeverScrollableScrollPhysics(),
             crossAxisCount: 2,
-            mainAxisSpacing: 16,
-            crossAxisSpacing: 16,
+            mainAxisSpacing: ResponsiveUtils.height(context, 16),
+            crossAxisSpacing: ResponsiveUtils.width(context, 16),
             childAspectRatio: 1.5,
             children: [
               _buildSpecializationCard(
@@ -301,7 +302,7 @@ class _ExpertiseSectionState extends State<ExpertiseSection>
           color: isSelected
               ? FlutterFlowTheme.of(context).primary.withValues(alpha: 0.15)
               : FlutterFlowTheme.of(context).secondaryBackground,
-          borderRadius: BorderRadius.circular(12),
+          borderRadius: BorderRadius.circular(ResponsiveUtils.width(context, 12)),
           border: Border.all(
             color: isSelected ? theme.primary : theme.alternate,
             width: isSelected ? 2 : 1,
@@ -322,15 +323,15 @@ class _ExpertiseSectionState extends State<ExpertiseSection>
             Icon(
               icon,
               color: isSelected ? theme.primary : theme.secondaryText,
-              size: 32,
+              size: ResponsiveUtils.iconSize(context, 32),
             ),
-            const SizedBox(height: 8),
+            SizedBox(height: ResponsiveUtils.height(context, 8)),
             Text(
               title,
               textAlign: TextAlign.center,
               style: AppStyles.textCairo(
                 context,
-                fontSize: 14,
+                fontSize: ResponsiveUtils.fontSize(context, 14),
                 fontWeight: FontWeight.w600,
                 color: isSelected ? theme.primary : theme.secondaryText,
               ),

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:iron_fit/componants/Styles.dart';
 import 'package:iron_fit/flutter_flow/flutter_flow_theme.dart';
 import 'package:iron_fit/flutter_flow/flutter_flow_util.dart';
+import 'package:iron_fit/utils/responsive_utils.dart';
 
 class TitleInputView extends StatelessWidget {
   final TextEditingController titleController;
@@ -17,23 +18,13 @@ class TitleInputView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final screenSize = MediaQuery.of(context).size;
-    final isSmallScreen = screenSize.width < 350;
-    final horizontalPadding = screenSize.width * 0.06; // 6% of screen width
-    final topPadding = screenSize.height * 0.03; // 3% of screen height
-
     return SafeArea(
       child: LayoutBuilder(
         builder: (context, constraints) {
           return SingleChildScrollView(
             physics: const BouncingScrollPhysics(),
             child: Padding(
-              padding: EdgeInsets.fromLTRB(
-                horizontalPadding,
-                topPadding,
-                horizontalPadding,
-                topPadding,
-              ),
+              padding: ResponsiveUtils.padding(context, horizontal: 24, vertical: 16),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -57,24 +48,24 @@ class TitleInputView extends StatelessWidget {
                           FFLocalizations.of(context).getText('name_training'),
                           style: AppStyles.textCairo(
                             context,
-                            fontSize: isSmallScreen ? 24 : 28,
+                            fontSize: ResponsiveUtils.fontSize(context, 28),
                             fontWeight: FontWeight.bold,
                           ),
                         ),
-                        SizedBox(height: constraints.maxHeight * 0.02),
+                        SizedBox(height: ResponsiveUtils.height(context, 12)),
                         Text(
                           FFLocalizations.of(context)
                               .getText('training_name_subtitle'),
                           style: AppStyles.textCairo(
                             context,
-                            fontSize: isSmallScreen ? 14 : 16,
+                            fontSize: ResponsiveUtils.fontSize(context, 16),
                             color: FlutterFlowTheme.of(context).secondaryText,
                           ),
                         ),
                       ],
                     ),
                   ),
-                  SizedBox(height: constraints.maxHeight * 0.05),
+                  SizedBox(height: ResponsiveUtils.height(context, 32)),
                   // Modern animated input field
                   TweenAnimationBuilder<double>(
                     duration: const Duration(milliseconds: 800),
@@ -116,7 +107,7 @@ class TitleInputView extends StatelessWidget {
                         onChanged: onTitleChanged,
                         style: AppStyles.textCairo(
                           context,
-                          fontSize: isSmallScreen ? 15 : 16,
+                          fontSize: ResponsiveUtils.fontSize(context, 16),
                           color: FlutterFlowTheme.of(context).primaryText,
                         ),
                         decoration: InputDecoration(
@@ -126,28 +117,28 @@ class TitleInputView extends StatelessWidget {
                               .getText('training_title_hint'),
                           hintStyle: AppStyles.textCairo(
                             context,
-                            fontSize: isSmallScreen ? 14 : 15,
+                            fontSize: ResponsiveUtils.fontSize(context, 15),
                             color: FlutterFlowTheme.of(context)
                                 .secondaryText
                                 .withValues(alpha: 0.5),
                           ),
                           labelStyle: AppStyles.textCairo(
                             context,
-                            fontSize: isSmallScreen ? 14 : 15,
+                            fontSize: ResponsiveUtils.fontSize(context, 15),
                             color: FlutterFlowTheme.of(context).secondaryText,
                             fontWeight: FontWeight.w500,
                           ),
                           prefixIcon: Icon(
                             Icons.fitness_center_rounded,
                             color: FlutterFlowTheme.of(context).primary,
-                            size: isSmallScreen ? 20 : 24,
+                            size: ResponsiveUtils.iconSize(context, 24),
                           ),
                           suffixIcon: dayTitle.isNotEmpty
                               ? IconButton(
                                   icon: Icon(
                                     Icons.check_circle_rounded,
                                     color: FlutterFlowTheme.of(context).primary,
-                                    size: isSmallScreen ? 20 : 24,
+                                    size: ResponsiveUtils.iconSize(context, 24),
                                   ),
                                   onPressed: null,
                                 )
@@ -176,9 +167,10 @@ class TitleInputView extends StatelessWidget {
                               width: 2,
                             ),
                           ),
-                          contentPadding: EdgeInsets.symmetric(
-                            horizontal: isSmallScreen ? 16 : 20,
-                            vertical: isSmallScreen ? 14 : 16,
+                          contentPadding: ResponsiveUtils.padding(
+                            context,
+                            horizontal: 20,
+                            vertical: 16,
                           ),
                         ),
                       ),
@@ -194,14 +186,15 @@ class TitleInputView extends StatelessWidget {
                           opacity: value,
                           child: Padding(
                             padding: EdgeInsets.only(
-                                top: constraints.maxHeight * 0.02),
+                                top: ResponsiveUtils.height(context, 16)),
                             child: Wrap(
-                              spacing: 8,
+                              spacing: ResponsiveUtils.width(context, 8),
                               children: [
                                 Container(
-                                  padding: EdgeInsets.symmetric(
+                                  padding: ResponsiveUtils.padding(
+                                    context,
                                     horizontal: 12,
-                                    vertical: isSmallScreen ? 4 : 6,
+                                    vertical: 6,
                                   ),
                                   decoration: BoxDecoration(
                                     color: FlutterFlowTheme.of(context)
@@ -213,7 +206,7 @@ class TitleInputView extends StatelessWidget {
                                     '${dayTitle.length} ${FFLocalizations.of(context).getText('characters')}',
                                     style: AppStyles.textCairo(
                                       context,
-                                      fontSize: isSmallScreen ? 11 : 12,
+                                      fontSize: ResponsiveUtils.fontSize(context, 12),
                                       color:
                                           FlutterFlowTheme.of(context).primary,
                                     ),
@@ -221,9 +214,10 @@ class TitleInputView extends StatelessWidget {
                                 ),
                                 if (dayTitle.length < 3)
                                   Container(
-                                    padding: EdgeInsets.symmetric(
+                                    padding: ResponsiveUtils.padding(
+                                      context,
                                       horizontal: 12,
-                                      vertical: isSmallScreen ? 4 : 6,
+                                      vertical: 6,
                                     ),
                                     decoration: BoxDecoration(
                                       color: FlutterFlowTheme.of(context)
@@ -236,7 +230,7 @@ class TitleInputView extends StatelessWidget {
                                           .getText('title_too_short'),
                                       style: AppStyles.textCairo(
                                         context,
-                                        fontSize: isSmallScreen ? 11 : 12,
+                                        fontSize: ResponsiveUtils.fontSize(context, 12),
                                         color:
                                             FlutterFlowTheme.of(context).error,
                                       ),
@@ -250,10 +244,10 @@ class TitleInputView extends StatelessWidget {
                     ),
 
                   // Recommendation section for larger screens
-                  if (screenSize.height > 600)
+                  if (ResponsiveUtils.screenHeight(context) > 600)
                     Padding(
                       padding:
-                          EdgeInsets.only(top: constraints.maxHeight * 0.06),
+                          EdgeInsets.only(top: ResponsiveUtils.height(context, 24)),
                       child: TweenAnimationBuilder<double>(
                         duration: const Duration(milliseconds: 700),
                         tween: Tween(begin: 0.0, end: 1.0),
@@ -268,7 +262,7 @@ class TitleInputView extends StatelessWidget {
                         },
                         child: Container(
                           width: double.infinity,
-                          padding: EdgeInsets.all(isSmallScreen ? 16 : 20),
+                          padding: const EdgeInsets.all(24),
                           decoration: BoxDecoration(
                             gradient: LinearGradient(
                               colors: [
@@ -298,7 +292,7 @@ class TitleInputView extends StatelessWidget {
                                   Icon(
                                     Icons.lightbulb_outline,
                                     color: FlutterFlowTheme.of(context).primary,
-                                    size: isSmallScreen ? 20 : 24,
+                                    size: ResponsiveUtils.iconSize(context, 24),
                                   ),
                                   const SizedBox(width: 12),
                                   Expanded(
@@ -307,7 +301,7 @@ class TitleInputView extends StatelessWidget {
                                           .getText('tips'),
                                       style: AppStyles.textCairo(
                                         context,
-                                        fontSize: isSmallScreen ? 16 : 18,
+                                        fontSize: ResponsiveUtils.fontSize(context, 18),
                                         fontWeight: FontWeight.w600,
                                         color: FlutterFlowTheme.of(context)
                                             .primaryText,
@@ -322,7 +316,7 @@ class TitleInputView extends StatelessWidget {
                                     .getText('title_tips'),
                                 style: AppStyles.textCairo(
                                   context,
-                                  fontSize: isSmallScreen ? 13 : 14,
+                                  fontSize: ResponsiveUtils.fontSize(context, 14),
                                   color: FlutterFlowTheme.of(context)
                                       .secondaryText,
                                 ),

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:iron_fit/coach/add_client/add_client_model.dart';
 import 'package:iron_fit/flutter_flow/flutter_flow_util.dart';
+import 'package:iron_fit/utils/responsive_utils.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/componants/Styles.dart';
 import '/widgets/build_text_filed.dart';
@@ -35,7 +36,7 @@ class ClientInfoStep extends StatelessWidget {
   Widget _buildHeader(BuildContext context) {
     return Container(
       width: double.infinity,
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 24),
+      padding: ResponsiveUtils.padding(context, horizontal: 16, vertical: 24),
       decoration: const BoxDecoration(
         borderRadius: BorderRadius.vertical(top: Radius.circular(12)),
       ),
@@ -45,18 +46,18 @@ class ClientInfoStep extends StatelessWidget {
             FFLocalizations.of(context).getText('client_information'),
             style: AppStyles.textCairo(
               context,
-              fontSize: 20,
+              fontSize: ResponsiveUtils.fontSize(context, 20),
               fontWeight: FontWeight.bold,
               color: FlutterFlowTheme.of(context).primaryText,
             ),
           ),
-          const SizedBox(height: 4),
+          SizedBox(height: ResponsiveUtils.height(context, 4)),
           Text(
             FFLocalizations.of(context).getText('client_information_desc'),
             textAlign: TextAlign.center,
             style: AppStyles.textCairo(
               context,
-              fontSize: 12,
+              fontSize: ResponsiveUtils.fontSize(context, 12),
               color: FlutterFlowTheme.of(context).secondaryText,
             ),
           ),
@@ -67,17 +68,17 @@ class ClientInfoStep extends StatelessWidget {
 
   Widget _buildFormFields(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16),
+      padding: ResponsiveUtils.padding(context, horizontal: 16),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           if (isFirstStep) ...[
             _buildEmailField(context),
-            const SizedBox(height: 16),
+            SizedBox(height: ResponsiveUtils.height(context, 16)),
             _buildNameField(context),
           ] else ...[
             _buildStartDateField(context),
-            const SizedBox(height: 16),
+            SizedBox(height: ResponsiveUtils.height(context, 16)),
             _buildEndDateField(context),
           ],
         ],
@@ -87,12 +88,6 @@ class ClientInfoStep extends StatelessWidget {
 
   Widget _buildEmailField(BuildContext context) {
     return buildTextField(
-      // onTap: () {
-      //   // Move cursor to end of text
-      //   model.emailTextController.selection = TextSelection.fromPosition(
-      //     TextPosition(offset: model.emailTextController.text.length),
-      //   );
-      // },
       keyboardType: TextInputType.emailAddress,
       controller: model.emailTextController,
       focusNode: model.emailFocusNode,
@@ -109,17 +104,13 @@ class ClientInfoStep extends StatelessWidget {
       },
       labelText: FFLocalizations.of(context).getText('label_email'),
       prefixIcon: Icons.email_outlined,
+      iconSize: ResponsiveUtils.iconSize(context, 24),
+      fontSize: ResponsiveUtils.fontSize(context, 14),
     );
   }
 
   Widget _buildNameField(BuildContext context) {
     return buildTextField(
-      // onTap: () {
-      //   // Move cursor to end of text
-      //   model.nameTextController.selection = TextSelection.fromPosition(
-      //     TextPosition(offset: model.nameTextController.text.length),
-      //   );
-      // },
       controller: model.nameTextController,
       focusNode: model.nameFocusNode,
       context: context,
@@ -132,6 +123,8 @@ class ClientInfoStep extends StatelessWidget {
       },
       labelText: FFLocalizations.of(context).getText('ziwjm0v1'),
       prefixIcon: Icons.person_outline,
+      iconSize: ResponsiveUtils.iconSize(context, 24),
+      fontSize: ResponsiveUtils.fontSize(context, 14),
     );
   }
 
@@ -142,6 +135,8 @@ class ClientInfoStep extends StatelessWidget {
       labelText: FFLocalizations.of(context).getText('1qacacys'),
       hintText: FFLocalizations.of(context).getText('prqg6mlg'),
       prefixIcon: Icons.calendar_today_rounded,
+      iconSize: ResponsiveUtils.iconSize(context, 24),
+      fontSize: ResponsiveUtils.fontSize(context, 14),
       readOnly: true,
       onTap: () => onStartDateSelected(model.startDateTextController.text),
       validator: (val) {
@@ -175,25 +170,14 @@ class ClientInfoStep extends StatelessWidget {
       labelText: FFLocalizations.of(context).getText('r448i96u'),
       hintText: FFLocalizations.of(context).getText('prqg6mlg'),
       prefixIcon: Icons.calendar_today_rounded,
+      iconSize: ResponsiveUtils.iconSize(context, 24),
+      fontSize: ResponsiveUtils.fontSize(context, 14),
       readOnly: true,
       onTap: () => onEndDateSelected(model.endDateTextController.text),
       validator: (val) {
         if (val?.isEmpty ?? true) {
           return FFLocalizations.of(context).getText('error_end_date_required');
         }
-
-        // Validate that end date is after start date
-        if (model.startDateTextController.text.isNotEmpty) {
-          final startDate = DateFormat('yyyy-MM-dd')
-              .parse(model.startDateTextController.text);
-          final endDate = DateFormat('yyyy-MM-dd').parse(val!);
-
-          if (endDate.isBefore(startDate)) {
-            return FFLocalizations.of(context)
-                .getText('error_start_before_end');
-          }
-        }
-
         return null;
       },
       context: context,

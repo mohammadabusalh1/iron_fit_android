@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:iron_fit/utils/responsive_utils.dart';
 import '/backend/backend.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
@@ -20,17 +21,17 @@ class RecentMessagesSection extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         _buildHeader(context),
-        const SizedBox(height: 8),
+        SizedBox(height: ResponsiveUtils.height(context, 8)),
         Text(
           FFLocalizations.of(context).getText(
               'messages_are_automatically_deleted_after_7_days' /* Messages are automatically deleted after 7 days */),
           style: AppStyles.textCairo(
             context,
-            fontSize: 14,
+            fontSize: ResponsiveUtils.fontSize(context, 14),
             color: FlutterFlowTheme.of(context).secondaryText,
           ),
         ),
-        const SizedBox(height: 16),
+        SizedBox(height: ResponsiveUtils.height(context, 16)),
         _buildMessagesListView(context),
       ],
     );
@@ -45,15 +46,15 @@ class RecentMessagesSection extends StatelessWidget {
             Icon(
               Icons.history_rounded,
               color: FlutterFlowTheme.of(context).primary,
-              size: 24,
+              size: ResponsiveUtils.iconSize(context, 24),
             ),
-            const SizedBox(width: 12),
+            SizedBox(width: ResponsiveUtils.width(context, 12)),
             Text(
               FFLocalizations.of(context)
                   .getText('mu14nif2' /* Recent Messages */),
               style: AppStyles.textCairo(
                 context,
-                fontSize: 18,
+                fontSize: ResponsiveUtils.fontSize(context, 18),
                 fontWeight: FontWeight.w600,
                 color: FlutterFlowTheme.of(context).primaryText,
               ),
@@ -61,16 +62,20 @@ class RecentMessagesSection extends StatelessWidget {
           ],
         ),
         Container(
-          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
+          padding: ResponsiveUtils.padding(
+            context,
+            horizontal: 12,
+            vertical: 4,
+          ),
           decoration: BoxDecoration(
             color: FlutterFlowTheme.of(context).primary.withOpacity(0.4),
-            borderRadius: BorderRadius.circular(12),
+            borderRadius: BorderRadius.circular(ResponsiveUtils.width(context, 12)),
           ),
           child: Text(
             '${messages.length} ${FFLocalizations.of(context).getText('vj2epgx9' /* messages */)}',
             style: AppStyles.textCairo(
               context,
-              fontSize: 14,
+              fontSize: ResponsiveUtils.fontSize(context, 14),
               color: FlutterFlowTheme.of(context).info,
             ),
           ),
@@ -83,22 +88,22 @@ class RecentMessagesSection extends StatelessWidget {
     if (messages.isEmpty) {
       return Center(
         child: Padding(
-          padding: const EdgeInsets.all(24.0),
+          padding: ResponsiveUtils.padding(context, horizontal: 24, vertical: 24),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
               Icon(
                 Icons.message_outlined,
-                size: 48,
+                size: ResponsiveUtils.iconSize(context, 48),
                 color: FlutterFlowTheme.of(context).secondaryText,
               ),
-              const SizedBox(height: 16),
+              SizedBox(height: ResponsiveUtils.height(context, 16)),
               Text(
                 FFLocalizations.of(context).getText('noData'),
                 style: AppStyles.textCairo(
                   context,
                   color: FlutterFlowTheme.of(context).secondaryText,
-                  fontSize: 16,
+                  fontSize: ResponsiveUtils.fontSize(context, 16),
                 ),
               ),
             ],
@@ -117,7 +122,7 @@ class RecentMessagesSection extends StatelessWidget {
         final alertRecord = messages[index];
         return Padding(
           padding:
-              EdgeInsets.only(bottom: index < messages.length - 1 ? 12.0 : 0),
+              EdgeInsets.only(bottom: index < messages.length - 1 ? ResponsiveUtils.height(context, 12.0) : 0),
           child: MessageCard(alertRecord: alertRecord),
         );
       },

@@ -7,6 +7,7 @@ import 'package:iron_fit/flutter_flow/flutter_flow_util.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:iron_fit/coach/add_client/add_client_model.dart';
 import '/auth/firebase_auth/auth_util.dart';
+import 'package:iron_fit/utils/responsive_utils.dart';
 
 class SelectPlans extends StatefulWidget {
   final AddClientModel model;
@@ -29,10 +30,10 @@ class _SelectPlansState extends State<SelectPlans> {
       duration: const Duration(milliseconds: 400),
       curve: Curves.easeInOut,
       margin: EdgeInsets.only(
-        top: 24,
-        bottom: 24,
-        left: widget.isFirstStep ? 0 : 16,
-        right: widget.isFirstStep ? 0 : 16,
+        top: ResponsiveUtils.height(context, 24),
+        bottom: ResponsiveUtils.height(context, 24),
+        left: widget.isFirstStep ? 0 : ResponsiveUtils.width(context, 16),
+        right: widget.isFirstStep ? 0 : ResponsiveUtils.width(context, 16),
       ),
       child: Column(
         mainAxisSize: MainAxisSize.min,
@@ -42,21 +43,23 @@ class _SelectPlansState extends State<SelectPlans> {
             FFLocalizations.of(context).getText('select_plans_title'),
             style: AppStyles.textCairo(
               context,
-              fontSize: 20,
+              fontSize: ResponsiveUtils.fontSize(context, 20),
               fontWeight: FontWeight.bold,
               color: FlutterFlowTheme.of(context).primaryText,
             ),
           ),
           Text(
             FFLocalizations.of(context).getText('select_plans_description'),
+            textAlign: TextAlign.center,
             style: AppStyles.textCairo(
               context,
+              fontSize: ResponsiveUtils.fontSize(context, 14),
               color: FlutterFlowTheme.of(context).secondaryText,
             ),
           ),
-          const SizedBox(height: 32),
+          SizedBox(height: ResponsiveUtils.height(context, 32)),
           _buildTrainingPlanSection(context),
-          const SizedBox(height: 24),
+          SizedBox(height: ResponsiveUtils.height(context, 24)),
           _buildNutritionalPlanSection(context),
         ],
       ),
@@ -76,20 +79,20 @@ class _SelectPlansState extends State<SelectPlans> {
             Icon(
               Icons.fitness_center_rounded,
               color: FlutterFlowTheme.of(context).primary,
-              size: 20,
+              size: ResponsiveUtils.iconSize(context, 20),
             ),
-            const SizedBox(width: 8),
+            SizedBox(width: ResponsiveUtils.width(context, 8)),
             Text(
               FFLocalizations.of(context).getText('fgv70x81'),
               style: AppStyles.textCairo(
                 context,
-                fontSize: 16,
+                fontSize: ResponsiveUtils.fontSize(context, 16),
                 fontWeight: FontWeight.w600,
               ),
             ),
           ],
         ),
-        const SizedBox(height: 8),
+        SizedBox(height: ResponsiveUtils.height(context, 8)),
         Container(
           decoration: BoxDecoration(
             color: FlutterFlowTheme.of(context).secondaryBackground,
@@ -108,7 +111,7 @@ class _SelectPlansState extends State<SelectPlans> {
             builder: (context, snapshot) {
               if (!snapshot.hasData) {
                 return Padding(
-                  padding: const EdgeInsets.all(16.0),
+                  padding: ResponsiveUtils.padding(context, horizontal: 16, vertical: 16),
                   child: Center(
                       child: CircularProgressIndicator(
                     color: FlutterFlowTheme.of(context).primary,
@@ -120,12 +123,13 @@ class _SelectPlansState extends State<SelectPlans> {
 
               if (trainingPlans.isEmpty) {
                 return Padding(
-                  padding: const EdgeInsets.all(16.0),
+                  padding: ResponsiveUtils.padding(context, horizontal: 16, vertical: 16),
                   child: Center(
                     child: Text(
                       FFLocalizations.of(context).getText('noPlansYet'),
                       style: AppStyles.textCairo(
                         context,
+                        fontSize: ResponsiveUtils.fontSize(context, 14),
                         color: FlutterFlowTheme.of(context).secondaryText,
                       ),
                     ),
@@ -134,7 +138,7 @@ class _SelectPlansState extends State<SelectPlans> {
               }
 
               return Padding(
-                padding: const EdgeInsets.symmetric(vertical: 4.0),
+                padding: ResponsiveUtils.padding(context, horizontal: 0, vertical: 4),
                 child: FlutterFlowDropDown<String>(
                   controller: widget.model.trainingPlanController,
                   options: trainingPlans.map((plan) => plan.plan.name).toList(),
@@ -149,23 +153,29 @@ class _SelectPlansState extends State<SelectPlans> {
                     widget.model.updateTrainingPlan(selectedPlan);
                   },
                   width: double.infinity,
-                  height: 50,
+                  height: ResponsiveUtils.height(context, 50),
                   textStyle: AppStyles.textCairo(
                     context,
+                    fontSize: ResponsiveUtils.fontSize(context, 14),
                     color: FlutterFlowTheme.of(context).primaryText,
                   ),
                   hintText: FFLocalizations.of(context).getText('select_plan'),
                   icon: Icon(
                     Icons.keyboard_arrow_down_rounded,
                     color: FlutterFlowTheme.of(context).secondaryText,
-                    size: 24,
+                    size: ResponsiveUtils.iconSize(context, 24),
                   ),
                   fillColor: FlutterFlowTheme.of(context).secondaryBackground,
                   elevation: 2,
                   borderColor: Colors.transparent,
                   borderWidth: 0,
                   borderRadius: 8,
-                  margin: const EdgeInsetsDirectional.fromSTEB(16, 4, 16, 4),
+                  margin: EdgeInsetsDirectional.fromSTEB(
+                    ResponsiveUtils.width(context, 16),
+                    ResponsiveUtils.height(context, 4),
+                    ResponsiveUtils.width(context, 16),
+                    ResponsiveUtils.height(context, 4),
+                  ),
                   hidesUnderline: true,
                   isSearchable: true,
                 ),
@@ -186,20 +196,20 @@ class _SelectPlansState extends State<SelectPlans> {
             Icon(
               Icons.restaurant_menu_rounded,
               color: FlutterFlowTheme.of(context).primary,
-              size: 20,
+              size: ResponsiveUtils.iconSize(context, 20),
             ),
-            const SizedBox(width: 8),
+            SizedBox(width: ResponsiveUtils.width(context, 8)),
             Text(
               FFLocalizations.of(context).getText('zs7ls2wz'),
               style: AppStyles.textCairo(
                 context,
-                fontSize: 16,
+                fontSize: ResponsiveUtils.fontSize(context, 16),
                 fontWeight: FontWeight.w600,
               ),
             ),
           ],
         ),
-        const SizedBox(height: 8),
+        SizedBox(height: ResponsiveUtils.height(context, 8)),
         Container(
           decoration: BoxDecoration(
             color: FlutterFlowTheme.of(context).secondaryBackground,
@@ -216,7 +226,7 @@ class _SelectPlansState extends State<SelectPlans> {
             builder: (context, snapshot) {
               if (!snapshot.hasData) {
                 return Padding(
-                  padding: const EdgeInsets.all(16.0),
+                  padding: ResponsiveUtils.padding(context, horizontal: 16, vertical: 16),
                   child: Center(
                       child: CircularProgressIndicator(
                     color: FlutterFlowTheme.of(context).primary,
@@ -228,13 +238,14 @@ class _SelectPlansState extends State<SelectPlans> {
 
               if (nutritionPlans.isEmpty) {
                 return Padding(
-                  padding: const EdgeInsets.all(16.0),
+                  padding: ResponsiveUtils.padding(context, horizontal: 16, vertical: 16),
                   child: Center(
                     child: Text(
                       FFLocalizations.of(context)
                           .getText('nutritionPlanNotFound'),
                       style: AppStyles.textCairo(
                         context,
+                        fontSize: ResponsiveUtils.fontSize(context, 14),
                         color: FlutterFlowTheme.of(context).secondaryText,
                       ),
                     ),
@@ -243,7 +254,7 @@ class _SelectPlansState extends State<SelectPlans> {
               }
 
               return Padding(
-                padding: const EdgeInsets.symmetric(vertical: 4.0),
+                padding: ResponsiveUtils.padding(context, horizontal: 0, vertical: 4),
                 child: FlutterFlowDropDown<String>(
                   controller: widget.model.nutritionalPlanController,
                   options:
@@ -259,9 +270,10 @@ class _SelectPlansState extends State<SelectPlans> {
                     widget.model.updateNutritionalPlan(selectedPlan);
                   },
                   width: double.infinity,
-                  height: 50,
+                  height: ResponsiveUtils.height(context, 50),
                   textStyle: AppStyles.textCairo(
                     context,
+                    fontSize: ResponsiveUtils.fontSize(context, 14),
                     color: FlutterFlowTheme.of(context).primaryText,
                   ),
                   hintText: FFLocalizations.of(context)
@@ -269,14 +281,19 @@ class _SelectPlansState extends State<SelectPlans> {
                   icon: Icon(
                     Icons.keyboard_arrow_down_rounded,
                     color: FlutterFlowTheme.of(context).secondaryText,
-                    size: 24,
+                    size: ResponsiveUtils.iconSize(context, 24),
                   ),
                   fillColor: FlutterFlowTheme.of(context).secondaryBackground,
                   elevation: 2,
                   borderColor: Colors.transparent,
                   borderWidth: 0,
                   borderRadius: 8,
-                  margin: const EdgeInsetsDirectional.fromSTEB(16, 4, 16, 4),
+                  margin: EdgeInsetsDirectional.fromSTEB(
+                    ResponsiveUtils.width(context, 16),
+                    ResponsiveUtils.height(context, 4),
+                    ResponsiveUtils.width(context, 16),
+                    ResponsiveUtils.height(context, 4),
+                  ),
                   hidesUnderline: true,
                   isSearchable: true,
                 ),

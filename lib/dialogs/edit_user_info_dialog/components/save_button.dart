@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:iron_fit/componants/Styles.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
+import '/utils/responsive_utils.dart';
 
 class SaveButton extends StatefulWidget {
   const SaveButton({
@@ -85,7 +86,7 @@ class _SaveButtonState extends State<SaveButton>
               child: AnimatedContainer(
                 duration: const Duration(milliseconds: 200),
                 width: double.infinity,
-                height: 60.0, // Increased height for better touch target
+                height: ResponsiveUtils.height(context, 60.0), // Responsive height
                 decoration: BoxDecoration(
                   gradient: LinearGradient(
                     colors: [
@@ -96,7 +97,7 @@ class _SaveButtonState extends State<SaveButton>
                     end: Alignment.bottomRight,
                   ),
                   borderRadius:
-                      BorderRadius.circular(30.0), // More rounded corners
+                      BorderRadius.circular(ResponsiveUtils.width(context, 30.0)), // Responsive border radius
                   boxShadow: widget.isSaving
                       ? []
                       : [
@@ -105,24 +106,24 @@ class _SaveButtonState extends State<SaveButton>
                                 .primary
                                 .withOpacity(0.3 * _shadowAnimation.value),
                             blurRadius: 15 * _shadowAnimation.value,
-                            offset: Offset(0, 6 * _shadowAnimation.value),
+                            offset: Offset(0, ResponsiveUtils.height(context, 6) * _shadowAnimation.value),
                             spreadRadius: -2,
                           ),
                           BoxShadow(
                             color: FlutterFlowTheme.of(context)
                                 .primary
                                 .withOpacity(0.2 * _shadowAnimation.value),
-                            blurRadius: 4,
-                            offset: Offset(0, 2 * _shadowAnimation.value),
+                            blurRadius: ResponsiveUtils.width(context, 4),
+                            offset: Offset(0, ResponsiveUtils.height(context, 2) * _shadowAnimation.value),
                             spreadRadius: 0,
                           ),
                         ],
                 ),
                 child: Material(
                   color: Colors.transparent,
-                  borderRadius: BorderRadius.circular(30.0),
+                  borderRadius: BorderRadius.circular(ResponsiveUtils.width(context, 30.0)),
                   child: InkWell(
-                    borderRadius: BorderRadius.circular(30.0),
+                    borderRadius: BorderRadius.circular(ResponsiveUtils.width(context, 30.0)),
                     splashColor:
                         FlutterFlowTheme.of(context).info.withOpacity(0.1),
                     highlightColor: Colors.transparent,
@@ -139,20 +140,20 @@ class _SaveButtonState extends State<SaveButton>
                               mainAxisSize: MainAxisSize.min,
                               children: [
                                 SizedBox(
-                                  width: 24,
-                                  height: 24,
+                                  width: ResponsiveUtils.width(context, 24),
+                                  height: ResponsiveUtils.height(context, 24),
                                   child: CircularProgressIndicator(
                                     valueColor: AlwaysStoppedAnimation<Color>(
                                         FlutterFlowTheme.of(context).info),
-                                    strokeWidth: 2.5,
+                                    strokeWidth: ResponsiveUtils.width(context, 2.5),
                                   ),
                                 ),
-                                const SizedBox(width: 12),
+                                SizedBox(width: ResponsiveUtils.width(context, 12)),
                                 Text(
                                   FFLocalizations.of(context).getText('saving'),
                                   style: AppStyles.textCairo(
                                     context,
-                                    fontSize: 17,
+                                    fontSize: ResponsiveUtils.fontSize(context, 17),
                                     fontWeight: FontWeight.w700,
                                     color: FlutterFlowTheme.of(context).info,
                                     letterSpacing: 0.5,
@@ -166,17 +167,19 @@ class _SaveButtonState extends State<SaveButton>
                                 AnimatedContainer(
                                   duration: const Duration(milliseconds: 200),
                                   transform: Matrix4.translationValues(
-                                      _isHovering ? 0 : -4, 0, 0),
+                                      _isHovering ? 0 : ResponsiveUtils.width(context, -4), 0, 0),
                                   child: Icon(
                                     Icons.save_rounded,
                                     color: FlutterFlowTheme.of(context).info,
-                                    size: 24,
+                                    size: ResponsiveUtils.iconSize(context, 24),
                                   ),
                                 ),
-                                const SizedBox(width: 12),
+                                SizedBox(width: ResponsiveUtils.width(context, 12)),
                                 AnimatedPadding(
                                   padding: EdgeInsets.only(
-                                    left: _isHovering ? 12 : 8,
+                                    left: _isHovering 
+                                        ? ResponsiveUtils.width(context, 12) 
+                                        : ResponsiveUtils.width(context, 8),
                                   ),
                                   duration: const Duration(milliseconds: 200),
                                   child: Text(
@@ -184,7 +187,7 @@ class _SaveButtonState extends State<SaveButton>
                                         .getText('ayt5365p'),
                                     style: AppStyles.textCairo(
                                       context,
-                                      fontSize: 17,
+                                      fontSize: ResponsiveUtils.fontSize(context, 17),
                                       fontWeight: FontWeight.w700,
                                       color: FlutterFlowTheme.of(context).info,
                                       letterSpacing: 0.5,
@@ -197,13 +200,15 @@ class _SaveButtonState extends State<SaveButton>
                                   duration: const Duration(milliseconds: 200),
                                   child: AnimatedPadding(
                                     padding: EdgeInsets.only(
-                                      left: _isHovering ? 8 : 0,
+                                      left: _isHovering 
+                                          ? ResponsiveUtils.width(context, 8) 
+                                          : 0,
                                     ),
                                     duration: const Duration(milliseconds: 200),
                                     child: Icon(
                                       Icons.arrow_forward,
                                       color: FlutterFlowTheme.of(context).info,
-                                      size: 20,
+                                      size: ResponsiveUtils.iconSize(context, 20),
                                     ),
                                   ),
                                 ),

@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:iron_fit/flutter_flow/custom_functions.dart';
 import 'package:iron_fit/utils/logger.dart';
+import 'package:iron_fit/utils/responsive_utils.dart';
 import 'package:lottie/lottie.dart';
 import '/backend/firebase_storage/storage.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
@@ -211,8 +212,8 @@ class _ProfileImageComponentState extends State<ProfileImageComponent>
                 message: 'Edit profile photo',
                 waitDuration: const Duration(milliseconds: 800),
                 child: Container(
-                  width: 130.0,
-                  height: 130.0,
+                  width: ResponsiveUtils.width(context, 130.0),
+                  height: ResponsiveUtils.height(context, 130.0),
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
                     boxShadow: [
@@ -220,9 +221,13 @@ class _ProfileImageComponentState extends State<ProfileImageComponent>
                         color: FlutterFlowTheme.of(context)
                             .primary
                             .withOpacity(0.2),
-                        blurRadius: _isHovering ? 15 : 8,
+                        blurRadius: _isHovering 
+                            ? ResponsiveUtils.width(context, 15) 
+                            : ResponsiveUtils.width(context, 8),
                         spreadRadius: _isHovering ? 2 : 0,
-                        offset: Offset(0, _isHovering ? 4 : 2),
+                        offset: Offset(0, _isHovering 
+                            ? ResponsiveUtils.height(context, 4) 
+                            : ResponsiveUtils.height(context, 2)),
                       ),
                     ],
                   ),
@@ -233,7 +238,7 @@ class _ProfileImageComponentState extends State<ProfileImageComponent>
                         color: FlutterFlowTheme.of(context)
                             .primary
                             .withOpacity(_isHovering ? 0.6 : 0.4),
-                        width: _borderAnimation.value,
+                        width: ResponsiveUtils.width(context, _borderAnimation.value),
                       ),
                     ),
                     clipBehavior: Clip.antiAlias,
@@ -248,152 +253,137 @@ class _ProfileImageComponentState extends State<ProfileImageComponent>
                             .withOpacity(0.3),
                         highlightColor: FlutterFlowTheme.of(context)
                             .primary
-                            .withOpacity(0.1),
-                        onTap: _isDataUploading
-                            ? null
-                            : () => _handleProfileImageUpload(),
-                        child: Stack(
-                          alignment: Alignment.center,
-                          children: [
-                            // Profile Image
-                            ClipRRect(
-                              borderRadius: BorderRadius.circular(80.0),
-                              child: _isDataUploading
-                                  ? Container(
-                                      color: FlutterFlowTheme.of(context)
-                                          .secondaryBackground,
-                                      child: Center(
-                                        child: Lottie.asset(
-                                          'assets/lottie/upload_progress.json',
-                                          width: 80,
-                                          height: 80,
-                                          fit: BoxFit.contain,
-                                        ),
-                                      ),
-                                    )
-                                  : _currentUploadedFileUrl.isEmpty
-                                      ? Center(
-                                          child: Container(
-                                            color: FlutterFlowTheme.of(context)
-                                                .secondaryBackground,
-                                            child: Center(
-                                              child: Lottie.asset(
-                                                'assets/lottie/profile_placeholder.json',
-                                                width: 130,
-                                                height: 130,
-                                                fit: BoxFit.contain,
-                                              ),
-                                            ),
-                                          ),
-                                        )
-                                      : CachedNetworkImage(
-                                          imageUrl: _currentUploadedFileUrl,
-                                          width: 130.0,
-                                          height: 130.0,
-                                          fit: BoxFit.cover,
-                                          progressIndicatorBuilder:
-                                              (context, url, progress) {
-                                            return Container(
-                                              color:
-                                                  FlutterFlowTheme.of(context)
-                                                      .secondaryBackground,
+                            .withOpacity(0.2),
+                        onTap: _handleProfileImageUpload,
+                        child: _isDataUploading
+                            ? Center(
+                                child: SizedBox(
+                                  width: ResponsiveUtils.width(context, 45),
+                                  height: ResponsiveUtils.height(context, 45),
+                                  child: CircularProgressIndicator(
+                                    valueColor: AlwaysStoppedAnimation<Color>(
+                                      FlutterFlowTheme.of(context).primary,
+                                    ),
+                                    strokeWidth: ResponsiveUtils.width(context, 2),
+                                  ),
+                                ),
+                              )
+                            : Stack(
+                                fit: StackFit.expand,
+                                children: [
+                                  // Profile image
+                                  ClipOval(
+                                    child: _currentUploadedFileUrl.isEmpty
+                                        ? Image.asset(
+                                            'assets/images/placeholder_user.png',
+                                            fit: BoxFit.cover,
+                                          )
+                                        : CachedNetworkImage(
+                                            fadeInDuration: const Duration(
+                                                milliseconds: 300),
+                                            fadeOutDuration: const Duration(
+                                                milliseconds: 300),
+                                            imageUrl: _currentUploadedFileUrl,
+                                            fit: BoxFit.cover,
+                                            placeholder: (context, url) =>
+                                                Container(
+                                              color: FlutterFlowTheme.of(context)
+                                                  .alternate
+                                                  .withOpacity(0.5),
                                               child: Center(
-                                                child: Lottie.asset(
-                                                  'assets/lottie/loading_avatar.json',
-                                                  width: 80,
-                                                  height: 80,
+                                                child: SizedBox(
+                                                  width: ResponsiveUtils.width(context, 30),
+                                                  height: ResponsiveUtils.height(context, 30),
+                                                  child:
+                                                      CircularProgressIndicator(
+                                                    valueColor:
+                                                        AlwaysStoppedAnimation<
+                                                            Color>(
+                                                      FlutterFlowTheme.of(
+                                                              context)
+                                                          .primary,
+                                                    ),
+                                                    strokeWidth: ResponsiveUtils.width(context, 2),
+                                                  ),
                                                 ),
                                               ),
-                                            );
-                                          },
-                                          errorWidget: (context, url, error) {
-                                            Logger.error(
-                                                'Error loading profile image',
-                                                error);
-                                            return Container(
+                                            ),
+                                            errorWidget:
+                                                (context, url, error) => Icon(
+                                              Icons.error_outline_rounded,
                                               color:
                                                   FlutterFlowTheme.of(context)
-                                                      .secondaryBackground,
-                                              child: Lottie.asset(
-                                                'assets/lottie/error_avatar.json',
-                                                width: 80,
-                                                height: 80,
-                                              ),
-                                            );
-                                          },
+                                                      .error,
+                                              size: ResponsiveUtils.iconSize(context, 40),
+                                            ),
+                                          ),
+                                  ),
+                                  // Upload overlay
+                                  Positioned.fill(
+                                    child: AnimatedOpacity(
+                                      opacity: _isHovering ? 0.85 : 0.0,
+                                      duration:
+                                          const Duration(milliseconds: 200),
+                                      child: Container(
+                                        decoration: BoxDecoration(
+                                          gradient: LinearGradient(
+                                            begin: Alignment.topCenter,
+                                            end: Alignment.bottomCenter,
+                                            colors: [
+                                              FlutterFlowTheme.of(context)
+                                                  .primary
+                                                  .withOpacity(0.5),
+                                              FlutterFlowTheme.of(context)
+                                                  .primary
+                                                  .withOpacity(0.7),
+                                            ],
+                                          ),
                                         ),
-                            ),
-
-                            // Overlay with gradient for better readability of upload icon
-                            if (!_isDataUploading)
-                              AnimatedOpacity(
-                                opacity: _isHovering ? 0.7 : 0.0,
-                                duration: const Duration(milliseconds: 200),
-                                child: Container(
-                                  decoration: BoxDecoration(
-                                    shape: BoxShape.circle,
-                                    gradient: LinearGradient(
-                                      colors: [
-                                        FlutterFlowTheme.of(context)
-                                            .primary
-                                            .withOpacity(0.1),
-                                        FlutterFlowTheme.of(context)
-                                            .primary
-                                            .withOpacity(0.6),
-                                      ],
-                                      begin: Alignment.topCenter,
-                                      end: Alignment.bottomCenter,
-                                    ),
-                                  ),
-                                ),
-                              ),
-
-                            // Upload icon
-                            if (!_isDataUploading)
-                              AnimatedOpacity(
-                                opacity: _isHovering ? 1.0 : 0.0,
-                                duration: const Duration(milliseconds: 200),
-                                child: Icon(
-                                  Icons.camera_alt_rounded,
-                                  color: Colors.white,
-                                  size: 40,
-                                ),
-                              ),
-
-                            // Edit badge indicator in center (replaces the positioned one)
-                            if (!_isDataUploading)
-                              AnimatedOpacity(
-                                opacity: _isHovering ? 0 : 0.9,
-                                duration: const Duration(milliseconds: 200),
-                                child: Container(
-                                  padding: const EdgeInsets.all(10),
-                                  decoration: BoxDecoration(
-                                    color: FlutterFlowTheme.of(context)
-                                        .primary
-                                        .withOpacity(0.8),
-                                    shape: BoxShape.circle,
-                                    border: Border.all(
-                                      color: FlutterFlowTheme.of(context)
-                                          .secondaryBackground,
-                                      width: 2,
-                                    ),
-                                    boxShadow: [
-                                      BoxShadow(
-                                        color: Colors.black.withOpacity(0.2),
-                                        blurRadius: 5,
-                                        offset: const Offset(0, 2),
+                                        child: Center(
+                                          child: Icon(
+                                            Icons.camera_alt_rounded,
+                                            color: FlutterFlowTheme.of(context)
+                                                .info,
+                                            size: ResponsiveUtils.iconSize(context, 36),
+                                          ),
+                                        ),
                                       ),
-                                    ],
+                                    ),
                                   ),
-                                  child: const Icon(
-                                    Icons.upload,
-                                    color: Colors.white,
-                                    size: 30,
-                                  ),
-                                ),
+                                  // Edit indicator
+                                  if (!_isHovering)
+                                    Positioned(
+                                      bottom: ResponsiveUtils.height(context, 0),
+                                      right: ResponsiveUtils.width(context, 0),
+                                      child: Container(
+                                        width: ResponsiveUtils.width(context, 36),
+                                        height: ResponsiveUtils.height(context, 36),
+                                        decoration: BoxDecoration(
+                                          color: FlutterFlowTheme.of(context)
+                                              .primary,
+                                          shape: BoxShape.circle,
+                                          boxShadow: [
+                                            BoxShadow(
+                                              color: FlutterFlowTheme.of(context)
+                                                  .primaryText
+                                                  .withOpacity(0.25),
+                                              blurRadius: ResponsiveUtils.width(context, 4),
+                                              offset: Offset(0, ResponsiveUtils.height(context, 2)),
+                                            ),
+                                          ],
+                                        ),
+                                        child: Center(
+                                          child: Icon(
+                                            Icons.edit_rounded,
+                                            color: FlutterFlowTheme.of(context)
+                                                .info,
+                                            size: ResponsiveUtils.iconSize(context, 18),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                ],
                               ),
-                          ],
-                        ),
                       ),
                     ),
                   ),

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/componants/Styles.dart';
 import '/flutter_flow/flutter_flow_util.dart';
+import 'package:iron_fit/utils/responsive_utils.dart';
 
 class SubscriptionEmptyState extends StatelessWidget {
   final VoidCallback loadData;
@@ -11,7 +12,7 @@ class SubscriptionEmptyState extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       alignment: AlignmentDirectional.center,
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 24),
+      padding: ResponsiveUtils.padding(context, horizontal: 16, vertical: 24),
       decoration: BoxDecoration(
         gradient: LinearGradient(
           begin: Alignment.topCenter,
@@ -21,10 +22,10 @@ class SubscriptionEmptyState extends StatelessWidget {
             FlutterFlowTheme.of(context).primaryBackground,
           ],
         ),
-        borderRadius: BorderRadius.circular(16),
+        borderRadius: BorderRadius.circular(ResponsiveUtils.width(context, 16)),
         border: Border.all(
           color: FlutterFlowTheme.of(context).alternate,
-          width: 1,
+          width: ResponsiveUtils.width(context, 1),
         ),
       ),
       child: SingleChildScrollView(
@@ -33,27 +34,27 @@ class SubscriptionEmptyState extends StatelessWidget {
           children: [
             Container(
               width: double.infinity,
-              padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 12),
+              padding: ResponsiveUtils.padding(context, vertical: 16, horizontal: 12),
               decoration: BoxDecoration(
                 color: FlutterFlowTheme.of(context)
                     .primaryBackground
                     .withValues(alpha: 0.3),
-                borderRadius: BorderRadius.circular(12),
+                borderRadius: BorderRadius.circular(ResponsiveUtils.width(context, 12)),
               ),
               child: Column(
                 children: [
                   Icon(
                     Icons.subscriptions_outlined,
-                    size: 48,
+                    size: ResponsiveUtils.iconSize(context, 48),
                     color: FlutterFlowTheme.of(context).primary,
                   ),
-                  const SizedBox(height: 8),
+                  SizedBox(height: ResponsiveUtils.height(context, 8)),
                   Text(
                     FFLocalizations.of(context).getText('noSubscriptionsFound'),
                     textAlign: TextAlign.center,
                     style: AppStyles.textCairo(
                       context,
-                      fontSize: 18,
+                      fontSize: ResponsiveUtils.fontSize(context, 18),
                       fontWeight: FontWeight.bold,
                       color: FlutterFlowTheme.of(context).primary,
                     ),
@@ -61,16 +62,16 @@ class SubscriptionEmptyState extends StatelessWidget {
                 ],
               ),
             ),
-            const SizedBox(height: 16),
+            SizedBox(height: ResponsiveUtils.height(context, 16)),
             Container(
               width: double.infinity,
-              padding: const EdgeInsets.all(12),
+              padding: ResponsiveUtils.padding(context, horizontal: 12, vertical: 12),
               decoration: BoxDecoration(
                 color: FlutterFlowTheme.of(context).primaryBackground,
-                borderRadius: BorderRadius.circular(12),
+                borderRadius: BorderRadius.circular(ResponsiveUtils.width(context, 12)),
                 border: Border.all(
                   color: FlutterFlowTheme.of(context).alternate,
-                  width: 1,
+                  width: ResponsiveUtils.width(context, 1),
                 ),
               ),
               child: Column(
@@ -81,19 +82,19 @@ class SubscriptionEmptyState extends StatelessWidget {
                     textAlign: TextAlign.center,
                     style: AppStyles.textCairo(
                       context,
-                      fontSize: 14,
+                      fontSize: ResponsiveUtils.fontSize(context, 14),
                       color: FlutterFlowTheme.of(context).secondaryText,
                     ),
                   ),
-                  const SizedBox(height: 12),
+                  SizedBox(height: ResponsiveUtils.height(context, 12)),
                   Wrap(
                     alignment: WrapAlignment.center,
                     crossAxisAlignment: WrapCrossAlignment.center,
-                    spacing: 8,
+                    spacing: ResponsiveUtils.width(context, 8),
                     children: [
                       Icon(
                         Icons.info_outline,
-                        size: 16,
+                        size: ResponsiveUtils.iconSize(context, 16),
                         color: FlutterFlowTheme.of(context).secondaryText,
                       ),
                       Text(
@@ -101,21 +102,24 @@ class SubscriptionEmptyState extends StatelessWidget {
                         FFLocalizations.of(context).getText('contactTrainer'),
                         style: AppStyles.textCairo(
                           context,
-                          fontSize: 14,
+                          fontSize: ResponsiveUtils.fontSize(context, 14),
                           color: FlutterFlowTheme.of(context).secondaryText,
                         ),
                       ),
                     ],
                   ),
-                  const SizedBox(height: 16),
+                  SizedBox(height: ResponsiveUtils.height(context, 16)),
                   ElevatedButton.icon(
                     onPressed: loadData,
-                    icon: const Icon(Icons.refresh_rounded),
+                    icon: Icon(
+                      Icons.refresh_rounded,
+                      size: ResponsiveUtils.iconSize(context, 16),
+                    ),
                     label: Text(
                       FFLocalizations.of(context).getText('refresh'),
                       style: AppStyles.textCairo(
                         context,
-                        fontSize: 14,
+                        fontSize: ResponsiveUtils.fontSize(context, 14),
                         color: FlutterFlowTheme.of(context).black,
                         fontWeight: FontWeight.w700,
                       ),
@@ -124,10 +128,10 @@ class SubscriptionEmptyState extends StatelessWidget {
                       backgroundColor: FlutterFlowTheme.of(context).primary,
                       foregroundColor:
                           FlutterFlowTheme.of(context).primaryBackground,
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 16, vertical: 8),
+                      padding: ResponsiveUtils.padding(
+                          context, horizontal: 16, vertical: 8),
                       shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(8),
+                        borderRadius: BorderRadius.circular(ResponsiveUtils.width(context, 8)),
                       ),
                     ),
                   ),

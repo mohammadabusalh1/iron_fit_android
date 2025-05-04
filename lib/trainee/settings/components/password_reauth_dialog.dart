@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:iron_fit/utils/responsive_utils.dart';
 import '/componants/Styles.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
@@ -23,16 +24,13 @@ class _PasswordReauthDialogState extends State<PasswordReauthDialog>
   late AnimationController _animationController;
   late Animation<double> _scaleAnimation;
 
-  // Constant widgets
-  static const SizedBox _sizedBox8 = SizedBox(height: 8);
-  static const SizedBox _sizedBox12 = SizedBox(width: 12);
-  static const SizedBox _sizedBox16 = SizedBox(height: 16);
-  static const SizedBox _sizedBox24 = SizedBox(height: 24);
-  static const EdgeInsets _contentPadding = EdgeInsets.symmetric(
-    horizontal: 16,
-    vertical: 16,
-  );
-  static const EdgeInsets _dialogPadding = EdgeInsets.all(24);
+  // Responsive SizedBox and EdgeInsets
+  late SizedBox _sizedBox8;
+  late SizedBox _sizedBox12;
+  late SizedBox _sizedBox16;
+  late SizedBox _sizedBox24;
+  late EdgeInsetsGeometry _contentPadding;
+  late EdgeInsetsGeometry _dialogPadding;
 
   @override
   void initState() {
@@ -57,6 +55,26 @@ class _PasswordReauthDialogState extends State<PasswordReauthDialog>
     });
   }
 
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    // Initialize responsive widgets
+    _sizedBox8 = SizedBox(height: ResponsiveUtils.height(context, 8));
+    _sizedBox12 = SizedBox(width: ResponsiveUtils.width(context, 12));
+    _sizedBox16 = SizedBox(height: ResponsiveUtils.height(context, 16));
+    _sizedBox24 = SizedBox(height: ResponsiveUtils.height(context, 24));
+    _contentPadding = ResponsiveUtils.padding(
+      context,
+      horizontal: 16,
+      vertical: 16,
+    );
+    _dialogPadding = ResponsiveUtils.padding(
+      context,
+      horizontal: 24,
+      vertical: 24,
+    );
+  }
+
   void _validatePassword() {
     setState(() {
       _isPasswordValid = _passwordController.text.trim().length >= 6;
@@ -74,8 +92,8 @@ class _PasswordReauthDialogState extends State<PasswordReauthDialog>
 
   @override
   Widget build(BuildContext context) {
-    final borderRadius = BorderRadius.circular(20);
-    final inputBorderRadius = BorderRadius.circular(14);
+    final borderRadius = BorderRadius.circular(ResponsiveUtils.width(context, 20));
+    final inputBorderRadius = BorderRadius.circular(ResponsiveUtils.width(context, 14));
 
     return GestureDetector(
       onTap: () => FocusScope.of(context).unfocus(),
@@ -108,8 +126,8 @@ class _PasswordReauthDialogState extends State<PasswordReauthDialog>
                 Align(
                   alignment: Alignment.center,
                   child: Container(
-                    width: 70,
-                    height: 70,
+                    width: ResponsiveUtils.width(context, 70),
+                    height: ResponsiveUtils.height(context, 70),
                     decoration: BoxDecoration(
                       color:
                           FlutterFlowTheme.of(context).primary.withOpacity(0.1),
@@ -117,7 +135,7 @@ class _PasswordReauthDialogState extends State<PasswordReauthDialog>
                     ),
                     child: Icon(
                       Icons.lock_outline_rounded,
-                      size: 32,
+                      size: ResponsiveUtils.iconSize(context, 32),
                       color: FlutterFlowTheme.of(context).primary,
                     ),
                   ),
@@ -128,7 +146,7 @@ class _PasswordReauthDialogState extends State<PasswordReauthDialog>
                   style: AppStyles.textCairo(
                     context,
                     fontWeight: FontWeight.bold,
-                    fontSize: 20,
+                    fontSize: ResponsiveUtils.fontSize(context, 20),
                   ),
                 ),
                 _sizedBox8,
@@ -137,7 +155,7 @@ class _PasswordReauthDialogState extends State<PasswordReauthDialog>
                   style: AppStyles.textCairo(
                     context,
                     color: FlutterFlowTheme.of(context).secondaryText,
-                    fontSize: 14,
+                    fontSize: ResponsiveUtils.fontSize(context, 14),
                   ),
                 ),
                 _sizedBox16,
@@ -150,14 +168,14 @@ class _PasswordReauthDialogState extends State<PasswordReauthDialog>
                     hintStyle: AppStyles.textCairo(
                       context,
                       color: FlutterFlowTheme.of(context).secondaryText,
-                      fontSize: 14,
+                      fontSize: ResponsiveUtils.fontSize(context, 14),
                     ),
                     prefixIcon: Icon(
                       Icons.password_rounded,
                       color: _passwordFocusNode.hasFocus
                           ? FlutterFlowTheme.of(context).primary
                           : FlutterFlowTheme.of(context).secondaryText,
-                      size: 20,
+                      size: ResponsiveUtils.iconSize(context, 20),
                     ),
                     enabledBorder: OutlineInputBorder(
                       borderSide: BorderSide(
@@ -187,13 +205,13 @@ class _PasswordReauthDialogState extends State<PasswordReauthDialog>
                             ? Icons.visibility_off_outlined
                             : Icons.visibility_outlined,
                         color: FlutterFlowTheme.of(context).secondaryText,
-                        size: 22,
+                        size: ResponsiveUtils.iconSize(context, 22),
                       ),
                     ),
                   ),
                   style: AppStyles.textCairo(
                     context,
-                    fontSize: 14,
+                    fontSize: ResponsiveUtils.fontSize(context, 14),
                   ),
                   onFieldSubmitted: (_) {
                     if (_isPasswordValid) {
@@ -216,13 +234,13 @@ class _PasswordReauthDialogState extends State<PasswordReauthDialog>
                         },
                         text: FFLocalizations.of(context).getText('cancel'),
                         options: FFButtonOptions(
-                          height: 50,
+                          height: ResponsiveUtils.height(context, 50),
                           color:
                               FlutterFlowTheme.of(context).secondaryBackground,
                           textStyle: AppStyles.textCairo(
                             context,
                             color: FlutterFlowTheme.of(context).primaryText,
-                            fontSize: 14,
+                            fontSize: ResponsiveUtils.fontSize(context, 14),
                             fontWeight: FontWeight.w600,
                           ),
                           elevation: 0,
@@ -248,20 +266,19 @@ class _PasswordReauthDialogState extends State<PasswordReauthDialog>
                             : null,
                         text: FFLocalizations.of(context).getText('confirm'),
                         options: FFButtonOptions(
-                          height: 50,
+                          height: ResponsiveUtils.height(context, 50),
                           color: FlutterFlowTheme.of(context).primary,
                           textStyle: AppStyles.textCairo(
                             context,
                             color: Colors.white,
-                            fontSize: 14,
+                            fontSize: ResponsiveUtils.fontSize(context, 14),
                             fontWeight: FontWeight.w600,
                           ),
                           elevation: 0,
-                          disabledColor:
-                              FlutterFlowTheme.of(context).primaryBackground,
-                          disabledTextColor:
-                              FlutterFlowTheme.of(context).secondaryText,
                           borderRadius: inputBorderRadius,
+                          disabledColor: FlutterFlowTheme.of(context)
+                              .alternate
+                              .withOpacity(0.3),
                         ),
                       ),
                     ),

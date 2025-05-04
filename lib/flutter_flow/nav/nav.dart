@@ -22,6 +22,7 @@ import '/flutter_flow/flutter_flow_util.dart';
 export 'package:go_router/go_router.dart';
 export 'serialization_util.dart';
 import '/auth/firebase_auth/auth_util.dart';
+import 'package:iron_fit/utils/notification_test_page.dart';
 
 const kTransitionInfoKey = '__transition_info__';
 
@@ -98,7 +99,7 @@ Widget _waitForAuthAndInitialize(BuildContext context) {
         );
       }
 
-      // return UserTypePage();
+      // return const NotificationTestPage();
 
       // Store state in local variables to avoid multiple calls
       final appState = FFAppState();

@@ -10,6 +10,7 @@ import 'package:flutter/material.dart';
 import 'renew_sub_model.dart';
 export 'renew_sub_model.dart';
 import '/utils/logger.dart';
+import '/utils/responsive_utils.dart';
 
 class RenewSubWidget extends StatefulWidget {
   const RenewSubWidget({
@@ -73,13 +74,14 @@ class _RenewSubWidgetState extends State<RenewSubWidget> {
             Icon(
               Icons.error_outline,
               color: FlutterFlowTheme.of(context).error,
+              size: ResponsiveUtils.iconSize(context, 24),
             ),
-            const SizedBox(width: 8),
+            SizedBox(width: ResponsiveUtils.width(context, 8)),
             Text(
               FFLocalizations.of(context).getText('error'),
               style: AppStyles.textCairo(
                 context,
-                fontSize: 16,
+                fontSize: ResponsiveUtils.fontSize(context, 16),
                 fontWeight: FontWeight.bold,
               ),
             ),
@@ -89,7 +91,7 @@ class _RenewSubWidgetState extends State<RenewSubWidget> {
           message,
           style: AppStyles.textCairo(
             context,
-            fontSize: 14,
+            fontSize: ResponsiveUtils.fontSize(context, 14),
           ),
         ),
         actions: [
@@ -99,7 +101,7 @@ class _RenewSubWidgetState extends State<RenewSubWidget> {
               FFLocalizations.of(context).getText('ok'),
               style: AppStyles.textCairo(
                 context,
-                fontSize: 14,
+                fontSize: ResponsiveUtils.fontSize(context, 14),
                 color: FlutterFlowTheme.of(context).primary,
               ),
             ),
@@ -209,16 +211,16 @@ class _RenewSubWidgetState extends State<RenewSubWidget> {
           ),
           child: Padding(
             padding: EdgeInsets.fromLTRB(
-              16.0,
-              40,
-              16.0,
+              ResponsiveUtils.width(context, 16.0),
+              ResponsiveUtils.height(context, 40),
+              ResponsiveUtils.width(context, 16.0),
               MediaQuery.of(context).viewInsets.bottom,
             ),
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
                 _buildHeader(context),
-                const SizedBox(height: 24),
+                SizedBox(height: ResponsiveUtils.height(context, 24)),
                 TextFormField(
                   controller: _model.startDate,
                   focusNode: _model.startDateFocusNode,
@@ -260,11 +262,16 @@ class _RenewSubWidgetState extends State<RenewSubWidget> {
                     ),
                     filled: true,
                     fillColor: FlutterFlowTheme.of(context).secondaryBackground,
-                    contentPadding:
-                        const EdgeInsetsDirectional.fromSTEB(16, 24, 16, 24),
+                    contentPadding: EdgeInsetsDirectional.fromSTEB(
+                      ResponsiveUtils.width(context, 16),
+                      ResponsiveUtils.height(context, 24),
+                      ResponsiveUtils.width(context, 16),
+                      ResponsiveUtils.height(context, 24),
+                    ),
                     prefixIcon: Icon(
                       Icons.calendar_today,
                       color: FlutterFlowTheme.of(context).secondaryText,
+                      size: ResponsiveUtils.iconSize(context, 24),
                     ),
                   ),
                   style: FlutterFlowTheme.of(context).bodyMedium,
@@ -294,7 +301,8 @@ class _RenewSubWidgetState extends State<RenewSubWidget> {
                             textButtonTheme: TextButtonThemeData(
                               style: TextButton.styleFrom(
                                 textStyle: AppStyles.textCairo(context,
-                                    fontSize: 16, fontWeight: FontWeight.w600),
+                                    fontSize: ResponsiveUtils.fontSize(context, 16), 
+                                    fontWeight: FontWeight.w600),
                               ),
                             ),
                           ),
@@ -315,7 +323,7 @@ class _RenewSubWidgetState extends State<RenewSubWidget> {
                       duration: 300.ms,
                       curve: Curves.easeOutBack,
                     ),
-                const SizedBox(height: 16),
+                SizedBox(height: ResponsiveUtils.height(context, 16)),
                 TextFormField(
                   controller: _model.endDate,
                   focusNode: _model.endDateFocusNode,
@@ -357,11 +365,16 @@ class _RenewSubWidgetState extends State<RenewSubWidget> {
                     ),
                     filled: true,
                     fillColor: FlutterFlowTheme.of(context).secondaryBackground,
-                    contentPadding:
-                        const EdgeInsetsDirectional.fromSTEB(16, 24, 16, 24),
+                    contentPadding: EdgeInsetsDirectional.fromSTEB(
+                      ResponsiveUtils.width(context, 16),
+                      ResponsiveUtils.height(context, 24),
+                      ResponsiveUtils.width(context, 16),
+                      ResponsiveUtils.height(context, 24),
+                    ),
                     prefixIcon: Icon(
                       Icons.calendar_today,
                       color: FlutterFlowTheme.of(context).secondaryText,
+                      size: ResponsiveUtils.iconSize(context, 24),
                     ),
                   ),
                   style: FlutterFlowTheme.of(context).bodyMedium,
@@ -391,7 +404,8 @@ class _RenewSubWidgetState extends State<RenewSubWidget> {
                             textButtonTheme: TextButtonThemeData(
                               style: TextButton.styleFrom(
                                 textStyle: AppStyles.textCairo(context,
-                                    fontSize: 16, fontWeight: FontWeight.w600),
+                                    fontSize: ResponsiveUtils.fontSize(context, 16), 
+                                    fontWeight: FontWeight.w600),
                               ),
                             ),
                           ),
@@ -412,7 +426,7 @@ class _RenewSubWidgetState extends State<RenewSubWidget> {
                       duration: 300.ms,
                       curve: Curves.easeOutBack,
                     ),
-                const SizedBox(height: 16),
+                SizedBox(height: ResponsiveUtils.height(context, 16)),
                 _buildAmountPaidField(context)
                     .animate()
                     .fadeIn(delay: 300.ms)
@@ -422,7 +436,7 @@ class _RenewSubWidgetState extends State<RenewSubWidget> {
                       duration: 300.ms,
                       curve: Curves.easeOutBack,
                     ),
-                const SizedBox(height: 16),
+                SizedBox(height: ResponsiveUtils.height(context, 16)),
                 _buildDebtsField(context)
                     .animate()
                     .fadeIn(delay: 400.ms)
@@ -432,7 +446,7 @@ class _RenewSubWidgetState extends State<RenewSubWidget> {
                       duration: 300.ms,
                       curve: Curves.easeOutBack,
                     ),
-                const SizedBox(height: 24),
+                SizedBox(height: ResponsiveUtils.height(context, 24)),
                 _buildRenewButton(context)
                     .animate()
                     .fadeIn(delay: 500.ms)
@@ -442,7 +456,7 @@ class _RenewSubWidgetState extends State<RenewSubWidget> {
                       duration: 300.ms,
                       curve: Curves.easeOutBack,
                     ),
-                const SizedBox(height: 24),
+                SizedBox(height: ResponsiveUtils.height(context, 24)),
               ],
             ),
           ),
@@ -460,7 +474,7 @@ class _RenewSubWidgetState extends State<RenewSubWidget> {
         Row(
           children: [
             Container(
-              padding: const EdgeInsets.all(8),
+              padding: EdgeInsets.all(ResponsiveUtils.width(context, 8)),
               decoration: BoxDecoration(
                 color: theme.primary.withOpacity(0.1),
                 borderRadius: BorderRadius.circular(12),
@@ -468,15 +482,15 @@ class _RenewSubWidgetState extends State<RenewSubWidget> {
               child: Icon(
                 Icons.workspace_premium,
                 color: theme.primary,
-                size: 24,
+                size: ResponsiveUtils.iconSize(context, 24),
               ),
             ),
-            const SizedBox(width: 12),
+            SizedBox(width: ResponsiveUtils.width(context, 12)),
             Text(
               FFLocalizations.of(context).getText('d34tbdlp'),
               style: AppStyles.textCairo(
                 context,
-                fontSize: 20,
+                fontSize: ResponsiveUtils.fontSize(context, 20),
                 fontWeight: FontWeight.w600,
               ),
             ),
@@ -486,11 +500,12 @@ class _RenewSubWidgetState extends State<RenewSubWidget> {
           icon: Icon(
             Icons.close,
             color: theme.secondaryText,
+            size: ResponsiveUtils.iconSize(context, 24),
           ),
           onPressed: () => Navigator.pop(context),
           padding: EdgeInsets.zero,
           constraints: const BoxConstraints(),
-          splashRadius: 24,
+          splashRadius: ResponsiveUtils.width(context, 24),
         ),
       ],
     );
@@ -546,12 +561,12 @@ class _RenewSubWidgetState extends State<RenewSubWidget> {
       text: FFLocalizations.of(context).getText('ivengb0e'),
       options: FFButtonOptions(
         width: double.infinity,
-        height: 56.0,
+        height: ResponsiveUtils.height(context, 56.0),
         padding: EdgeInsets.zero,
         color: FlutterFlowTheme.of(context).primary,
         textStyle: AppStyles.textCairo(
           context,
-          fontSize: 16,
+          fontSize: ResponsiveUtils.fontSize(context, 16),
           fontWeight: FontWeight.w600,
           color: Colors.white,
         ),
@@ -596,7 +611,7 @@ class _FormField extends StatelessWidget {
         ],
       ),
       child: Padding(
-        padding: const EdgeInsets.all(16.0),
+        padding: EdgeInsets.all(ResponsiveUtils.width(context, 16.0)),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -607,15 +622,15 @@ class _FormField extends StatelessWidget {
                   label,
                   style: AppStyles.textCairo(
                     context,
-                    fontSize: 14,
+                    fontSize: ResponsiveUtils.fontSize(context, 14),
                     fontWeight: FontWeight.w600,
                     color: theme.primaryText.withOpacity(0.9),
                   ),
                 ),
-                const SizedBox(width: 4),
+                SizedBox(width: ResponsiveUtils.width(context, 4)),
                 Container(
-                  width: 4,
-                  height: 4,
+                  width: ResponsiveUtils.width(context, 4),
+                  height: ResponsiveUtils.width(context, 4),
                   decoration: BoxDecoration(
                     color: theme.primary.withOpacity(0.8),
                     shape: BoxShape.circle,
@@ -623,7 +638,7 @@ class _FormField extends StatelessWidget {
                 ),
               ],
             ),
-            const SizedBox(height: 12),
+            SizedBox(height: ResponsiveUtils.height(context, 12)),
             child,
           ],
         ),
@@ -659,7 +674,7 @@ class _CustomTextField extends StatelessWidget {
       focusNode: focusNode,
       style: AppStyles.textCairo(
         context,
-        fontSize: 16,
+        fontSize: ResponsiveUtils.fontSize(context, 16),
         color: theme.primaryText,
       ),
       keyboardType: const TextInputType.numberWithOptions(decimal: true),
@@ -695,7 +710,7 @@ class _CustomTextField extends StatelessWidget {
         hintStyle: AppStyles.textCairo(
           context,
           color: theme.secondaryText.withOpacity(0.7),
-          fontSize: 16,
+          fontSize: ResponsiveUtils.fontSize(context, 16),
         ),
         enabledBorder: OutlineInputBorder(
           borderSide: BorderSide(
@@ -730,13 +745,13 @@ class _CustomTextField extends StatelessWidget {
         prefixText: '\$ ',
         prefixStyle: AppStyles.textCairo(
           context,
-          fontSize: 16,
+          fontSize: ResponsiveUtils.fontSize(context, 16),
           color: theme.primaryText,
           fontWeight: FontWeight.w600,
         ),
-        contentPadding: const EdgeInsets.symmetric(
-          horizontal: 16.0,
-          vertical: 16.0,
+        contentPadding: EdgeInsets.symmetric(
+          horizontal: ResponsiveUtils.width(context, 16.0),
+          vertical: ResponsiveUtils.height(context, 16.0),
         ),
         suffixIcon: AnimatedContainer(
           duration: const Duration(milliseconds: 200),
@@ -745,7 +760,7 @@ class _CustomTextField extends StatelessWidget {
             color: focusNode.hasFocus
                 ? theme.primary
                 : theme.secondaryText.withOpacity(0.7),
-            size: 20,
+            size: ResponsiveUtils.iconSize(context, 20),
           ),
         ),
       ),

@@ -4,6 +4,7 @@ import 'package:iron_fit/backend/schema/structs/index.dart';
 import 'package:iron_fit/componants/Styles.dart';
 import 'package:iron_fit/flutter_flow/flutter_flow_theme.dart';
 import 'package:iron_fit/flutter_flow/flutter_flow_util.dart';
+import 'package:iron_fit/utils/responsive_utils.dart';
 
 class DaySelectionView extends StatelessWidget {
   final List<String> weekDays;
@@ -26,7 +27,7 @@ class DaySelectionView extends StatelessWidget {
     final bool isEditMode = editingDay != null;
 
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 16),
+      padding: ResponsiveUtils.padding(context, horizontal: 24.0, vertical: 16),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -41,7 +42,7 @@ class DaySelectionView extends StatelessWidget {
                     : FFLocalizations.of(context).getText('isftiu1s'),
                 style: AppStyles.textCairo(
                   context,
-                  fontSize: 28,
+                  fontSize: ResponsiveUtils.fontSize(context, 28),
                   fontWeight: FontWeight.bold,
                 ),
               ),
@@ -52,38 +53,38 @@ class DaySelectionView extends StatelessWidget {
                 child: Icon(
                   Icons.close_rounded,
                   color: FlutterFlowTheme.of(context).secondaryText,
-                  size: 28,
+                  size: ResponsiveUtils.iconSize(context, 28),
                 ),
               ),
             ],
           ),
-          const SizedBox(height: 4),
+          SizedBox(height: ResponsiveUtils.height(context, 4)),
           Text(
             FFLocalizations.of(context).getText('o89ikb3u'),
             style: AppStyles.textCairo(
               context,
-              fontSize: 16,
+              fontSize: ResponsiveUtils.fontSize(context, 16),
               color: FlutterFlowTheme.of(context).secondaryText,
             ),
           ),
-          const SizedBox(height: 8),
+          SizedBox(height: ResponsiveUtils.height(context, 8)),
           Text(
             isEditMode
                 ? FFLocalizations.of(context).getText('multiple_days_hint_edit')
                 : FFLocalizations.of(context).getText('multiple_days_hint'),
             style: AppStyles.textCairo(
               context,
-              fontSize: 14,
+              fontSize: ResponsiveUtils.fontSize(context, 14),
               color: FlutterFlowTheme.of(context).primary,
               fontStyle: FontStyle.italic,
             ),
           ),
-          const SizedBox(height: 24),
+          SizedBox(height: ResponsiveUtils.height(context, 24)),
           Expanded(
             child: ListView.separated(
               physics: const BouncingScrollPhysics(),
               itemCount: weekDays.length,
-              separatorBuilder: (context, index) => const SizedBox(height: 16),
+              separatorBuilder: (context, index) => SizedBox(height: ResponsiveUtils.height(context, 16)),
               itemBuilder: (context, index) {
                 final day = weekDays[index];
                 final isSelected = selectedDays.contains(day);
@@ -131,7 +132,7 @@ class DaySelectionView extends StatelessWidget {
                 },
           borderRadius: BorderRadius.circular(16),
           child: Container(
-            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
+            padding: ResponsiveUtils.padding(context, horizontal: 20, vertical: 16),
             decoration: BoxDecoration(
               gradient: isSelected
                   ? LinearGradient(
@@ -180,8 +181,8 @@ class DaySelectionView extends StatelessWidget {
             child: Row(
               children: [
                 Container(
-                  width: 48,
-                  height: 48,
+                  width: ResponsiveUtils.width(context, 48),
+                  height: ResponsiveUtils.height(context, 48),
                   decoration: BoxDecoration(
                     color: isSelected
                         ? FlutterFlowTheme.of(context).primary
@@ -195,7 +196,7 @@ class DaySelectionView extends StatelessWidget {
                       abbreviation,
                       style: AppStyles.textCairo(
                         context,
-                        fontSize: 14,
+                        fontSize: ResponsiveUtils.fontSize(context, 14),
                         fontWeight: FontWeight.bold,
                         color: isSelected
                             ? Colors.white
@@ -206,7 +207,7 @@ class DaySelectionView extends StatelessWidget {
                     ),
                   ),
                 ),
-                const SizedBox(width: 16),
+                SizedBox(width: ResponsiveUtils.width(context, 16)),
                 Expanded(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -215,7 +216,7 @@ class DaySelectionView extends StatelessWidget {
                         day,
                         style: AppStyles.textCairo(
                           context,
-                          fontSize: 16,
+                          fontSize: ResponsiveUtils.fontSize(context, 16),
                           fontWeight: FontWeight.w600,
                           color: isDisabled
                               ? FlutterFlowTheme.of(context).alternate
@@ -227,7 +228,7 @@ class DaySelectionView extends StatelessWidget {
                           FFLocalizations.of(context).getText('already_added'),
                           style: AppStyles.textCairo(
                             context,
-                            fontSize: 12,
+                            fontSize: ResponsiveUtils.fontSize(context, 12),
                             color: FlutterFlowTheme.of(context).alternate,
                           ),
                         ),
@@ -239,7 +240,7 @@ class DaySelectionView extends StatelessWidget {
                               .getText('already_in_plan'),
                           style: AppStyles.textCairo(
                             context,
-                            fontSize: 12,
+                            fontSize: ResponsiveUtils.fontSize(context, 12),
                             color: FlutterFlowTheme.of(context).secondaryText,
                           ),
                         ),
@@ -248,27 +249,24 @@ class DaySelectionView extends StatelessWidget {
                           FFLocalizations.of(context).getText('current_day'),
                           style: AppStyles.textCairo(
                             context,
-                            fontSize: 12,
+                            fontSize: ResponsiveUtils.fontSize(context, 12),
                             color: FlutterFlowTheme.of(context).primary,
                           ),
                         ),
                     ],
                   ),
                 ),
-                if (isSelected)
-                  Container(
-                    width: 24,
-                    height: 24,
-                    decoration: BoxDecoration(
-                      color: FlutterFlowTheme.of(context).primary,
-                      shape: BoxShape.circle,
-                    ),
-                    child: const Icon(
-                      Icons.check,
-                      size: 16,
-                      color: Colors.white,
-                    ),
-                  ),
+                Icon(
+                  isSelected
+                      ? Icons.check_circle_rounded
+                      : Icons.circle_outlined,
+                  color: isSelected
+                      ? FlutterFlowTheme.of(context).primary
+                      : isDisabled
+                          ? FlutterFlowTheme.of(context).alternate
+                          : FlutterFlowTheme.of(context).secondaryText,
+                  size: ResponsiveUtils.iconSize(context, 24),
+                ),
               ],
             ),
           ),

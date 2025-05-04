@@ -4,6 +4,7 @@ import 'package:iron_fit/componants/Styles.dart';
 import 'package:iron_fit/flutter_flow/flutter_flow_theme.dart';
 import 'package:iron_fit/flutter_flow/flutter_flow_util.dart';
 import 'package:iron_fit/services/trainee_service.dart';
+import 'package:iron_fit/utils/responsive_utils.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 
 /// A widget that displays trainee information in a card format.
@@ -27,37 +28,32 @@ class TraineeCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final screenSize = MediaQuery.of(context).size;
-    final isSmallScreen = screenSize.width < 600;
     return _buildTraineeCard(
       context,
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          _buildUserProfileSection(context, isSmallScreen),
+          _buildUserProfileSection(context),
         ],
       ),
     );
   }
 
   Widget _buildTraineeCard(BuildContext context, {required Widget child}) {
-    final screenSize = MediaQuery.of(context).size;
-    final isSmallScreen = screenSize.width < 600;
-
     return Material(
       color: Colors.transparent,
       elevation: 2.0,
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(isSmallScreen ? 12.0 : 16.0),
+        borderRadius: BorderRadius.circular(ResponsiveUtils.width(context, 16.0)),
       ),
       child: Container(
         width: double.infinity,
         constraints: BoxConstraints(
-          maxWidth: screenSize.width < 1200 ? double.infinity : 1200,
+          maxWidth: MediaQuery.of(context).size.width < 1200 ? double.infinity : 1200,
         ),
         decoration: BoxDecoration(
           color: FlutterFlowTheme.of(context).secondaryBackground,
-          borderRadius: BorderRadius.circular(isSmallScreen ? 12.0 : 16.0),
+          borderRadius: BorderRadius.circular(ResponsiveUtils.width(context, 16.0)),
           border: Border.all(
             color: FlutterFlowTheme.of(context).primary.withAlpha(40),
             width: 1,
@@ -75,44 +71,36 @@ class TraineeCard extends StatelessWidget {
         );
   }
 
-  Widget _buildUserProfileSection(BuildContext context, bool isSmallScreen) {
-    return _buildUnifiedUserProfile(context, isSmallScreen);
+  Widget _buildUserProfileSection(BuildContext context) {
+    return _buildUnifiedUserProfile(context);
   }
 
-  Widget _buildUnifiedUserProfile(BuildContext context, bool isSmallScreen) {
-    final avatarSize = isSmallScreen ? 60.0 : 70.0;
-    final horizontalPadding = isSmallScreen ? 16.0 : 20.0;
-    final verticalPadding = isSmallScreen ? 16.0 : 20.0;
-    final spacing = isSmallScreen ? 12.0 : 16.0;
+  Widget _buildUnifiedUserProfile(BuildContext context) {
+    final avatarSize = ResponsiveUtils.width(context, 70.0);
     final isAnonymous = subscription.isAnonymous;
 
     return Padding(
-        padding: EdgeInsets.symmetric(
-          horizontal: horizontalPadding,
-          vertical: verticalPadding,
-        ),
+        padding: ResponsiveUtils.padding(context, horizontal: 20, vertical: 20),
         child: Column(
           children: [
             Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 _buildAvatar(context, avatarSize, isAnonymous),
-                SizedBox(width: spacing),
+                SizedBox(width: ResponsiveUtils.width(context, 16)),
                 Expanded(
-                  child: _buildUserInfo(
-                      context, isSmallScreen, false, isAnonymous),
+                  child: _buildUserInfo(context, isAnonymous),
                 ),
               ],
             ),
             // Additional trainee information (only for registered users)
             if (!isAnonymous && traineeRecord != null) ...[
-              const SizedBox(height: 8),
+              SizedBox(height: ResponsiveUtils.height(context, 8)),
               Container(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                padding: ResponsiveUtils.padding(context, horizontal: 16, vertical: 12),
                 decoration: BoxDecoration(
                   color: FlutterFlowTheme.of(context).secondaryBackground,
-                  borderRadius: BorderRadius.circular(16),
+                  borderRadius: BorderRadius.circular(ResponsiveUtils.width(context, 16)),
                 ),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -126,7 +114,7 @@ class TraineeCard extends StatelessWidget {
                           ? FFLocalizations.of(context).getText('none')
                           : traineeRecord!.gender,
                     ),
-                    const SizedBox(height: 8),
+                    SizedBox(height: ResponsiveUtils.height(context, 8)),
                     _buildInfoRow(
                       context,
                       icon: Icons.monitor_weight_outlined,
@@ -136,7 +124,7 @@ class TraineeCard extends StatelessWidget {
                           ? FFLocalizations.of(context).getText('none')
                           : '${traineeRecord!.weight} kg',
                     ),
-                    const SizedBox(height: 8),
+                    SizedBox(height: ResponsiveUtils.height(context, 8)),
                     _buildInfoRow(
                       context,
                       icon: Icons.height_outlined,
@@ -191,10 +179,8 @@ class TraineeCard extends StatelessWidget {
     );
   }
 
-  Widget _buildUserInfo(BuildContext context, bool isSmallScreen,
-      bool isCentered, bool isAnonymous) {
-    final textScaler = MediaQuery.of(context).textScaler;
-    final adjustedFontSize = (size) => textScaler.scale(size.toDouble());
+  Widget _buildUserInfo(BuildContext context, bool isAnonymous) {
+    final isCentered = false;
 
     return Column(
       crossAxisAlignment:
@@ -211,7 +197,7 @@ class TraineeCard extends StatelessWidget {
                     : subscription.name,
                 style: AppStyles.textCairo(
                   context,
-                  fontSize: adjustedFontSize(isSmallScreen ? 16 : 18),
+                  fontSize: ResponsiveUtils.fontSize(context, 18),
                   color: FlutterFlowTheme.of(context).primaryText,
                   fontWeight: FontWeight.w600,
                 ),
@@ -221,11 +207,11 @@ class TraineeCard extends StatelessWidget {
                 textAlign: isCentered ? TextAlign.center : TextAlign.start,
               ),
             ),
-            const SizedBox(width: 4),
+            SizedBox(width: ResponsiveUtils.width(context, 4)),
             IconButton(
               icon: Icon(
                 Icons.edit,
-                size: isSmallScreen ? 16 : 18,
+                size: ResponsiveUtils.iconSize(context, 18),
                 color: FlutterFlowTheme.of(context).primary,
               ),
               onPressed: () => _showNameEditDialog(context),
@@ -234,7 +220,7 @@ class TraineeCard extends StatelessWidget {
             ),
           ],
         ),
-        SizedBox(height: isSmallScreen ? 2 : 4),
+        SizedBox(height: ResponsiveUtils.height(context, 4)),
 
         // Email section with copy feature
         Row(
@@ -257,17 +243,17 @@ class TraineeCard extends StatelessWidget {
                                 : userRecord!.email),
                         style: AppStyles.textCairo(
                           context,
-                          fontSize: adjustedFontSize(isSmallScreen ? 12 : 14),
+                          fontSize: ResponsiveUtils.fontSize(context, 14),
                           color: FlutterFlowTheme.of(context).secondaryText,
                           decoration: TextDecoration.underline,
                         ),
                         overflow: TextOverflow.ellipsis,
                       ),
                     ),
-                    const SizedBox(width: 4),
+                    SizedBox(width: ResponsiveUtils.width(context, 4)),
                     Icon(
                       Icons.copy_rounded,
-                      size: isSmallScreen ? 12 : 14,
+                      size: ResponsiveUtils.iconSize(context, 14),
                       color: FlutterFlowTheme.of(context).secondaryText,
                     ),
                   ],
@@ -284,7 +270,7 @@ class TraineeCard extends StatelessWidget {
               IconButton(
                 icon: Icon(
                   Icons.edit,
-                  size: isSmallScreen ? 14 : 16,
+                  size: ResponsiveUtils.iconSize(context, 16),
                   color: FlutterFlowTheme.of(context).primary,
                 ),
                 onPressed: () => _showEmailEditDialog(context),
@@ -293,7 +279,7 @@ class TraineeCard extends StatelessWidget {
               ),
           ],
         ),
-        SizedBox(height: isSmallScreen ? 2 : 4),
+        SizedBox(height: ResponsiveUtils.height(context, 4)),
 
         // Membership date section
         Row(
@@ -301,10 +287,10 @@ class TraineeCard extends StatelessWidget {
           children: [
             Icon(
               Icons.calendar_today_rounded,
-              size: isSmallScreen ? 12 : 14,
+              size: ResponsiveUtils.iconSize(context, 14),
               color: FlutterFlowTheme.of(context).primary,
             ),
-            const SizedBox(width: 4),
+            SizedBox(width: ResponsiveUtils.width(context, 4)),
             Flexible(
               child: Text(
                 '${FFLocalizations.of(context).getText('memberSince')}: ${dateTimeFormat(
@@ -314,7 +300,7 @@ class TraineeCard extends StatelessWidget {
                 )}',
                 style: AppStyles.textCairo(
                   context,
-                  fontSize: adjustedFontSize(isSmallScreen ? 10 : 12),
+                  fontSize: ResponsiveUtils.fontSize(context, 12),
                   color: FlutterFlowTheme.of(context).primary,
                 ),
                 overflow: TextOverflow.ellipsis,
@@ -322,10 +308,10 @@ class TraineeCard extends StatelessWidget {
             ),
           ],
         ),
-        SizedBox(height: isSmallScreen ? 4 : 8),
+        SizedBox(height: ResponsiveUtils.height(context, 8)),
 
         // Trainee level display
-        _buildTraineeLevelDisplay(context, isSmallScreen, isCentered),
+        _buildTraineeLevelDisplay(context, isCentered),
       ],
     );
   }
@@ -338,14 +324,14 @@ class TraineeCard extends StatelessWidget {
   }) {
     return Row(
       children: [
-        Icon(icon, size: 20, color: FlutterFlowTheme.of(context).primary),
-        const SizedBox(width: 8),
+        Icon(icon, size: ResponsiveUtils.iconSize(context, 20), color: FlutterFlowTheme.of(context).primary),
+        SizedBox(width: ResponsiveUtils.width(context, 8)),
         Expanded(
           child: Text(
             '$label: $value',
             style: AppStyles.textCairo(
               context,
-              fontSize: 14,
+              fontSize: ResponsiveUtils.fontSize(context, 14),
               color: FlutterFlowTheme.of(context).secondaryText,
             ),
           ),
@@ -354,11 +340,7 @@ class TraineeCard extends StatelessWidget {
     );
   }
 
-  Widget _buildTraineeLevelDisplay(
-      BuildContext context, bool isSmallScreen, bool isCentered) {
-    final textScaler = MediaQuery.of(context).textScaler;
-    final adjustedFontSize = (size) => textScaler.scale(size.toDouble());
-
+  Widget _buildTraineeLevelDisplay(BuildContext context, bool isCentered) {
     // Get level from subscription record
     // The level is stored as a list of strings in the subscription record
     String level = subscription.level;
@@ -406,7 +388,7 @@ class TraineeCard extends StatelessWidget {
     }
 
     return Container(
-      margin: EdgeInsets.symmetric(vertical: isSmallScreen ? 4 : 8),
+      margin: EdgeInsets.symmetric(vertical: ResponsiveUtils.height(context, 8)),
       decoration: BoxDecoration(
         gradient: LinearGradient(
           colors: [
@@ -416,7 +398,7 @@ class TraineeCard extends StatelessWidget {
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
         ),
-        borderRadius: BorderRadius.circular(16),
+        borderRadius: BorderRadius.circular(ResponsiveUtils.width(context, 16)),
         boxShadow: [
           BoxShadow(
             color: getLevelColor(level).withOpacity(0.3),
@@ -425,24 +407,21 @@ class TraineeCard extends StatelessWidget {
           ),
         ],
       ),
-      padding: const EdgeInsets.symmetric(
-        horizontal: 12,
-        vertical: 6,
-      ),
+      padding: ResponsiveUtils.padding(context, horizontal: 12, vertical: 6),
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
           Icon(
             getLevelIcon(level),
-            size: isSmallScreen ? 14 : 16,
+            size: ResponsiveUtils.iconSize(context, 16),
             color: Colors.white,
           ),
-          const SizedBox(width: 4),
+          SizedBox(width: ResponsiveUtils.width(context, 4)),
           Text(
             level,
             style: AppStyles.textCairo(
               context,
-              fontSize: adjustedFontSize(isSmallScreen ? 12 : 14),
+              fontSize: ResponsiveUtils.fontSize(context, 14),
               color: Colors.white,
               fontWeight: FontWeight.w600,
             ),
@@ -467,11 +446,6 @@ class TraineeCard extends StatelessWidget {
   }
 
   void _showNameEditDialog(BuildContext context) {
-    final screenSize = MediaQuery.of(context).size;
-    final isSmallScreen = screenSize.width < 600;
-    final textScaler = MediaQuery.of(context).textScaler;
-    final adjustedFontSize = (size) => textScaler.scale(size.toDouble());
-
     final TextEditingController nameController =
         TextEditingController(text: subscription.name);
     final nameFocusNode = FocusNode();
@@ -488,14 +462,14 @@ class TraineeCard extends StatelessWidget {
           builder: (context22, setState) {
             return Dialog(
               shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(isSmallScreen ? 16 : 20),
+                borderRadius: BorderRadius.circular(ResponsiveUtils.width(context, 20)),
               ),
               elevation: 5,
               child: Container(
-                width: screenSize.width < 600 ? double.infinity : 400,
-                padding: EdgeInsets.all(isSmallScreen ? 16 : 20),
+                width: MediaQuery.of(context).size.width < 600 ? double.infinity : 400,
+                padding: ResponsiveUtils.padding(context, horizontal: 20, vertical: 20),
                 decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(isSmallScreen ? 16 : 20),
+                  borderRadius: BorderRadius.circular(ResponsiveUtils.width(context, 20)),
                   color: FlutterFlowTheme.of(context).secondaryBackground,
                 ),
                 child: Column(
@@ -504,28 +478,27 @@ class TraineeCard extends StatelessWidget {
                     Row(
                       children: [
                         Container(
-                          padding: EdgeInsets.all(isSmallScreen ? 8 : 10),
+                          padding: EdgeInsets.all(ResponsiveUtils.width(context, 8)),
                           decoration: BoxDecoration(
                             color: FlutterFlowTheme.of(context)
                                 .primary
                                 .withAlpha(25),
                             borderRadius:
-                                BorderRadius.circular(isSmallScreen ? 10 : 12),
+                                BorderRadius.circular(ResponsiveUtils.width(context, 10)),
                           ),
                           child: Icon(
                             Icons.person_rounded,
                             color: FlutterFlowTheme.of(context).primary,
-                            size: isSmallScreen ? 20 : 24,
+                            size: ResponsiveUtils.iconSize(context, 20),
                           ),
                         ),
-                        SizedBox(width: isSmallScreen ? 12 : 15),
+                        SizedBox(width: ResponsiveUtils.width(context, 12)),
                         Expanded(
                           child: Text(
                             FFLocalizations.of(context).getText('editName'),
                             style: AppStyles.textCairo(
                               context,
-                              fontSize:
-                                  adjustedFontSize(isSmallScreen ? 18 : 20),
+                              fontSize: ResponsiveUtils.fontSize(context, 18),
                               fontWeight: FontWeight.bold,
                             ),
                           ),
@@ -535,14 +508,14 @@ class TraineeCard extends StatelessWidget {
                           icon: Icon(
                             Icons.close_rounded,
                             color: FlutterFlowTheme.of(context).secondaryText,
-                            size: isSmallScreen ? 20 : 22,
+                            size: ResponsiveUtils.iconSize(context, 20),
                           ),
                           padding: EdgeInsets.zero,
                           constraints: const BoxConstraints(),
                         ),
                       ],
                     ),
-                    SizedBox(height: isSmallScreen ? 20 : 25),
+                    SizedBox(height: ResponsiveUtils.height(context, 20)),
                     TextField(
                       onTap: () {
                         nameController.selection = TextSelection.fromPosition(
@@ -557,35 +530,35 @@ class TraineeCard extends StatelessWidget {
                         prefixIcon: Icon(
                           Icons.edit_rounded,
                           color: FlutterFlowTheme.of(context).primary,
-                          size: isSmallScreen ? 20 : 22,
+                          size: ResponsiveUtils.iconSize(context, 20),
                         ),
                         filled: true,
                         fillColor:
                             FlutterFlowTheme.of(context).primaryBackground,
                         border: OutlineInputBorder(
                           borderRadius:
-                              BorderRadius.circular(isSmallScreen ? 10 : 12),
+                              BorderRadius.circular(ResponsiveUtils.width(context, 10)),
                           borderSide: BorderSide.none,
                         ),
                         focusedBorder: OutlineInputBorder(
                           borderRadius:
-                              BorderRadius.circular(isSmallScreen ? 10 : 12),
+                              BorderRadius.circular(ResponsiveUtils.width(context, 10)),
                           borderSide: BorderSide(
                             color: FlutterFlowTheme.of(context).primary,
                             width: 2,
                           ),
                         ),
                         contentPadding: EdgeInsets.symmetric(
-                          vertical: isSmallScreen ? 14 : 16,
-                          horizontal: isSmallScreen ? 16 : 20,
+                          vertical: ResponsiveUtils.height(context, 14),
+                          horizontal: ResponsiveUtils.width(context, 16),
                         ),
                       ),
                       style: AppStyles.textCairo(
                         context,
-                        fontSize: adjustedFontSize(isSmallScreen ? 14 : 16),
+                        fontSize: ResponsiveUtils.fontSize(context, 14),
                       ),
                     ),
-                    SizedBox(height: isSmallScreen ? 20 : 25),
+                    SizedBox(height: ResponsiveUtils.height(context, 20)),
                     Row(
                       children: [
                         Expanded(
@@ -593,21 +566,20 @@ class TraineeCard extends StatelessWidget {
                             onPressed: () => Navigator.of(dialogContext).pop(),
                             style: TextButton.styleFrom(
                               padding: EdgeInsets.symmetric(
-                                vertical: isSmallScreen ? 10 : 12,
+                                vertical: ResponsiveUtils.height(context, 10),
                               ),
                               backgroundColor: FlutterFlowTheme.of(context)
                                   .primaryBackground,
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(
-                                    isSmallScreen ? 10 : 12),
+                                    ResponsiveUtils.width(context, 10)),
                               ),
                             ),
                             child: Text(
                               FFLocalizations.of(context).getText('cancel'),
                               style: AppStyles.textCairo(
                                 context,
-                                fontSize:
-                                    adjustedFontSize(isSmallScreen ? 14 : 16),
+                                fontSize: ResponsiveUtils.fontSize(context, 14),
                                 color:
                                     FlutterFlowTheme.of(context).secondaryText,
                                 fontWeight: FontWeight.w600,
@@ -615,19 +587,19 @@ class TraineeCard extends StatelessWidget {
                             ),
                           ),
                         ),
-                        SizedBox(width: isSmallScreen ? 12 : 15),
+                        SizedBox(width: ResponsiveUtils.width(context, 12)),
                         Expanded(
                           child: ElevatedButton(
                             style: ElevatedButton.styleFrom(
                               padding: EdgeInsets.symmetric(
-                                vertical: isSmallScreen ? 10 : 12,
+                                vertical: ResponsiveUtils.height(context, 10),
                               ),
                               backgroundColor:
                                   FlutterFlowTheme.of(context).primary,
                               elevation: 0,
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(
-                                    isSmallScreen ? 10 : 12),
+                                    ResponsiveUtils.width(context, 10)),
                               ),
                             ),
                             onPressed: isLoading
@@ -646,8 +618,8 @@ class TraineeCard extends StatelessWidget {
                                   },
                             child: isLoading
                                 ? SizedBox(
-                                    width: isSmallScreen ? 18 : 20,
-                                    height: isSmallScreen ? 18 : 20,
+                                    width: ResponsiveUtils.width(context, 18),
+                                    height: ResponsiveUtils.width(context, 18),
                                     child: CircularProgressIndicator(
                                       strokeWidth: 2,
                                       valueColor: AlwaysStoppedAnimation<Color>(
@@ -658,8 +630,7 @@ class TraineeCard extends StatelessWidget {
                                     FFLocalizations.of(context).getText('save'),
                                     style: AppStyles.textCairo(
                                       context,
-                                      fontSize: adjustedFontSize(
-                                          isSmallScreen ? 14 : 16),
+                                      fontSize: ResponsiveUtils.fontSize(context, 14),
                                       color: FlutterFlowTheme.of(context).info,
                                       fontWeight: FontWeight.w600,
                                     ),
@@ -684,11 +655,6 @@ class TraineeCard extends StatelessWidget {
   }
 
   void _showEmailEditDialog(BuildContext context) {
-    final screenSize = MediaQuery.of(context).size;
-    final isSmallScreen = screenSize.width < 600;
-    final textScaler = MediaQuery.of(context).textScaler;
-    final adjustedFontSize = (size) => textScaler.scale(size.toDouble());
-
     final TextEditingController emailController =
         TextEditingController(text: subscription.email);
     final emailFocusNode = FocusNode();
@@ -706,14 +672,14 @@ class TraineeCard extends StatelessWidget {
           builder: (context22, setState) {
             return Dialog(
               shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(isSmallScreen ? 16 : 20),
+                borderRadius: BorderRadius.circular(ResponsiveUtils.width(context, 20)),
               ),
               elevation: 5,
               child: Container(
-                width: screenSize.width < 600 ? double.infinity : 400,
-                padding: EdgeInsets.all(isSmallScreen ? 16 : 20),
+                width: MediaQuery.of(context).size.width < 600 ? double.infinity : 400,
+                padding: ResponsiveUtils.padding(context, horizontal: 20, vertical: 20),
                 decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(isSmallScreen ? 16 : 20),
+                  borderRadius: BorderRadius.circular(ResponsiveUtils.width(context, 20)),
                   color: FlutterFlowTheme.of(context).secondaryBackground,
                 ),
                 child: Column(
@@ -722,28 +688,27 @@ class TraineeCard extends StatelessWidget {
                     Row(
                       children: [
                         Container(
-                          padding: EdgeInsets.all(isSmallScreen ? 8 : 10),
+                          padding: EdgeInsets.all(ResponsiveUtils.width(context, 8)),
                           decoration: BoxDecoration(
                             color: FlutterFlowTheme.of(context)
                                 .primary
                                 .withAlpha(25),
                             borderRadius:
-                                BorderRadius.circular(isSmallScreen ? 10 : 12),
+                                BorderRadius.circular(ResponsiveUtils.width(context, 10)),
                           ),
                           child: Icon(
                             Icons.email_rounded,
                             color: FlutterFlowTheme.of(context).primary,
-                            size: isSmallScreen ? 20 : 24,
+                            size: ResponsiveUtils.iconSize(context, 20),
                           ),
                         ),
-                        SizedBox(width: isSmallScreen ? 12 : 15),
+                        SizedBox(width: ResponsiveUtils.width(context, 12)),
                         Expanded(
                           child: Text(
                             FFLocalizations.of(context).getText('editEmail'),
                             style: AppStyles.textCairo(
                               context,
-                              fontSize:
-                                  adjustedFontSize(isSmallScreen ? 18 : 20),
+                              fontSize: ResponsiveUtils.fontSize(context, 18),
                               fontWeight: FontWeight.bold,
                             ),
                           ),
@@ -753,14 +718,14 @@ class TraineeCard extends StatelessWidget {
                           icon: Icon(
                             Icons.close_rounded,
                             color: FlutterFlowTheme.of(context).secondaryText,
-                            size: isSmallScreen ? 20 : 22,
+                            size: ResponsiveUtils.iconSize(context, 20),
                           ),
                           padding: EdgeInsets.zero,
                           constraints: const BoxConstraints(),
                         ),
                       ],
                     ),
-                    SizedBox(height: isSmallScreen ? 20 : 25),
+                    SizedBox(height: ResponsiveUtils.height(context, 20)),
                     TextField(
                       onTap: () {
                         emailController.selection = TextSelection.fromPosition(
@@ -775,27 +740,27 @@ class TraineeCard extends StatelessWidget {
                         prefixIcon: Icon(
                           Icons.alternate_email_rounded,
                           color: FlutterFlowTheme.of(context).primary,
-                          size: isSmallScreen ? 20 : 22,
+                          size: ResponsiveUtils.iconSize(context, 20),
                         ),
                         filled: true,
                         fillColor:
                             FlutterFlowTheme.of(context).primaryBackground,
                         border: OutlineInputBorder(
                           borderRadius:
-                              BorderRadius.circular(isSmallScreen ? 10 : 12),
+                              BorderRadius.circular(ResponsiveUtils.width(context, 10)),
                           borderSide: BorderSide.none,
                         ),
                         focusedBorder: OutlineInputBorder(
                           borderRadius:
-                              BorderRadius.circular(isSmallScreen ? 10 : 12),
+                              BorderRadius.circular(ResponsiveUtils.width(context, 10)),
                           borderSide: BorderSide(
                             color: FlutterFlowTheme.of(context).primary,
                             width: 2,
                           ),
                         ),
                         contentPadding: EdgeInsets.symmetric(
-                          vertical: isSmallScreen ? 14 : 16,
-                          horizontal: isSmallScreen ? 16 : 20,
+                          vertical: ResponsiveUtils.height(context, 14),
+                          horizontal: ResponsiveUtils.width(context, 16),
                         ),
                         errorText: !isValidEmail
                             ? FFLocalizations.of(context)
@@ -804,7 +769,7 @@ class TraineeCard extends StatelessWidget {
                       ),
                       style: AppStyles.textCairo(
                         context,
-                        fontSize: adjustedFontSize(isSmallScreen ? 14 : 16),
+                        fontSize: ResponsiveUtils.fontSize(context, 14),
                       ),
                       keyboardType: TextInputType.emailAddress,
                       onChanged: (value) {
@@ -816,7 +781,7 @@ class TraineeCard extends StatelessWidget {
                         });
                       },
                     ),
-                    SizedBox(height: isSmallScreen ? 20 : 25),
+                    SizedBox(height: ResponsiveUtils.height(context, 20)),
                     Row(
                       children: [
                         Expanded(
@@ -824,21 +789,20 @@ class TraineeCard extends StatelessWidget {
                             onPressed: () => Navigator.of(dialogContext).pop(),
                             style: TextButton.styleFrom(
                               padding: EdgeInsets.symmetric(
-                                vertical: isSmallScreen ? 10 : 12,
+                                vertical: ResponsiveUtils.height(context, 10),
                               ),
                               backgroundColor: FlutterFlowTheme.of(context)
                                   .primaryBackground,
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(
-                                    isSmallScreen ? 10 : 12),
+                                    ResponsiveUtils.width(context, 10)),
                               ),
                             ),
                             child: Text(
                               FFLocalizations.of(context).getText('cancel'),
                               style: AppStyles.textCairo(
                                 context,
-                                fontSize:
-                                    adjustedFontSize(isSmallScreen ? 14 : 16),
+                                fontSize: ResponsiveUtils.fontSize(context, 14),
                                 color:
                                     FlutterFlowTheme.of(context).secondaryText,
                                 fontWeight: FontWeight.w600,
@@ -846,19 +810,19 @@ class TraineeCard extends StatelessWidget {
                             ),
                           ),
                         ),
-                        SizedBox(width: isSmallScreen ? 12 : 15),
+                        SizedBox(width: ResponsiveUtils.width(context, 12)),
                         Expanded(
                           child: ElevatedButton(
                             style: ElevatedButton.styleFrom(
                               padding: EdgeInsets.symmetric(
-                                vertical: isSmallScreen ? 10 : 12,
+                                vertical: ResponsiveUtils.height(context, 10),
                               ),
                               backgroundColor:
                                   FlutterFlowTheme.of(context).primary,
                               elevation: 0,
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(
-                                    isSmallScreen ? 10 : 12),
+                                    ResponsiveUtils.width(context, 10)),
                               ),
                             ),
                             onPressed: (isLoading ||
@@ -877,8 +841,8 @@ class TraineeCard extends StatelessWidget {
                                   },
                             child: isLoading
                                 ? SizedBox(
-                                    width: isSmallScreen ? 18 : 20,
-                                    height: isSmallScreen ? 18 : 20,
+                                    width: ResponsiveUtils.width(context, 18),
+                                    height: ResponsiveUtils.width(context, 18),
                                     child: CircularProgressIndicator(
                                       strokeWidth: 2,
                                       valueColor: AlwaysStoppedAnimation<Color>(
@@ -889,8 +853,7 @@ class TraineeCard extends StatelessWidget {
                                     FFLocalizations.of(context).getText('save'),
                                     style: AppStyles.textCairo(
                                       context,
-                                      fontSize: adjustedFontSize(
-                                          isSmallScreen ? 14 : 16),
+                                      fontSize: ResponsiveUtils.fontSize(context, 14),
                                       color: FlutterFlowTheme.of(context).info,
                                       fontWeight: FontWeight.w600,
                                     ),

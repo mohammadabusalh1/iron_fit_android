@@ -1,5 +1,6 @@
 import 'package:iron_fit/componants/coach_appbar/coach_appbar.dart';
 import 'package:iron_fit/componants/user_nav/user_nav_widget.dart';
+import 'package:iron_fit/utils/responsive_utils.dart';
 
 import '/backend/backend.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
@@ -63,7 +64,7 @@ class _NutPlanDetialsWidgetState extends State<NutPlanDetialsWidget> {
             icon: Icon(
               Icons.arrow_back,
               color: FlutterFlowTheme.of(context).primaryText,
-              size: 24,
+              size: ResponsiveUtils.iconSize(context, 24),
             ),
             onPressed: () {
               widget.isForUser
@@ -77,7 +78,7 @@ class _NutPlanDetialsWidgetState extends State<NutPlanDetialsWidget> {
                   icon: Icon(
                     Icons.edit_outlined,
                     color: FlutterFlowTheme.of(context).primaryText,
-                    size: 24,
+                    size: ResponsiveUtils.iconSize(context, 24),
                   ),
                   onPressed: () {
                     context.pushNamed(
@@ -111,7 +112,7 @@ class _NutPlanDetialsWidgetState extends State<NutPlanDetialsWidget> {
     return Container(
       height: mediaQuery.size.height,
       padding: EdgeInsets.only(
-        top: MediaQuery.of(context).padding.top + 80,
+        top: MediaQuery.of(context).padding.top + ResponsiveUtils.height(context, 80),
       ),
       decoration: BoxDecoration(
         gradient: LinearGradient(
@@ -163,28 +164,28 @@ class _NutPlanContent extends StatelessWidget {
         children: [
           Container(
             constraints: BoxConstraints(
-              minHeight: mediaQuery.size.height * 0.75,
+              minHeight: ResponsiveUtils.height(context, mediaQuery.size.height * 0.75),
             ),
             width: mediaQuery.size.width,
-            decoration: const BoxDecoration(
+            decoration: BoxDecoration(
               borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(32.0),
-                topRight: Radius.circular(32.0),
+                topLeft: Radius.circular(ResponsiveUtils.width(context, 32.0)),
+                topRight: Radius.circular(ResponsiveUtils.width(context, 32.0)),
               ),
             ),
             child: Padding(
-              padding: const EdgeInsets.all(20),
+              padding: EdgeInsets.all(ResponsiveUtils.width(context, 20)),
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   PlanSummary(nuPlan: nuPlan),
-                  const SizedBox(height: 24.0),
+                  SizedBox(height: ResponsiveUtils.height(context, 24.0)),
                   MealsList(nuPlan: nuPlan),
                 ],
               ),
             ),
           ),
-          hasNav ? const SizedBox(height: 56) : const SizedBox(),
+          hasNav ? SizedBox(height: ResponsiveUtils.height(context, 56)) : const SizedBox(),
         ],
       ),
     ).animate().fadeIn(duration: 400.ms).slideY(begin: 0.1, end: 0);

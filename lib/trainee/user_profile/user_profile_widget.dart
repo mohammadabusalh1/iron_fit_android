@@ -12,6 +12,7 @@ import 'componants/profile_tabs.dart';
 import 'componants/achievements_tab.dart';
 import 'componants/stats_tab.dart';
 import 'package:iron_fit/navigation/page_wrapper.dart';
+import 'package:iron_fit/utils/responsive_utils.dart';
 export 'user_profile_model.dart';
 
 class UserProfileWidget extends StatefulWidget {
@@ -137,7 +138,7 @@ class _UserProfileWidgetState extends State<UserProfileWidget>
             // Main content
             SafeArea(
               child: SizedBox(
-                height: MediaQuery.sizeOf(context).height,
+                height: ResponsiveUtils.screenHeight(context),
                 child: SingleChildScrollView(
                   child: Column(
                     children: [
@@ -185,7 +186,7 @@ class _UserProfileWidgetState extends State<UserProfileWidget>
                       ),
 
                       // Add extra space at bottom for better scrolling experience
-                      const SizedBox(height: 20),
+                      SizedBox(height: ResponsiveUtils.height(context, 20)),
                     ],
                   ),
                 ),

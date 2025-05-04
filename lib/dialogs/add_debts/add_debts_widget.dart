@@ -1,4 +1,5 @@
 import 'package:iron_fit/componants/Styles.dart';
+import 'package:iron_fit/utils/responsive_utils.dart';
 
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
@@ -52,7 +53,7 @@ class _AddDebtsWidgetState extends State<AddDebtsWidget> {
           borderRadius: BorderRadius.circular(12.0),
         ),
         child: Padding(
-          padding: const EdgeInsetsDirectional.all(24),
+          padding: ResponsiveUtils.padding(context, horizontal: 24, vertical: 24),
           child: SingleChildScrollView(
             child: Column(
               mainAxisSize: MainAxisSize.min,
@@ -61,7 +62,7 @@ class _AddDebtsWidgetState extends State<AddDebtsWidget> {
                 DebtTitleInputField(model: _model),
                 DebtInputField(model: _model),
                 _buildSaveButton(context),
-              ].divide(const SizedBox(height: 24.0)),
+              ].divide(SizedBox(height: ResponsiveUtils.height(context, 24.0))),
             ),
           ),
         ),
@@ -78,7 +79,7 @@ class _AddDebtsWidgetState extends State<AddDebtsWidget> {
           FFLocalizations.of(context).getText('sc2jlg7l' /* Edit  Debt */),
           style: AppStyles.textCairo(
             context,
-            fontSize: 18,
+            fontSize: ResponsiveUtils.fontSize(context, 18),
             fontWeight: FontWeight.bold,
           ),
         ),
@@ -93,7 +94,7 @@ class _AddDebtsWidgetState extends State<AddDebtsWidget> {
           child: Icon(
             Icons.close,
             color: FlutterFlowTheme.of(context).primaryText,
-            size: 24.0,
+            size: ResponsiveUtils.iconSize(context, 24.0),
           ),
         ),
       ],
@@ -121,8 +122,8 @@ class _AddDebtsWidgetState extends State<AddDebtsWidget> {
             'apqx7rpg' /* Save */,
           ),
           options: FFButtonOptions(
-            width: 100.0,
-            height: 40.0,
+            width: ResponsiveUtils.width(context, 100.0),
+            height: ResponsiveUtils.height(context, 40.0),
             padding: const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
             iconPadding:
                 const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
@@ -130,6 +131,7 @@ class _AddDebtsWidgetState extends State<AddDebtsWidget> {
             textStyle: AppStyles.textCairo(
               context,
               fontWeight: FontWeight.w700,
+              fontSize: ResponsiveUtils.fontSize(context, 14),
               color: FlutterFlowTheme.of(context).info,
             ),
             elevation: 0.0,
@@ -140,7 +142,7 @@ class _AddDebtsWidgetState extends State<AddDebtsWidget> {
             borderRadius: BorderRadius.circular(20.0),
           ),
         ),
-      ].divide(const SizedBox(width: 12.0)),
+      ].divide(SizedBox(width: ResponsiveUtils.width(context, 12.0))),
     );
   }
 }
@@ -160,12 +162,12 @@ class DebtTitleInputField extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Padding(
-          padding: const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 4.0),
+          padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, ResponsiveUtils.height(context, 4.0)),
           child: Text(
             FFLocalizations.of(context).getText('debt_title' /* Debt Title */),
             style: AppStyles.textCairo(
               context,
-              fontSize: 16,
+              fontSize: ResponsiveUtils.fontSize(context, 16),
               fontWeight: FontWeight.w600,
             ),
           ),
@@ -184,11 +186,11 @@ class DebtTitleInputField extends StatelessWidget {
           },
           autofocus: true,
           decoration: InputDecoration(
-            prefixIcon: const Padding(
-              padding: EdgeInsetsDirectional.fromSTEB(12, 0, 0, 0),
+            prefixIcon: Padding(
+              padding: EdgeInsetsDirectional.fromSTEB(ResponsiveUtils.width(context, 12), 0, 0, 0),
               child: Icon(
                 Icons.title,
-                size: 24,
+                size: ResponsiveUtils.iconSize(context, 24),
               ),
             ),
             prefixIconConstraints:
@@ -198,7 +200,7 @@ class DebtTitleInputField extends StatelessWidget {
             hintStyle: AppStyles.textCairo(
               context,
               color: FlutterFlowTheme.of(context).secondaryText,
-              fontSize: 12,
+              fontSize: ResponsiveUtils.fontSize(context, 12),
             ),
             enabledBorder: OutlineInputBorder(
               borderSide: BorderSide(
@@ -224,9 +226,9 @@ class DebtTitleInputField extends StatelessWidget {
             filled: true,
             fillColor: FlutterFlowTheme.of(context).secondaryBackground,
             contentPadding:
-                const EdgeInsetsDirectional.fromSTEB(16, 16, 16, 16),
+                ResponsiveUtils.padding(context, horizontal: 16, vertical: 16),
           ),
-          style: AppStyles.textCairo(context, fontSize: 16),
+          style: AppStyles.textCairo(context, fontSize: ResponsiveUtils.fontSize(context, 16)),
           textAlign: TextAlign.start,
           validator: (value) {
             if (value == null || value.isEmpty) {
@@ -256,12 +258,12 @@ class DebtInputField extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Padding(
-          padding: const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 4.0),
+          padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, ResponsiveUtils.height(context, 4.0)),
           child: Text(
             FFLocalizations.of(context).getText('enkjrdua' /* Debt */),
             style: AppStyles.textCairo(
               context,
-              fontSize: 16,
+              fontSize: ResponsiveUtils.fontSize(context, 16),
               fontWeight: FontWeight.w600,
             ),
           ),
@@ -278,12 +280,12 @@ class DebtInputField extends StatelessWidget {
           obscureText: false,
           decoration: InputDecoration(
             prefixIcon: Padding(
-              padding: const EdgeInsetsDirectional.fromSTEB(12, 0, 4, 0),
+              padding: EdgeInsetsDirectional.fromSTEB(ResponsiveUtils.width(context, 12), 0, ResponsiveUtils.width(context, 4), 0),
               child: Text(
                 '\$',
                 style: AppStyles.textCairo(
                   context,
-                  fontSize: 18,
+                  fontSize: ResponsiveUtils.fontSize(context, 18),
                   color: FlutterFlowTheme.of(context).primaryText,
                 ),
               ),
@@ -291,7 +293,11 @@ class DebtInputField extends StatelessWidget {
             prefixIconConstraints:
                 const BoxConstraints(minWidth: 0, minHeight: 0),
             hintText: FFLocalizations.of(context).getText('n51nli3x' /* 50 */),
-            hintStyle: FlutterFlowTheme.of(context).labelSmall,
+            hintStyle: AppStyles.textCairo(
+              context,
+                color: FlutterFlowTheme.of(context).secondaryText,
+                fontSize: ResponsiveUtils.fontSize(context, 12),
+              ),
             enabledBorder: OutlineInputBorder(
               borderSide: BorderSide(
                 color: FlutterFlowTheme.of(context).alternate,
@@ -316,9 +322,9 @@ class DebtInputField extends StatelessWidget {
             filled: true,
             fillColor: FlutterFlowTheme.of(context).secondaryBackground,
             contentPadding:
-                const EdgeInsetsDirectional.fromSTEB(16, 16, 16, 16),
+                ResponsiveUtils.padding(context, horizontal: 16, vertical: 16),
           ),
-          style: AppStyles.textCairo(context, fontSize: 16),
+          style: AppStyles.textCairo(context, fontSize: ResponsiveUtils.fontSize(context, 16)),
           textAlign: TextAlign.start,
           keyboardType: const TextInputType.numberWithOptions(decimal: true),
           validator: (value) {

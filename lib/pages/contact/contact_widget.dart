@@ -6,6 +6,7 @@ import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:iron_fit/utils/responsive_utils.dart';
 
 import 'contact_model.dart';
 export 'contact_model.dart';
@@ -50,8 +51,8 @@ class ContactItem extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Container(
-                  width: 50,
-                  height: 50,
+                  width: ResponsiveUtils.width(context, 50),
+                  height: ResponsiveUtils.height(context, 50),
                   decoration: BoxDecoration(
                     color: iconBackgroundColor,
                     borderRadius: borderRadius,
@@ -59,7 +60,7 @@ class ContactItem extends StatelessWidget {
                   child: Icon(
                     icon,
                     color: iconColor,
-                    size: 24,
+                    size: ResponsiveUtils.iconSize(context, 24),
                   ),
                 ),
                 Column(
@@ -71,20 +72,20 @@ class ContactItem extends StatelessWidget {
                       title,
                       style: AppStyles.textCairo(
                         context,
-                        fontSize: 12,
+                        fontSize: ResponsiveUtils.fontSize(context, 12),
                       ),
                     ),
                     Text(
                       subtitle,
-                      style: const TextStyle(
-                        color: Color(0xFF57636C),
-                        fontSize: 12,
+                      style: TextStyle(
+                        color: const Color(0xFF57636C),
+                        fontSize: ResponsiveUtils.fontSize(context, 12),
                         fontFamily: 'Cairo',
                       ),
                     ),
                   ],
                 ),
-              ].divide(const SizedBox(width: 16)),
+              ].divide(SizedBox(width: ResponsiveUtils.width(context, 16))),
             ),
           ],
         ),
@@ -136,7 +137,7 @@ class SectionContainer extends StatelessWidget {
                   title!,
                   style: AppStyles.textCairo(
                     context,
-                    fontSize: 16,
+                    fontSize: ResponsiveUtils.fontSize(context, 16),
                     fontWeight: FontWeight.bold,
                   ),
                 ),
@@ -168,13 +169,8 @@ class _ContactWidgetState extends State<ContactWidget> {
   static const _borderRadius8 = BorderRadius.all(Radius.circular(8));
   static const _borderRadius12 = BorderRadius.all(Radius.circular(12));
   static const _borderRadius25 = BorderRadius.all(Radius.circular(12));
-  static const _padding24 = EdgeInsetsDirectional.fromSTEB(24, 24, 24, 24);
-  static const _padding16 = EdgeInsetsDirectional.fromSTEB(16, 16, 16, 16);
-  static const _padding0 = EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0);
   static const _whatsappColor = Color(0xFF25D366);
   static const _transparentColor = Color(0x00000000);
-  static const _dividerHeight16 = SizedBox(height: 16);
-  static const _dividerHeight24 = SizedBox(height: 24);
   static const _dividerWidth12 = SizedBox(width: 12);
   static const _zeroHeight = SizedBox(height: 0);
 
@@ -281,11 +277,11 @@ class _ContactWidgetState extends State<ContactWidget> {
         labelText: FFLocalizations.of(context).getText(labelText),
         labelStyle: AppStyles.textCairo(
           context,
-          fontSize: 12,
+          fontSize: ResponsiveUtils.fontSize(context, 12),
         ),
         hintStyle: AppStyles.textCairo(
           context,
-          fontSize: 12,
+          fontSize: ResponsiveUtils.fontSize(context, 12),
         ),
         enabledBorder: OutlineInputBorder(
           borderSide: BorderSide(
@@ -319,6 +315,27 @@ class _ContactWidgetState extends State<ContactWidget> {
       validator: validator,
     );
   }
+
+  // Responsive padding getters
+  EdgeInsetsDirectional get _padding24 => EdgeInsetsDirectional.fromSTEB(
+        ResponsiveUtils.width(context, 24),
+        ResponsiveUtils.height(context, 24),
+        ResponsiveUtils.width(context, 24),
+        ResponsiveUtils.height(context, 24),
+      );
+
+  EdgeInsetsDirectional get _padding16 => EdgeInsetsDirectional.fromSTEB(
+        ResponsiveUtils.width(context, 16),
+        ResponsiveUtils.height(context, 16),
+        ResponsiveUtils.width(context, 16),
+        ResponsiveUtils.height(context, 16),
+      );
+
+  EdgeInsetsDirectional get _padding0 => const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0);
+
+  // Responsive dividers
+  Widget get _dividerHeight16 => SizedBox(height: ResponsiveUtils.height(context, 16));
+  Widget get _dividerHeight24 => SizedBox(height: ResponsiveUtils.height(context, 24));
 
   @override
   Widget build(BuildContext context) {
@@ -357,7 +374,10 @@ class _ContactWidgetState extends State<ContactWidget> {
           body: Container(
             height: MediaQuery.of(context).size.height,
             padding: EdgeInsets.fromLTRB(
-                20, MediaQuery.of(context).padding.top, 20, 0),
+                ResponsiveUtils.width(context, 20),
+                MediaQuery.of(context).padding.top,
+                ResponsiveUtils.width(context, 20),
+                0),
             decoration: BoxDecoration(
               gradient: LinearGradient(
                 colors: [
@@ -385,8 +405,8 @@ class _ContactWidgetState extends State<ContactWidget> {
                           mainAxisSize: MainAxisSize.max,
                           children: [
                             Container(
-                              width: 50,
-                              height: 50,
+                              width: ResponsiveUtils.width(context, 50),
+                              height: ResponsiveUtils.height(context, 50),
                               decoration: BoxDecoration(
                                 color: _accent1,
                                 borderRadius: _borderRadius25,
@@ -394,7 +414,7 @@ class _ContactWidgetState extends State<ContactWidget> {
                               child: Icon(
                                 Icons.support_agent,
                                 color: _primary,
-                                size: 24,
+                                size: ResponsiveUtils.iconSize(context, 24),
                               ),
                             ),
                             Expanded(
@@ -408,7 +428,7 @@ class _ContactWidgetState extends State<ContactWidget> {
                                     ),
                                     style: AppStyles.textCairo(
                                       context,
-                                      fontSize: 16,
+                                      fontSize: ResponsiveUtils.fontSize(context, 16),
                                       fontWeight: FontWeight.bold,
                                     ),
                                   ),
@@ -418,14 +438,14 @@ class _ContactWidgetState extends State<ContactWidget> {
                                     ),
                                     style: AppStyles.textCairo(
                                       context,
-                                      fontSize: 12,
+                                      fontSize: ResponsiveUtils.fontSize(context, 12),
                                       color: _secondaryText,
                                     ),
                                   ),
                                 ],
                               ),
                             ),
-                          ].divide(_dividerWidth12),
+                          ].divide(SizedBox(width: ResponsiveUtils.width(context, 12))),
                         ),
                       ],
                     ),
@@ -471,13 +491,14 @@ class _ContactWidgetState extends State<ContactWidget> {
                           ),
                           options: FFButtonOptions(
                             width: screenWidth,
-                            height: 50,
+                            height: ResponsiveUtils.height(context, 50),
                             padding: _padding0,
                             iconPadding: _padding0,
                             color: _primary,
                             textStyle: AppStyles.textCairo(
                               context,
                               color: _info,
+                              fontSize: ResponsiveUtils.fontSize(context, 14),
                               fontWeight: FontWeight.bold,
                             ),
                             elevation: 2,

@@ -1,6 +1,7 @@
 import 'package:iron_fit/componants/styles.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:iron_fit/utils/logger.dart';
+import 'package:iron_fit/utils/responsive_utils.dart';
 
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
@@ -53,7 +54,7 @@ class _CheckSubscribeState extends State<CheckSubscribe> {
     final theme = FlutterFlowTheme.of(context);
 
     return Container(
-      width: 320,
+      width: ResponsiveUtils.width(context, 320),
       decoration: BoxDecoration(
         color: theme.secondaryBackground,
         borderRadius: BorderRadius.circular(12),
@@ -61,7 +62,7 @@ class _CheckSubscribeState extends State<CheckSubscribe> {
       child: Stack(
         children: [
           Padding(
-            padding: const EdgeInsetsDirectional.fromSTEB(16, 16, 16, 16),
+            padding: ResponsiveUtils.padding(context, horizontal: 16, vertical: 16),
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
@@ -71,12 +72,12 @@ class _CheckSubscribeState extends State<CheckSubscribe> {
                   textAlign: TextAlign.center,
                   style: AppStyles.textCairo(
                     context,
-                    fontSize: 20,
+                    fontSize: ResponsiveUtils.fontSize(context, 20),
                     fontWeight: FontWeight.bold,
                     color: theme.primaryText,
                   ),
                 ),
-                const SizedBox(height: 4),
+                SizedBox(height: ResponsiveUtils.height(context, 4)),
                 Text(
                   FFLocalizations.of(context).getText(
                       'xjwed7h7' /* Choose how you'd like to acces... */),
@@ -86,9 +87,9 @@ class _CheckSubscribeState extends State<CheckSubscribe> {
                     color: theme.secondaryText,
                   ),
                 ),
-                const SizedBox(height: 16),
+                SizedBox(height: ResponsiveUtils.height(context, 16)),
                 _buildPremiumOption(context, theme),
-                const SizedBox(height: 16),
+                SizedBox(height: ResponsiveUtils.height(context, 16)),
                 _buildWatchAdOption(context, theme),
               ],
             ),
@@ -100,7 +101,7 @@ class _CheckSubscribeState extends State<CheckSubscribe> {
               icon: Icon(
                 Icons.close,
                 color: theme.secondaryText,
-                size: 24,
+                size: ResponsiveUtils.iconSize(context, 24),
               ),
               onPressed: () => Navigator.of(context).pop(),
             ),
@@ -118,13 +119,13 @@ class _CheckSubscribeState extends State<CheckSubscribe> {
       },
       child: Container(
         width: double.infinity,
-        height: 100,
+        height: ResponsiveUtils.height(context, 100),
         decoration: BoxDecoration(
           color: theme.primaryBackground,
           borderRadius: BorderRadius.circular(8),
         ),
         child: Padding(
-          padding: const EdgeInsetsDirectional.fromSTEB(12, 12, 12, 12),
+          padding: ResponsiveUtils.padding(context, horizontal: 12, vertical: 12),
           child: _PremiumOptionContent(monthlyPrice: _monthlyPrice),
         ),
       ),
@@ -144,14 +145,14 @@ class _CheckSubscribeState extends State<CheckSubscribe> {
       },
       child: Container(
         width: double.infinity,
-        height: 100,
+        height: ResponsiveUtils.height(context, 100),
         decoration: BoxDecoration(
           color: theme.primaryBackground,
           borderRadius: BorderRadius.circular(8),
         ),
-        child: const Padding(
-          padding: EdgeInsetsDirectional.fromSTEB(12, 12, 12, 12),
-          child: _WatchAdOptionContent(),
+        child: Padding(
+          padding: ResponsiveUtils.padding(context, horizontal: 12, vertical: 12),
+          child: const _WatchAdOptionContent(),
         ),
       ),
     );
@@ -180,9 +181,9 @@ class _PremiumOptionContent extends StatelessWidget {
             Icon(
               Icons.workspace_premium,
               color: theme.primary,
-              size: 24,
+              size: ResponsiveUtils.iconSize(context, 24),
             ),
-            const SizedBox(width: 8),
+            SizedBox(width: ResponsiveUtils.width(context, 8)),
             Text(
               FFLocalizations.of(context)
                   .getText('w5rfrseu' /* Premium Access */),
@@ -193,14 +194,14 @@ class _PremiumOptionContent extends StatelessWidget {
             ),
           ],
         ),
-        const SizedBox(height: 8),
+        SizedBox(height: ResponsiveUtils.height(context, 8)),
         Text(
           '$monthlyPrice${FFLocalizations.of(context).getText('29k2j7bb' /* /month - No ads, unlimite... */)}',
           textAlign: TextAlign.center,
           style: AppStyles.textCairo(
             context,
             color: theme.secondaryText,
-            fontSize: 12,
+            fontSize: ResponsiveUtils.fontSize(context, 12),
           ),
         ),
       ],
@@ -226,9 +227,9 @@ class _WatchAdOptionContent extends StatelessWidget {
             Icon(
               Icons.play_circle,
               color: theme.tertiary,
-              size: 24,
+              size: ResponsiveUtils.iconSize(context, 24),
             ),
-            const SizedBox(width: 8),
+            SizedBox(width: ResponsiveUtils.width(context, 8)),
             Text(
               FFLocalizations.of(context).getText('bsb8adg1' /* Watch Ad */),
               style: AppStyles.textCairo(
@@ -238,7 +239,7 @@ class _WatchAdOptionContent extends StatelessWidget {
             ),
           ],
         ),
-        const SizedBox(height: 8),
+        SizedBox(height: ResponsiveUtils.height(context, 8)),
         Text(
           FFLocalizations.of(context)
               .getText('cpwu14gx1' /* Watch a 30-second ad to contin... */),
@@ -246,7 +247,7 @@ class _WatchAdOptionContent extends StatelessWidget {
           style: AppStyles.textCairo(
             context,
             color: theme.secondaryText,
-            fontSize: 12,
+            fontSize: ResponsiveUtils.fontSize(context, 12),
           ),
         ),
       ],

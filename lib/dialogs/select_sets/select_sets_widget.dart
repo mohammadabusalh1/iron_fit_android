@@ -7,6 +7,7 @@ import '/flutter_flow/flutter_flow_widgets.dart';
 import 'package:flutter/material.dart';
 import 'select_sets_model.dart';
 export 'select_sets_model.dart';
+import '/utils/responsive_utils.dart';
 
 class SelectSetsWidget extends StatefulWidget {
   const SelectSetsWidget({
@@ -83,10 +84,10 @@ class _SelectSetsWidgetState extends State<SelectSetsWidget> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 300,
+      height: ResponsiveUtils.height(context, 350),
       decoration: _buildContainerDecoration(context),
       child: Padding(
-        padding: const EdgeInsets.all(_padding),
+        padding: EdgeInsets.all(24),
         child: Form(
           key: _formKey,
           child: SingleChildScrollView(
@@ -96,7 +97,7 @@ class _SelectSetsWidgetState extends State<SelectSetsWidget> {
                 _buildHeader(context),
                 _buildInputFields(context),
                 _buildSubmitButton(context),
-              ].divide(const SizedBox(height: _spacing)),
+              ].divide(SizedBox(height: ResponsiveUtils.height(context, _spacing))),
             ),
           ),
         ),
@@ -120,7 +121,7 @@ class _SelectSetsWidgetState extends State<SelectSetsWidget> {
           FFLocalizations.of(context).getText('odal1r8y'),
           style: AppStyles.textCairo(
             context,
-            fontSize: 18,
+            fontSize: ResponsiveUtils.fontSize(context, 18),
             fontWeight: FontWeight.w600,
           ),
         ),
@@ -131,12 +132,12 @@ class _SelectSetsWidgetState extends State<SelectSetsWidget> {
 
   Widget _buildInputFields(BuildContext context) {
     final screenWidth = MediaQuery.sizeOf(context).width;
-    final fieldWidth = screenWidth / 2 - 24;
+    final fieldWidth = screenWidth / 2 - ResponsiveUtils.width(context, 36);
 
     return Column(
       children: [
         _buildInputTypeSelector(),
-        const SizedBox(height: _spacing),
+        SizedBox(height: ResponsiveUtils.height(context, _spacing)),
         Row(
           mainAxisSize: MainAxisSize.max,
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -170,7 +171,7 @@ class _SelectSetsWidgetState extends State<SelectSetsWidget> {
                 hintText: '2',
                 validator: _validateNumber,
               ),
-          ].divide(const SizedBox(width: _padding)),
+          ].divide(SizedBox(width: ResponsiveUtils.width(context, _padding))),
         ),
       ],
     );
@@ -202,18 +203,18 @@ class _SelectSetsWidgetState extends State<SelectSetsWidget> {
           onPressed: _handleSubmit,
           text: FFLocalizations.of(context).getText('0p2fuvxm'),
           options: FFButtonOptions(
-            width: 150.0,
-            height: 40.0,
-            padding: const EdgeInsetsDirectional.symmetric(horizontal: 16),
+            width: ResponsiveUtils.width(context, 150.0),
+            height: ResponsiveUtils.height(context, 40.0),
+            padding: EdgeInsetsDirectional.symmetric(horizontal: ResponsiveUtils.width(context, 16)),
             iconPadding: EdgeInsets.zero,
             color: FlutterFlowTheme.of(context).primary,
-            textStyle: AppStyles.textCairoButton(16.0),
+            textStyle: AppStyles.textCairoButton(ResponsiveUtils.fontSize(context, 16.0)),
             elevation: 0.0,
             borderSide: const BorderSide(color: Colors.transparent, width: 1.0),
             borderRadius: BorderRadius.circular(20.0),
           ),
         ),
-      ].divide(const SizedBox(width: 12.0)),
+      ].divide(SizedBox(width: ResponsiveUtils.width(context, 12.0))),
     );
   }
 
@@ -248,7 +249,7 @@ class _SelectSetsWidgetState extends State<SelectSetsWidget> {
       child: Icon(
         Icons.close,
         color: FlutterFlowTheme.of(context).primaryText,
-        size: 24.0,
+        size: ResponsiveUtils.iconSize(context, 24.0),
       ),
     );
   }
@@ -270,6 +271,7 @@ class _SelectSetsWidgetState extends State<SelectSetsWidget> {
             label,
             style: FlutterFlowTheme.of(context).bodyMedium.override(
                   fontFamily: 'Inter',
+                  fontSize: ResponsiveUtils.fontSize(context, 14),
                   letterSpacing: 0.0,
                 ),
           ),
@@ -286,6 +288,7 @@ class _SelectSetsWidgetState extends State<SelectSetsWidget> {
             decoration: _buildInputDecoration(hintText),
             style: FlutterFlowTheme.of(context).bodyMedium.override(
                   fontFamily: 'Inter',
+                  fontSize: ResponsiveUtils.fontSize(context, 14),
                 ),
             minLines: 1,
             keyboardType: TextInputType.number,
@@ -303,6 +306,7 @@ class _SelectSetsWidgetState extends State<SelectSetsWidget> {
       hintText: FFLocalizations.of(context).getText(hintText),
       hintStyle: FlutterFlowTheme.of(context).labelSmall.override(
             fontFamily: 'Inter',
+            fontSize: ResponsiveUtils.fontSize(context, 12),
             letterSpacing: 0.0,
           ),
       enabledBorder: OutlineInputBorder(
@@ -335,6 +339,10 @@ class _SelectSetsWidgetState extends State<SelectSetsWidget> {
       ),
       filled: true,
       fillColor: FlutterFlowTheme.of(context).secondaryBackground,
+      contentPadding: EdgeInsets.symmetric(
+        horizontal: ResponsiveUtils.width(context, 10),
+        vertical: ResponsiveUtils.height(context, 12),
+      ),
     );
   }
 
@@ -351,10 +359,13 @@ class _SelectSetsWidgetState extends State<SelectSetsWidget> {
               onChanged: (value) => _updateInputType(value!),
             ),
             Text(FFLocalizations.of(context).getText('wkyczine'),
-                style: AppStyles.textCairo(context)),
+                style: AppStyles.textCairo(
+                  context, 
+                  fontSize: ResponsiveUtils.fontSize(context, 14)
+                )),
           ],
         ),
-        const SizedBox(width: 20),
+        SizedBox(width: ResponsiveUtils.width(context, 20)),
         Wrap(
           crossAxisAlignment: WrapCrossAlignment.center,
           children: [
@@ -364,7 +375,10 @@ class _SelectSetsWidgetState extends State<SelectSetsWidget> {
               onChanged: (value) => _updateInputType(value!),
             ),
             Text(FFLocalizations.of(context).getText('time'),
-                style: AppStyles.textCairo(context)),
+                style: AppStyles.textCairo(
+                  context, 
+                  fontSize: ResponsiveUtils.fontSize(context, 14)
+                )),
           ],
         ),
         Wrap(
@@ -376,7 +390,10 @@ class _SelectSetsWidgetState extends State<SelectSetsWidget> {
               onChanged: (value) => _updateInputType(value!),
             ),
             Text(FFLocalizations.of(context).getText('time_seconds'),
-                style: AppStyles.textCairo(context)),
+                style: AppStyles.textCairo(
+                  context, 
+                  fontSize: ResponsiveUtils.fontSize(context, 14)
+                )),
           ],
         ),
       ],

@@ -3,6 +3,7 @@ import 'package:iron_fit/componants/Styles.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
+import '/utils/responsive_utils.dart';
 
 class HeaderSection extends StatelessWidget {
   final bool isEditMode;
@@ -29,7 +30,7 @@ class HeaderSection extends StatelessWidget {
                       .getText('drkdjo18' /* Create Plan */),
               style: AppStyles.textCairo(
                 context,
-                fontSize: 20,
+                fontSize: ResponsiveUtils.fontSize(context, 20),
                 fontWeight: FontWeight.bold,
               ),
             ),
@@ -40,7 +41,7 @@ class HeaderSection extends StatelessWidget {
                       .getText('h5uiph9g' /* Design a new training program */),
               style: AppStyles.textCairo(
                 context,
-                fontSize: 16,
+                fontSize: ResponsiveUtils.fontSize(context, 16),
                 color: const Color(0xFFE0E0E0),
               ),
             ),
@@ -48,12 +49,12 @@ class HeaderSection extends StatelessWidget {
         ),
         FlutterFlowIconButton(
           borderRadius: 8.0,
-          buttonSize: 40.0,
+          buttonSize: ResponsiveUtils.width(context, 40.0),
           fillColor: const Color(0x33FFFFFF),
           icon: Icon(
             Icons.close,
             color: FlutterFlowTheme.of(context).info,
-            size: 24.0,
+            size: ResponsiveUtils.iconSize(context, 24.0),
           ),
           onPressed: () async {
             context.pushNamed('CoachExercisesPlans');
