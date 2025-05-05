@@ -75,7 +75,7 @@ class ExerciseStruct extends FFFirebaseStruct {
         reps: castToType<int>(data['reps']),
         sets: castToType<int>(data['sets']),
         time: castToType<int>(data['time']),
-        timeType: data['timeType'] as String,
+        timeType: data['timeType'] == null ? 'm' : data['timeType'] as String,
         ref: data['ref'] as DocumentReference?,
         trainerFeedback: data['trainerFeedback'] as String?,
         trainerAdjustments: (data['trainerAdjustments'] as List?)

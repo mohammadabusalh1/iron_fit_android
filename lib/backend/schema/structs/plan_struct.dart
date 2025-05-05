@@ -229,8 +229,8 @@ class PlanStruct extends FFFirebaseStruct {
   }
 
   @override
-  int get hashCode => const ListEquality()
-      .hash([name, level, coach, createdAt, description, draft, days, totalSource]);
+  int get hashCode => const ListEquality().hash(
+      [name, level, coach, createdAt, description, draft, days, totalSource]);
 }
 
 PlanStruct createPlanStruct({
