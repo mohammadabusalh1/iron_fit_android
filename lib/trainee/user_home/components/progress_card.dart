@@ -20,7 +20,8 @@ class ProgressCard extends StatelessWidget {
     final percentage = progress > total ? 100 : ((progress / total) * 100);
 
     return Container(
-      height: ResponsiveUtils.height(context, FFLocalizations.of(context).languageCode == 'ar' ? 150 : 170),
+      height: ResponsiveUtils.height(context,
+          FFLocalizations.of(context).languageCode == 'ar' ? 160 : 180),
       padding: ResponsiveUtils.padding(context, horizontal: 16, vertical: 16),
       decoration: BoxDecoration(
         color: FlutterFlowTheme.of(context).secondaryBackground,
@@ -33,12 +34,13 @@ class ProgressCard extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               ConstrainedBox(
-                constraints: BoxConstraints(maxWidth: ResponsiveUtils.width(context, 80)),
+                constraints: BoxConstraints(
+                    maxWidth: ResponsiveUtils.width(context, 80)),
                 child: Text(
                   FFLocalizations.of(context).getText('rconapdq'),
                   style: AppStyles.textCairo(
                     context,
-                    fontSize: ResponsiveUtils.fontSize(context, 16),
+                    fontSize: ResponsiveUtils.fontSize(context, 14),
                     color: FlutterFlowTheme.of(context).primaryText,
                   ),
                 ),

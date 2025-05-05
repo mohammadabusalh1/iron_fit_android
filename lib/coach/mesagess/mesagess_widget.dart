@@ -167,7 +167,7 @@ class _MessagesWidgetState extends State<MessagesWidget> {
             padding: ResponsiveUtils.padding(
               context,
               horizontal: 20,
-              vertical: 24,
+              vertical: 0,
             ),
             child: SafeArea(
               top: true,
@@ -175,6 +175,7 @@ class _MessagesWidgetState extends State<MessagesWidget> {
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
+                    SizedBox(height: ResponsiveUtils.height(context, 24.0)),
                     BroadcastMessageSection(
                         coachRecord: coachRecord, onMessageSent: getMessages),
                     SizedBox(height: ResponsiveUtils.height(context, 32.0)),

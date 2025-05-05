@@ -41,9 +41,9 @@ class FilterTabs extends StatelessWidget {
       options: FFButtonOptions(
         height: ResponsiveUtils.height(context, 35.0),
         padding: EdgeInsetsDirectional.fromSTEB(
-          ResponsiveUtils.width(context, 16),
+          ResponsiveUtils.width(context, 14),
           0,
-          ResponsiveUtils.width(context, 16),
+          ResponsiveUtils.width(context, 14),
           0,
         ),
         color: isSelected

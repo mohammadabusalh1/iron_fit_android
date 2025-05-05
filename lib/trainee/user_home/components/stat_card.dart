@@ -21,7 +21,8 @@ class StatCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: ResponsiveUtils.height(context, FFLocalizations.of(context).languageCode == 'ar' ? 150 : 170),
+      height: ResponsiveUtils.height(context,
+          FFLocalizations.of(context).languageCode == 'ar' ? 160 : 180),
       padding: ResponsiveUtils.padding(context, horizontal: 16, vertical: 16),
       decoration: BoxDecoration(
         color: FlutterFlowTheme.of(context).secondaryBackground,
@@ -34,12 +35,13 @@ class StatCard extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               ConstrainedBox(
-                constraints: BoxConstraints(maxWidth: ResponsiveUtils.width(context, 80)),
+                constraints: BoxConstraints(
+                    maxWidth: ResponsiveUtils.width(context, 80)),
                 child: Text(
                   title,
                   style: AppStyles.textCairo(
                     context,
-                    fontSize: ResponsiveUtils.fontSize(context, 16),
+                    fontSize: ResponsiveUtils.fontSize(context, 14),
                     color: FlutterFlowTheme.of(context).primaryText,
                   ),
                 ),
@@ -65,7 +67,7 @@ class StatCard extends StatelessWidget {
             unit,
             style: AppStyles.textCairo(
               context,
-              fontSize: ResponsiveUtils.fontSize(context, 14),
+              fontSize: ResponsiveUtils.fontSize(context, 12),
               color: FlutterFlowTheme.of(context).secondaryText,
             ),
           ),

@@ -62,7 +62,8 @@ class _CheckSubscribeState extends State<CheckSubscribe> {
       child: Stack(
         children: [
           Padding(
-            padding: ResponsiveUtils.padding(context, horizontal: 16, vertical: 16),
+            padding:
+                ResponsiveUtils.padding(context, horizontal: 16, vertical: 16),
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
@@ -125,7 +126,8 @@ class _CheckSubscribeState extends State<CheckSubscribe> {
           borderRadius: BorderRadius.circular(8),
         ),
         child: Padding(
-          padding: ResponsiveUtils.padding(context, horizontal: 12, vertical: 12),
+          padding:
+              ResponsiveUtils.padding(context, horizontal: 12, vertical: 12),
           child: _PremiumOptionContent(monthlyPrice: _monthlyPrice),
         ),
       ),
@@ -151,7 +153,8 @@ class _CheckSubscribeState extends State<CheckSubscribe> {
           borderRadius: BorderRadius.circular(8),
         ),
         child: Padding(
-          padding: ResponsiveUtils.padding(context, horizontal: 12, vertical: 12),
+          padding:
+              ResponsiveUtils.padding(context, horizontal: 12, vertical: 12),
           child: const _WatchAdOptionContent(),
         ),
       ),

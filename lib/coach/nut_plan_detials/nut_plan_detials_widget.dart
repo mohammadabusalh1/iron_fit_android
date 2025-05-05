@@ -112,7 +112,8 @@ class _NutPlanDetialsWidgetState extends State<NutPlanDetialsWidget> {
     return Container(
       height: mediaQuery.size.height,
       padding: EdgeInsets.only(
-        top: MediaQuery.of(context).padding.top + ResponsiveUtils.height(context, 80),
+        top: MediaQuery.of(context).padding.top +
+            ResponsiveUtils.height(context, 80),
       ),
       decoration: BoxDecoration(
         gradient: LinearGradient(
@@ -164,7 +165,8 @@ class _NutPlanContent extends StatelessWidget {
         children: [
           Container(
             constraints: BoxConstraints(
-              minHeight: ResponsiveUtils.height(context, mediaQuery.size.height * 0.75),
+              minHeight: ResponsiveUtils.height(
+                  context, mediaQuery.size.height * 0.75),
             ),
             width: mediaQuery.size.width,
             decoration: BoxDecoration(
@@ -185,7 +187,9 @@ class _NutPlanContent extends StatelessWidget {
               ),
             ),
           ),
-          hasNav ? SizedBox(height: ResponsiveUtils.height(context, 56)) : const SizedBox(),
+          hasNav
+              ? SizedBox(height: ResponsiveUtils.height(context, 80))
+              : const SizedBox(),
         ],
       ),
     ).animate().fadeIn(duration: 400.ms).slideY(begin: 0.1, end: 0);

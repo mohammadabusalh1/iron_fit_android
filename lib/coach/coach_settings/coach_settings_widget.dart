@@ -80,7 +80,8 @@ class _CoachSettingsWidgetState extends State<CoachSettingsWidget> {
         body: Center(
           child: Text(
             'Unable to load settings',
-            style: AppStyles.textCairo(context, fontSize: ResponsiveUtils.fontSize(context, 16)),
+            style: AppStyles.textCairo(context,
+                fontSize: ResponsiveUtils.fontSize(context, 16)),
           ),
         ),
       );
@@ -107,7 +108,6 @@ class _CoachSettingsWidgetState extends State<CoachSettingsWidget> {
           body: Container(
             height: MediaQuery.of(context).size.height,
             padding: EdgeInsets.only(
-                top: MediaQuery.of(context).padding.top + ResponsiveUtils.height(context, 12),
                 left: ResponsiveUtils.width(context, 20),
                 right: ResponsiveUtils.width(context, 20)),
             decoration: BoxDecoration(
@@ -126,6 +126,9 @@ class _CoachSettingsWidgetState extends State<CoachSettingsWidget> {
                   mainAxisSize: MainAxisSize.min,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
+                    const SizedBox(
+                      height: 24,
+                    ),
                     AccountSettings(
                       onDeleteAccount: _handleDeleteAccount,
                     ),
@@ -133,6 +136,9 @@ class _CoachSettingsWidgetState extends State<CoachSettingsWidget> {
                     SignOutButton(onPressed: () {
                       logout(context);
                     }),
+                    const SizedBox(
+                      height: 24,
+                    ),
                   ],
                 ),
               ),

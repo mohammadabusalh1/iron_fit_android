@@ -175,7 +175,8 @@ class _DaysExerciseListState extends State<DaysExerciseList> {
       builder: (BuildContext context) {
         return AlertDialog(
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(ResponsiveUtils.width(context, 16)),
+            borderRadius:
+                BorderRadius.circular(ResponsiveUtils.width(context, 16)),
           ),
           backgroundColor: FlutterFlowTheme.of(context).secondaryBackground,
           title: Row(
@@ -263,8 +264,17 @@ class _DaysExerciseListState extends State<DaysExerciseList> {
             onPressed: () {
               setState(() {
                 _errorMessage = null;
+                _isLoading = true;
               });
-              _refreshController.requestRefresh();
+              // Instead of calling requestRefresh(), which requires the SmartRefresher to be built,
+              // directly call the fetch data method and then update the state
+              _fetchData().then((_) {
+                if (mounted) {
+                  setState(() {
+                    _isLoading = false;
+                  });
+                }
+              });
             },
             style: ElevatedButton.styleFrom(
               backgroundColor: FlutterFlowTheme.of(context).primary,
@@ -296,7 +306,7 @@ class _DaysExerciseListState extends State<DaysExerciseList> {
     }
 
     return Padding(
-      padding: const EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 16.0),
+      padding: const EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 30.0),
       child: SmartRefresher(
         controller: _refreshController,
         onRefresh: () async {

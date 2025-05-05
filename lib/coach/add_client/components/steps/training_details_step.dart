@@ -68,139 +68,134 @@ class TrainingDetailsStep extends StatelessWidget {
   }
 
   Widget _buildGoalField(BuildContext context) {
-    return Padding(
-      padding: ResponsiveUtils.padding(context, horizontal: 16),
-      child: buildTextField(
-        controller: model.goalTextController,
-        focusNode: model.goalFocusNode,
-        context: context,
-        hintText: FFLocalizations.of(context).getText('k7u005at'),
-        validator: (value) {
-          if (value == null || value.isEmpty) {
-            return FFLocalizations.of(context).getText('error_goal_required');
-          }
-          return null;
-        },
-        labelText: FFLocalizations.of(context).getText('label_training_goals'),
-        prefixIcon: Icons.fitness_center,
-        fontSize: ResponsiveUtils.fontSize(context, 14),
-        iconSize: ResponsiveUtils.iconSize(context, 24),
-      ),
+    return buildTextField(
+      controller: model.goalTextController,
+      focusNode: model.goalFocusNode,
+      context: context,
+      hintText: FFLocalizations.of(context).getText('k7u005at'),
+      validator: (value) {
+        if (value == null || value.isEmpty) {
+          return FFLocalizations.of(context).getText('error_goal_required');
+        }
+        return null;
+      },
+      labelText: FFLocalizations.of(context).getText('label_training_goals'),
+      prefixIcon: Icons.fitness_center,
+      fontSize: ResponsiveUtils.fontSize(context, 14),
+      iconSize: ResponsiveUtils.iconSize(context, 24),
     );
   }
 
   Widget _buildLevelSelection(BuildContext context) {
-    return Padding(
-      padding: ResponsiveUtils.padding(context, horizontal: 16),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            children: [
-              Expanded(
-                child: Text(
-                  FFLocalizations.of(context)
-                      .getText('label_current_fitness_level'),
-                  style: AppStyles.textCairo(
-                    context,
-                    fontSize: ResponsiveUtils.fontSize(context, 14),
-                    fontWeight: FontWeight.bold,
-                    color: FlutterFlowTheme.of(context).primaryText,
-                  ),
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Row(
+          children: [
+            Expanded(
+              child: Text(
+                FFLocalizations.of(context)
+                    .getText('label_current_fitness_level'),
+                style: AppStyles.textCairo(
+                  context,
+                  fontSize: ResponsiveUtils.fontSize(context, 14),
+                  fontWeight: FontWeight.bold,
+                  color: FlutterFlowTheme.of(context).primaryText,
                 ),
               ),
-              if (levelValidationError != null)
-                Text(
-                  '*',
-                  style: AppStyles.textCairo(
+            ),
+            if (levelValidationError != null)
+              Text(
+                '*',
+                style: AppStyles.textCairo(
+                  context,
+                  fontSize: ResponsiveUtils.fontSize(context, 18),
+                  fontWeight: FontWeight.bold,
+                  color: FlutterFlowTheme.of(context).error,
+                ),
+              ),
+          ],
+        ),
+        SizedBox(height: ResponsiveUtils.height(context, 12)),
+        Column(
+          children: [
+            Row(
+              children: [
+                Expanded(
+                  flex: 1,
+                  child: _buildLevelCard(
                     context,
-                    fontSize: ResponsiveUtils.fontSize(context, 18),
-                    fontWeight: FontWeight.bold,
+                    FFLocalizations.of(context).getText('1h4l5b6m'),
+                    onLevelChanged,
+                    model.levelValue,
+                    Icons.fitness_center,
+                  ),
+                ),
+                SizedBox(width: ResponsiveUtils.width(context, 12)),
+                Expanded(
+                  flex: 1,
+                  child: _buildLevelCard(
+                    context,
+                    FFLocalizations.of(context).getText('vncaynbk'),
+                    onLevelChanged,
+                    model.levelValue,
+                    Icons.speed,
+                  ),
+                ),
+              ],
+            ),
+            SizedBox(height: ResponsiveUtils.height(context, 12)),
+            _buildLevelCard(
+              context,
+              FFLocalizations.of(context).getText('ocvkm51o'),
+              onLevelChanged,
+              model.levelValue,
+              Icons.military_tech,
+              isFullWidth: true,
+            ),
+            if (levelValidationError != null)
+              Container(
+                width: double.infinity,
+                margin:
+                    EdgeInsets.only(top: ResponsiveUtils.height(context, 8.0)),
+                padding: ResponsiveUtils.padding(
+                  context,
+                  horizontal: 12,
+                  vertical: 8,
+                ),
+                decoration: BoxDecoration(
+                  color: FlutterFlowTheme.of(context).error.withOpacity(0.1),
+                  borderRadius: BorderRadius.circular(8),
+                  border: Border.all(
                     color: FlutterFlowTheme.of(context).error,
+                    width: 1,
                   ),
                 ),
-            ],
-          ),
-          SizedBox(height: ResponsiveUtils.height(context, 12)),
-          Column(
-            children: [
-              Row(
-                children: [
-                  Expanded(
-                    flex: 1,
-                    child: _buildLevelCard(
-                      context,
-                      FFLocalizations.of(context).getText('1h4l5b6m'),
-                      onLevelChanged,
-                      model.levelValue,
-                      Icons.fitness_center,
-                    ),
-                  ),
-                  SizedBox(width: ResponsiveUtils.width(context, 12)),
-                  Expanded(
-                    flex: 1,
-                    child: _buildLevelCard(
-                      context,
-                      FFLocalizations.of(context).getText('vncaynbk'),
-                      onLevelChanged,
-                      model.levelValue,
-                      Icons.speed,
-                    ),
-                  ),
-                ],
-              ),
-              SizedBox(height: ResponsiveUtils.height(context, 12)),
-              _buildLevelCard(
-                context,
-                FFLocalizations.of(context).getText('ocvkm51o'),
-                onLevelChanged,
-                model.levelValue,
-                Icons.military_tech,
-                isFullWidth: true,
-              ),
-              if (levelValidationError != null)
-                Container(
-                  width: double.infinity,
-                  margin: EdgeInsets.only(top: ResponsiveUtils.height(context, 8.0)),
-                  padding: ResponsiveUtils.padding(
-                    context,
-                    horizontal: 12,
-                    vertical: 8,
-                  ),
-                  decoration: BoxDecoration(
-                    color: FlutterFlowTheme.of(context).error.withOpacity(0.1),
-                    borderRadius: BorderRadius.circular(8),
-                    border: Border.all(
+                child: Row(
+                  children: [
+                    Icon(
+                      Icons.error_outline,
                       color: FlutterFlowTheme.of(context).error,
-                      width: 1,
+                      size: ResponsiveUtils.iconSize(context, 16),
                     ),
-                  ),
-                  child: Row(
-                    children: [
-                      Icon(
-                        Icons.error_outline,
-                        color: FlutterFlowTheme.of(context).error,
-                        size: ResponsiveUtils.iconSize(context, 16),
-                      ),
-                      SizedBox(width: ResponsiveUtils.width(context, 8)),
-                      Expanded(
-                        child: Text(
-                          levelValidationError!,
-                          style: AppStyles.textCairo(
-                            context,
-                            fontSize: ResponsiveUtils.fontSize(context, 12),
-                            fontWeight: FontWeight.w500,
-                            color: FlutterFlowTheme.of(context).error,
-                          ),
+                    SizedBox(width: ResponsiveUtils.width(context, 8)),
+                    Expanded(
+                      child: Text(
+                        levelValidationError!,
+                        style: AppStyles.textCairo(
+                          context,
+                          fontSize: ResponsiveUtils.fontSize(context, 12),
+                          fontWeight: FontWeight.w500,
+                          color: FlutterFlowTheme.of(context).error,
                         ),
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
-            ],
-          ),
-        ],
-      ),
+              ),
+          ],
+        ),
+      ],
     );
   }
 

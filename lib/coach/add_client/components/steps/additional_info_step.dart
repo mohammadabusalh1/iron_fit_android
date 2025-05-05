@@ -61,20 +61,17 @@ class AdditionalInfoStep extends StatelessWidget {
   }
 
   Widget _buildFormFields(BuildContext context) {
-    return Padding(
-      padding: ResponsiveUtils.padding(context, horizontal: 16),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          if (isFirstStep) ...[
-            _buildPaidField(context),
-            SizedBox(height: ResponsiveUtils.height(context, 12)),
-            _buildDebtsField(context),
-          ] else ...[
-            _buildNotesField(context),
-          ],
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        if (isFirstStep) ...[
+          _buildPaidField(context),
+          SizedBox(height: ResponsiveUtils.height(context, 12)),
+          _buildDebtsField(context),
+        ] else ...[
+          _buildNotesField(context),
         ],
-      ),
+      ],
     );
   }
 

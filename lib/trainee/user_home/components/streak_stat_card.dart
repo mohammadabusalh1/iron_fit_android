@@ -25,6 +25,7 @@ class StreakStatCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       padding: ResponsiveUtils.padding(context, horizontal: 16, vertical: 16),
+      margin: ResponsiveUtils.padding(context, vertical: 12, horizontal: 0),
       decoration: BoxDecoration(
         color: FlutterFlowTheme.of(context).secondaryBackground,
         borderRadius: BorderRadius.circular(16),
@@ -136,7 +137,8 @@ class AchievementBadge extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           Container(
-            padding: ResponsiveUtils.padding(context, horizontal: 8, vertical: 8),
+            padding:
+                ResponsiveUtils.padding(context, horizontal: 8, vertical: 8),
             decoration: BoxDecoration(
               color:
                   FlutterFlowTheme.of(context).primary.withValues(alpha: 0.2),
@@ -150,7 +152,8 @@ class AchievementBadge extends StatelessWidget {
           ),
           SizedBox(width: ResponsiveUtils.width(context, 8)),
           ConstrainedBox(
-            constraints: BoxConstraints(maxWidth: ResponsiveUtils.width(context, 80)),
+            constraints:
+                BoxConstraints(maxWidth: ResponsiveUtils.width(context, 80)),
             child: Text(
               achievement['title'] ?? '',
               style: AppStyles.textCairo(

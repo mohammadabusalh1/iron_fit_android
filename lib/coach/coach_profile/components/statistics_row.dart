@@ -135,13 +135,18 @@ class StatisticsRow extends StatelessWidget {
                   size: 24,
                 ),
               ),
-              Text(
-                value,
-                style: _getTextStyle(
-                  context,
-                  fontSize: 24,
-                  fontWeight: FontWeight.w800,
-                  color: FlutterFlowTheme.of(context).primaryText,
+              SizedBox(
+                width: 50,
+                child: Text(
+                  textAlign: TextAlign.center,
+                  value,
+                  style: _getTextStyle(
+                    context,
+                    fontSize: 20,
+                    fontWeight: FontWeight.w800,
+                    color: FlutterFlowTheme.of(context).primaryText,
+                  ),
+                  overflow: TextOverflow.ellipsis,
                 ),
               ),
               Container(

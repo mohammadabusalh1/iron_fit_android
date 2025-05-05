@@ -98,9 +98,11 @@ class StatsTab extends StatelessWidget {
           onTap: () {
             // Show exercise details
           },
-          borderRadius: BorderRadius.circular(ResponsiveUtils.width(context, 16)),
+          borderRadius:
+              BorderRadius.circular(ResponsiveUtils.width(context, 16)),
           child: Padding(
-            padding: ResponsiveUtils.padding(context, horizontal: 16, vertical: 16),
+            padding:
+                ResponsiveUtils.padding(context, horizontal: 16, vertical: 16),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -112,7 +114,7 @@ class StatsTab extends StatelessWidget {
                         exerciseName.replaceAll('qft_', '').toUpperCase(),
                         style: AppStyles.textCairo(
                           context,
-                          fontSize: ResponsiveUtils.fontSize(context, 16),
+                          fontSize: ResponsiveUtils.fontSize(context, 14),
                           fontWeight: FontWeight.w600,
                         ),
                       ),
@@ -125,7 +127,8 @@ class StatsTab extends StatelessWidget {
                       ),
                       decoration: BoxDecoration(
                         color: themeCache.primaryColor.withValues(alpha: 0.1),
-                        borderRadius: BorderRadius.circular(ResponsiveUtils.width(context, 12)),
+                        borderRadius: BorderRadius.circular(
+                            ResponsiveUtils.width(context, 12)),
                       ),
                       child: Text(
                         '$weight ${FFLocalizations.of(context).getText('maximum_weight')}',

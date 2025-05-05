@@ -22,7 +22,7 @@ class SignInButton extends StatelessWidget {
       text: FFLocalizations.of(context).getText('by7fphqy' /* Sign In */),
       options: FFButtonOptions(
         width: double.infinity,
-        height: ResponsiveUtils.height(context, 50),
+        height: ResponsiveUtils.height(context, 60),
         padding: ResponsiveUtils.padding(context, vertical: 0, horizontal: 24),
         iconPadding: ResponsiveUtils.padding(context, horizontal: 0),
         color: isEnabled

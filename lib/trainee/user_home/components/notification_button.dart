@@ -582,15 +582,14 @@ class _NotificationButtonState extends State<NotificationButton> {
                         right: 0,
                         top: 1,
                         child: Container(
-                          padding: ResponsiveUtils.padding(context,
-                              horizontal: 2, vertical: 2),
+                          padding: EdgeInsets.all(2),
                           decoration: BoxDecoration(
                             color: FlutterFlowTheme.of(context).primary,
-                            borderRadius: BorderRadius.circular(12),
+                            borderRadius: BorderRadius.circular(50),
                           ),
                           constraints: BoxConstraints(
                             minWidth: ResponsiveUtils.width(context, 20),
-                            minHeight: ResponsiveUtils.height(context, 20),
+                            minHeight: ResponsiveUtils.height(context, 12),
                           ),
                           child: Text(
                             notificationCount.toString(),

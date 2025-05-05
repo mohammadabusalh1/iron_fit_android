@@ -49,15 +49,19 @@ class _CreateMealWidgetState extends State<CreateMealWidget> {
   }
 
   // Static constants for reusable widgets to avoid unnecessary rebuilds
-  static Widget _sizedBox8(BuildContext context) => SizedBox(height: ResponsiveUtils.height(context, 8));
-  static Widget _sizedBox20(BuildContext context) => SizedBox(height: ResponsiveUtils.height(context, 20));
-  static Widget _sizedBox4(BuildContext context) => SizedBox(height: ResponsiveUtils.height(context, 4));
+  static Widget _sizedBox8(BuildContext context) =>
+      SizedBox(height: ResponsiveUtils.height(context, 24));
+  static Widget _sizedBox20(BuildContext context) =>
+      SizedBox(height: ResponsiveUtils.height(context, 20));
+  static Widget _sizedBox4(BuildContext context) =>
+      SizedBox(height: ResponsiveUtils.height(context, 4));
   static const _divider = Divider(height: 24);
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      constraints: BoxConstraints(maxWidth: ResponsiveUtils.width(context, 500)),
+      constraints:
+          BoxConstraints(maxWidth: ResponsiveUtils.width(context, 500)),
       child: SingleChildScrollView(
         child: Container(
           width: double.infinity,
@@ -74,7 +78,8 @@ class _CreateMealWidgetState extends State<CreateMealWidget> {
             borderRadius: BorderRadius.circular(16.0),
           ),
           child: Padding(
-            padding: ResponsiveUtils.padding(context, horizontal: 24, vertical: 24),
+            padding:
+                ResponsiveUtils.padding(context, horizontal: 24, vertical: 24),
             child: Form(
               key: _formKey,
               child: Column(
@@ -140,7 +145,8 @@ class _CreateMealWidgetState extends State<CreateMealWidget> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Padding(
-          padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, ResponsiveUtils.height(context, 4.0)),
+          padding: EdgeInsetsDirectional.fromSTEB(
+              0.0, 0.0, 0.0, ResponsiveUtils.height(context, 4.0)),
           child: Text(
             FFLocalizations.of(context).getText(
               'gjl6p81h' /* Meal Name */,
@@ -209,7 +215,8 @@ class _CreateMealWidgetState extends State<CreateMealWidget> {
             ),
             filled: true,
             fillColor: FlutterFlowTheme.of(context).primaryBackground,
-            contentPadding: ResponsiveUtils.padding(context, horizontal: 16, vertical: 16),
+            contentPadding:
+                ResponsiveUtils.padding(context, horizontal: 16, vertical: 16),
           ),
           style: AppStyles.textCairo(
             context,
@@ -233,7 +240,8 @@ class _CreateMealWidgetState extends State<CreateMealWidget> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Padding(
-          padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, ResponsiveUtils.height(context, 4.0)),
+          padding: EdgeInsetsDirectional.fromSTEB(
+              0.0, 0.0, 0.0, ResponsiveUtils.height(context, 4.0)),
           child: Text(
             FFLocalizations.of(context).getText(
               'vcre8yrp' /* Description */,
@@ -302,7 +310,8 @@ class _CreateMealWidgetState extends State<CreateMealWidget> {
             ),
             filled: true,
             fillColor: FlutterFlowTheme.of(context).primaryBackground,
-            contentPadding: ResponsiveUtils.padding(context, horizontal: 16, vertical: 16),
+            contentPadding:
+                ResponsiveUtils.padding(context, horizontal: 16, vertical: 16),
           ),
           style: AppStyles.textCairo(
             context,

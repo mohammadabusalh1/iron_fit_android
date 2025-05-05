@@ -71,7 +71,8 @@ class _CoachExercisesPlansWidgetState extends State<CoachExercisesPlansWidget>
     _isMounted = true;
     _model = createModel(context, () => CoachExercisesPlansModel());
     _tabController = TabController(length: 2, vsync: this);
-    
+    _adService = AdService();
+
     // Add delay to ad loading
     Future.delayed(const Duration(seconds: 3), () {
       if (mounted) {
@@ -222,6 +223,7 @@ class _CoachExercisesPlansWidgetState extends State<CoachExercisesPlansWidget>
       );
 
       final plans = await plansQuery.first;
+
       if (_isMounted) {
         _model.updatePlans(plans);
       }
@@ -259,10 +261,9 @@ class _CoachExercisesPlansWidgetState extends State<CoachExercisesPlansWidget>
       precacheImage(CachedNetworkImageProvider(currentUserPhoto), context);
     }
 
-    // Prefetch any icons or logos used in the app
-    const defaultIcon = 'https://via.placeholder.com/150';
+    // Use local placeholder instead of external URL
     if (_isMounted) {
-      precacheImage(CachedNetworkImageProvider(defaultIcon), context);
+      precacheImage(const AssetImage('assets/images/error_image.png'), context);
     }
   }
 
@@ -343,12 +344,13 @@ class _CoachExercisesPlansWidgetState extends State<CoachExercisesPlansWidget>
           padding: ResponsiveUtils.padding(
             context,
             horizontal: 24.0,
-            vertical: 24.0,
+            vertical: 0.0,
           ),
           child: Column(
             mainAxisSize: MainAxisSize.max,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              SizedBox(height: ResponsiveUtils.height(context, 24)),
               PlansHeader(
                 coach: model.coach,
                 adService: _adService,
@@ -392,8 +394,8 @@ class _CoachExercisesPlansWidgetState extends State<CoachExercisesPlansWidget>
         unselectedLabelColor:
             FlutterFlowTheme.of(context).info.withOpacity(0.5),
         labelStyle: FlutterFlowTheme.of(context).titleMedium.copyWith(
-          fontSize: ResponsiveUtils.fontSize(context, 16),
-        ),
+              fontSize: ResponsiveUtils.fontSize(context, 16),
+            ),
         indicator: BoxDecoration(
           color: FlutterFlowTheme.of(context).primary,
           borderRadius: BorderRadius.circular(

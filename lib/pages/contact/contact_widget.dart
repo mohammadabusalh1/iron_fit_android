@@ -40,7 +40,7 @@ class ContactItem extends StatelessWidget {
       width: MediaQuery.sizeOf(context).width,
       decoration: decoration,
       child: Padding(
-        padding: padding,
+        padding: const EdgeInsets.symmetric(horizontal: 0),
         child: Row(
           mainAxisSize: MainAxisSize.max,
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -331,11 +331,14 @@ class _ContactWidgetState extends State<ContactWidget> {
         ResponsiveUtils.height(context, 16),
       );
 
-  EdgeInsetsDirectional get _padding0 => const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0);
+  EdgeInsetsDirectional get _padding0 =>
+      const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0);
 
   // Responsive dividers
-  Widget get _dividerHeight16 => SizedBox(height: ResponsiveUtils.height(context, 16));
-  Widget get _dividerHeight24 => SizedBox(height: ResponsiveUtils.height(context, 24));
+  Widget get _dividerHeight16 =>
+      SizedBox(height: ResponsiveUtils.height(context, 16));
+  Widget get _dividerHeight24 =>
+      SizedBox(height: ResponsiveUtils.height(context, 24));
 
   @override
   Widget build(BuildContext context) {
@@ -428,7 +431,8 @@ class _ContactWidgetState extends State<ContactWidget> {
                                     ),
                                     style: AppStyles.textCairo(
                                       context,
-                                      fontSize: ResponsiveUtils.fontSize(context, 16),
+                                      fontSize:
+                                          ResponsiveUtils.fontSize(context, 16),
                                       fontWeight: FontWeight.bold,
                                     ),
                                   ),
@@ -438,14 +442,16 @@ class _ContactWidgetState extends State<ContactWidget> {
                                     ),
                                     style: AppStyles.textCairo(
                                       context,
-                                      fontSize: ResponsiveUtils.fontSize(context, 12),
+                                      fontSize:
+                                          ResponsiveUtils.fontSize(context, 12),
                                       color: _secondaryText,
                                     ),
                                   ),
                                 ],
                               ),
                             ),
-                          ].divide(SizedBox(width: ResponsiveUtils.width(context, 12))),
+                          ].divide(SizedBox(
+                              width: ResponsiveUtils.width(context, 12))),
                         ),
                       ],
                     ),

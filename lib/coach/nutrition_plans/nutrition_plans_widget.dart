@@ -34,7 +34,7 @@ class _NutritionPlansWidgetState extends State<NutritionPlansWidget> {
     super.initState();
     _model = createModel(context, () => NutritionPlansModel());
     _adService = AdService();
-    
+
     // Add delay to ad loading
     Future.delayed(const Duration(seconds: 4), () {
       if (mounted) {
@@ -95,7 +95,7 @@ class _NutritionPlansWidgetState extends State<NutritionPlansWidget> {
                 child: SafeArea(
                   top: true,
                   child: Padding(
-                    padding: ResponsiveUtils.padding(context, horizontal: 24.0),
+                    padding: ResponsiveUtils.padding(context, horizontal: 16.0),
                     child: RefreshIndicator(
                       onRefresh: () async {
                         if (mounted) {
@@ -105,7 +105,11 @@ class _NutritionPlansWidgetState extends State<NutritionPlansWidget> {
                             const Duration(milliseconds: 500));
                       },
                       child: SingleChildScrollView(
-                        child: _buildNutritionPlansList(coachRecord),
+                        child: Padding(
+                          padding:
+                              ResponsiveUtils.padding(context, vertical: 24.0),
+                          child: _buildNutritionPlansList(coachRecord),
+                        ),
                       ),
                     ),
                   ),

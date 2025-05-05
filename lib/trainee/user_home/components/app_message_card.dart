@@ -11,7 +11,8 @@ class AppMessageCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: ResponsiveUtils.padding(context, horizontal: 16.0, vertical: 16.0),
+      padding:
+          ResponsiveUtils.padding(context, horizontal: 16.0, vertical: 0.0),
       child: Container(
         padding: ResponsiveUtils.padding(context, horizontal: 16, vertical: 16),
         decoration: BoxDecoration(
@@ -23,7 +24,8 @@ class AppMessageCard extends StatelessWidget {
             Row(
               children: [
                 Container(
-                  padding: ResponsiveUtils.padding(context, horizontal: 12, vertical: 12),
+                  padding: ResponsiveUtils.padding(context,
+                      horizontal: 12, vertical: 12),
                   decoration: BoxDecoration(
                     color: FlutterFlowTheme.of(context)
                         .primary
@@ -53,7 +55,8 @@ class AppMessageCard extends StatelessWidget {
             SizedBox(
               width: double.infinity,
               child: ElevatedButton.icon(
-                icon: Icon(Icons.share_rounded, size: ResponsiveUtils.iconSize(context, 20)),
+                icon: Icon(Icons.share_rounded,
+                    size: ResponsiveUtils.iconSize(context, 20)),
                 label: Text(
                   FFLocalizations.of(context)
                       .getText(LocalizationKeys.inviteFriends),
@@ -65,7 +68,8 @@ class AppMessageCard extends StatelessWidget {
                 ),
                 style: ElevatedButton.styleFrom(
                   backgroundColor: FlutterFlowTheme.of(context).primary,
-                  padding: EdgeInsets.symmetric(vertical: ResponsiveUtils.height(context, 12)),
+                  padding: EdgeInsets.symmetric(
+                      vertical: ResponsiveUtils.height(context, 12)),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(8),
                   ),

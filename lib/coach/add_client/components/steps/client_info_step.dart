@@ -57,7 +57,7 @@ class ClientInfoStep extends StatelessWidget {
             textAlign: TextAlign.center,
             style: AppStyles.textCairo(
               context,
-              fontSize: ResponsiveUtils.fontSize(context, 12),
+              fontSize: ResponsiveUtils.fontSize(context, 14),
               color: FlutterFlowTheme.of(context).secondaryText,
             ),
           ),
@@ -67,22 +67,19 @@ class ClientInfoStep extends StatelessWidget {
   }
 
   Widget _buildFormFields(BuildContext context) {
-    return Padding(
-      padding: ResponsiveUtils.padding(context, horizontal: 16),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          if (isFirstStep) ...[
-            _buildEmailField(context),
-            SizedBox(height: ResponsiveUtils.height(context, 16)),
-            _buildNameField(context),
-          ] else ...[
-            _buildStartDateField(context),
-            SizedBox(height: ResponsiveUtils.height(context, 16)),
-            _buildEndDateField(context),
-          ],
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        if (isFirstStep) ...[
+          _buildEmailField(context),
+          SizedBox(height: ResponsiveUtils.height(context, 16)),
+          _buildNameField(context),
+        ] else ...[
+          _buildStartDateField(context),
+          SizedBox(height: ResponsiveUtils.height(context, 16)),
+          _buildEndDateField(context),
         ],
-      ),
+      ],
     );
   }
 

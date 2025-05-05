@@ -77,9 +77,11 @@ class _LanguageSelectorState extends State<LanguageSelector>
             color: Colors.transparent,
             child: InkWell(
               onTap: _toggleExpanded,
-              borderRadius: BorderRadius.circular(ResponsiveUtils.width(context, 16)),
+              borderRadius:
+                  BorderRadius.circular(ResponsiveUtils.width(context, 16)),
               child: Padding(
-                padding: ResponsiveUtils.padding(context, horizontal: 16, vertical: 16),
+                padding: ResponsiveUtils.padding(context,
+                    horizontal: 16, vertical: 16),
                 child: Row(
                   children: [
                     Container(
@@ -87,7 +89,8 @@ class _LanguageSelectorState extends State<LanguageSelector>
                       height: ResponsiveUtils.height(context, 48),
                       decoration: BoxDecoration(
                         color: Colors.purple.withOpacity(0.12),
-                        borderRadius: BorderRadius.circular(ResponsiveUtils.width(context, 14)),
+                        borderRadius: BorderRadius.circular(
+                            ResponsiveUtils.width(context, 14)),
                       ),
                       child: Icon(
                         Icons.language,
@@ -144,7 +147,7 @@ class _LanguageSelectorState extends State<LanguageSelector>
           // Language options
           AnimatedContainer(
             duration: const Duration(milliseconds: 300),
-            height: _isExpanded ? ResponsiveUtils.height(context, 100) : 0,
+            height: _isExpanded ? ResponsiveUtils.height(context, 130) : 0,
             curve: Curves.easeInOut,
             clipBehavior: Clip.antiAlias,
             decoration: BoxDecoration(
@@ -153,7 +156,8 @@ class _LanguageSelectorState extends State<LanguageSelector>
                   .withOpacity(0.5),
               borderRadius: BorderRadius.only(
                 bottomLeft: Radius.circular(ResponsiveUtils.width(context, 16)),
-                bottomRight: Radius.circular(ResponsiveUtils.width(context, 16)),
+                bottomRight:
+                    Radius.circular(ResponsiveUtils.width(context, 16)),
               ),
             ),
             child: SingleChildScrollView(
@@ -196,7 +200,8 @@ class _LanguageSelectorState extends State<LanguageSelector>
           _toggleExpanded();
         },
         child: Container(
-          padding: ResponsiveUtils.padding(context, horizontal: 16, vertical: 12),
+          padding:
+              ResponsiveUtils.padding(context, horizontal: 16, vertical: 12),
           child: Row(
             children: [
               SizedBox(width: ResponsiveUtils.width(context, 4)),
@@ -216,7 +221,8 @@ class _LanguageSelectorState extends State<LanguageSelector>
               ),
               if (isSelected)
                 Container(
-                  padding: ResponsiveUtils.padding(context, horizontal: 2, vertical: 2),
+                  padding: ResponsiveUtils.padding(context,
+                      horizontal: 2, vertical: 2),
                   decoration: const BoxDecoration(
                     color: Colors.purple,
                     shape: BoxShape.circle,

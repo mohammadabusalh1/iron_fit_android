@@ -296,7 +296,8 @@ class _UserHomeWidgetState extends State<UserHomeWidget>
                 child: Form(
                   key: formKey,
                   child: Padding(
-                    padding: ResponsiveUtils.padding(context, horizontal: 24, vertical: 16),
+                    padding: ResponsiveUtils.padding(context,
+                        horizontal: 24, vertical: 16),
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -320,7 +321,8 @@ class _UserHomeWidgetState extends State<UserHomeWidget>
                         Row(
                           children: [
                             Container(
-                              padding: ResponsiveUtils.padding(context, horizontal: 10, vertical: 10),
+                              padding: ResponsiveUtils.padding(context,
+                                  horizontal: 10, vertical: 10),
                               decoration: BoxDecoration(
                                 color: FlutterFlowTheme.of(context)
                                     .primary
@@ -344,10 +346,13 @@ class _UserHomeWidgetState extends State<UserHomeWidget>
                                     style: AppStyles.textCairo(
                                       context,
                                       fontWeight: FontWeight.bold,
-                                      fontSize: ResponsiveUtils.fontSize(context, 20),
+                                      fontSize:
+                                          ResponsiveUtils.fontSize(context, 20),
                                     ),
                                   ),
-                                  SizedBox(height: ResponsiveUtils.height(context, 4)),
+                                  SizedBox(
+                                      height:
+                                          ResponsiveUtils.height(context, 4)),
                                   Text(
                                     FFLocalizations.of(context)
                                         .getText('weight_reminder_message'),
@@ -355,7 +360,8 @@ class _UserHomeWidgetState extends State<UserHomeWidget>
                                       context,
                                       color: FlutterFlowTheme.of(context)
                                           .secondaryText,
-                                      fontSize: ResponsiveUtils.fontSize(context, 14),
+                                      fontSize:
+                                          ResponsiveUtils.fontSize(context, 14),
                                     ),
                                   ),
                                 ],
@@ -367,7 +373,8 @@ class _UserHomeWidgetState extends State<UserHomeWidget>
 
                         // Modern weight selector
                         Container(
-                          padding: ResponsiveUtils.padding(context, vertical: 20, horizontal: 16),
+                          padding: ResponsiveUtils.padding(context,
+                              vertical: 20, horizontal: 16),
                           decoration: BoxDecoration(
                             color:
                                 FlutterFlowTheme.of(context).primaryBackground,
@@ -380,12 +387,14 @@ class _UserHomeWidgetState extends State<UserHomeWidget>
                                     .getText('current_weight'),
                                 style: AppStyles.textCairo(
                                   context,
-                                  fontSize: ResponsiveUtils.fontSize(context, 15),
+                                  fontSize:
+                                      ResponsiveUtils.fontSize(context, 15),
                                   color: FlutterFlowTheme.of(context)
                                       .secondaryText,
                                 ),
                               ),
-                              SizedBox(height: ResponsiveUtils.height(context, 16)),
+                              SizedBox(
+                                  height: ResponsiveUtils.height(context, 16)),
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -407,8 +416,10 @@ class _UserHomeWidgetState extends State<UserHomeWidget>
                                       },
                                       customBorder: const CircleBorder(),
                                       child: Container(
-                                        width: ResponsiveUtils.width(context, 50),
-                                        height: ResponsiveUtils.height(context, 50),
+                                        width:
+                                            ResponsiveUtils.width(context, 50),
+                                        height:
+                                            ResponsiveUtils.height(context, 50),
                                         decoration: BoxDecoration(
                                           color: FlutterFlowTheme.of(context)
                                               .secondaryBackground,
@@ -427,19 +438,23 @@ class _UserHomeWidgetState extends State<UserHomeWidget>
                                             Icons.remove,
                                             color: FlutterFlowTheme.of(context)
                                                 .primaryText,
-                                            size: ResponsiveUtils.iconSize(context, 24),
+                                            size: ResponsiveUtils.iconSize(
+                                                context, 24),
                                           ),
                                         ),
                                       ),
                                     ),
                                   ),
-                                  SizedBox(width: ResponsiveUtils.width(context, 24)),
+                                  SizedBox(
+                                      width:
+                                          ResponsiveUtils.width(context, 24)),
 
                                   // Weight display
                                   Expanded(
                                     child: Container(
                                       padding: EdgeInsets.symmetric(
-                                          vertical: ResponsiveUtils.height(context, 8)),
+                                          vertical: ResponsiveUtils.height(
+                                              context, 8)),
                                       child: Stack(
                                         alignment: Alignment.center,
                                         children: [
@@ -450,7 +465,9 @@ class _UserHomeWidgetState extends State<UserHomeWidget>
                                             style: AppStyles.textCairo(
                                               context,
                                               fontWeight: FontWeight.bold,
-                                              fontSize: ResponsiveUtils.fontSize(context, 28),
+                                              fontSize:
+                                                  ResponsiveUtils.fontSize(
+                                                      context, 28),
                                             ),
                                             decoration: const InputDecoration(
                                               border: InputBorder.none,
@@ -491,7 +508,9 @@ class _UserHomeWidgetState extends State<UserHomeWidget>
                                                 color:
                                                     FlutterFlowTheme.of(context)
                                                         .secondaryText,
-                                                fontSize: ResponsiveUtils.fontSize(context, 16),
+                                                fontSize:
+                                                    ResponsiveUtils.fontSize(
+                                                        context, 16),
                                               ),
                                             ),
                                           ),
@@ -499,7 +518,9 @@ class _UserHomeWidgetState extends State<UserHomeWidget>
                                       ),
                                     ),
                                   ),
-                                  SizedBox(width: ResponsiveUtils.width(context, 24)),
+                                  SizedBox(
+                                      width:
+                                          ResponsiveUtils.width(context, 24)),
 
                                   // Increment button
                                   Material(
@@ -518,8 +539,10 @@ class _UserHomeWidgetState extends State<UserHomeWidget>
                                       },
                                       customBorder: const CircleBorder(),
                                       child: Container(
-                                        width: ResponsiveUtils.width(context, 50),
-                                        height: ResponsiveUtils.height(context, 50),
+                                        width:
+                                            ResponsiveUtils.width(context, 50),
+                                        height:
+                                            ResponsiveUtils.height(context, 50),
                                         decoration: BoxDecoration(
                                           color: FlutterFlowTheme.of(context)
                                               .secondaryBackground,
@@ -538,7 +561,8 @@ class _UserHomeWidgetState extends State<UserHomeWidget>
                                             Icons.add,
                                             color: FlutterFlowTheme.of(context)
                                                 .primaryText,
-                                            size: ResponsiveUtils.iconSize(context, 24),
+                                            size: ResponsiveUtils.iconSize(
+                                                context, 24),
                                           ),
                                         ),
                                       ),
@@ -618,8 +642,10 @@ class _UserHomeWidgetState extends State<UserHomeWidget>
                                       },
                                 child: loading
                                     ? SizedBox(
-                                        width: ResponsiveUtils.width(context, 24),
-                                        height: ResponsiveUtils.height(context, 24),
+                                        width:
+                                            ResponsiveUtils.width(context, 24),
+                                        height:
+                                            ResponsiveUtils.height(context, 24),
                                         child: const CircularProgressIndicator(
                                           color: Colors.white,
                                           strokeWidth: 2,
@@ -630,7 +656,8 @@ class _UserHomeWidgetState extends State<UserHomeWidget>
                                             .getText('update'),
                                         style: AppStyles.textCairo(
                                           context,
-                                          fontSize: ResponsiveUtils.fontSize(context, 16),
+                                          fontSize: ResponsiveUtils.fontSize(
+                                              context, 16),
                                           fontWeight: FontWeight.bold,
                                           color: Colors.white,
                                         ),
@@ -646,7 +673,8 @@ class _UserHomeWidgetState extends State<UserHomeWidget>
                           child: TextButton(
                             onPressed: () => Navigator.pop(context),
                             style: TextButton.styleFrom(
-                              padding: ResponsiveUtils.padding(context, 
+                              padding: ResponsiveUtils.padding(
+                                context,
                                 horizontal: 24,
                                 vertical: 12,
                               ),
@@ -812,7 +840,8 @@ class _UserHomeWidgetState extends State<UserHomeWidget>
                     );
                   },
                   child: Padding(
-                    padding: EdgeInsets.only(bottom: ResponsiveUtils.height(context, 80)),
+                    padding: EdgeInsets.only(
+                        bottom: ResponsiveUtils.height(context, 40)),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [

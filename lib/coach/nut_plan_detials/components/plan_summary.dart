@@ -82,7 +82,7 @@ class _PlanInfo extends StatelessWidget {
                     softWrap: true, // Allow wrapping
                     style: AppStyles.textCairo(
                       context,
-                      fontSize: ResponsiveUtils.fontSize(context, 20),
+                      fontSize: ResponsiveUtils.fontSize(context, 16),
                       fontWeight: FontWeight.w600,
                     ),
                   ),

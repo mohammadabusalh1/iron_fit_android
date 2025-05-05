@@ -42,7 +42,7 @@ class TodayInfoSection extends StatelessWidget {
         : dateTimeFormat('MMMM, yyyy', DateTime.now());
 
     return Padding(
-      padding: ResponsiveUtils.padding(context, vertical: 16, horizontal: 24),
+      padding: ResponsiveUtils.padding(context, vertical: 8, horizontal: 24),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

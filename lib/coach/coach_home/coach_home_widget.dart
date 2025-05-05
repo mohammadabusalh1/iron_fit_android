@@ -90,14 +90,14 @@ class _CoachHomeWidgetState extends State<CoachHomeWidget>
     super.initState();
     WidgetsBinding.instance.addObserver(this);
     _model = createModel(context, () => CoachHomeModel());
-    
+
     // Load ad with a slight delay to allow the UI to initialize first
     Future.delayed(const Duration(seconds: 2), () {
       if (mounted) {
         _model.adService.loadAd(context);
       }
     });
-    
+
     _initializeData();
 
     // Check if subscription reminder should be shown
@@ -404,19 +404,20 @@ class _CoachHomeWidgetState extends State<CoachHomeWidget>
 
   Widget _buildMainContent(BuildContext context, CoachRecord coachRecord) {
     return Container(
-      padding:
-          ResponsiveUtils.padding(context, horizontal: 12, vertical: 8),
+      padding: ResponsiveUtils.padding(context, horizontal: 8, vertical: 8),
       child: SingleChildScrollView(
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            SizedBox(height: MediaQuery.of(context).padding.top + ResponsiveUtils.height(context, 80)),
+            SizedBox(
+                height: MediaQuery.of(context).padding.top +
+                    ResponsiveUtils.height(context, 80)),
             _buildWelcomeCard(coachRecord),
             SizedBox(height: ResponsiveUtils.height(context, 0)),
             _buildNewUsersCard(coachRecord),
             SizedBox(height: ResponsiveUtils.height(context, 0)),
             _buildQuickActionsCard(coachRecord),
-            SizedBox(height: ResponsiveUtils.height(context, 32)),
+            SizedBox(height: ResponsiveUtils.height(context, 88)),
           ],
         ),
       ),
@@ -576,11 +577,9 @@ class _CoachHomeWidgetState extends State<CoachHomeWidget>
                 ],
               ),
               Container(
-                padding:
-                    EdgeInsets.symmetric(
-                      horizontal: ResponsiveUtils.width(context, 12), 
-                      vertical: ResponsiveUtils.height(context, 6)
-                    ),
+                padding: EdgeInsets.symmetric(
+                    horizontal: ResponsiveUtils.width(context, 12),
+                    vertical: ResponsiveUtils.height(context, 6)),
                 decoration: BoxDecoration(
                   color: FlutterFlowTheme.of(context).primary.withAlpha(30),
                   borderRadius: BorderRadius.circular(20),
@@ -658,7 +657,8 @@ class _CoachHomeWidgetState extends State<CoachHomeWidget>
                 if (subscriptions.isEmpty) {
                   return Center(
                     child: Padding(
-                      padding: ResponsiveUtils.padding(context, horizontal: 20, vertical: 20),
+                      padding: ResponsiveUtils.padding(context,
+                          horizontal: 20, vertical: 20),
                       child: Column(
                         mainAxisSize: MainAxisSize.min,
                         children: [
@@ -685,7 +685,8 @@ class _CoachHomeWidgetState extends State<CoachHomeWidget>
                 return Column(
                   children: subscriptions.map((subscription) {
                     return Padding(
-                      padding: EdgeInsets.only(bottom: ResponsiveUtils.height(context, 12)),
+                      padding: EdgeInsets.only(
+                          bottom: ResponsiveUtils.height(context, 12)),
                       child: SubscriptionCard(subscription: subscription),
                     );
                   }).toList(),
@@ -700,7 +701,8 @@ class _CoachHomeWidgetState extends State<CoachHomeWidget>
 
   Widget _buildQuickActionsCard(CoachRecord coachRecord) {
     return Padding(
-      padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, ResponsiveUtils.height(context, 48.0)),
+      padding: EdgeInsetsDirectional.fromSTEB(
+          0.0, 0.0, 0.0, ResponsiveUtils.height(context, 48.0)),
       child: DashboardCard(
         child: Column(
           mainAxisSize: MainAxisSize.min,
@@ -728,11 +730,9 @@ class _CoachHomeWidgetState extends State<CoachHomeWidget>
                   ],
                 ),
                 Container(
-                  padding:
-                      EdgeInsets.symmetric(
-                        horizontal: ResponsiveUtils.width(context, 12), 
-                        vertical: ResponsiveUtils.height(context, 6)
-                      ),
+                  padding: EdgeInsets.symmetric(
+                      horizontal: ResponsiveUtils.width(context, 12),
+                      vertical: ResponsiveUtils.height(context, 6)),
                   decoration: BoxDecoration(
                     color: FlutterFlowTheme.of(context).primary.withAlpha(30),
                     borderRadius: BorderRadius.circular(20),
@@ -860,7 +860,8 @@ class _CoachHomeWidgetState extends State<CoachHomeWidget>
                     return Transform.scale(
                       scale: value,
                       child: Container(
-                        padding: ResponsiveUtils.padding(context, horizontal: 16, vertical: 16),
+                        padding: ResponsiveUtils.padding(context,
+                            horizontal: 16, vertical: 16),
                         decoration: const BoxDecoration(
                           shape: BoxShape.circle,
                         ),
@@ -909,7 +910,8 @@ class _CoachHomeWidgetState extends State<CoachHomeWidget>
                     style: ElevatedButton.styleFrom(
                       backgroundColor: FlutterFlowTheme.of(context).primary,
                       foregroundColor: Colors.white,
-                      padding: EdgeInsets.symmetric(vertical: ResponsiveUtils.height(context, 16)),
+                      padding: EdgeInsets.symmetric(
+                          vertical: ResponsiveUtils.height(context, 16)),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(12),
                       ),
@@ -943,7 +945,8 @@ class _CoachHomeWidgetState extends State<CoachHomeWidget>
             width: 2,
           ),
         ),
-        fixedSize: Size(ResponsiveUtils.width(context, 66), ResponsiveUtils.height(context, 66)),
+        fixedSize: Size(ResponsiveUtils.width(context, 66),
+            ResponsiveUtils.height(context, 66)),
       ),
       child: Padding(
         padding: EdgeInsets.only(top: ResponsiveUtils.height(context, 10)),
@@ -983,8 +986,9 @@ class _CoachHomeWidgetState extends State<CoachHomeWidget>
           child: Padding(
             padding: MediaQuery.viewInsetsOf(context),
             child: Container(
-              padding: ResponsiveUtils.padding(context, horizontal: 24, vertical: 24),
-              height: ResponsiveUtils.height(context, 275),
+              padding: ResponsiveUtils.padding(context,
+                  horizontal: 24, vertical: 24),
+              height: ResponsiveUtils.height(context, 320),
               decoration: BoxDecoration(
                 color: FlutterFlowTheme.of(context).secondaryBackground,
                 borderRadius: const BorderRadius.only(
@@ -1062,7 +1066,8 @@ class _CoachHomeWidgetState extends State<CoachHomeWidget>
                         style: ElevatedButton.styleFrom(
                           backgroundColor: FlutterFlowTheme.of(context).primary,
                           foregroundColor: FlutterFlowTheme.of(context).info,
-                          minimumSize: Size(double.infinity, ResponsiveUtils.height(context, 45)),
+                          minimumSize: Size(double.infinity,
+                              ResponsiveUtils.height(context, 45)),
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(8),
                           ),

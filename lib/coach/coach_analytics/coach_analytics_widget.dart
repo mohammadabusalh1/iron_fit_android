@@ -221,8 +221,9 @@ class _CoachAnalyticsWidgetState extends State<CoachAnalyticsWidget> {
               },
             )),
         body: Container(
-          padding:
-              EdgeInsets.only(top: MediaQuery.of(context).padding.top + ResponsiveUtils.height(context, 48)),
+          padding: EdgeInsets.symmetric(
+              vertical: MediaQuery.of(context).padding.top + 80,
+              horizontal: ResponsiveUtils.width(context, 16)),
           height: MediaQuery.of(context).size.height,
           decoration: BoxDecoration(
             gradient: LinearGradient(
@@ -272,7 +273,6 @@ class _CoachAnalyticsWidgetState extends State<CoachAnalyticsWidget> {
                             coachRecord: coach,
                           ),
                         ),
-                        SizedBox(height: ResponsiveUtils.height(context, 100.0)),
                       ],
                     ),
                   ),
@@ -294,13 +294,15 @@ class _CoachAnalyticsWidgetState extends State<CoachAnalyticsWidget> {
         color: Colors.transparent,
         elevation: 2.0,
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(ResponsiveUtils.width(context, 16.0)),
+          borderRadius:
+              BorderRadius.circular(ResponsiveUtils.width(context, 16.0)),
         ),
         child: Container(
           width: MediaQuery.sizeOf(context).width,
           decoration: BoxDecoration(
             color: FlutterFlowTheme.of(context).secondaryBackground,
-            borderRadius: BorderRadius.circular(ResponsiveUtils.width(context, 16.0)),
+            borderRadius:
+                BorderRadius.circular(ResponsiveUtils.width(context, 16.0)),
           ),
           child: Padding(
             padding: EdgeInsets.all(ResponsiveUtils.width(context, 20.0)),
@@ -557,13 +559,15 @@ class _CoachAnalyticsWidgetState extends State<CoachAnalyticsWidget> {
         color: Colors.transparent,
         elevation: 2.0,
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(ResponsiveUtils.width(context, 16.0)),
+          borderRadius:
+              BorderRadius.circular(ResponsiveUtils.width(context, 16.0)),
         ),
         child: Container(
           width: MediaQuery.sizeOf(context).width,
           decoration: BoxDecoration(
             color: FlutterFlowTheme.of(context).secondaryBackground,
-            borderRadius: BorderRadius.circular(ResponsiveUtils.width(context, 16.0)),
+            borderRadius:
+                BorderRadius.circular(ResponsiveUtils.width(context, 16.0)),
           ),
           child: Padding(
             padding: EdgeInsets.all(ResponsiveUtils.width(context, 20.0)),
@@ -664,7 +668,8 @@ class _CoachAnalyticsWidgetState extends State<CoachAnalyticsWidget> {
             padding: EdgeInsets.all(ResponsiveUtils.width(context, 20.0)),
             decoration: BoxDecoration(
               color: FlutterFlowTheme.of(context).secondaryBackground,
-              borderRadius: BorderRadius.circular(ResponsiveUtils.width(context, 16.0)),
+              borderRadius:
+                  BorderRadius.circular(ResponsiveUtils.width(context, 16.0)),
             ),
             child: Column(
               mainAxisSize: MainAxisSize.min,
@@ -709,7 +714,8 @@ class _CoachAnalyticsWidgetState extends State<CoachAnalyticsWidget> {
             padding: EdgeInsets.all(ResponsiveUtils.width(context, 20.0)),
             decoration: BoxDecoration(
               color: FlutterFlowTheme.of(context).secondaryBackground,
-              borderRadius: BorderRadius.circular(ResponsiveUtils.width(context, 16.0)),
+              borderRadius:
+                  BorderRadius.circular(ResponsiveUtils.width(context, 16.0)),
             ),
             child: Column(
               mainAxisSize: MainAxisSize.min,
@@ -735,13 +741,15 @@ class _CoachAnalyticsWidgetState extends State<CoachAnalyticsWidget> {
         color: Colors.transparent,
         elevation: 2.0,
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(ResponsiveUtils.width(context, 16.0)),
+          borderRadius:
+              BorderRadius.circular(ResponsiveUtils.width(context, 16.0)),
         ),
         child: Container(
           width: MediaQuery.sizeOf(context).width,
           decoration: BoxDecoration(
             color: FlutterFlowTheme.of(context).secondaryBackground,
-            borderRadius: BorderRadius.circular(ResponsiveUtils.width(context, 16.0)),
+            borderRadius:
+                BorderRadius.circular(ResponsiveUtils.width(context, 16.0)),
           ),
           child: Padding(
             padding: EdgeInsets.all(ResponsiveUtils.width(context, 20.0)),
@@ -824,13 +832,15 @@ class _CoachAnalyticsWidgetState extends State<CoachAnalyticsWidget> {
         color: Colors.transparent,
         elevation: 2.0,
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(ResponsiveUtils.width(context, 16.0)),
+          borderRadius:
+              BorderRadius.circular(ResponsiveUtils.width(context, 16.0)),
         ),
         child: Container(
           width: MediaQuery.sizeOf(context).width,
           decoration: BoxDecoration(
             color: FlutterFlowTheme.of(context).secondaryBackground,
-            borderRadius: BorderRadius.circular(ResponsiveUtils.width(context, 16.0)),
+            borderRadius:
+                BorderRadius.circular(ResponsiveUtils.width(context, 16.0)),
           ),
           child: Padding(
             padding: EdgeInsets.all(ResponsiveUtils.width(context, 20.0)),
@@ -875,7 +885,8 @@ class _CoachAnalyticsWidgetState extends State<CoachAnalyticsWidget> {
                                                   .toList()
                                                   .indexOf(entry.key) %
                                               colorsList.length],
-                                      radius: ResponsiveUtils.width(context, 100.0),
+                                      radius:
+                                          ResponsiveUtils.width(context, 100.0),
                                     );
                                   })
                                   .toList()

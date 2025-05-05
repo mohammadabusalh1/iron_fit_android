@@ -333,7 +333,7 @@ class _CreateExercisePlanWidgetState extends State<CreateExercisePlanWidget> {
             padding: ResponsiveUtils.padding(
               context,
               horizontal: 24.0,
-              vertical: 48.0,
+              vertical: 0.0,
             ),
             child: SingleChildScrollView(
               child: Form(
@@ -342,6 +342,7 @@ class _CreateExercisePlanWidgetState extends State<CreateExercisePlanWidget> {
                   mainAxisSize: MainAxisSize.min,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
+                    SizedBox(height: ResponsiveUtils.height(context, 24.0)),
                     MemoizedHeaderSection(
                       isEditMode: _isEditMode,
                     ),
@@ -402,7 +403,8 @@ class _CreateExercisePlanWidgetState extends State<CreateExercisePlanWidget> {
                           !_isEditMode ? () => _saveAsDraft(coachRecord) : null,
                     ),
                     SizedBox(height: ResponsiveUtils.height(context, 24.0)),
-                  ].divide(SizedBox(height: ResponsiveUtils.height(context, 24.0))),
+                  ].divide(
+                      SizedBox(height: ResponsiveUtils.height(context, 24.0))),
                 ),
               ),
             ),

@@ -27,7 +27,7 @@ class ResponsiveUtils {
   static double fontSize(BuildContext context, double baseFontSize) {
     if (isPhone(context)) {
       final screenSize = MediaQuery.of(context).size;
-      return baseFontSize + (screenSize.width * 0.01);
+      return (screenSize.width * 0.003 * baseFontSize);
     } else if (isTablet(context)) {
       return baseFontSize * 1.15;
     } else {
@@ -49,8 +49,8 @@ class ResponsiveUtils {
   /// Returns responsive padding based on screen width
   static EdgeInsetsGeometry padding(
     BuildContext context, {
-    double horizontal = 16.0,
-    double vertical = 16.0,
+    double horizontal = 0.0,
+    double vertical = 0.0,
   }) {
     double horizontalFactor = 1.0;
     double verticalFactor = 1.0;
@@ -61,15 +61,15 @@ class ResponsiveUtils {
     } else if (isDesktop(context)) {
       horizontalFactor = 1.5;
       verticalFactor = 1.3;
-    }else{
+    } else {
       final screenSize = MediaQuery.of(context).size;
-      if(screenSize.width > 380){
+      if (screenSize.width > 380) {
         horizontalFactor = 1.25;
         verticalFactor = 1.25;
-      }else if(screenSize.width > 320){
+      } else if (screenSize.width > 320) {
         horizontalFactor = 1.15;
         verticalFactor = 1.15;
-      }else{
+      } else {
         horizontalFactor = 1.0;
         verticalFactor = 1.0;
       }
@@ -84,20 +84,19 @@ class ResponsiveUtils {
   /// Returns a responsive height value based on screen height
   static double height(BuildContext context, double baseHeight) {
     final screenHeight = MediaQuery.of(context).size.height;
-    final baseScreenHeight = 800.0; // Base for comparison
-    
-    return baseHeight * (screenHeight / baseScreenHeight);
+
+    return (screenHeight * (0.00125 * baseHeight));
   }
 
   /// Returns a responsive width value based on screen width
   static double width(BuildContext context, double baseWidth) {
     final screenWidth = MediaQuery.of(context).size.width;
     final baseScreenWidth = 360.0; // Base for comparison (phone width)
-    
+
     return baseWidth * (screenWidth / baseScreenWidth);
   }
 
   static double screenHeight(BuildContext context) {
     return MediaQuery.of(context).size.height;
   }
-} 
+}

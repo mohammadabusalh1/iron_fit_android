@@ -31,9 +31,6 @@ class _SelectPlansState extends State<SelectPlans> {
       curve: Curves.easeInOut,
       margin: EdgeInsets.only(
         top: ResponsiveUtils.height(context, 24),
-        bottom: ResponsiveUtils.height(context, 24),
-        left: widget.isFirstStep ? 0 : ResponsiveUtils.width(context, 16),
-        right: widget.isFirstStep ? 0 : ResponsiveUtils.width(context, 16),
       ),
       child: Column(
         mainAxisSize: MainAxisSize.min,
@@ -111,7 +108,8 @@ class _SelectPlansState extends State<SelectPlans> {
             builder: (context, snapshot) {
               if (!snapshot.hasData) {
                 return Padding(
-                  padding: ResponsiveUtils.padding(context, horizontal: 16, vertical: 16),
+                  padding: ResponsiveUtils.padding(context,
+                      horizontal: 16, vertical: 16),
                   child: Center(
                       child: CircularProgressIndicator(
                     color: FlutterFlowTheme.of(context).primary,
@@ -123,7 +121,8 @@ class _SelectPlansState extends State<SelectPlans> {
 
               if (trainingPlans.isEmpty) {
                 return Padding(
-                  padding: ResponsiveUtils.padding(context, horizontal: 16, vertical: 16),
+                  padding: ResponsiveUtils.padding(context,
+                      horizontal: 16, vertical: 16),
                   child: Center(
                     child: Text(
                       FFLocalizations.of(context).getText('noPlansYet'),
@@ -138,7 +137,8 @@ class _SelectPlansState extends State<SelectPlans> {
               }
 
               return Padding(
-                padding: ResponsiveUtils.padding(context, horizontal: 0, vertical: 4),
+                padding: ResponsiveUtils.padding(context,
+                    horizontal: 0, vertical: 4),
                 child: FlutterFlowDropDown<String>(
                   controller: widget.model.trainingPlanController,
                   options: trainingPlans.map((plan) => plan.plan.name).toList(),
@@ -226,7 +226,8 @@ class _SelectPlansState extends State<SelectPlans> {
             builder: (context, snapshot) {
               if (!snapshot.hasData) {
                 return Padding(
-                  padding: ResponsiveUtils.padding(context, horizontal: 16, vertical: 16),
+                  padding: ResponsiveUtils.padding(context,
+                      horizontal: 16, vertical: 16),
                   child: Center(
                       child: CircularProgressIndicator(
                     color: FlutterFlowTheme.of(context).primary,
@@ -238,7 +239,8 @@ class _SelectPlansState extends State<SelectPlans> {
 
               if (nutritionPlans.isEmpty) {
                 return Padding(
-                  padding: ResponsiveUtils.padding(context, horizontal: 16, vertical: 16),
+                  padding: ResponsiveUtils.padding(context,
+                      horizontal: 16, vertical: 16),
                   child: Center(
                     child: Text(
                       FFLocalizations.of(context)
@@ -254,7 +256,8 @@ class _SelectPlansState extends State<SelectPlans> {
               }
 
               return Padding(
-                padding: ResponsiveUtils.padding(context, horizontal: 0, vertical: 4),
+                padding: ResponsiveUtils.padding(context,
+                    horizontal: 0, vertical: 4),
                 child: FlutterFlowDropDown<String>(
                   controller: widget.model.nutritionalPlanController,
                   options:

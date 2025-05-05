@@ -225,7 +225,7 @@ class _AddClientWidgetState extends State<AddClientWidget> {
             padding: ResponsiveUtils.padding(
               context,
               horizontal: isDesktop ? 48 : (isTablet ? 32 : 24),
-              vertical: MediaQuery.of(context).padding.top,
+              vertical: MediaQuery.of(context).padding.top + 12,
             ),
             margin:
                 isDesktop ? const EdgeInsets.symmetric(horizontal: 24) : null,
@@ -372,6 +372,13 @@ class _AddClientWidgetState extends State<AddClientWidget> {
   // Validate the current step and show errors in snackbar if validation fails
   bool _validateCurrentStep(AddClientModel model) {
     if (model.currentStep == 1) {
+      if (model.startDateTextController.text.isEmpty) {
+        showErrorDialog(
+            FFLocalizations.of(context).getText('error_start_date_required'),
+            context);
+        return false;
+      }
+
       if (DateTime.parse(model.startDateTextController.text)
           .isAfter(DateTime.parse(model.endDateTextController.text))) {
         showErrorDialog(

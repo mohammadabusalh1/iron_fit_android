@@ -22,14 +22,16 @@ class StepNavigation extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: ResponsiveUtils.padding(context, vertical: 16.0),
+      padding:
+          ResponsiveUtils.padding(context, vertical: 24.0, horizontal: 0.0),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           if (currentStep > 0)
             Expanded(
               child: Padding(
-                padding: EdgeInsets.only(right: ResponsiveUtils.width(context, 8.0)),
+                padding:
+                    EdgeInsets.only(right: ResponsiveUtils.width(context, 8.0)),
                 child: FFButtonWidget(
                   onPressed: onPrevious,
                   text: FFLocalizations.of(context).getText('previous_step'),
@@ -59,7 +61,10 @@ class StepNavigation extends StatelessWidget {
           SizedBox(width: ResponsiveUtils.width(context, 8.0)),
           Expanded(
             child: Padding(
-              padding: EdgeInsets.only(left: currentStep > 0 ? ResponsiveUtils.width(context, 8.0) : 0),
+              padding: EdgeInsets.only(
+                  left: currentStep > 0
+                      ? ResponsiveUtils.width(context, 8.0)
+                      : 0),
               child: FFButtonWidget(
                 onPressed: onNext,
                 text: currentStep == totalSteps - 1
