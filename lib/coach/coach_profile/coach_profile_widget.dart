@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:iron_fit/coach/coach_settings/componants/sevices.dart';
 import 'package:iron_fit/componants/loading_indicator/loadingIndicator.dart';
-import 'package:logging/logging.dart';
+import 'package:iron_fit/utils/logger.dart';
 import '/auth/firebase_auth/auth_util.dart';
 import '/backend/backend.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
@@ -11,9 +11,6 @@ import 'package:flutter_animate/flutter_animate.dart';
 import 'components/components.dart';
 import 'package:iron_fit/navigation/page_wrapper.dart';
 import 'package:iron_fit/utils/responsive_utils.dart';
-
-// Initialize logger
-final _logger = Logger('CoachProfileWidget');
 
 // Cache for coach profile data
 class CoachProfileCache {
@@ -31,7 +28,7 @@ class CoachProfileCache {
     lastFetchTime = DateTime.now();
   }
 
-  static void clear() {
+  static Future<void> clear() async {
     cachedCoachProfile = null;
     lastFetchTime = null;
   }
@@ -66,8 +63,7 @@ class _CoachProfileWidgetState extends State<CoachProfileWidget>
     );
 
     _scrollController.addListener(() {
-      setState(() {
-      });
+      setState(() {});
     });
 
     _prefetchData();
@@ -125,7 +121,7 @@ class _CoachProfileWidgetState extends State<CoachProfileWidget>
         });
       }
     } catch (e) {
-      _logger.severe('Error fetching coach data: $e');
+      Logger.error('Error fetching coach data: $e');
       if (mounted) {
         setState(() {
           _hasError = true;
@@ -186,13 +182,15 @@ class _CoachProfileWidgetState extends State<CoachProfileWidget>
           physics: const AlwaysScrollableScrollPhysics(),
           children: [
             SizedBox(
-              height: ResponsiveUtils.height(context, MediaQuery.of(context).size.height * 0.8),
+              height: ResponsiveUtils.height(
+                  context, MediaQuery.of(context).size.height * 0.8),
               child: Center(
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Container(
-                      padding: EdgeInsets.all(ResponsiveUtils.width(context, 20)),
+                      padding:
+                          EdgeInsets.all(ResponsiveUtils.width(context, 20)),
                       decoration: BoxDecoration(
                         color:
                             FlutterFlowTheme.of(context).error.withOpacity(0.1),
@@ -269,8 +267,7 @@ class _CoachProfileWidgetState extends State<CoachProfileWidget>
             child: NotificationListener<ScrollNotification>(
               onNotification: (notification) {
                 if (notification is ScrollUpdateNotification) {
-                  setState(() {
-                  });
+                  setState(() {});
                 }
                 return false;
               },
@@ -287,11 +284,10 @@ class _CoachProfileWidgetState extends State<CoachProfileWidget>
                     actions: [
                       Padding(
                         padding: EdgeInsetsDirectional.fromSTEB(
-                          0, 
-                          ResponsiveUtils.height(context, 8), 
-                          ResponsiveUtils.width(context, 16), 
-                          0
-                        ),
+                            0,
+                            ResponsiveUtils.height(context, 8),
+                            ResponsiveUtils.width(context, 16),
+                            0),
                         child: IconButton(
                           icon: Icon(
                             Icons.settings_rounded,
@@ -305,11 +301,10 @@ class _CoachProfileWidgetState extends State<CoachProfileWidget>
                       ),
                       Padding(
                         padding: EdgeInsetsDirectional.fromSTEB(
-                          0, 
-                          ResponsiveUtils.height(context, 8), 
-                          ResponsiveUtils.width(context, 16), 
-                          0
-                        ),
+                            0,
+                            ResponsiveUtils.height(context, 8),
+                            ResponsiveUtils.width(context, 16),
+                            0),
                         child: IconButton(
                           icon: Icon(
                             Icons.logout_rounded,
@@ -338,13 +333,15 @@ class _CoachProfileWidgetState extends State<CoachProfileWidget>
                     child: Column(
                       children: [
                         Transform.translate(
-                          offset: Offset(0, -ResponsiveUtils.height(context, 40)),
+                          offset:
+                              Offset(0, -ResponsiveUtils.height(context, 40)),
                           child: ProfileHeader(
                             coachRecord: coachProfileCoachRecord,
                           ),
                         ),
                         Transform.translate(
-                          offset: Offset(0, -ResponsiveUtils.height(context, 20)),
+                          offset:
+                              Offset(0, -ResponsiveUtils.height(context, 20)),
                           child: _buildDetailsSection(
                               context, coachProfileCoachRecord),
                         ),
@@ -366,11 +363,10 @@ class _CoachProfileWidgetState extends State<CoachProfileWidget>
       width: MediaQuery.sizeOf(context).width,
       child: Padding(
         padding: EdgeInsetsDirectional.fromSTEB(
-          ResponsiveUtils.width(context, 16.0),
-          ResponsiveUtils.height(context, 12.0),
-          ResponsiveUtils.width(context, 16.0), 
-          ResponsiveUtils.height(context, 88.0)
-        ),
+            ResponsiveUtils.width(context, 16.0),
+            ResponsiveUtils.height(context, 12.0),
+            ResponsiveUtils.width(context, 16.0),
+            ResponsiveUtils.height(context, 88.0)),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
@@ -668,7 +664,8 @@ class _CoachProfileWidgetState extends State<CoachProfileWidget>
                   Row(
                     children: [
                       Container(
-                        padding: EdgeInsets.all(ResponsiveUtils.width(context, 10)),
+                        padding:
+                            EdgeInsets.all(ResponsiveUtils.width(context, 10)),
                         decoration: BoxDecoration(
                           color: FlutterFlowTheme.of(context)
                               .primary
@@ -770,17 +767,21 @@ class _CoachProfileWidgetState extends State<CoachProfileWidget>
                                         color: FlutterFlowTheme.of(context)
                                             .primary,
                                         fontWeight: FontWeight.w600,
-                                        fontSize: ResponsiveUtils.fontSize(context, 13),
+                                        fontSize: ResponsiveUtils.fontSize(
+                                            context, 13),
                                       ),
                                     ),
-                                    SizedBox(width: ResponsiveUtils.width(context, 4)),
+                                    SizedBox(
+                                        width:
+                                            ResponsiveUtils.width(context, 4)),
                                     AnimatedRotation(
                                       turns: expanded ? 0.5 : 0,
                                       duration:
                                           const Duration(milliseconds: 300),
                                       child: Icon(
                                         Icons.keyboard_arrow_down,
-                                        size: ResponsiveUtils.iconSize(context, 16),
+                                        size: ResponsiveUtils.iconSize(
+                                            context, 16),
                                         color: FlutterFlowTheme.of(context)
                                             .primary,
                                       ),

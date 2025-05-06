@@ -1,12 +1,12 @@
 import 'package:iron_fit/componants/Styles.dart';
 import 'package:iron_fit/flutter_flow/custom_functions.dart';
+import 'package:iron_fit/utils/logger.dart';
 import '/auth/firebase_auth/auth_util.dart';
 import '/backend/backend.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import 'package:flutter/material.dart';
-import 'package:logging/logging.dart';
 import 'package:provider/provider.dart';
 import 'coach_enter_info_model.dart';
 import 'sections/personal_info_section.dart';
@@ -19,7 +19,6 @@ export 'coach_enter_info_model.dart';
 // State provider for coach info entry
 class CoachInfoState extends ChangeNotifier {
   final CoachEnterInfoModel model = CoachEnterInfoModel();
-  final Logger _logger = Logger('CoachInfoState');
   CoachRecord? existingCoach;
   GymRecord? existingGym;
 
@@ -106,7 +105,7 @@ class CoachInfoState extends ChangeNotifier {
             });
           }
         } catch (e) {
-          _logger.severe('Error creating GymRecord from snapshot: $e');
+          Logger.error('Error creating GymRecord from snapshot: $e');
           // Fallback: manually extract data from snapshot
           final data = gymSnapshot.data() as Map<String, dynamic>?;
           if (data != null) {
@@ -151,7 +150,7 @@ class CoachInfoState extends ChangeNotifier {
 
       notifyListeners();
     } catch (e) {
-      _logger.severe('Error loading existing coach data: $e');
+      Logger.error('Error loading existing coach data: $e');
     }
   }
 
@@ -407,7 +406,7 @@ class CoachInfoState extends ChangeNotifier {
       context.pop();
     } catch (e) {
       showErrorDialog(FFLocalizations.of(context).getText('2184r6dy'), context);
-      _logger.severe('Error occurred: $e');
+      Logger.error('Error occurred: $e');
     } finally {
       setSaving(false);
     }
@@ -482,7 +481,7 @@ class CoachInfoState extends ChangeNotifier {
       await context.pushNamed('CoachHome');
     } catch (e) {
       showErrorDialog(FFLocalizations.of(context).getText('2184r6dy'), context);
-      _logger.severe('Error occurred: $e');
+      Logger.error('Error occurred: $e');
     } finally {
       setSaving(false);
     }
@@ -703,7 +702,8 @@ class _CoachEnterInfoWidgetState extends State<CoachEnterInfoWidget> {
           if (state.currentStage > 0 || state.currentSubStage > 0)
             Expanded(
               child: Padding(
-                padding: EdgeInsets.only(right: ResponsiveUtils.width(context, 8)),
+                padding:
+                    EdgeInsets.only(right: ResponsiveUtils.width(context, 8)),
                 child: FFButtonWidget(
                   onPressed: state.previousInput,
                   text: FFLocalizations.of(context).getText('previous'),
@@ -721,7 +721,8 @@ class _CoachEnterInfoWidgetState extends State<CoachEnterInfoWidget> {
                       color: FlutterFlowTheme.of(context).primary,
                       width: 1.0,
                     ),
-                    borderRadius: BorderRadius.circular(ResponsiveUtils.width(context, 28.0)),
+                    borderRadius: BorderRadius.circular(
+                        ResponsiveUtils.width(context, 28.0)),
                   ),
                 ),
               ),
@@ -773,7 +774,8 @@ class _CoachEnterInfoWidgetState extends State<CoachEnterInfoWidget> {
                   fontSize: ResponsiveUtils.fontSize(context, 14),
                 ),
                 elevation: 3.0,
-                borderRadius: BorderRadius.circular(ResponsiveUtils.width(context, 28.0)),
+                borderRadius:
+                    BorderRadius.circular(ResponsiveUtils.width(context, 28.0)),
               ),
             ),
           ),

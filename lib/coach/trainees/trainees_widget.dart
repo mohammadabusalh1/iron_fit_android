@@ -49,7 +49,7 @@ class CoachTraineesCache {
     lastFetchTime = DateTime.now();
   }
 
-  static void clear() {
+  static Future<void> clear() async {
     cachedCoach = null;
     cachedSubscriptions = {
       'active': [],
@@ -112,7 +112,7 @@ class _TraineesWidgetState extends State<TraineesWidget>
     });
     _model = createModel(context, () => TraineesModel());
     _adService = AdService();
-    
+
     // Add delay to ad loading
     Future.delayed(const Duration(seconds: 6), () {
       if (mounted) {
@@ -311,10 +311,11 @@ class _TraineesWidgetState extends State<TraineesWidget>
     final isTablet = ResponsiveUtils.isTablet(context);
     final isDesktop = ResponsiveUtils.isDesktop(context);
     final horizontalPadding = ResponsiveUtils.padding(
-      context,
-      horizontal: isDesktop ? 32.0 : (isTablet ? 24.0 : 16.0),
-      vertical: 0,
-    ).horizontal / 2;
+          context,
+          horizontal: isDesktop ? 32.0 : (isTablet ? 24.0 : 16.0),
+          vertical: 0,
+        ).horizontal /
+        2;
 
     return GestureDetector(
       child: Scaffold(
@@ -385,17 +386,15 @@ class _TraineesWidgetState extends State<TraineesWidget>
       CoachRecord coachRecord, Size screenSize, Orientation orientation) {
     final isTablet = ResponsiveUtils.isTablet(context);
     final isDesktop = ResponsiveUtils.isDesktop(context);
-    
+
     final padding = ResponsiveUtils.padding(
       context,
       horizontal: isDesktop ? 32.0 : (isTablet ? 24.0 : 16.0),
       vertical: isDesktop ? 24.0 : (isTablet ? 20.0 : 16.0),
     );
-    
+
     final spacing = ResponsiveUtils.height(
-      context, 
-      isDesktop ? 32.0 : (isTablet ? 24.0 : 16.0)
-    );
+        context, isDesktop ? 32.0 : (isTablet ? 24.0 : 16.0));
 
     return RefreshIndicator(
       onRefresh: () async {
@@ -424,7 +423,9 @@ class _TraineesWidgetState extends State<TraineesWidget>
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              SizedBox(height: MediaQuery.of(context).padding.top + ResponsiveUtils.height(context, 80)),
+              SizedBox(
+                  height: MediaQuery.of(context).padding.top +
+                      ResponsiveUtils.height(context, 80)),
               LayoutBuilder(
                 builder: (context, constraints) {
                   if (orientation == Orientation.landscape && isTablet) {
@@ -509,11 +510,10 @@ class _TraineesWidgetState extends State<TraineesWidget>
     Size screenSize,
   ) {
     final spacing = ResponsiveUtils.height(
-      context, 
-      ResponsiveUtils.isDesktop(context) 
-          ? 32.0 
-          : (ResponsiveUtils.isTablet(context) ? 24.0 : 16.0)
-    );
+        context,
+        ResponsiveUtils.isDesktop(context)
+            ? 32.0
+            : (ResponsiveUtils.isTablet(context) ? 24.0 : 16.0));
 
     // Only include the needed section based on current filter status
     // This prevents unnecessary widget creation and comparison
@@ -622,7 +622,6 @@ class _TraineesWidgetState extends State<TraineesWidget>
 
   Widget _buildFloatingActionButton(CoachRecord coachRecord) {
     return FloatingActionButton(
-      
       backgroundColor: FlutterFlowTheme.of(context).primary,
       onPressed: () {
         _onAddClientPressed(coachRecord);
@@ -1015,7 +1014,8 @@ class _TraineesWidgetState extends State<TraineesWidget>
                     return Transform.scale(
                       scale: value,
                       child: Container(
-                        padding: ResponsiveUtils.padding(context, horizontal: 16, vertical: 16),
+                        padding: ResponsiveUtils.padding(context,
+                            horizontal: 16, vertical: 16),
                         decoration: const BoxDecoration(
                           shape: BoxShape.circle,
                         ),
@@ -1069,7 +1069,8 @@ class _TraineesWidgetState extends State<TraineesWidget>
                     style: ElevatedButton.styleFrom(
                       backgroundColor: FlutterFlowTheme.of(context).primary,
                       foregroundColor: FlutterFlowTheme.of(context).info,
-                      padding: ResponsiveUtils.padding(context, horizontal: 0, vertical: 16),
+                      padding: ResponsiveUtils.padding(context,
+                          horizontal: 0, vertical: 16),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(12),
                       ),

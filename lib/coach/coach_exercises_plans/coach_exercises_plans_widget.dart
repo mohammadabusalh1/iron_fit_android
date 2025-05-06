@@ -37,7 +37,7 @@ class CoachExercisesPlansCache {
     lastUpdated = DateTime.now();
   }
 
-  static void clear() {
+  static Future<void> clear() async {
     cachedCoach = null;
     cachedPlans = null;
     lastUpdated = null;

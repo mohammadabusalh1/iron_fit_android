@@ -1,6 +1,7 @@
 // Flutter core imports
 import 'package:flutter/material.dart';
 import 'package:iron_fit/componants/coach_appbar/coach_appbar.dart';
+import 'package:iron_fit/utils/logger.dart';
 import 'dart:async';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -8,7 +9,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:collection/collection.dart';
 import 'package:iron_fit/componants/loading_indicator/loadingIndicator.dart';
 import 'package:iron_fit/navigation/page_wrapper.dart';
-import 'package:logging/logging.dart';
 import 'package:lottie/lottie.dart';
 
 // FlutterFlow imports
@@ -34,7 +34,7 @@ export 'coach_home_model.dart';
 class CoachHomeCache {
   static DateTime? lastFetchTime;
   static const Duration cacheValidity = Duration(minutes: 5);
-  static int _activeSubscriptionsCount = 0;
+  static int activeSubscriptionsCount = 0;
   static double _totalEarnings = 0;
   static List<SubscriptionsRecord> _recentSubscriptions = [];
 
@@ -45,15 +45,16 @@ class CoachHomeCache {
 
   static void updateSubscriptionData(
       int activeCount, double earnings, List<SubscriptionsRecord> recentSubs) {
-    _activeSubscriptionsCount = activeCount;
+    activeSubscriptionsCount = activeCount;
     _totalEarnings = earnings;
     _recentSubscriptions = List.from(recentSubs);
     lastFetchTime = DateTime.now();
   }
 
-  static void clear() {
+  static Future<void> clear() async {
+    Logger.info('Clearing coach home cache');
     lastFetchTime = null;
-    _activeSubscriptionsCount = 0;
+    activeSubscriptionsCount = 0;
     _totalEarnings = 0;
     _recentSubscriptions = [];
   }
@@ -70,10 +71,9 @@ class _CoachHomeWidgetState extends State<CoachHomeWidget>
     with WidgetsBindingObserver, AutomaticKeepAliveClientMixin {
   late CoachHomeModel _model;
   final scaffoldKey = GlobalKey<ScaffoldState>();
-  final _logger = Logger('CoachHomeWidget');
 
   // Replace instance variables with ValueNotifiers
-  final ValueNotifier<int> _activeSubscriptionsCount = ValueNotifier<int>(0);
+  final ValueNotifier<int> activeSubscriptionsCount = ValueNotifier<int>(0);
   final ValueNotifier<double> _totalEarnings = ValueNotifier<double>(0.0);
   final ValueNotifier<List<SubscriptionsRecord>> _recentSubscriptions =
       ValueNotifier<List<SubscriptionsRecord>>([]);
@@ -107,8 +107,8 @@ class _CoachHomeWidgetState extends State<CoachHomeWidget>
   Future<void> _initializeData() async {
     try {
       if (CoachHomeCache.isValid) {
-        _activeSubscriptionsCount.value =
-            CoachHomeCache._activeSubscriptionsCount;
+        activeSubscriptionsCount.value =
+            CoachHomeCache.activeSubscriptionsCount;
         _totalEarnings.value = CoachHomeCache._totalEarnings;
         _recentSubscriptions.value = CoachHomeCache._recentSubscriptions;
         return;
@@ -124,11 +124,11 @@ class _CoachHomeWidgetState extends State<CoachHomeWidget>
       try {
         await _fetchSubscriptionsData(currentCoachDocument!.reference);
       } catch (e) {
-        _logger.severe('Error processing coach data: $e');
+        Logger.error('Error processing coach data: $e');
         _model.isLoading.value = false;
       }
     } catch (e) {
-      _logger.severe('Error initializing data: $e');
+      Logger.error('Error initializing data: $e');
       _model.isLoading.value = false;
     }
   }
@@ -153,11 +153,11 @@ class _CoachHomeWidgetState extends State<CoachHomeWidget>
             .toList();
         final count = subscriptionsWithoutUnactive.length;
         if (mounted) {
-          _activeSubscriptionsCount.value = count;
-          CoachHomeCache._activeSubscriptionsCount = count;
+          activeSubscriptionsCount.value = count;
+          CoachHomeCache.activeSubscriptionsCount = count;
         }
       }, onError: (e) {
-        _logger.warning('Error fetching active subscriptions count: $e');
+        Logger.warning('Error fetching active subscriptions count: $e');
         if (mounted) {
           _subscriptionsError.value =
               FFLocalizations.of(context).getText('subscription_count_error');
@@ -185,14 +185,14 @@ class _CoachHomeWidgetState extends State<CoachHomeWidget>
             CoachHomeCache._totalEarnings = earnings;
           }
         } catch (e) {
-          _logger.warning('Error calculating total earnings: $e');
+          Logger.warning('Error calculating total earnings: $e');
           if (mounted) {
             _subscriptionsError.value =
                 FFLocalizations.of(context).getText('earnings_calc_error');
           }
         }
       }, onError: (e) {
-        _logger.warning('Error fetching earnings data: $e');
+        Logger.warning('Error fetching earnings data: $e');
         if (mounted) {
           _subscriptionsError.value =
               FFLocalizations.of(context).getText('earnings_fetch_error');
@@ -208,20 +208,20 @@ class _CoachHomeWidgetState extends State<CoachHomeWidget>
 
           // Update all cache data at once when all data is fetched
           CoachHomeCache.updateSubscriptionData(
-            _activeSubscriptionsCount.value,
+            activeSubscriptionsCount.value,
             _totalEarnings.value,
             subscriptions,
           );
         }
       } catch (e) {
-        _logger.warning('Error fetching recent subscriptions: $e');
+        Logger.warning('Error fetching recent subscriptions: $e');
         if (mounted) {
           _subscriptionsError.value =
               FFLocalizations.of(context).getText('recent_subscriptions_error');
         }
       }
     } catch (e) {
-      _logger.severe('Error in subscription data fetch: $e');
+      Logger.error('Error in subscription data fetch: $e');
       if (mounted) {
         _subscriptionsError.value =
             FFLocalizations.of(context).getText('subscription_fetch_error');
@@ -242,7 +242,7 @@ class _CoachHomeWidgetState extends State<CoachHomeWidget>
       }
 
       if (currentUserReference == null) {
-        _logger.warning(
+        Logger.warning(
             'Cannot show subscription reminder: User not authenticated');
         return;
       }
@@ -268,14 +268,14 @@ class _CoachHomeWidgetState extends State<CoachHomeWidget>
         });
       }
     } catch (e) {
-      _logger.severe('Error checking subscription reminder: $e');
+      Logger.error('Error checking subscription reminder: $e');
     }
   }
 
   @override
   void dispose() {
     // Dispose ValueNotifiers
-    _activeSubscriptionsCount.dispose();
+    activeSubscriptionsCount.dispose();
     _totalEarnings.dispose();
     _recentSubscriptions.dispose();
     _isSubscriptionsLoading.dispose();
@@ -522,7 +522,7 @@ class _CoachHomeWidgetState extends State<CoachHomeWidget>
             children: [
               // Using ValueListenableBuilder instead of cached variables directly
               ValueListenableBuilder<int>(
-                valueListenable: _activeSubscriptionsCount,
+                valueListenable: activeSubscriptionsCount,
                 builder: (context, count, _) {
                   return StatisticBox(
                     icon: Icons.people,

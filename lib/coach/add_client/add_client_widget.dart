@@ -4,6 +4,7 @@ import 'package:iron_fit/componants/Styles.dart';
 import 'package:iron_fit/componants/loading_indicator/loadingIndicator.dart';
 import 'package:iron_fit/flutter_flow/custom_functions.dart';
 import 'package:iron_fit/services/firebase_messages.dart';
+import 'package:iron_fit/utils/logger.dart';
 import 'package:iron_fit/utils/responsive_utils.dart';
 import 'package:iron_fit/widgets/date_pocker.dart';
 import '/auth/firebase_auth/auth_util.dart';
@@ -11,7 +12,6 @@ import '/backend/backend.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import 'package:flutter/material.dart';
-import 'package:logging/logging.dart';
 import 'package:provider/provider.dart';
 import 'add_client_model.dart';
 import 'add_client_service.dart';
@@ -27,7 +27,6 @@ class AddClientWidget extends StatefulWidget {
 
 class _AddClientWidgetState extends State<AddClientWidget> {
   final _formKey = GlobalKey<FormState>();
-  final _logger = Logger('AddClientWidget');
   late AddClientService _service;
 
   @override
@@ -93,7 +92,7 @@ class _AddClientWidgetState extends State<AddClientWidget> {
             );
           }
         } catch (e) {
-          _logger.severe('Error in _handleSubmit: $e');
+          Logger.error('Error in _handleSubmit: $e');
         }
 
         if (!mounted) return;
@@ -151,7 +150,7 @@ class _AddClientWidgetState extends State<AddClientWidget> {
               );
             }
           } catch (e) {
-            _logger.severe('Error in _handleSubmit: $e');
+            Logger.error('Error in _handleSubmit: $e');
           }
 
           if (!mounted) return;
@@ -159,8 +158,8 @@ class _AddClientWidgetState extends State<AddClientWidget> {
         }
       }
     } catch (e, s) {
-      _logger.severe('Error in _handleSubmit: $e');
-      _logger.severe('Stack trace: $s');
+      Logger.error('Error in _handleSubmit: $e');
+      Logger.error('Stack trace: $s');
       if (!mounted) return;
       showErrorDialog(FFLocalizations.of(context).getText('2184r6dy'), context);
       // context.goNamed('trainees');

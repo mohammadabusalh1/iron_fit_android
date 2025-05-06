@@ -144,6 +144,8 @@ class TraineeUserStreamWidget extends StatelessWidget {
 }
 
 void clearUserData() {
+  currentCoachDocument = null;
+  currentTraineeDocument = null;
   currentUserDocument = null;
   _currentJwtToken = null;
   currentUser = null;

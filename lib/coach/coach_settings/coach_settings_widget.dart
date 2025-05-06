@@ -8,13 +8,10 @@ import 'package:iron_fit/flutter_flow/internationalization.dart';
 import 'package:iron_fit/navigation/page_wrapper.dart';
 import 'package:iron_fit/backend/backend.dart';
 import 'package:iron_fit/auth/firebase_auth/auth_util.dart';
-import 'package:logging/logging.dart';
+import 'package:iron_fit/utils/logger.dart';
 import 'componants/account_settings.dart';
 import '/componants/loading_indicator/loadingIndicator.dart';
 import '/utils/responsive_utils.dart';
-
-// Initialize logger
-final _logger = Logger('CoachSettingsWidget');
 
 class CoachSettingsWidget extends StatefulWidget {
   const CoachSettingsWidget({super.key});
@@ -53,7 +50,7 @@ class _CoachSettingsWidgetState extends State<CoachSettingsWidget> {
         });
       }
     } catch (e) {
-      _logger.severe('Error fetching coach data: $e');
+      Logger.error('Error fetching coach data: $e');
       if (mounted) {
         setState(() {
           _isLoading = false;
@@ -65,7 +62,7 @@ class _CoachSettingsWidgetState extends State<CoachSettingsWidget> {
   // Handle account deletion
   void _handleDeleteAccount(CoachRecord coach) async {
     // This would be implemented with actual account deletion logic
-    _logger.info('Delete account requested for coach: ${coach.reference.id}');
+    Logger.info('Delete account requested for coach: ${coach.reference.id}');
     deleteAccount(coach, context);
   }
 

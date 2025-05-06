@@ -1,4 +1,5 @@
 import 'package:flutter/foundation.dart';
+import 'firebase_logger.dart';
 
 /// A simple logger utility for Iron Fit app
 class Logger {
@@ -15,9 +16,13 @@ class Logger {
       debugPrint('❌ ERROR: $message\nException: $error');
       if (stackTrace != null) {
         debugPrint('Stack trace: $stackTrace');
+        FirebaseLogger.logErrorToFirebase(message, error, stackTrace);
+      } else {
+        FirebaseLogger.logErrorToFirebase(message);
       }
     } else {
       debugPrint('❌ ERROR: $message');
+      FirebaseLogger.logErrorToFirebase(message);
     }
   }
 
@@ -33,5 +38,17 @@ class Logger {
     if (kDebugMode) {
       debugPrint('🔍 DEBUG: $message');
     }
+  }
+
+  /// Log an error to Firebase Storage
+  ///
+  /// This will save the error details to a file in Firebase Storage
+  /// Returns the download URL of the created file, or null if unsuccessful
+  static Future<String?> logErrorToFirebase(
+    String message, [
+    dynamic error,
+    StackTrace? stackTrace,
+  ]) async {
+    return FirebaseLogger.logErrorToFirebase(message, error, stackTrace);
   }
 }

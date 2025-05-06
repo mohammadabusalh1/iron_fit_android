@@ -2,6 +2,7 @@
 
 import 'package:animate_do/animate_do.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:iron_fit/coach/coach_home/coach_home_widget.dart';
 import 'package:iron_fit/componants/Styles.dart';
 import 'package:iron_fit/flutter_flow/custom_functions.dart';
 import 'package:iron_fit/pages/pre_login/components/auth_service.dart';
@@ -143,7 +144,9 @@ class _LoginWidgetState extends State<LoginWidget> {
                             onForgotPasswordPressed: _handleForgotPassword,
                           ),
                         ),
-                        SizedBox(height: ResponsiveUtils.height(context, screenHeight * 0.03)),
+                        SizedBox(
+                            height: ResponsiveUtils.height(
+                                context, screenHeight * 0.03)),
                         FadeInUp(
                           duration: const Duration(milliseconds: 1000),
                           child: const OrDivider(),
@@ -164,7 +167,8 @@ class _LoginWidgetState extends State<LoginWidget> {
             ),
 
             Positioned(
-              top: MediaQuery.of(context).padding.top + ResponsiveUtils.height(context, 12.0),
+              top: MediaQuery.of(context).padding.top +
+                  ResponsiveUtils.height(context, 12.0),
               right: ResponsiveUtils.width(context, 24.0),
               child: FadeInDown(
                 duration: const Duration(milliseconds: 800),
@@ -452,16 +456,19 @@ class _LoginWidgetState extends State<LoginWidget> {
         builder: (alertDialogContext) {
           return Dialog(
             shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(ResponsiveUtils.width(context, 16.0)),
+              borderRadius:
+                  BorderRadius.circular(ResponsiveUtils.width(context, 16.0)),
             ),
             elevation: 0,
             backgroundColor: Colors.transparent,
             child: Container(
-              padding: ResponsiveUtils.padding(context, horizontal: 20.0, vertical: 20.0),
+              padding: ResponsiveUtils.padding(context,
+                  horizontal: 20.0, vertical: 20.0),
               decoration: BoxDecoration(
                 color: FlutterFlowTheme.of(context).secondaryBackground,
                 shape: BoxShape.rectangle,
-                borderRadius: BorderRadius.circular(ResponsiveUtils.width(context, 16.0)),
+                borderRadius:
+                    BorderRadius.circular(ResponsiveUtils.width(context, 16.0)),
                 boxShadow: [
                   BoxShadow(
                     color: FlutterFlowTheme.of(context).black,
@@ -474,7 +481,8 @@ class _LoginWidgetState extends State<LoginWidget> {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   Container(
-                    padding: ResponsiveUtils.padding(context, horizontal: 16.0, vertical: 16.0),
+                    padding: ResponsiveUtils.padding(context,
+                        horizontal: 16.0, vertical: 16.0),
                     decoration: BoxDecoration(
                       color: FlutterFlowTheme.of(context)
                           .primary
@@ -546,7 +554,8 @@ class _LoginWidgetState extends State<LoginWidget> {
                           color: Colors.transparent,
                           width: 1.0,
                         ),
-                        borderRadius: BorderRadius.circular(ResponsiveUtils.width(context, 8.0)),
+                        borderRadius: BorderRadius.circular(
+                            ResponsiveUtils.width(context, 8.0)),
                       ),
                     ),
                   ),
