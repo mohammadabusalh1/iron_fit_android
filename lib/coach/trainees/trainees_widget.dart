@@ -49,7 +49,7 @@ class CoachTraineesCache {
     lastFetchTime = DateTime.now();
   }
 
-  static Future<void> clear() async {
+  static Future<void> clear() async{
     cachedCoach = null;
     cachedSubscriptions = {
       'active': [],

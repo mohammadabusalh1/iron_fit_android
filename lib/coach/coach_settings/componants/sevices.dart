@@ -29,7 +29,7 @@ void logout(BuildContext context) async {
       // Clear user data before signing out
       clearUserData();
 
-      // Clear cached coach data
+      // Clear cached coach profile
       await CoachProfileCache.clear();
       await CoachHomeCache.clear();
       await CoachTraineesCache.clear();
