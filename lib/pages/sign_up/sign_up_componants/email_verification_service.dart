@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:iron_fit/componants/Styles.dart';
 import 'package:iron_fit/flutter_flow/custom_functions.dart';
 import 'package:iron_fit/utils/logger.dart';
+import 'package:iron_fit/utils/responsive_utils.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import 'package:mailer/mailer.dart';
@@ -163,15 +164,15 @@ class EmailVerificationService {
             children: [
               Icon(
                 Icons.email_outlined,
-                size: 50,
+                size: ResponsiveUtils.iconSize(context, 50),
                 color: FlutterFlowTheme.of(context).primary,
               ),
-              const SizedBox(height: 16),
+              SizedBox(height: ResponsiveUtils.height(context, 16)),
               Text(
                 FFLocalizations.of(context).getText('emailVerification'),
                 style: AppStyles.textCairo(
                   context,
-                  fontSize: 20,
+                  fontSize: ResponsiveUtils.fontSize(context, 20),
                   fontWeight: FontWeight.bold,
                 ),
                 textAlign: TextAlign.center,
@@ -187,20 +188,21 @@ class EmailVerificationService {
                   style: AppStyles.textCairo(
                     context,
                     color: FlutterFlowTheme.of(context).secondaryText,
+                    fontSize: ResponsiveUtils.fontSize(context, 14),
                   ),
                   textAlign: TextAlign.center,
                 ),
-                const SizedBox(height: 4),
+                SizedBox(height: ResponsiveUtils.height(context, 4)),
                 Text(
                   email,
                   style: AppStyles.textCairo(
                     context,
-                    fontSize: 12,
+                    fontSize: ResponsiveUtils.fontSize(context, 12),
                     color: FlutterFlowTheme.of(context).secondaryText,
                   ),
                   textAlign: TextAlign.center,
                 ),
-                const SizedBox(height: 24),
+                SizedBox(height: ResponsiveUtils.height(context, 24)),
                 PinCodeTextField(
                   appContext: context,
                   length: 6,
@@ -209,8 +211,8 @@ class EmailVerificationService {
                   pinTheme: PinTheme(
                     shape: PinCodeFieldShape.box,
                     borderRadius: BorderRadius.circular(8),
-                    fieldHeight: 45,
-                    fieldWidth: 35,
+                    fieldHeight: ResponsiveUtils.height(context, 45),
+                    fieldWidth: ResponsiveUtils.width(context, 35),
                     activeFillColor:
                         FlutterFlowTheme.of(context).primaryBackground,
                     selectedFillColor:
@@ -272,7 +274,7 @@ class EmailVerificationService {
                         .getText('resendVerificationCode'),
                     style: AppStyles.textCairo(
                       context,
-                      fontSize: 14,
+                      fontSize: ResponsiveUtils.fontSize(context, 14),
                       color: FlutterFlowTheme.of(context).primary,
                       fontWeight: FontWeight.bold,
                     ),
@@ -283,7 +285,7 @@ class EmailVerificationService {
                   style: AppStyles.textCairo(
                     context,
                     color: FlutterFlowTheme.of(context).error,
-                    fontSize: 12,
+                    fontSize: ResponsiveUtils.fontSize(context, 12),
                   ),
                   textAlign: TextAlign.center,
                 )
@@ -301,6 +303,7 @@ class EmailVerificationService {
                 style: AppStyles.textCairo(
                   context,
                   color: FlutterFlowTheme.of(context).secondaryText,
+                  fontSize: ResponsiveUtils.fontSize(context, 14),
                 ),
               ),
             ),
@@ -324,10 +327,12 @@ class EmailVerificationService {
                   context,
                   color: FlutterFlowTheme.of(context).primary,
                   fontWeight: FontWeight.bold,
+                  fontSize: ResponsiveUtils.fontSize(context, 14),
                 ),
               ),
             ),
           ],
+          contentPadding: ResponsiveUtils.padding(context, horizontal: 20, vertical: 20),
         );
       },
     );

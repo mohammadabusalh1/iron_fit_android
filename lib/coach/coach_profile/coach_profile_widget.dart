@@ -28,7 +28,8 @@ class CoachProfileCache {
     lastFetchTime = DateTime.now();
   }
 
-  static Future<void> clear() async {
+  static Future<void> clear() async{
+    Logger.info('Clearing coach profile cache');
     cachedCoachProfile = null;
     lastFetchTime = null;
   }

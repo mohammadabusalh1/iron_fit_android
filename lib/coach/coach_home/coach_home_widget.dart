@@ -51,7 +51,7 @@ class CoachHomeCache {
     lastFetchTime = DateTime.now();
   }
 
-  static Future<void> clear() async {
+  static Future<void> clear() async{
     Logger.info('Clearing coach home cache');
     lastFetchTime = null;
     activeSubscriptionsCount = 0;
