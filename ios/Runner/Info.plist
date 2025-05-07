@@ -44,8 +44,6 @@
 	<string>This app requires photo library access to select profile images</string>
 	<key>NSUserNotificationsUsageDescription</key>
 	<string>We need to send you notifications related to your workout sessions and reminders.</string>
-	<key>NSUserTrackingUsageDescription</key>
-	<string>This identifier will be used to deliver personalized ads to you.</string>
 	<key>SKAdNetworkItems</key>
 	<array>
 		<dict>

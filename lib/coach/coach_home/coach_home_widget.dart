@@ -458,18 +458,22 @@ class _CoachHomeWidgetState extends State<CoachHomeWidget>
                     ],
                   ),
                   AuthUserStreamWidget(
-                    builder: (context) => Text(
-                      currentUserDisplayName.length > 16
-                          ? currentUserDisplayName.split(' ')[0]
-                          : currentUserDisplayName,
-                      style: AppStyles.textCairo(
-                        context,
-                        fontSize: ResponsiveUtils.fontSize(context, 24),
-                        fontWeight: FontWeight.bold,
-                        color: FlutterFlowTheme.of(context).primaryText,
-                      ),
-                    ),
-                  ),
+                      builder: (context) => SizedBox(
+                            width: ResponsiveUtils.width(context, 230),
+                            child: Text(
+                              overflow: TextOverflow.ellipsis,
+                              maxLines: 1,
+                              currentUserDisplayName.length > 16
+                                  ? currentUserDisplayName.split(' ')[0]
+                                  : currentUserDisplayName,
+                              style: AppStyles.textCairo(
+                                context,
+                                fontSize: ResponsiveUtils.fontSize(context, 22),
+                                fontWeight: FontWeight.bold,
+                                color: FlutterFlowTheme.of(context).primaryText,
+                              ),
+                            ),
+                          )),
                 ],
               ),
               Container(

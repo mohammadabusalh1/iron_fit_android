@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import 'package:iron_fit/utils/responsive_utils.dart';
 import '/auth/firebase_auth/auth_util.dart';
 import '/backend/backend.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
@@ -92,13 +93,18 @@ class ProfileHeader extends StatelessWidget {
             AuthUserStreamWidget(
               builder: (context) {
                 String displayName = _formatDisplayName(context);
-                return Text(
-                  displayName,
-                  style: _getTextStyle(
-                    context,
-                    fontSize: 26,
-                    fontWeight: FontWeight.bold,
-                    color: FlutterFlowTheme.of(context).primaryText,
+                return SizedBox(
+                  width: ResponsiveUtils.width(context, 250),
+                  child: Text(
+                    overflow: TextOverflow.ellipsis,
+                    maxLines: 1,
+                    displayName,
+                    style: _getTextStyle(
+                      context,
+                      fontSize: 26,
+                      fontWeight: FontWeight.bold,
+                      color: FlutterFlowTheme.of(context).primaryText,
+                    ),
                   ),
                 );
               },

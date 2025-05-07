@@ -6,7 +6,6 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
-import 'package:iron_fit/Ad/IOSAdsHelper.dart';
 import 'package:iron_fit/constants/AdConstants.dart';
 import 'package:iron_fit/utils/logger.dart';
 
@@ -20,18 +19,13 @@ class AdService {
   bool _isInitialized = false;
   bool _isCurrentlyLoading = false;
   DateTime? _lastLoadAttemptTime;
-  
+
   // Min time between ad load attempts
   static const Duration _minLoadInterval = Duration(seconds: 5);
 
   Future<void> initialize() async {
     if (_isInitialized) return;
     _isInitialized = true;
-
-    if (Platform.isIOS) {
-      // Request iOS tracking authorization
-      await IOSAdsHelper.requestTrackingAuthorization();
-    }
   }
 
   Future<void> loadAd(BuildContext context) async {
@@ -41,22 +35,24 @@ class AdService {
 
     // Check if a previous ad is still loading or available
     if (_interstitialAd != null || _isCurrentlyLoading) return;
-    
+
     // Enforce minimum time between load attempts
     if (_lastLoadAttemptTime != null) {
-      final timeSinceLastAttempt = DateTime.now().difference(_lastLoadAttemptTime!);
+      final timeSinceLastAttempt =
+          DateTime.now().difference(_lastLoadAttemptTime!);
       if (timeSinceLastAttempt < _minLoadInterval) {
         Logger.info('Throttling ad load request. Will try again later.');
         return;
       }
     }
-    
+
     // Mark as loading and update last attempt time
     _isCurrentlyLoading = true;
     _lastLoadAttemptTime = DateTime.now();
 
-    Logger.info('Loading interstitial ad for ${Platform.isIOS ? 'iOS' : 'Android'}');
-    
+    Logger.info(
+        'Loading interstitial ad for ${Platform.isIOS ? 'iOS' : 'Android'}');
+
     await InterstitialAd.load(
       adUnitId: Platform.isIOS ? AdConstants.adUnitIdIOS : AdConstants.adUnitId,
       request: AdConstants.request,
@@ -69,7 +65,8 @@ class AdService {
           Logger.info('Interstitial ad loaded successfully');
         },
         onAdFailedToLoad: (LoadAdError error) {
-          Logger.error('Interstitial ad failed to load: ${error.message}');
+          Logger.error(
+              'Interstitial ad failed to load: ${error.message} ${error.code} AdService.dart line 68');
           _isCurrentlyLoading = false;
           _handleAdFailedToLoad(error, context);
         },
@@ -84,7 +81,8 @@ class AdService {
     if (_numInterstitialLoadAttempts < AdConstants.maxFailedLoadAttempts) {
       // Exponential backoff with minimum 3 seconds (3000ms)
       int delay = max(3000, (1 << (_numInterstitialLoadAttempts - 1)) * 1000);
-      Logger.info('Retrying to load ad in $delay ms. Attempt: $_numInterstitialLoadAttempts');
+      Logger.info(
+          'Retrying to load ad in $delay ms. Attempt: $_numInterstitialLoadAttempts');
       Timer(Duration(milliseconds: delay), () => loadAd(context));
     } else {
       Logger.error('Failed to load interstitial ad after multiple attempts');
@@ -130,7 +128,7 @@ class AdService {
     _interstitialAd!.show();
     _interstitialAd = null;
   }
-  
+
   // Helper function to get max value
   int max(int a, int b) {
     return a > b ? a : b;

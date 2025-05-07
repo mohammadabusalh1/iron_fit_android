@@ -12,6 +12,8 @@ import 'logger.dart';
 class FirebaseLogger {
   static const String _storagePath = 'error_logs';
   static const String _logFileName = 'app_errors.txt';
+  static const int _maxRetries = 3;
+  static const Duration _timeout = Duration(seconds: 10);
 
   /// Log an error to Firebase Storage
   ///
@@ -22,7 +24,15 @@ class FirebaseLogger {
     StackTrace? stackTrace,
   ]) async {
     // First log to console
-    Logger.error(message, error, stackTrace);
+    print('Error: $message');
+    print('Error: $error');
+    print('Error: $stackTrace');
+
+    // Skip Firebase logging in debug mode to avoid unnecessary storage operations
+    if (kDebugMode) {
+      return null;
+    }
+
     try {
       // Format the error log entry
       final String timestamp =
@@ -43,37 +53,38 @@ class FirebaseLogger {
       logEntry.writeln('----------------------------------------\n');
 
       final String filePath = '$_storagePath/$_logFileName';
+      final Uint8List newLogData =
+          Uint8List.fromList(utf8.encode(logEntry.toString()));
 
-      // First try to download existing log file
-      Uint8List? existingLog;
-      try {
-        existingLog = await downloadBytes(filePath);
-      } catch (e) {
-        // File may not exist yet, that's okay
-        Logger.info('Creating new error log file');
+      // Try to upload with retries
+      for (int attempt = 1; attempt <= _maxRetries; attempt++) {
+        try {
+          // Upload directly without downloading existing logs
+          final result = await uploadData(
+            filePath,
+            newLogData,
+          ).timeout(_timeout);
+
+          if (result != null) {
+            Logger.info('Error log saved to Firebase Storage: $result');
+            return result;
+          }
+        } catch (e) {
+          if (attempt == _maxRetries) {
+            rethrow;
+          }
+          // Wait before retrying
+          await Future.delayed(Duration(seconds: attempt));
+        }
       }
 
-      // Combine existing log with new entry
-      final String combinedLog = existingLog != null
-          ? utf8.decode(existingLog) + logEntry.toString()
-          : logEntry.toString();
-
-      // Upload to Firebase Storage
-      final result = await uploadData(
-        filePath,
-        Uint8List.fromList(utf8.encode(combinedLog)),
-      );
-
-      if (result != null) {
-        Logger.info('Error log saved to Firebase Storage: $result');
-        return result;
-      } else {
-        Logger.error('Failed to save error log to Firebase Storage');
-        return null;
-      }
+      print(
+          'Failed to save error log to Firebase Storage after $_maxRetries attempts');
+      return null;
     } catch (e, st) {
       // Log any errors that occur during storage (to console only)
-      Logger.error('Error while saving log to Firebase Storage', e, st);
+      print('Error while saving log to Firebase Storage: $e');
+      print('Error while saving log to Firebase Storage: $st');
       return null;
     }
   }
