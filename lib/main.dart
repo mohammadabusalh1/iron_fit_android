@@ -68,8 +68,8 @@ void main() async {
   // Initialize app
   await initializeApp();
 
-  await authManager.signOut();
-  FFAppState().prefs.clear();
+  // await authManager.signOut();
+  // FFAppState().prefs.clear();
 
   // Initialize firebase notifications only after Firebase is fully initialized
   await FirebaseNotificationService.instance.initialize();
