@@ -406,14 +406,18 @@ class _UserEnterInfoWidgetState extends State<UserEnterInfoWidget> {
                           colorScheme: ColorScheme.fromSeed(
                               seedColor: FlutterFlowTheme.of(context).primary),
                           textTheme: TextTheme(
-                            bodyMedium: FlutterFlowTheme.of(context).bodyMedium.copyWith(
-                                  fontSize: ResponsiveUtils.fontSize(context, 14),
+                            bodyMedium: FlutterFlowTheme.of(context)
+                                .bodyMedium
+                                .copyWith(
+                                  fontSize:
+                                      ResponsiveUtils.fontSize(context, 14),
                                 ),
                           ),
                           textButtonTheme: TextButtonThemeData(
                             style: TextButton.styleFrom(
                               textStyle: AppStyles.textCairo(context,
-                                  fontSize: ResponsiveUtils.fontSize(context, 16),
+                                  fontSize:
+                                      ResponsiveUtils.fontSize(context, 16),
                                   fontWeight: FontWeight.w600),
                             ),
                           ),
@@ -484,10 +488,8 @@ class _UserEnterInfoWidgetState extends State<UserEnterInfoWidget> {
                           onTap: () => setState(() =>
                               _model.genderValueController!.value = [gender]),
                           child: Padding(
-                            padding: ResponsiveUtils.padding(context, 
-                              horizontal: 16, 
-                              vertical: 16
-                            ),
+                            padding: ResponsiveUtils.padding(context,
+                                horizontal: 16, vertical: 16),
                             child: Row(
                               children: [
                                 Icon(
@@ -498,13 +500,15 @@ class _UserEnterInfoWidgetState extends State<UserEnterInfoWidget> {
                                           .secondaryText,
                                   size: ResponsiveUtils.iconSize(context, 24),
                                 ),
-                                SizedBox(width: ResponsiveUtils.width(context, 12)),
+                                SizedBox(
+                                    width: ResponsiveUtils.width(context, 12)),
                                 Text(
                                   gender,
                                   style: FlutterFlowTheme.of(context)
                                       .bodyLarge
                                       .copyWith(
-                                        fontSize: ResponsiveUtils.fontSize(context, 16),
+                                        fontSize: ResponsiveUtils.fontSize(
+                                            context, 16),
                                         color: _model.genderValue == gender
                                             ? FlutterFlowTheme.of(context)
                                                 .primary
@@ -1011,16 +1015,14 @@ class _UserEnterInfoWidgetState extends State<UserEnterInfoWidget> {
         }
       } else {
         Logger.warning('Invalid file format selected for profile image');
-        if (mounted) {
-          showErrorDialog(
-              _localizations.getText('invalidFileFormatSelected'), context);
-        }
+        setState(() => _model.isDataUploading = false);
       }
     } catch (e) {
       Logger.error('Error uploading profile image', e);
       if (mounted) {
         showErrorDialog(_localizations.getText('failedToUploadImage'), context);
       }
+      setState(() => _model.isDataUploading = false);
     }
   }
 
