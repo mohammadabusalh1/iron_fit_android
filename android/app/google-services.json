@@ -14,11 +14,11 @@
       },
       "oauth_client": [
         {
-          "client_id": "252100398371-1f2b9njn7fti43cv686g9n8bj5viu0r1.apps.googleusercontent.com",
+          "client_id": "252100398371-eu1kkehajnpedjq087p2t19jsdq4icfg.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.abusalh.ironfit",
-            "certificate_hash": "4c5795f2ed375d65d96ccca5d3793745c5a49f75"
+            "certificate_hash": "bcdf5352c8de71e5290c2801e79a40c19ae04c59"
           }
         },
         {
