@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:iron_fit/componants/loading_indicator/loadingIndicator.dart';
 import 'package:iron_fit/componants/styles.dart';
 import 'package:iron_fit/services/notification_service.dart';
@@ -756,140 +757,143 @@ class _UserHomeWidgetState extends State<UserHomeWidget>
         }
       });
       return const LoadingIndicator();
-    }
-    if (currentUserReference == null) {
+    } else if (currentUserReference == null) {
       Logger.warning(
           'Current user reference is null, showing loading indicator');
+      FFAppState().prefs.clear();
+      clearUserData();
+      FirebaseAuth.instance.signOut();
       WidgetsBinding.instance.addPostFrameCallback((_) {
         if (context.mounted) {
           context.goNamed('Login');
         }
       });
       return const LoadingIndicator();
-    }
-
-    if (currentTraineeDocument == null) {
+    } else if (currentTraineeDocument == null) {
       Logger.warning(
           'current trainee document is null, showing loading indicator');
+      FFAppState().prefs.clear();
+      clearUserData();
+      FirebaseAuth.instance.signOut();
       WidgetsBinding.instance.addPostFrameCallback((_) {
         if (context.mounted) {
           context.goNamed('Login');
         }
       });
       return const LoadingIndicator();
-    }
+    } else {
+      if (isiOS) {
+        SystemChrome.setSystemUIOverlayStyle(
+          SystemUiOverlayStyle(
+            statusBarBrightness: Theme.of(context).brightness,
+            systemStatusBarContrastEnforced: true,
+          ),
+        );
+      }
 
-    if (isiOS) {
-      SystemChrome.setSystemUIOverlayStyle(
-        SystemUiOverlayStyle(
-          statusBarBrightness: Theme.of(context).brightness,
-          systemStatusBarContrastEnforced: true,
-        ),
+      return GestureDetector(
+        onTap: () => FocusScope.of(context).unfocus(),
+        child: Scaffold(
+          key: scaffoldKey,
+          backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
+          body: Stack(
+            children: [
+              // Background gradient overlay
+              Container(
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    begin: Alignment.topCenter,
+                    end: Alignment.bottomCenter,
+                    colors: [
+                      FlutterFlowTheme.of(context)
+                          .primary
+                          .withValues(alpha: 0.05),
+                      FlutterFlowTheme.of(context).primaryBackground,
+                    ],
+                  ),
+                ),
+              ),
+
+              // Main content with refresh indicator and animations
+              RefreshIndicator(
+                onRefresh: () async {
+                  try {
+                    _isLoading.value = true;
+                    await getPlan();
+                    Logger.info('Data refreshed successfully');
+                  } catch (e, stackTrace) {
+                    Logger.error('Error refreshing data', e, stackTrace);
+                  } finally {
+                    if (mounted) {
+                      _isLoading.value = false;
+                    }
+                  }
+                },
+                child: SingleChildScrollView(
+                  physics: const AlwaysScrollableScrollPhysics(),
+                  child: AnimatedBuilder(
+                    animation: _fadeInController,
+                    builder: (context, child) {
+                      return Opacity(
+                        opacity: _fadeInController.value,
+                        child: Transform.translate(
+                          offset: Offset(0, 20 * (1 - _fadeInController.value)),
+                          child: child!,
+                        ),
+                      );
+                    },
+                    child: Padding(
+                      padding: EdgeInsets.only(
+                          bottom: ResponsiveUtils.height(context, 40)),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          SizedBox(height: MediaQuery.of(context).padding.top),
+                          UserHeader(
+                            trainee: currentTraineeDocument!,
+                            notificationService: _notificationService,
+                          ),
+                          TodayInfoSection(animation: _slideController),
+                          StatsSection(
+                            trainee: currentTraineeDocument!,
+                            animation: _scaleController,
+                            sourceNotifier: _source,
+                          ),
+                          ExercisesSection(
+                            trainee: currentTraineeDocument!,
+                            animation: _slideController,
+                          ),
+                          _appMessageCardAnimated,
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+
+              // Loading overlay
+              ValueListenableBuilder<bool>(
+                valueListenable: _isLoading,
+                builder: (context, isLoading, _) {
+                  if (!isLoading) return const SizedBox.shrink();
+
+                  return BackdropFilter(
+                    filter: ImageFilter.blur(sigmaX: 3, sigmaY: 3),
+                    child: Container(
+                      color: FlutterFlowTheme.of(context)
+                          .black
+                          .withValues(alpha: 0.3),
+                      child: const Center(
+                        child: LoadingIndicator(),
+                      ),
+                    ),
+                  );
+                },
+              ),
+            ],
+          ),
+        ).withUserNavBar(0),
       );
     }
-
-    return GestureDetector(
-      onTap: () => FocusScope.of(context).unfocus(),
-      child: Scaffold(
-        key: scaffoldKey,
-        backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
-        body: Stack(
-          children: [
-            // Background gradient overlay
-            Container(
-              decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  begin: Alignment.topCenter,
-                  end: Alignment.bottomCenter,
-                  colors: [
-                    FlutterFlowTheme.of(context)
-                        .primary
-                        .withValues(alpha: 0.05),
-                    FlutterFlowTheme.of(context).primaryBackground,
-                  ],
-                ),
-              ),
-            ),
-
-            // Main content with refresh indicator and animations
-            RefreshIndicator(
-              onRefresh: () async {
-                try {
-                  _isLoading.value = true;
-                  await getPlan();
-                  Logger.info('Data refreshed successfully');
-                } catch (e, stackTrace) {
-                  Logger.error('Error refreshing data', e, stackTrace);
-                } finally {
-                  if (mounted) {
-                    _isLoading.value = false;
-                  }
-                }
-              },
-              child: SingleChildScrollView(
-                physics: const AlwaysScrollableScrollPhysics(),
-                child: AnimatedBuilder(
-                  animation: _fadeInController,
-                  builder: (context, child) {
-                    return Opacity(
-                      opacity: _fadeInController.value,
-                      child: Transform.translate(
-                        offset: Offset(0, 20 * (1 - _fadeInController.value)),
-                        child: child!,
-                      ),
-                    );
-                  },
-                  child: Padding(
-                    padding: EdgeInsets.only(
-                        bottom: ResponsiveUtils.height(context, 40)),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        SizedBox(height: MediaQuery.of(context).padding.top),
-                        UserHeader(
-                          trainee: currentTraineeDocument!,
-                          notificationService: _notificationService,
-                        ),
-                        TodayInfoSection(animation: _slideController),
-                        StatsSection(
-                          trainee: currentTraineeDocument!,
-                          animation: _scaleController,
-                          sourceNotifier: _source,
-                        ),
-                        ExercisesSection(
-                          trainee: currentTraineeDocument!,
-                          animation: _slideController,
-                        ),
-                        _appMessageCardAnimated,
-                      ],
-                    ),
-                  ),
-                ),
-              ),
-            ),
-
-            // Loading overlay
-            ValueListenableBuilder<bool>(
-              valueListenable: _isLoading,
-              builder: (context, isLoading, _) {
-                if (!isLoading) return const SizedBox.shrink();
-
-                return BackdropFilter(
-                  filter: ImageFilter.blur(sigmaX: 3, sigmaY: 3),
-                  child: Container(
-                    color: FlutterFlowTheme.of(context)
-                        .black
-                        .withValues(alpha: 0.3),
-                    child: const Center(
-                      child: LoadingIndicator(),
-                    ),
-                  ),
-                );
-              },
-            ),
-          ],
-        ),
-      ).withUserNavBar(0),
-    );
   }
 }

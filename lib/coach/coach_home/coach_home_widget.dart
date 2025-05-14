@@ -1,4 +1,5 @@
 // Flutter core imports
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:iron_fit/componants/coach_appbar/coach_appbar.dart';
 import 'package:iron_fit/utils/logger.dart';
@@ -51,7 +52,7 @@ class CoachHomeCache {
     lastFetchTime = DateTime.now();
   }
 
-  static Future<void> clear() async{
+  static Future<void> clear() async {
     Logger.info('Clearing coach home cache');
     lastFetchTime = null;
     activeSubscriptionsCount = 0;
@@ -302,13 +303,32 @@ class _CoachHomeWidgetState extends State<CoachHomeWidget>
           builder: (context, error, _) {
             if (error != null) {
               return _buildErrorScreen(error);
-            }
-
-            if (currentCoachDocument == null) {
+            } else if (currentUserReference == null) {
+              Logger.warning(
+                  'Current user reference is null, showing loading indicator');
+              FFAppState().prefs.clear();
+              clearUserData();
+              FirebaseAuth.instance.signOut();
+              WidgetsBinding.instance.addPostFrameCallback((_) {
+                if (context.mounted) {
+                  context.goNamed('Login');
+                }
+              });
               return const LoadingIndicator();
+            } else if (currentCoachDocument == null) {
+              Logger.warning('Current coach document is null');
+              FFAppState().prefs.clear();
+              clearUserData();
+              FirebaseAuth.instance.signOut();
+              WidgetsBinding.instance.addPostFrameCallback((_) {
+                if (context.mounted) {
+                  context.goNamed('Login');
+                }
+              });
+              return const LoadingIndicator();
+            } else {
+              return _buildMainScaffold(context, currentCoachDocument!);
             }
-
-            return _buildMainScaffold(context, currentCoachDocument!);
           },
         );
       },

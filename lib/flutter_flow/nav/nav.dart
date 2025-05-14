@@ -99,7 +99,7 @@ Widget _waitForAuthAndInitialize(BuildContext context) {
         );
       }
 
-      return const UserEnterInfoWidget();
+      // return const UserEnterInfoWidget();
 
       // Store state in local variables to avoid multiple calls
       final appState = FFAppState();
