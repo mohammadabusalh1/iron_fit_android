@@ -157,7 +157,7 @@ class _PlanDetailsPageState extends State<PlanDetailsPage>
   Widget _buildProgramHeader(BuildContext context, FlutterFlowTheme theme) {
     return Container(
       width: double.infinity,
-      padding: ResponsiveUtils.padding(context),
+      padding: ResponsiveUtils.padding(context, all: 16),
       decoration: BoxDecoration(
         color: theme.primaryBackground.withOpacity(0.85),
         borderRadius: BorderRadius.circular(16),
@@ -523,8 +523,7 @@ class _PlanDetailsPageState extends State<PlanDetailsPage>
           // Workout focus area
           if (day.hasTitle() && day.title.isNotEmpty)
             Padding(
-              padding:
-                  ResponsiveUtils.padding(context, horizontal: 16, vertical: 0),
+              padding: ResponsiveUtils.padding(context, all: 16),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [

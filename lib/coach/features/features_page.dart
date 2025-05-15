@@ -36,7 +36,7 @@ class _FeaturesPageState extends State<FeaturesPage>
 
   @override
   Widget build(BuildContext context) {
-    final mediaQuery = MediaQuery.of(context);
+    MediaQuery.of(context);
     final padding = ResponsiveUtils.width(context, 18.0);
 
     return Scaffold(
@@ -74,19 +74,15 @@ class _FeaturesPageState extends State<FeaturesPage>
                 : width < 900
                     ? 3
                     : 4;
-            final childAspectRatio = ResponsiveUtils.isPhone(context) 
-                ? 0.9 
-                : ResponsiveUtils.isTablet(context) 
-                    ? 1.1 
+            final childAspectRatio = ResponsiveUtils.isPhone(context)
+                ? 0.9
+                : ResponsiveUtils.isTablet(context)
+                    ? 1.1
                     : 1.2;
 
             return Padding(
-              padding: EdgeInsets.fromLTRB(
-                padding, 
-                ResponsiveUtils.height(context, 24), 
-                padding, 
-                padding
-              ),
+              padding: EdgeInsets.fromLTRB(padding,
+                  ResponsiveUtils.height(context, 24), padding, padding),
               child: GridView.builder(
                 physics: const BouncingScrollPhysics(),
                 gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
@@ -215,11 +211,8 @@ class _FeaturesPageState extends State<FeaturesPage>
                 ),
                 SizedBox(height: ResponsiveUtils.height(context, 14)),
                 Padding(
-                  padding: ResponsiveUtils.padding(
-                    context, 
-                    horizontal: 12, 
-                    vertical: 0
-                  ),
+                  padding: ResponsiveUtils.padding(context,
+                      horizontal: 12, vertical: 0),
                   child: Text(
                     title,
                     textAlign: TextAlign.center,

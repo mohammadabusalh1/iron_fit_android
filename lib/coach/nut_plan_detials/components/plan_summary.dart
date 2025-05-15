@@ -99,7 +99,7 @@ class _PlanInfo extends StatelessWidget {
                         ),
                       ),
                       Text(
-                        '${nuPlan.nutPlan.calories ?? 0} ${FFLocalizations.of(context).getText('calories')}',
+                        '${nuPlan.nutPlan.calories} ${FFLocalizations.of(context).getText('calories')}',
                         style: AppStyles.textCairo(
                           context,
                           fontSize: ResponsiveUtils.fontSize(context, 12),
