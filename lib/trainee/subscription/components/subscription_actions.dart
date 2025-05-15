@@ -56,7 +56,8 @@ class SubscriptionActions extends StatelessWidget {
 
       return nutPlan;
     } catch (e, stackTrace) {
-      Logger.error('Error fetching nutrition plan', e, stackTrace);
+      Logger.error('Error fetching nutrition plan',
+          error: e, stackTrace: stackTrace);
       return null;
     }
   }
@@ -100,17 +101,21 @@ class SubscriptionActions extends StatelessWidget {
             size: ResponsiveUtils.iconSize(context, 20),
           ),
           options: FFButtonOptions(
-            width: ResponsiveUtils.width(context, MediaQuery.sizeOf(context).width),
+            width: ResponsiveUtils.width(
+                context, MediaQuery.sizeOf(context).width),
             height: ResponsiveUtils.height(context, 56),
-            padding: ResponsiveUtils.padding(context, horizontal: 8, vertical: 8),
-            iconPadding: ResponsiveUtils.padding(context, horizontal: 0, vertical: 0),
+            padding:
+                ResponsiveUtils.padding(context, horizontal: 8, vertical: 8),
+            iconPadding:
+                ResponsiveUtils.padding(context, horizontal: 0, vertical: 0),
             color: FlutterFlowTheme.of(context).primary,
             textStyle: AppStyles.textCairo(context,
                 fontSize: ResponsiveUtils.fontSize(context, 18),
                 fontWeight: FontWeight.w600,
                 color: FlutterFlowTheme.of(context).info),
             elevation: 3,
-            borderRadius: BorderRadius.circular(ResponsiveUtils.width(context, 28)),
+            borderRadius:
+                BorderRadius.circular(ResponsiveUtils.width(context, 28)),
           ),
         ),
         FFButtonWidget(
@@ -119,7 +124,8 @@ class SubscriptionActions extends StatelessWidget {
               Logger.debug('Navigating to training plan screen');
               context.pushNamed('days');
             } catch (e, stackTrace) {
-              Logger.error('Error navigating to training plan', e, stackTrace);
+              Logger.error('Error navigating to training plan',
+                  error: e, stackTrace: stackTrace);
               if (context.mounted) {
                 showErrorDialog(
                     FFLocalizations.of(context)
@@ -135,10 +141,13 @@ class SubscriptionActions extends StatelessWidget {
             size: ResponsiveUtils.iconSize(context, 20),
           ),
           options: FFButtonOptions(
-            width: ResponsiveUtils.width(context, MediaQuery.sizeOf(context).width),
+            width: ResponsiveUtils.width(
+                context, MediaQuery.sizeOf(context).width),
             height: ResponsiveUtils.height(context, 56),
-            padding: ResponsiveUtils.padding(context, horizontal: 8, vertical: 8),
-            iconPadding: ResponsiveUtils.padding(context, horizontal: 0, vertical: 0),
+            padding:
+                ResponsiveUtils.padding(context, horizontal: 8, vertical: 8),
+            iconPadding:
+                ResponsiveUtils.padding(context, horizontal: 0, vertical: 0),
             color: const Color(0x00FFFFFF),
             textStyle: AppStyles.textCairo(context,
                 fontSize: ResponsiveUtils.fontSize(context, 18),
@@ -149,7 +158,8 @@ class SubscriptionActions extends StatelessWidget {
               color: FlutterFlowTheme.of(context).primary,
               width: ResponsiveUtils.width(context, 2),
             ),
-            borderRadius: BorderRadius.circular(ResponsiveUtils.width(context, 28)),
+            borderRadius:
+                BorderRadius.circular(ResponsiveUtils.width(context, 28)),
           ),
         ),
       ].divide(SizedBox(height: ResponsiveUtils.height(context, 16))),

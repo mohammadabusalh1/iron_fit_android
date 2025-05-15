@@ -25,7 +25,7 @@ final _textStyleCache = <String, TextStyle>{};
 Future<void> initializeApp() async {
   // Initialize Firebase first, before any other Firebase services
   await initFirebase();
-  
+
   // Then initialize other services
   final initFutures = <Future<dynamic>>[
     FlutterFlowTheme.initialize(),
@@ -37,7 +37,7 @@ Future<void> initializeApp() async {
   if (!kIsWeb) {
     // Initialize MobileAds first before any ad service
     initFutures.add(MobileAds.instance.initialize());
-    
+
     // Initialize AdService only after MobileAds is ready
     // We don't want to load ads yet, just initialize the service
     await Future.wait(initFutures);
@@ -73,7 +73,7 @@ void main() async {
 
   // Initialize firebase notifications only after Firebase is fully initialized
   await FirebaseNotificationService.instance.initialize();
-  
+
   // Initialize local notifications
   final notificationService = NotificationService();
   await notificationService.initializeNotification();

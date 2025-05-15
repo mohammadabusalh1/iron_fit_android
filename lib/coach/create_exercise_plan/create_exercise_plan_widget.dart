@@ -443,7 +443,7 @@ class _CreateExercisePlanWidgetState extends State<CreateExercisePlanWidget> {
             FFLocalizations.of(context).getText('emptyOrErrorFields'), context);
       }
     } catch (e, stackTrace) {
-      Logger.error('Error creating plan: $e', e, stackTrace);
+      Logger.error('Error creating plan', error: e, stackTrace: stackTrace);
       functions.showErrorDialog(
           FFLocalizations.of(context).getText('failedToCreatePlan'), context);
     }
@@ -505,8 +505,8 @@ class _CreateExercisePlanWidgetState extends State<CreateExercisePlanWidget> {
           context.pushNamed('CoachExercisesPlans');
         }
       } on FirebaseException catch (e, stackTrace) {
-        Logger.error('Firebase error creating plan: [${e.code}] ${e.message}',
-            e, stackTrace);
+        Logger.error('Firebase error creating plan',
+            error: e, stackTrace: stackTrace);
         if (mounted) {
           String errorMessage =
               FFLocalizations.of(context).getText('failedToCreatePlan');
@@ -520,7 +520,8 @@ class _CreateExercisePlanWidgetState extends State<CreateExercisePlanWidget> {
           functions.showErrorDialog(errorMessage, context);
         }
       } catch (e, stackTrace) {
-        Logger.error('Error creating plan record: $e', e, stackTrace);
+        Logger.error('Error creating plan record',
+            error: e, stackTrace: stackTrace);
         if (mounted) {
           functions.showErrorDialog(
               FFLocalizations.of(context).getText('failedToCreatePlan'),
@@ -528,7 +529,8 @@ class _CreateExercisePlanWidgetState extends State<CreateExercisePlanWidget> {
         }
       }
     } catch (e, stackTrace) {
-      Logger.error('Error in _createPlanRecord: $e', e, stackTrace);
+      Logger.error('Error in _createPlanRecord',
+          error: e, stackTrace: stackTrace);
       if (mounted) {
         functions.showErrorDialog(
             FFLocalizations.of(context).getText('failedToCreatePlan'), context);
@@ -565,8 +567,8 @@ class _CreateExercisePlanWidgetState extends State<CreateExercisePlanWidget> {
         context.pushNamed('CoachExercisesPlans');
       }
     } on FirebaseException catch (e, stackTrace) {
-      Logger.error('Firebase error saving draft: [${e.code}] ${e.message}', e,
-          stackTrace);
+      Logger.error('Firebase error saving draft',
+          error: e, stackTrace: stackTrace);
       if (mounted) {
         String errorMessage =
             FFLocalizations.of(context).getText('failedToSaveDraft');
@@ -577,7 +579,7 @@ class _CreateExercisePlanWidgetState extends State<CreateExercisePlanWidget> {
         functions.showErrorDialog(errorMessage, context);
       }
     } catch (e, stackTrace) {
-      Logger.error('Error saving draft: $e', e, stackTrace);
+      Logger.error('Error saving draft', error: e, stackTrace: stackTrace);
       if (mounted) {
         functions.showErrorDialog(
             FFLocalizations.of(context).getText('failedToSaveDraft'), context);
@@ -618,7 +620,7 @@ class _CreateExercisePlanWidgetState extends State<CreateExercisePlanWidget> {
             FFLocalizations.of(context).getText('emptyOrErrorFields'), context);
       }
     } catch (e, stackTrace) {
-      Logger.error('Error updating plan: $e', e, stackTrace);
+      Logger.error('Error updating plan', error: e, stackTrace: stackTrace);
       functions.showErrorDialog(
           FFLocalizations.of(context).getText('2184r6dy'), context);
     }
@@ -681,7 +683,7 @@ class _CreateExercisePlanWidgetState extends State<CreateExercisePlanWidget> {
         }
       } on FirebaseException catch (e, stackTrace) {
         Logger.error('Firebase error updating plan: [${e.code}] ${e.message}',
-            e, stackTrace);
+            error: e, stackTrace: stackTrace);
         if (mounted) {
           String errorMessage =
               FFLocalizations.of(context).getText('failedToUpdatePlan');
@@ -695,7 +697,8 @@ class _CreateExercisePlanWidgetState extends State<CreateExercisePlanWidget> {
           functions.showErrorDialog(errorMessage, context);
         }
       } catch (e, stackTrace) {
-        Logger.error('Error updating plan record: $e', e, stackTrace);
+        Logger.error('Error updating plan record',
+            error: e, stackTrace: stackTrace);
         if (mounted) {
           functions.showErrorDialog(
               FFLocalizations.of(context).getText('failedToUpdatePlan'),
@@ -703,7 +706,8 @@ class _CreateExercisePlanWidgetState extends State<CreateExercisePlanWidget> {
         }
       }
     } catch (e, stackTrace) {
-      Logger.error('Error in _updatePlanRecord: $e', e, stackTrace);
+      Logger.error('Error in _updatePlanRecord',
+          error: e, stackTrace: stackTrace);
       if (mounted) {
         functions.showErrorDialog(
             FFLocalizations.of(context).getText('failedToUpdatePlan'), context);

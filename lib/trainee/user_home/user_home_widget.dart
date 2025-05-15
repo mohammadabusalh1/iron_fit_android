@@ -106,8 +106,9 @@ class _UserHomeWidgetState extends State<UserHomeWidget>
         if (mounted) {
           try {
             _fadeInController.forward();
-          } catch (e) {
-            Logger.error('Failed to start fade animation', e);
+          } catch (e, stackTrace) {
+            Logger.error('Failed to start fade animation',
+                error: e, stackTrace: stackTrace);
           }
         }
       });
@@ -116,8 +117,9 @@ class _UserHomeWidgetState extends State<UserHomeWidget>
         if (mounted) {
           try {
             _slideController.forward();
-          } catch (e) {
-            Logger.error('Failed to start slide animation', e);
+          } catch (e, stackTrace) {
+            Logger.error('Failed to start slide animation',
+                error: e, stackTrace: stackTrace);
           }
         }
       });
@@ -126,15 +128,17 @@ class _UserHomeWidgetState extends State<UserHomeWidget>
         if (mounted) {
           try {
             _scaleController.forward();
-          } catch (e) {
-            Logger.error('Failed to start scale animation', e);
+          } catch (e, stackTrace) {
+            Logger.error('Failed to start scale animation',
+                error: e, stackTrace: stackTrace);
           }
         }
       });
 
       Logger.debug('Animation controllers initialized successfully');
     } catch (e, stackTrace) {
-      Logger.error('Failed to initialize animation controllers', e, stackTrace);
+      Logger.error('Failed to initialize animation controllers',
+          error: e, stackTrace: stackTrace);
     }
   }
 
@@ -144,7 +148,8 @@ class _UserHomeWidgetState extends State<UserHomeWidget>
       await getPlan();
       Logger.info('Notifications initialized successfully');
     } catch (e, stackTrace) {
-      Logger.error('Failed to initialize notifications', e, stackTrace);
+      Logger.error('Failed to initialize notifications',
+          error: e, stackTrace: stackTrace);
     }
   }
 
@@ -190,7 +195,8 @@ class _UserHomeWidgetState extends State<UserHomeWidget>
         }
       }
     } catch (e, stackTrace) {
-      Logger.error('Failed to check for today\'s exercises', e, stackTrace);
+      Logger.error('Failed to check for today\'s exercises',
+          error: e, stackTrace: stackTrace);
     }
   }
 
@@ -210,8 +216,9 @@ class _UserHomeWidgetState extends State<UserHomeWidget>
       return lastShown.year == today.year &&
           lastShown.month == today.month &&
           lastShown.day == today.day;
-    } catch (e) {
-      Logger.error('Error checking last reminder date', e);
+    } catch (e, stackTrace) {
+      Logger.error('Error checking last reminder date',
+          error: e, stackTrace: stackTrace);
       return false;
     }
   }
@@ -222,8 +229,9 @@ class _UserHomeWidgetState extends State<UserHomeWidget>
       final today = DateTime.now().toIso8601String();
       await prefs.setString('weight_reminder_last_shown', today);
       Logger.info('Marked weight reminder as shown today');
-    } catch (e) {
-      Logger.error('Error marking reminder as shown', e);
+    } catch (e, stackTrace) {
+      Logger.error('Error marking reminder as shown',
+          error: e, stackTrace: stackTrace);
     }
   }
 
@@ -633,9 +641,11 @@ class _UserHomeWidgetState extends State<UserHomeWidget>
                                               if (mounted) {
                                                 Navigator.pop(context);
                                               }
-                                            } catch (e) {
+                                            } catch (e, stackTrace) {
                                               Logger.error(
-                                                  'Failed to update weight', e);
+                                                  'Failed to update weight',
+                                                  error: e,
+                                                  stackTrace: stackTrace);
                                               isLoading.value = false;
                                             }
                                           }
@@ -742,7 +752,8 @@ class _UserHomeWidgetState extends State<UserHomeWidget>
             'Successfully retrieved plan with source: ${_source.value}');
       }
     } catch (e, stackTrace) {
-      Logger.error('Failed to retrieve user plan', e, stackTrace);
+      Logger.error('Failed to retrieve user plan',
+          error: e, stackTrace: stackTrace);
     }
   }
 
@@ -822,7 +833,8 @@ class _UserHomeWidgetState extends State<UserHomeWidget>
                     await getPlan();
                     Logger.info('Data refreshed successfully');
                   } catch (e, stackTrace) {
-                    Logger.error('Error refreshing data', e, stackTrace);
+                    Logger.error('Error refreshing data',
+                        error: e, stackTrace: stackTrace);
                   } finally {
                     if (mounted) {
                       _isLoading.value = false;

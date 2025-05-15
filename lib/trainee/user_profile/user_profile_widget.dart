@@ -55,6 +55,7 @@ class _UserProfileWidgetState extends State<UserProfileWidget>
 
   // Cache for theme values to avoid repeated lookups
   late final ThemeCache _themeCache;
+  bool _themeCacheInitialized = false;
 
   @override
   void initState() {
@@ -68,7 +69,10 @@ class _UserProfileWidgetState extends State<UserProfileWidget>
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    _themeCache = ThemeCache(context);
+    if (!_themeCacheInitialized) {
+      _themeCache = ThemeCache(context);
+      _themeCacheInitialized = true;
+    }
   }
 
   @override

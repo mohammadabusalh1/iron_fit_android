@@ -101,7 +101,7 @@ class PersonalInfoSection extends StatelessWidget {
       } finally {
         state.setDataUploading(false);
       }
-    }else{
+    } else {
       state.setDataUploading(false);
     }
   }
@@ -127,7 +127,8 @@ class PersonalInfoSection extends StatelessWidget {
                   child: Transform.translate(
                     offset: Offset(0, 20 * (1 - value)),
                     child: Padding(
-                      padding: ResponsiveUtils.padding(context, horizontal: 16.0, vertical: 16.0),
+                      padding: ResponsiveUtils.padding(context,
+                          horizontal: 16.0, vertical: 16.0),
                       child: Text(
                         FFLocalizations.of(context).getText(
                             'edit_coach_info' /* Give the Coach a Makeover! 💇‍♂️📋 */),
@@ -211,13 +212,13 @@ class PersonalInfoSection extends StatelessWidget {
                         child: GestureDetector(
                           onTap: () => _handleImageSelection(context),
                           child: Container(
-                            width: ResponsiveUtils.width(context, 160),
-                            height: ResponsiveUtils.height(context, 160),
+                            width: 150,
+                            height: 150,
                             decoration: BoxDecoration(
                               shape: BoxShape.circle,
                               border: Border.all(
                                 color: FlutterFlowTheme.of(context).primary,
-                                width: 3,
+                                width: 2,
                               ),
                               boxShadow: [
                                 BoxShadow(
@@ -268,9 +269,11 @@ class PersonalInfoSection extends StatelessWidget {
             style: ElevatedButton.styleFrom(
               foregroundColor: FlutterFlowTheme.of(context).primaryBackground,
               backgroundColor: FlutterFlowTheme.of(context).primary,
-              padding: ResponsiveUtils.padding(context, horizontal: 16, vertical: 12),
+              padding: ResponsiveUtils.padding(context,
+                  horizontal: 16, vertical: 12),
               shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(ResponsiveUtils.width(context, 12)),
+                borderRadius:
+                    BorderRadius.circular(ResponsiveUtils.width(context, 12)),
               ),
               elevation: 2,
             ),
@@ -278,7 +281,8 @@ class PersonalInfoSection extends StatelessWidget {
 
           // Profile Instructions Text
           Padding(
-            padding: ResponsiveUtils.padding(context, horizontal: 24, vertical: 24),
+            padding:
+                ResponsiveUtils.padding(context, horizontal: 24, vertical: 24),
             child: TweenAnimationBuilder<double>(
               duration: const Duration(milliseconds: 800),
               tween: Tween<double>(begin: 0, end: 1),
@@ -346,7 +350,7 @@ class PersonalInfoSection extends StatelessWidget {
                 model.uploadedFileUrl,
                 width: ResponsiveUtils.width(context, 160),
                 height: ResponsiveUtils.height(context, 160),
-                fit: BoxFit.cover,
+                fit: BoxFit.fill,
                 errorBuilder: (context, error, stackTrace) {
                   return Container(
                     width: ResponsiveUtils.width(context, 160),
@@ -398,7 +402,8 @@ class PersonalInfoSection extends StatelessWidget {
                     child: Transform.translate(
                       offset: Offset(0, 20 * (1 - value)),
                       child: Padding(
-                        padding: ResponsiveUtils.padding(context, horizontal: 16.0, vertical: 16.0),
+                        padding: ResponsiveUtils.padding(context,
+                            horizontal: 16.0, vertical: 16.0),
                         child: Text(
                           FFLocalizations.of(context).getText(
                               'coach_personal_info' /* Personal Info */),
@@ -429,7 +434,8 @@ class PersonalInfoSection extends StatelessWidget {
       _buildAnimatedFormField(
         index: 0,
         child: Padding(
-          padding: ResponsiveUtils.padding(context, horizontal: 16, vertical: 8),
+          padding:
+              ResponsiveUtils.padding(context, horizontal: 16, vertical: 8),
           child: buildTextField(
             onTap: () {
               // Move cursor to end of text
@@ -459,7 +465,8 @@ class PersonalInfoSection extends StatelessWidget {
       _buildAnimatedFormField(
         index: 2,
         child: Padding(
-          padding: ResponsiveUtils.padding(context, horizontal: 16, vertical: 8),
+          padding:
+              ResponsiveUtils.padding(context, horizontal: 16, vertical: 8),
           child: buildTextField(
             context: context,
             controller: model.dateOfBirthTextController,
@@ -484,7 +491,8 @@ class PersonalInfoSection extends StatelessWidget {
                       textButtonTheme: TextButtonThemeData(
                         style: TextButton.styleFrom(
                           textStyle: AppStyles.textCairo(context,
-                              fontSize: ResponsiveUtils.fontSize(context, 16), fontWeight: FontWeight.w600),
+                              fontSize: ResponsiveUtils.fontSize(context, 16),
+                              fontWeight: FontWeight.w600),
                         ),
                       ),
                     ),

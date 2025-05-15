@@ -183,7 +183,8 @@ class _NutritionPlansWidgetState extends State<NutritionPlansWidget> {
         }
       }
     } catch (e, stackTrace) {
-      Logger.error('Error in _onAddPlanPressed', e, stackTrace);
+      Logger.error('Error in _onAddPlanPressed',
+          error: e, stackTrace: stackTrace);
       if (mounted) {
         showErrorDialog(
             FFLocalizations.of(context).getText('errorAddingPlan'), context);
@@ -202,8 +203,8 @@ class _NutritionPlansWidgetState extends State<NutritionPlansWidget> {
         ),
         builder: (context, snapshot) {
           if (snapshot.hasError) {
-            Logger.error('Error fetching nutrition plans', snapshot.error,
-                snapshot.stackTrace);
+            Logger.error('Error fetching nutrition plans',
+                error: snapshot.error, stackTrace: snapshot.stackTrace);
             return const ErrorPageWidget();
           }
 
@@ -219,7 +220,8 @@ class _NutritionPlansWidgetState extends State<NutritionPlansWidget> {
         },
       );
     } catch (e, stackTrace) {
-      Logger.error('Error building nutrition plans list', e, stackTrace);
+      Logger.error('Error building nutrition plans list',
+          error: e, stackTrace: stackTrace);
       return const ErrorPageWidget();
     }
   }
@@ -296,8 +298,8 @@ class _NutritionPlansWidgetState extends State<NutritionPlansWidget> {
                 context);
           }
         } catch (error, stackTrace) {
-          Logger.error(
-              'Error deleting plan: ${plan.nutPlan.name}', error, stackTrace);
+          Logger.error('Error deleting plan: ${plan.nutPlan.name}',
+              error: error, stackTrace: stackTrace);
 
           // Close loading dialog
           if (mounted) LoadingDialog.hide(context);
@@ -312,7 +314,8 @@ class _NutritionPlansWidgetState extends State<NutritionPlansWidget> {
         Logger.info('Plan deletion cancelled by user: ${plan.nutPlan.name}');
       }
     } catch (e, stackTrace) {
-      Logger.error('Unexpected error in _onDeletePlanPressed', e, stackTrace);
+      Logger.error('Unexpected error in _onDeletePlanPressed',
+          error: e, stackTrace: stackTrace);
       if (mounted) {
         showErrorDialog(
             FFLocalizations.of(context).getText('unexpectedError'), context);
@@ -333,7 +336,8 @@ class _NutritionPlansWidgetState extends State<NutritionPlansWidget> {
         },
       );
     } catch (e, stackTrace) {
-      Logger.error('Error navigating to edit plan', e, stackTrace);
+      Logger.error('Error navigating to edit plan',
+          error: e, stackTrace: stackTrace);
       if (mounted) {
         showErrorDialog(
             FFLocalizations.of(context).getText('errorNavigatingToEdit'),
@@ -355,7 +359,8 @@ class _NutritionPlansWidgetState extends State<NutritionPlansWidget> {
         },
       );
     } catch (e, stackTrace) {
-      Logger.error('Error navigating to plan details', e, stackTrace);
+      Logger.error('Error navigating to plan details',
+          error: e, stackTrace: stackTrace);
       if (mounted) {
         showErrorDialog(
             FFLocalizations.of(context).getText('errorViewingDetails'),

@@ -19,6 +19,7 @@ class _UserTypePageState extends State<UserTypePage>
   final ValueNotifier<int?> _hoveredCardNotifier = ValueNotifier<int?>(null);
   final ValueNotifier<int?> _activeCardNotifier = ValueNotifier<int?>(null);
   final ValueNotifier<bool> _isAnimatingNotifier = ValueNotifier<bool>(false);
+  final ValueNotifier<bool> _isLoadingNotifier = ValueNotifier<bool>(false);
 
   @override
   void initState() {
@@ -37,6 +38,7 @@ class _UserTypePageState extends State<UserTypePage>
     _hoveredCardNotifier.dispose();
     _activeCardNotifier.dispose();
     _isAnimatingNotifier.dispose();
+    _isLoadingNotifier.dispose();
     super.dispose();
   }
 
@@ -45,6 +47,7 @@ class _UserTypePageState extends State<UserTypePage>
 
     _isAnimatingNotifier.value = true;
     _activeCardNotifier.value = index;
+    _isLoadingNotifier.value = true;
 
     // Add a small delay to show the effect before navigating
     await Future.delayed(const Duration(milliseconds: 600));
@@ -77,7 +80,7 @@ class _UserTypePageState extends State<UserTypePage>
           ),
           child: Padding(
             padding: EdgeInsets.symmetric(
-                horizontal: ResponsiveUtils.width(context, 24.0), 
+                horizontal: ResponsiveUtils.width(context, 24.0),
                 vertical: ResponsiveUtils.height(context, 16.0)),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
@@ -123,6 +126,7 @@ class _UserTypePageState extends State<UserTypePage>
                           icon: Icons.sports_kabaddi,
                           hoveredCardNotifier: _hoveredCardNotifier,
                           activeCardNotifier: _activeCardNotifier,
+                          isLoadingNotifier: _isLoadingNotifier,
                           onTap: () => _handleUserTypeSelection('coach', 0),
                         ),
                       ),
@@ -137,6 +141,7 @@ class _UserTypePageState extends State<UserTypePage>
                           icon: Icons.directions_run,
                           hoveredCardNotifier: _hoveredCardNotifier,
                           activeCardNotifier: _activeCardNotifier,
+                          isLoadingNotifier: _isLoadingNotifier,
                           onTap: () => _handleUserTypeSelection('trainee', 1),
                         ),
                       ),
@@ -162,6 +167,7 @@ class UserTypeCard extends StatefulWidget {
     required this.onTap,
     required this.hoveredCardNotifier,
     required this.activeCardNotifier,
+    required this.isLoadingNotifier,
   });
 
   final int index;
@@ -171,6 +177,7 @@ class UserTypeCard extends StatefulWidget {
   final VoidCallback onTap;
   final ValueNotifier<int?> hoveredCardNotifier;
   final ValueNotifier<int?> activeCardNotifier;
+  final ValueNotifier<bool> isLoadingNotifier;
 
   @override
   State<UserTypeCard> createState() => _UserTypeCardState();
@@ -200,10 +207,18 @@ class _UserTypeCardState extends State<UserTypeCard> {
             builder: (context, activeIndex, _) {
               final bool isActive = activeIndex == widget.index;
 
-              return _buildCard(
-                context: context,
-                isHovered: isHovered,
-                isActive: isActive,
+              return ValueListenableBuilder<bool>(
+                valueListenable: widget.isLoadingNotifier,
+                builder: (context, isLoading, _) {
+                  final bool isCardLoading = isLoading && isActive;
+
+                  return _buildCard(
+                    context: context,
+                    isHovered: isHovered,
+                    isActive: isActive,
+                    isLoading: isCardLoading,
+                  );
+                },
               );
             },
           );
@@ -216,6 +231,7 @@ class _UserTypeCardState extends State<UserTypeCard> {
     required BuildContext context,
     required bool isHovered,
     required bool isActive,
+    required bool isLoading,
   }) {
     final scaleMatrix = Matrix4.identity()
       ..scale(isActive ? 0.98 : (isHovered ? 1.03 : 1.0));
@@ -229,9 +245,11 @@ class _UserTypeCardState extends State<UserTypeCard> {
         color: Colors.transparent,
         child: InkWell(
           onTap: () {
-            // Visual feedback then execute onTap
-            HapticFeedback.mediumImpact();
-            widget.onTap();
+            if (!isLoading) {
+              // Visual feedback then execute onTap
+              HapticFeedback.mediumImpact();
+              widget.onTap();
+            }
           },
           borderRadius: BorderRadius.circular(20),
           splashColor:
@@ -305,52 +323,83 @@ class _UserTypeCardState extends State<UserTypeCard> {
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                TweenAnimationBuilder<double>(
-                  duration: const Duration(milliseconds: 300),
-                  tween: Tween<double>(
-                    begin: 0,
-                    end: isActive || isPressing ? 0.2 : (isHovered ? 0.1 : 0),
-                  ),
-                  builder: (context, value, child) {
-                    return Transform.rotate(
-                      angle: value,
-                      child: AnimatedContainer(
-                        duration: const Duration(milliseconds: 300),
-                        padding: EdgeInsets.all(isActive || isPressing
-                            ? ResponsiveUtils.width(context, 22)
-                            : (isHovered ? ResponsiveUtils.width(context, 20) : ResponsiveUtils.width(context, 16))),
-                        decoration: BoxDecoration(
-                          color: isActive
-                              ? FlutterFlowTheme.of(context)
-                                  .primary
-                                  .withValues(alpha: 0.3)
-                              : (isPressing
+                Stack(
+                  alignment: Alignment.center,
+                  children: [
+                    TweenAnimationBuilder<double>(
+                      duration: const Duration(milliseconds: 300),
+                      tween: Tween<double>(
+                        begin: 0,
+                        end: isActive || isPressing
+                            ? 0.2
+                            : (isHovered ? 0.1 : 0),
+                      ),
+                      builder: (context, value, child) {
+                        return Transform.rotate(
+                          angle: value,
+                          child: AnimatedContainer(
+                            duration: const Duration(milliseconds: 300),
+                            padding: EdgeInsets.all(isActive || isPressing
+                                ? ResponsiveUtils.width(context, 22)
+                                : (isHovered
+                                    ? ResponsiveUtils.width(context, 20)
+                                    : ResponsiveUtils.width(context, 16))),
+                            decoration: BoxDecoration(
+                              color: isActive
                                   ? FlutterFlowTheme.of(context)
                                       .primary
-                                      .withValues(alpha: 0.25)
-                                  : (isHovered
+                                      .withValues(alpha: 0.3)
+                                  : (isPressing
                                       ? FlutterFlowTheme.of(context)
                                           .primary
-                                          .withValues(alpha: 0.2)
-                                      : FlutterFlowTheme.of(context)
-                                          .primary
-                                          .withValues(alpha: 0.1))),
-                          borderRadius: BorderRadius.circular(16),
-                        ),
-                        child: Icon(
-                          widget.icon,
-                          color: isActive || isPressing
-                              ? FlutterFlowTheme.of(context).primary
-                              : (isHovered
-                                  ? FlutterFlowTheme.of(context).primary
-                                  : FlutterFlowTheme.of(context).primary),
-                          size: isActive || isPressing
-                              ? ResponsiveUtils.iconSize(context, 42)
-                              : (isHovered ? ResponsiveUtils.iconSize(context, 40) : ResponsiveUtils.iconSize(context, 36)),
+                                          .withValues(alpha: 0.25)
+                                      : (isHovered
+                                          ? FlutterFlowTheme.of(context)
+                                              .primary
+                                              .withValues(alpha: 0.2)
+                                          : FlutterFlowTheme.of(context)
+                                              .primary
+                                              .withValues(alpha: 0.1))),
+                              borderRadius: BorderRadius.circular(16),
+                            ),
+                            child: isLoading
+                                ? SizedBox(
+                                    width:
+                                        ResponsiveUtils.iconSize(context, 36),
+                                    height:
+                                        ResponsiveUtils.iconSize(context, 36),
+                                  )
+                                : Icon(
+                                    widget.icon,
+                                    color: isActive || isPressing
+                                        ? FlutterFlowTheme.of(context).primary
+                                        : (isHovered
+                                            ? FlutterFlowTheme.of(context)
+                                                .primary
+                                            : FlutterFlowTheme.of(context)
+                                                .primary),
+                                    size: isActive || isPressing
+                                        ? ResponsiveUtils.iconSize(context, 42)
+                                        : (isHovered
+                                            ? ResponsiveUtils.iconSize(
+                                                context, 40)
+                                            : ResponsiveUtils.iconSize(
+                                                context, 36)),
+                                  ),
+                          ),
+                        );
+                      },
+                    ),
+                    if (isLoading)
+                      SizedBox(
+                        width: ResponsiveUtils.iconSize(context, 48),
+                        height: ResponsiveUtils.iconSize(context, 48),
+                        child: CircularProgressIndicator(
+                          color: FlutterFlowTheme.of(context).primary,
+                          strokeWidth: 3,
                         ),
                       ),
-                    );
-                  },
+                  ],
                 ),
                 SizedBox(height: ResponsiveUtils.height(context, 12)),
                 Column(
@@ -366,10 +415,13 @@ class _UserTypeCardState extends State<UserTypeCard> {
                         return Transform.translate(
                           offset: Offset(value * 8, 0),
                           child: Text(
-                            widget.title,
+                            isLoading && isActive
+                                ? FFLocalizations.of(context).getText('loading')
+                                : widget.title,
                             style: AppStyles.textCairo(
                               context,
-                              fontSize: ResponsiveUtils.fontSize(context, 20 + (value * 2)),
+                              fontSize: ResponsiveUtils.fontSize(
+                                  context, 20 + (value * 2)),
                               fontWeight: FontWeight.w600,
                               color: isActive || isPressing || isHovered
                                   ? FlutterFlowTheme.of(context).primary
@@ -394,7 +446,9 @@ class _UserTypeCardState extends State<UserTypeCard> {
                                 : FlutterFlowTheme.of(context).secondaryText),
                       ),
                       child: Text(
-                        widget.subtitle,
+                        isLoading && isActive
+                            ? FFLocalizations.of(context).getText('pleaseWait')
+                            : widget.subtitle,
                         textAlign: TextAlign.center,
                       ),
                     ),

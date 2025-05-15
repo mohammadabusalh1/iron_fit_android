@@ -154,7 +154,8 @@ class _CreateNutritionPlansWidgetState
             child: Form(
               key: _formKey,
               child: Padding(
-                padding: ResponsiveUtils.padding(context, horizontal: 16, vertical: 16),
+                padding: ResponsiveUtils.padding(context,
+                    horizontal: 16, vertical: 16),
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -191,7 +192,8 @@ class _CreateNutritionPlansWidgetState
                       isEditing: isEditing,
                       onPressed: isEditing ? _updatePlan : _createPlan,
                     ),
-                  ].divide(SizedBox(height: ResponsiveUtils.height(context, 24.0))),
+                  ].divide(
+                      SizedBox(height: ResponsiveUtils.height(context, 24.0))),
                 ),
               ),
             ),
@@ -244,7 +246,7 @@ class _CreateNutritionPlansWidgetState
 
       context.pushNamed('NutritionPlans');
     } catch (e) {
-      Logger.error('Error creating nutrition plan', e);
+      Logger.error('Error creating nutrition plan', error: e);
       if (mounted) {
         showErrorDialog(
             FFLocalizations.of(context).getText('failedToCreatePlan'), context);
@@ -266,7 +268,8 @@ class _CreateNutritionPlansWidgetState
         barrierDismissible: false,
         builder: (context) => Center(
           child: Container(
-            padding: ResponsiveUtils.padding(context, horizontal: 16, vertical: 16),
+            padding:
+                ResponsiveUtils.padding(context, horizontal: 16, vertical: 16),
             decoration: BoxDecoration(
               color: FlutterFlowTheme.of(context).secondaryBackground,
               borderRadius: BorderRadius.circular(16),
@@ -351,7 +354,7 @@ class _CreateNutritionPlansWidgetState
 
       context.pushNamed('NutritionPlans');
     } catch (e) {
-      Logger.error('Error updating nutrition plan', e);
+      Logger.error('Error updating nutrition plan', error: e);
       if (mounted) {
         showErrorDialog(
             FFLocalizations.of(context).getText('failedToUpdatePlan'), context);

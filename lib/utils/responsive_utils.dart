@@ -51,6 +51,7 @@ class ResponsiveUtils {
     BuildContext context, {
     double horizontal = 0.0,
     double vertical = 0.0,
+    double? all,
   }) {
     double horizontalFactor = 1.0;
     double verticalFactor = 1.0;
@@ -73,6 +74,10 @@ class ResponsiveUtils {
         horizontalFactor = 1.0;
         verticalFactor = 1.0;
       }
+    }
+
+    if (all != null) {
+      return EdgeInsets.all(all * horizontalFactor);
     }
 
     return EdgeInsets.symmetric(

@@ -2,7 +2,6 @@
 
 import 'package:animate_do/animate_do.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:iron_fit/coach/coach_home/coach_home_widget.dart';
 import 'package:iron_fit/componants/Styles.dart';
 import 'package:iron_fit/flutter_flow/custom_functions.dart';
 import 'package:iron_fit/pages/pre_login/components/auth_service.dart';
@@ -44,6 +43,7 @@ class _LoginWidgetState extends State<LoginWidget> {
   DateTime? _lastLoginAttempt;
   static const int MAX_LOGIN_ATTEMPTS = 15;
   static const int LOCKOUT_DURATION_MINUTES = 10;
+  bool _isLoading = false;
 
   @override
   void initState() {
@@ -62,7 +62,8 @@ class _LoginWidgetState extends State<LoginWidget> {
       _model.passwordTextController = TextEditingController();
       _model.textFieldFocusNode2 = FocusNode();
     } catch (e) {
-      Logger.error('Failed to initialize login state', e, StackTrace.current);
+      Logger.error('Failed to initialize login state',
+          error: e, stackTrace: StackTrace.current);
       if (mounted) {
         showErrorDialog(
             FFLocalizations.of(context).getText('failedToInitializeLoginState'),
@@ -157,6 +158,7 @@ class _LoginWidgetState extends State<LoginWidget> {
                           child: SocialLoginButtons(
                             onGooglePressed: _handleGoogleSignIn,
                             onApplePressed: _handleAppleSignIn,
+                            isLoading: _isLoading,
                           ),
                         ),
                       ],
@@ -177,6 +179,40 @@ class _LoginWidgetState extends State<LoginWidget> {
                 ),
               ),
             ),
+
+            // Full screen loading overlay
+            if (_isLoading)
+              Container(
+                color: FlutterFlowTheme.of(context).black.withOpacity(0.5),
+                width: double.infinity,
+                height: double.infinity,
+                child: Center(
+                  child: Container(
+                    padding: ResponsiveUtils.padding(context, all: 16.0),
+                    decoration: BoxDecoration(
+                      color: FlutterFlowTheme.of(context).secondaryBackground,
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        CircularProgressIndicator(
+                          color: FlutterFlowTheme.of(context).primary,
+                        ),
+                        SizedBox(height: ResponsiveUtils.height(context, 16.0)),
+                        Text(
+                          FFLocalizations.of(context).getText('pleaseWait'),
+                          style: AppStyles.textCairo(
+                            context,
+                            fontSize: ResponsiveUtils.fontSize(context, 16),
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
           ],
         ),
       ),
@@ -265,7 +301,8 @@ class _LoginWidgetState extends State<LoginWidget> {
       _lastLoginAttempt = null;
     } catch (e) {
       _incrementLoginAttempts();
-      Logger.error('Authentication failed', e, StackTrace.current);
+      Logger.error('Authentication failed',
+          error: e, stackTrace: StackTrace.current);
       if (mounted) {
         showErrorDialog(
             FFLocalizations.of(context).getText('authenticationFailed'),
@@ -358,26 +395,134 @@ class _LoginWidgetState extends State<LoginWidget> {
           errorMessage = FFLocalizations.of(context).getText(
               'authenticationFailed' /* Authentication failed. Please try again. */);
       }
-      Logger.error('Firebase authentication error', e, StackTrace.current);
+      Logger.error('Firebase authentication error',
+          error: e, stackTrace: StackTrace.current);
       throw Exception(errorMessage);
     }
   }
 
-  Future<void> _waitForAuth() async {
-    // Check every 100ms until authentication is available
+  Future<void> waitForAuth() async {
+    // Define a maximum wait time (in seconds)
+    const maxWaitTimeInSeconds = 20;
+    final stopwatch = Stopwatch()..start();
+
+    // Check every 100ms until authentication is available or timeout
     while (currentUserReference == null) {
+      if (stopwatch.elapsed.inSeconds > maxWaitTimeInSeconds) {
+        Logger.warning('Authentication timed out, refreshing page');
+        if (mounted) {
+          // Reset the application state
+          setState(() {
+            _isLoading = false;
+          });
+          // Show timeout dialog
+          await showDialog(
+            context: context,
+            builder: (context) => AlertDialog(
+              title: Text(
+                  FFLocalizations.of(context).getText('authenticationTimeout')),
+              content: Text(FFLocalizations.of(context)
+                  .getText('authenticationTakingTooLong')),
+              actions: [
+                TextButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                    // Refresh the login page
+                    Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const LoginWidget()),
+                    );
+                  },
+                  child: Text(FFLocalizations.of(context).getText('ok')),
+                ),
+              ],
+            ),
+          );
+          return;
+        }
+      }
       await Future.delayed(const Duration(milliseconds: 100));
     }
 
     if (FFAppState().userType == 'coach') {
       authenticatedCoachStream.listen((_) {});
 
+      stopwatch.reset();
       while (currentCoachDocument == null) {
+        if (stopwatch.elapsed.inSeconds > maxWaitTimeInSeconds) {
+          Logger.warning('Coach document loading timed out, refreshing page');
+          if (mounted) {
+            setState(() {
+              _isLoading = false;
+            });
+            // Show timeout dialog
+            await showDialog(
+              context: context,
+              builder: (context) => AlertDialog(
+                title: Text(
+                    FFLocalizations.of(context).getText('dataLoadingTimeout')),
+                content: Text(FFLocalizations.of(context)
+                    .getText('dataLoadingTakingTooLong')),
+                actions: [
+                  TextButton(
+                    onPressed: () {
+                      Navigator.pop(context);
+                      // Refresh the login page
+                      Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const LoginWidget()),
+                      );
+                    },
+                    child: Text(FFLocalizations.of(context).getText('ok')),
+                  ),
+                ],
+              ),
+            );
+            return;
+          }
+        }
         await Future.delayed(const Duration(milliseconds: 100));
       }
     } else if (FFAppState().userType == 'trainee') {
       authenticatedTraineeStream.listen((_) {});
+
+      stopwatch.reset();
       while (currentTraineeDocument == null) {
+        if (stopwatch.elapsed.inSeconds > maxWaitTimeInSeconds) {
+          Logger.warning('Trainee document loading timed out, refreshing page');
+          if (mounted) {
+            setState(() {
+              _isLoading = false;
+            });
+            // Show timeout dialog
+            await showDialog(
+              context: context,
+              builder: (context) => AlertDialog(
+                title: Text(
+                    FFLocalizations.of(context).getText('dataLoadingTimeout')),
+                content: Text(FFLocalizations.of(context)
+                    .getText('dataLoadingTakingTooLong')),
+                actions: [
+                  TextButton(
+                    onPressed: () {
+                      Navigator.pop(context);
+                      // Refresh the login page
+                      Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const LoginWidget()),
+                      );
+                    },
+                    child: Text(FFLocalizations.of(context).getText('ok')),
+                  ),
+                ],
+              ),
+            );
+            return;
+          }
+        }
         await Future.delayed(const Duration(milliseconds: 100));
       }
     }
@@ -386,20 +531,20 @@ class _LoginWidgetState extends State<LoginWidget> {
   Future<void> _handleCoachSignIn() async {
     try {
       if (!mounted) return;
-      await _waitForAuth();
+      await waitForAuth();
       context.goNamed('CoachHome');
     } catch (e) {
-      Logger.error('Error signing in as coach', e, StackTrace.current);
+      Logger.error('Error signing in as coach', error: e);
     }
   }
 
   Future<void> _handleTraineeSignIn() async {
     try {
       if (!mounted) return;
-      await _waitForAuth();
+      await waitForAuth();
       context.goNamed('UserHome');
     } catch (e) {
-      Logger.error('Error signing in as trainee', e, StackTrace.current);
+      Logger.error('Error signing in as trainee', error: e);
       if (mounted) {
         _showErrorDialog(context, 'Error signing in as trainee', e.toString());
       }
@@ -566,8 +711,8 @@ class _LoginWidgetState extends State<LoginWidget> {
         },
       );
     } catch (e) {
-      Logger.error(
-          'Failed to send password reset email', e, StackTrace.current);
+      Logger.error('Failed to send password reset email',
+          error: e, stackTrace: StackTrace.current);
       if (mounted) {
         showErrorDialog(
             FFLocalizations.of(context).getText('failedToSendResetEmail'),
@@ -577,7 +722,11 @@ class _LoginWidgetState extends State<LoginWidget> {
   }
 
   Future<void> _handleGoogleSignIn() async {
+    if (_isLoading) return;
+
     try {
+      setState(() => _isLoading = true);
+
       if (!mounted) return;
       // Prepare the auth event
       GoRouter.of(context).prepareAuthEvent();
@@ -620,12 +769,12 @@ class _LoginWidgetState extends State<LoginWidget> {
       if (role == 'coach') {
         Logger.info('Navigating to Coach Home');
         FFAppState().userType = 'coach';
-        await _waitForAuth();
+        await waitForAuth();
         context.goNamed('CoachHome');
       } else if (role == 'trainee') {
         Logger.info('Navigating to User Home');
         FFAppState().userType = 'trainee';
-        await _waitForAuth();
+        await waitForAuth();
         final fcmToken =
             await FirebaseNotificationService.instance.getFcmToken();
         if (fcmToken != null) {
@@ -635,17 +784,25 @@ class _LoginWidgetState extends State<LoginWidget> {
       }
     } catch (e) {
       _incrementLoginAttempts();
-      Logger.error('Error during Google sign-in', e, StackTrace.current);
+      Logger.error('Error during Google sign-in', error: e);
       // Improve error handling by providing more informative messages
       if (mounted) {
         showErrorDialog(
             FFLocalizations.of(context).getText('2184r6dy'), context);
       }
+    } finally {
+      if (mounted) {
+        setState(() => _isLoading = false);
+      }
     }
   }
 
   Future<void> _handleAppleSignIn() async {
+    if (_isLoading) return;
+
     try {
+      setState(() => _isLoading = true);
+
       if (!mounted) return;
       // Prepare the auth event
       GoRouter.of(context).prepareAuthEvent();
@@ -688,12 +845,12 @@ class _LoginWidgetState extends State<LoginWidget> {
       if (role == 'coach') {
         Logger.info('Navigating to Coach Home');
         FFAppState().userType = 'coach';
-        await _waitForAuth();
+        await waitForAuth();
         context.goNamed('CoachEnterInfo');
       } else if (role == 'trainee') {
         Logger.info('Navigating to User Home');
         FFAppState().userType = 'trainee';
-        await _waitForAuth();
+        await waitForAuth();
         final fcmToken =
             await FirebaseNotificationService.instance.getFcmToken();
         if (fcmToken != null) {
@@ -703,10 +860,14 @@ class _LoginWidgetState extends State<LoginWidget> {
       }
     } catch (e) {
       _incrementLoginAttempts();
-      Logger.error('Error during Apple sign-in', e, StackTrace.current);
+      Logger.error('Error during Apple sign-in', error: e);
       if (mounted) {
         showErrorDialog(
             FFLocalizations.of(context).getText('2184r6dy'), context);
+      }
+    } finally {
+      if (mounted) {
+        setState(() => _isLoading = false);
       }
     }
   }

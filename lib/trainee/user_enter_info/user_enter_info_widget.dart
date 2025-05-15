@@ -19,6 +19,7 @@ import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/upload_data.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'user_enter_info_model.dart';
 import 'package:iron_fit/utils/logger.dart';
 export 'user_enter_info_model.dart';
@@ -202,6 +203,7 @@ class _UserEnterInfoWidgetState extends State<UserEnterInfoWidget> {
                 uploadedFileUrl: _model.uploadedFileUrl,
                 isUploading: _model.isDataUploading,
                 onImageSelected: _handleProfileImageUpload,
+                localImageBytes: _model.uploadedLocalFile.bytes,
               ),
               SizedBox(height: ResponsiveUtils.height(context, 30)),
               Text(
@@ -785,11 +787,10 @@ class _UserEnterInfoWidgetState extends State<UserEnterInfoWidget> {
 
     switch (_currentStep) {
       case 0: // Profile Image Step
-        while (_model.isDataUploading) {
-          await Future.delayed(const Duration(milliseconds: 100));
-        }
-
-        if (_model.uploadedFileUrl.isEmpty) {
+        // Check if we have either a local image or a remote URL
+        if (_model.uploadedFileUrl.isEmpty &&
+            (_model.uploadedLocalFile.bytes == null ||
+                _model.uploadedLocalFile.bytes!.isEmpty)) {
           Logger.warning('Photo upload step validation failed');
           ErrorDialog.show(
             context,
@@ -959,70 +960,41 @@ class _UserEnterInfoWidgetState extends State<UserEnterInfoWidget> {
       if (selectedMedia != null &&
           selectedMedia
               .every((m) => validateFileFormat(m.storagePath, context))) {
-        var selectedUploadedFiles = <FFUploadedFile>[];
-        var downloadUrls = <String>[];
-        try {
-          if (_model.uploadedFileUrl.isNotEmpty) {
-            Logger.info('Deleting previous profile image');
-            await FirebaseStorage.instance
-                .refFromURL(_model.uploadedFileUrl)
-                .delete();
-          }
+        // Store selected file locally instead of uploading immediately
+        final media = selectedMedia.first;
+        _model.uploadedLocalFile = FFUploadedFile(
+          name: media.storagePath.split('/').last,
+          bytes: media.bytes ?? Uint8List(0),
+          height: media.dimensions?.height,
+          width: media.dimensions?.width,
+          blurHash: media.blurHash,
+        );
 
-          selectedUploadedFiles = selectedMedia
-              .map((m) => FFUploadedFile(
-                    name: m.storagePath.split('/').last,
-                    bytes: m.bytes,
-                    height: m.dimensions?.height,
-                    width: m.dimensions?.width,
-                    blurHash: m.blurHash,
-                  ))
-              .toList();
+        // Store the XFile for later upload
+        if (media.bytes != null) {
+          _model.localImageFile = XFile.fromData(
+            media.bytes!,
+            name: media.storagePath.split('/').last,
+          );
+        }
 
-          Logger.info('Uploading new profile image');
-          downloadUrls = (await Future.wait(
-            selectedMedia.map(
-              (m) async => await uploadData(m.storagePath, m.bytes),
-            ),
-          ))
-              .where((u) => u != null)
-              .map((u) => u!)
-              .toList();
-        } catch (e) {
-          // Handle upload error
-          Logger.error('Failed to upload profile image', e);
-          if (mounted) {
-            showErrorDialog(
-                _localizations.getText('failedToUploadImage'), context);
-          }
-        } finally {
-          if (mounted) {
-            setState(() => _model.isDataUploading = false);
-          }
-        }
-        if (selectedUploadedFiles.length == selectedMedia.length &&
-            downloadUrls.length == selectedMedia.length) {
-          Logger.info('Profile image uploaded successfully');
-          if (mounted) {
-            setState(() {
-              _model.uploadedLocalFile = selectedUploadedFiles.first;
-              _model.uploadedFileUrl = downloadUrls.first;
-            });
-          }
-        } else {
-          Logger.warning('Profile image upload incomplete');
-          return;
-        }
+        // Clear Firebase URL since we haven't uploaded yet
+        _model.uploadedFileUrl = '';
+
+        Logger.info('Profile image selected and stored locally');
       } else {
         Logger.warning('Invalid file format selected for profile image');
-        setState(() => _model.isDataUploading = false);
       }
-    } catch (e) {
-      Logger.error('Error uploading profile image', e);
+    } catch (e, stackTrace) {
+      Logger.error('Error selecting profile image',
+          error: e, stackTrace: stackTrace);
       if (mounted) {
         showErrorDialog(_localizations.getText('failedToUploadImage'), context);
       }
-      setState(() => _model.isDataUploading = false);
+    } finally {
+      if (mounted) {
+        setState(() => _model.isDataUploading = false);
+      }
     }
   }
 
@@ -1052,14 +1024,61 @@ class _UserEnterInfoWidgetState extends State<UserEnterInfoWidget> {
       Logger.info('Starting profile save process');
       setState(() => _model.isSaving = true);
 
-      while (_model.isDataUploading) {
-        Logger.info('Waiting for image upload to complete');
-        await Future.delayed(const Duration(milliseconds: 100));
-      }
-
       if (!_validateForm()) {
         Logger.warning('Form validation failed during save');
         return;
+      }
+
+      // Upload image to Firebase if we have a local image file
+      if (_model.localImageFile != null) {
+        try {
+          Logger.info('Uploading profile image to Firebase');
+          setState(() => _model.isDataUploading = true);
+
+          // If we already have a previous uploaded image URL, delete it
+          if (_model.uploadedFileUrl.isNotEmpty) {
+            try {
+              await FirebaseStorage.instance
+                  .refFromURL(_model.uploadedFileUrl)
+                  .delete();
+              Logger.info('Previous profile image deleted');
+            } catch (e) {
+              Logger.warning('Failed to delete previous image: $e');
+            }
+          }
+
+          // Generate a unique path for the image
+          final fileName =
+              '${currentUserUid}_profile_${DateTime.now().millisecondsSinceEpoch}.jpg';
+          final path = 'users/$currentUserUid/profile_images/$fileName';
+
+          // Upload the image to Firebase Storage
+          final uploadResult = await uploadData(
+              path, _model.uploadedLocalFile.bytes ?? Uint8List(0));
+          if (uploadResult != null) {
+            _model.uploadedFileUrl = uploadResult;
+            Logger.info('Profile image uploaded successfully to Firebase');
+          } else {
+            Logger.error('Failed to upload profile image - null result');
+            if (mounted) {
+              showErrorDialog(
+                  _localizations.getText('failedToUploadImage'), context);
+              return;
+            }
+          }
+        } catch (e, stackTrace) {
+          Logger.error('Failed to upload profile image to Firebase',
+              error: e, stackTrace: stackTrace);
+          if (mounted) {
+            showErrorDialog(
+                _localizations.getText('failedToUploadImage'), context);
+            return;
+          }
+        } finally {
+          if (mounted) {
+            setState(() => _model.isDataUploading = false);
+          }
+        }
       }
 
       // Convert single TimeOfDay to serializable format for Firestore
@@ -1097,7 +1116,8 @@ class _UserEnterInfoWidgetState extends State<UserEnterInfoWidget> {
         context.pushNamed('UserHome');
       }
     } catch (e, stackTrace) {
-      Logger.error('Failed to save user profile', e, stackTrace);
+      Logger.error('Failed to save user profile',
+          error: e, stackTrace: stackTrace);
       if (mounted) {
         showErrorDialog(_localizations.getText('2184r6dy'), context);
       }

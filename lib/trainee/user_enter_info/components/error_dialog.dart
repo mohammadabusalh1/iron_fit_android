@@ -31,7 +31,8 @@ class ErrorDialog extends StatelessWidget {
       title: Column(
         children: [
           Container(
-            padding: ResponsiveUtils.padding(context, horizontal: 16, vertical: 16),
+            padding:
+                ResponsiveUtils.padding(context, horizontal: 16, vertical: 16),
             decoration: BoxDecoration(
               color: FlutterFlowTheme.of(context).error.withValues(alpha: 0.1),
               shape: BoxShape.circle,
@@ -72,7 +73,8 @@ class ErrorDialog extends StatelessWidget {
       actions: [
         Container(
           width: double.infinity,
-          padding: ResponsiveUtils.padding(context, horizontal: 24, vertical: 8),
+          padding:
+              ResponsiveUtils.padding(context, horizontal: 24, vertical: 8),
           child: FFButtonWidget(
             onPressed: () => Navigator.of(context).pop(),
             text: FFLocalizations.of(context).getText('ok' /* OK */),

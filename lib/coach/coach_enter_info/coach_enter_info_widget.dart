@@ -38,6 +38,12 @@ class CoachInfoState extends ChangeNotifier {
   // Cached section widgets
   final Map<String, Widget> _cachedSections = {};
 
+  // Create a field to store validation error messages
+  String? _validationErrorMessage;
+
+  // Getter for validation error message
+  String? get validationErrorMessage => _validationErrorMessage;
+
   // Getters
   int get currentStage => _currentStage;
   int get currentSubStage => _currentSubStage;
@@ -69,95 +75,123 @@ class CoachInfoState extends ChangeNotifier {
       model.priceTextController.text = existingCoach!.price.toString();
       // Load gym data if available
       if (existingCoach!.gym != null) {
-        final gymSnapshot = await existingCoach!.gym!.get();
+        final DocumentSnapshot gymSnapshot = await existingCoach!.gym!.get();
 
         try {
           existingGym = GymRecord.fromSnapshot(gymSnapshot);
 
-          model.gymNameController.text = existingGym!.name;
-          model.gymWebsiteController.text = existingGym!.website;
-          model.gymPhotos = existingGym!.photos;
-          model.gymCountryController.text = existingGym!.country;
-          model.gymCityController.text = existingGym!.city;
-          model.gymAddressController.text = existingGym!.address;
-          // model.gymLocation = existingGym!.location;
-          model.gymPhoneController.text = existingGym!.phoneNumber;
-          model.gymEmailController.text = existingGym!.email;
-
-          // Safely handle socialMedia Map<String, dynamic> to Map<String, String>
-          if (existingGym!.socialMedia.isNotEmpty) {
-            model.gymInstagramController.text =
-                existingGym!.socialMedia['instagram']?.toString() ?? '';
-            model.gymFacebookController.text =
-                existingGym!.socialMedia['facebook']?.toString() ?? '';
-          }
-
-          if (existingGym!.facilities.isNotEmpty) {
-            model.selectedFacilities = existingGym!.facilities.toSet();
-          }
-
-          // Safely handle workingHours Map<String, dynamic> to Map<String, String>
-          if (existingGym!.workingHours.isNotEmpty) {
-            existingGym!.workingHours.forEach((key, value) {
-              if (model.workingHoursControllers.containsKey(key)) {
-                model.workingHoursControllers[key]!.text = value.toString();
-              }
-            });
-          }
+          // Populate gym fields
+          _populateGymFields(existingGym!);
         } catch (e) {
-          Logger.error('Error creating GymRecord from snapshot: $e');
+          Logger.error('Error loading gym record',
+              error: e, extras: {'coachId': existingCoach?.reference?.id});
+
           // Fallback: manually extract data from snapshot
-          final data = gymSnapshot.data() as Map<String, dynamic>?;
-          if (data != null) {
-            model.gymNameController.text = data['name'] as String? ?? '';
-            model.gymWebsiteController.text = data['website'] as String? ?? '';
-            model.gymPhotos = (data['photos'] as List?)?.cast<String>() ?? [];
-            model.gymCountryController.text = data['country'] as String? ?? '';
-            model.gymCityController.text = data['city'] as String? ?? '';
-            model.gymAddressController.text = data['address'] as String? ?? '';
-            model.gymPhoneController.text =
-                data['phoneNumber'] as String? ?? '';
-            model.gymEmailController.text = data['email'] as String? ?? '';
-
-            // Handle social media
-            final socialMedia = data['socialMedia'] as Map<String, dynamic>?;
-            if (socialMedia != null) {
-              model.gymInstagramController.text =
-                  socialMedia['instagram']?.toString() ?? '';
-              model.gymFacebookController.text =
-                  socialMedia['facebook']?.toString() ?? '';
-            }
-
-            // Handle facilities
-            model.selectedFacilities = ((data['facilities'] as List?)
-                        ?.map((e) => e.toString())
-                        .toList() ??
-                    [])
-                .toSet();
-
-            // Handle working hours
-            final workingHours = data['workingHours'] as Map<String, dynamic>?;
-            if (workingHours != null) {
-              workingHours.forEach((key, value) {
-                if (model.workingHoursControllers.containsKey(key)) {
-                  model.workingHoursControllers[key]!.text = value.toString();
-                }
-              });
-            }
-          }
+          _manuallyExtractGymData(gymSnapshot);
         }
       }
 
       notifyListeners();
     } catch (e) {
-      Logger.error('Error loading existing coach data: $e');
+      Logger.error('Error loading existing coach data',
+          error: e,
+          stackTrace: StackTrace.current,
+          extras: {'userId': currentUserUid});
+    }
+  }
+
+  // New helper methods to clean up _loadExistingData
+  void _populateGymFields(GymRecord gym) {
+    model.gymNameController.text = gym.name;
+    model.gymWebsiteController.text = gym.website;
+    model.gymPhotos = gym.photos;
+    model.gymCountryController.text = gym.country;
+    model.gymCityController.text = gym.city;
+    model.gymAddressController.text = gym.address;
+    model.gymPhoneController.text = gym.phoneNumber;
+    model.gymEmailController.text = gym.email;
+
+    // Handle socialMedia
+    if (gym.socialMedia.isNotEmpty) {
+      model.gymInstagramController.text =
+          gym.socialMedia['instagram']?.toString() ?? '';
+      model.gymFacebookController.text =
+          gym.socialMedia['facebook']?.toString() ?? '';
+    }
+
+    if (gym.facilities.isNotEmpty) {
+      model.selectedFacilities = gym.facilities.toSet();
+    }
+
+    // Handle workingHours
+    if (gym.workingHours.isNotEmpty) {
+      gym.workingHours.forEach((key, value) {
+        if (model.workingHoursControllers.containsKey(key)) {
+          model.workingHoursControllers[key]!.text = value.toString();
+        }
+      });
+    }
+  }
+
+  void _manuallyExtractGymData(DocumentSnapshot gymSnapshot) {
+    final data = gymSnapshot.data() as Map<String, dynamic>?;
+    if (data != null) {
+      model.gymNameController.text = data['name'] as String? ?? '';
+      model.gymWebsiteController.text = data['website'] as String? ?? '';
+      model.gymPhotos = (data['photos'] as List?)?.cast<String>() ?? [];
+      model.gymCountryController.text = data['country'] as String? ?? '';
+      model.gymCityController.text = data['city'] as String? ?? '';
+      model.gymAddressController.text = data['address'] as String? ?? '';
+      model.gymPhoneController.text = data['phoneNumber'] as String? ?? '';
+      model.gymEmailController.text = data['email'] as String? ?? '';
+
+      // Handle social media
+      final socialMedia = data['socialMedia'] as Map<String, dynamic>?;
+      if (socialMedia != null) {
+        model.gymInstagramController.text =
+            socialMedia['instagram']?.toString() ?? '';
+        model.gymFacebookController.text =
+            socialMedia['facebook']?.toString() ?? '';
+      }
+
+      // Handle facilities
+      model.selectedFacilities =
+          ((data['facilities'] as List?)?.map((e) => e.toString()).toList() ??
+                  [])
+              .toSet();
+
+      // Handle working hours
+      final workingHours = data['workingHours'] as Map<String, dynamic>?;
+      if (workingHours != null) {
+        workingHours.forEach((key, value) {
+          if (model.workingHoursControllers.containsKey(key)) {
+            model.workingHoursControllers[key]!.text = value.toString();
+          }
+        });
+      }
     }
   }
 
   void nextInput(BuildContext context) async {
-    while (_isDataUploading) {
-      await Future.delayed(const Duration(milliseconds: 100));
+    // Clear any previous error message
+    _validationErrorMessage = null;
+
+    // Prevent rapid clicking causing state issues
+    if (_isDataUploading) {
+      // Show visual feedback that we're waiting
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(
+            FFLocalizations.of(context).getText('pleaseWaitProcessing'),
+            textAlign: TextAlign.center,
+          ),
+          duration: const Duration(seconds: 1),
+          backgroundColor: FlutterFlowTheme.of(context).primary,
+        ),
+      );
+      return;
     }
+
     if (_currentSubStage < _subStagesCount[_currentStage] - 1) {
       _currentSubStage++;
       _total++;
@@ -173,12 +207,16 @@ class CoachInfoState extends ChangeNotifier {
   }
 
   void onFieldSubmitted(BuildContext context) {
-    if (validateCurrentInput()) {
+    if (validateCurrentInput(context: context)) {
       nextInput(context);
     }
+    // No need for SnackBar - the validation error will be displayed automatically
   }
 
   void previousInput() {
+    // Clear any previous error message
+    _validationErrorMessage = null;
+
     if (_currentSubStage > 0) {
       _currentSubStage--;
       _total--;
@@ -190,8 +228,9 @@ class CoachInfoState extends ChangeNotifier {
     notifyListeners();
   }
 
-  bool validateCurrentInput() {
+  bool validateCurrentInput({required BuildContext context}) {
     bool isValid = true;
+    _validationErrorMessage = null;
 
     switch (_currentStage) {
       case 0: // Personal Info
@@ -200,47 +239,139 @@ class CoachInfoState extends ChangeNotifier {
             isValid = true; // Optional
             break;
           case 1: // Full Name
-            isValid = model.fullNameTextController.text.isNotEmpty &&
-                model.dateOfBirthTextController.text.isNotEmpty;
+            if (model.fullNameTextController.text.isEmpty) {
+              isValid = false;
+              _validationErrorMessage =
+                  FFLocalizations.of(context).getText('pleaseEnterFullName');
+            } else if (model.dateOfBirthTextController.text.isEmpty) {
+              isValid = false;
+              _validationErrorMessage =
+                  FFLocalizations.of(context).getText('pleaseEnterDateOfBirth');
+            } else {
+              // Validate date format
+              try {
+                DateTime.parse(model.dateOfBirthTextController.text);
+              } catch (e) {
+                isValid = false;
+                _validationErrorMessage =
+                    FFLocalizations.of(context).getText('invalidDateFormat');
+                Logger.warning('Invalid date format entered',
+                    extras: {'input': model.dateOfBirthTextController.text});
+              }
+            }
             break;
         }
         break;
       case 1: // Expertise
         switch (_currentSubStage) {
           case 0: // Years of Experience
-            isValid = model.yearsofExperienceTextController.text.isNotEmpty &&
-                int.tryParse(model.yearsofExperienceTextController.text)! < 100;
+            final yearsText = model.yearsofExperienceTextController.text;
+            if (yearsText.isEmpty) {
+              isValid = false;
+              _validationErrorMessage = FFLocalizations.of(context)
+                  .getText('pleaseEnterYearsOfExperience');
+            } else {
+              final years = int.tryParse(yearsText);
+              if (years == null) {
+                isValid = false;
+                _validationErrorMessage = FFLocalizations.of(context)
+                    .getText('pleaseEnterValidYearsNumber');
+              } else if (years < 0 || years >= 100) {
+                isValid = false;
+                _validationErrorMessage =
+                    FFLocalizations.of(context).getText('yearsExperienceRange');
+              }
+            }
             break;
           case 1: // About Me
-            isValid = model.aboutMeTextController.text.isNotEmpty;
+            if (model.aboutMeTextController.text.isEmpty) {
+              isValid = false;
+              _validationErrorMessage =
+                  FFLocalizations.of(context).getText('pleaseProvideAboutInfo');
+            } else if (model.aboutMeTextController.text.length < 10) {
+              isValid = false;
+              _validationErrorMessage =
+                  FFLocalizations.of(context).getText('descriptionMinLength');
+            }
             break;
           case 2: // Specializations
-            isValid = model.specializationsValue != null;
+            if (model.specializationsValue == null) {
+              isValid = false;
+              _validationErrorMessage = FFLocalizations.of(context)
+                  .getText('pleaseSelectSpecialization');
+            }
             break;
         }
         break;
       case 2: // Pricing
-        isValid = model.priceTextController.text.isNotEmpty;
+        final priceText = model.priceTextController.text;
+        if (priceText.isEmpty) {
+          isValid = false;
+          _validationErrorMessage =
+              FFLocalizations.of(context).getText('pleaseEnterPrice');
+        } else {
+          final price = int.tryParse(priceText);
+          if (price == null) {
+            isValid = false;
+            _validationErrorMessage =
+                FFLocalizations.of(context).getText('pleaseEnterValidPrice');
+          } else if (price <= 0) {
+            isValid = false;
+            _validationErrorMessage = FFLocalizations.of(context)
+                .getText('priceMustBeGreaterThanZero');
+          }
+        }
         break;
       case 3: // Gym Info
         switch (_currentSubStage) {
           case 0: // Basic Info
-            isValid = model.gymNameController.text.isNotEmpty;
+            if (model.gymNameController.text.isEmpty) {
+              isValid = false;
+              _validationErrorMessage =
+                  FFLocalizations.of(context).getText('pleaseEnterGymName');
+            }
             break;
           case 1: // Location
-            isValid = model.gymCountryController.text.isNotEmpty &&
-                model.gymCityController.text.isNotEmpty &&
-                model.gymAddressController.text.isNotEmpty;
+            if (model.gymCountryController.text.isEmpty) {
+              isValid = false;
+              _validationErrorMessage =
+                  FFLocalizations.of(context).getText('pleaseEnterCountry');
+            } else if (model.gymCityController.text.isEmpty) {
+              isValid = false;
+              _validationErrorMessage =
+                  FFLocalizations.of(context).getText('pleaseEnterCity');
+            } else if (model.gymAddressController.text.isEmpty) {
+              isValid = false;
+              _validationErrorMessage =
+                  FFLocalizations.of(context).getText('pleaseEnterAddress');
+            }
             break;
           case 2: // Contact
-            isValid = model.gymPhoneController.text.isNotEmpty &&
-                model.gymEmailController.text.isNotEmpty;
+            if (model.gymPhoneController.text.isEmpty) {
+              isValid = false;
+              _validationErrorMessage =
+                  FFLocalizations.of(context).getText('pleaseEnterGymPhone');
+            } else if (model.gymEmailController.text.isEmpty) {
+              isValid = false;
+              _validationErrorMessage =
+                  FFLocalizations.of(context).getText('pleaseEnterGymEmail');
+            } else if (!RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$')
+                .hasMatch(model.gymEmailController.text)) {
+              isValid = false;
+              _validationErrorMessage =
+                  FFLocalizations.of(context).getText('pleaseEnterValidEmail');
+            }
             break;
           case 3: // Facilities
             isValid = true; // Optional
             break;
         }
         break;
+    }
+
+    // Notify listeners if there's an error message to show
+    if (!isValid) {
+      notifyListeners();
     }
 
     return isValid;
@@ -297,20 +428,42 @@ class CoachInfoState extends ChangeNotifier {
 
   static Future<void> _waitForAuth() async {
     // Check every 100ms until authentication is available
-    while (currentUserReference == null) {
+    int attempts = 0;
+    const maxAttempts = 50; // 5 seconds timeout
+
+    while (currentUserReference == null && attempts < maxAttempts) {
       await Future.delayed(const Duration(milliseconds: 100));
+      attempts++;
+    }
+
+    if (currentUserReference == null) {
+      Logger.error('Authentication timed out after 5 seconds');
+      return;
     }
 
     if (FFAppState().userType == 'coach') {
       authenticatedCoachStream.listen((_) {});
 
-      while (currentCoachDocument == null) {
+      attempts = 0;
+      while (currentCoachDocument == null && attempts < maxAttempts) {
         await Future.delayed(const Duration(milliseconds: 100));
+        attempts++;
+      }
+
+      if (currentCoachDocument == null) {
+        Logger.error('Coach document not found after 5 seconds');
       }
     } else if (FFAppState().userType == 'trainee') {
       authenticatedTraineeStream.listen((_) {});
-      while (currentTraineeDocument == null) {
+
+      attempts = 0;
+      while (currentTraineeDocument == null && attempts < maxAttempts) {
         await Future.delayed(const Duration(milliseconds: 100));
+        attempts++;
+      }
+
+      if (currentTraineeDocument == null) {
+        Logger.error('Trainee document not found after 5 seconds');
       }
     }
   }
@@ -321,8 +474,29 @@ class CoachInfoState extends ChangeNotifier {
     try {
       setSaving(true);
 
-      while (_isDataUploading) {
-        await Future.delayed(const Duration(milliseconds: 100));
+      if (_isDataUploading) {
+        // Show visual feedback to user
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(
+              FFLocalizations.of(context).getText('finishingUploads'),
+              textAlign: TextAlign.center,
+            ),
+            duration: const Duration(seconds: 2),
+          ),
+        );
+
+        // Wait with timeout for uploads to complete
+        int attempts = 0;
+        while (_isDataUploading && attempts < 50) {
+          // 5 second timeout
+          await Future.delayed(const Duration(milliseconds: 100));
+          attempts++;
+        }
+
+        if (_isDataUploading) {
+          throw Exception('Upload process taking too long');
+        }
       }
 
       // Create the LatLng data properly
@@ -405,8 +579,15 @@ class CoachInfoState extends ChangeNotifier {
 
       context.pop();
     } catch (e) {
-      showErrorDialog(FFLocalizations.of(context).getText('2184r6dy'), context);
-      Logger.error('Error occurred: $e');
+      showErrorDialog(
+          FFLocalizations.of(context).getText('errorUpdatingProfile'), context);
+      Logger.error('Error updating profile',
+          error: e,
+          stackTrace: StackTrace.current,
+          extras: {
+            'userId': currentUserUid,
+            'coachId': currentCoachDocument?.reference?.id
+          });
     } finally {
       setSaving(false);
     }
@@ -418,8 +599,29 @@ class CoachInfoState extends ChangeNotifier {
     try {
       setSaving(true);
 
-      while (_isDataUploading) {
-        await Future.delayed(const Duration(milliseconds: 100));
+      if (_isDataUploading) {
+        // Show visual feedback to user
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(
+              FFLocalizations.of(context).getText('finishingUploads'),
+              textAlign: TextAlign.center,
+            ),
+            duration: const Duration(seconds: 2),
+          ),
+        );
+
+        // Wait with timeout for uploads to complete
+        int attempts = 0;
+        while (_isDataUploading && attempts < 50) {
+          // 5 second timeout
+          await Future.delayed(const Duration(milliseconds: 100));
+          attempts++;
+        }
+
+        if (_isDataUploading) {
+          throw Exception('Upload process taking too long');
+        }
       }
 
       // Create the LatLng data properly
@@ -458,6 +660,11 @@ class CoachInfoState extends ChangeNotifier {
           .snapshots()
           .first;
 
+      // Check if we have coach records
+      if (coachRecord.docs.isEmpty) {
+        throw Exception('No coach record found for user');
+      }
+
       await coachRecord.docs.first.reference.update(createCoachRecordData(
         user: currentUserReference,
         isSub: false,
@@ -480,8 +687,13 @@ class CoachInfoState extends ChangeNotifier {
       await _waitForAuth();
       await context.pushNamed('CoachHome');
     } catch (e) {
-      showErrorDialog(FFLocalizations.of(context).getText('2184r6dy'), context);
-      Logger.error('Error occurred: $e');
+      final errorMsg =
+          FFLocalizations.of(context).getText('errorCreatingProfile');
+      showErrorDialog(errorMsg, context);
+      Logger.error('Error creating profile',
+          error: e,
+          stackTrace: StackTrace.current,
+          extras: {'userId': currentUserUid});
     } finally {
       setSaving(false);
     }
@@ -518,6 +730,10 @@ class _CoachEnterInfoWidgetState extends State<CoachEnterInfoWidget> {
   void initState() {
     super.initState();
     initIsEditing();
+
+    // Log page entry for analytics
+    Logger.info('Coach enter info page opened',
+        extras: {'isEditMode': widget.isEditing});
   }
 
   initIsEditing() {
@@ -540,6 +756,7 @@ class _CoachEnterInfoWidgetState extends State<CoachEnterInfoWidget> {
         return GestureDetector(
           onTap: () => FocusScope.of(context).unfocus(),
           child: Scaffold(
+            key: scaffoldKey,
             backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
             body: SafeArea(
               child: Stack(
@@ -558,11 +775,13 @@ class _CoachEnterInfoWidgetState extends State<CoachEnterInfoWidget> {
                   ),
                   Column(
                     children: [
-                      SizedBox(height: ResponsiveUtils.height(context, 16)),
-                      _buildStageIndicator(context, coachInfoState),
-                      SizedBox(height: ResponsiveUtils.height(context, 16)),
+                      SizedBox(height: ResponsiveUtils.height(context, 64)),
+                      // _buildStageIndicator(context, coachInfoState),
+                      // SizedBox(height: ResponsiveUtils.height(context, 16)),
                       Expanded(
                         child: SingleChildScrollView(
+                          physics:
+                              const ClampingScrollPhysics(), // Smoother scrolling
                           child: Form(
                             key: _formKey,
                             child: Column(
@@ -607,11 +826,39 @@ class _CoachEnterInfoWidgetState extends State<CoachEnterInfoWidget> {
                         text: FFLocalizations.of(context).getText('finish'),
                         options: FFButtonOptions(
                           height: ResponsiveUtils.height(context, 45.0),
+                          padding: ResponsiveUtils.padding(context,
+                              horizontal: 16.0),
                           color: FlutterFlowTheme.of(context).primary,
                           textStyle: AppStyles.textCairo(context,
                               fontWeight: FontWeight.w700,
                               color: FlutterFlowTheme.of(context).black,
                               fontSize: ResponsiveUtils.fontSize(context, 12)),
+                        ),
+                      ),
+                    ),
+                  // Loading overlay when saving
+                  if (coachInfoState.isSaving)
+                    Container(
+                      color: Colors.black.withOpacity(0.4),
+                      child: Center(
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            CircularProgressIndicator(
+                              color: FlutterFlowTheme.of(context).primary,
+                            ),
+                            SizedBox(
+                                height: ResponsiveUtils.height(context, 16)),
+                            Text(
+                              FFLocalizations.of(context)
+                                  .getText('savingProfile'),
+                              style: AppStyles.textCairo(
+                                context,
+                                fontSize: ResponsiveUtils.fontSize(context, 16),
+                                color: Colors.white,
+                              ),
+                            ),
+                          ],
                         ),
                       ),
                     ),
@@ -627,14 +874,27 @@ class _CoachEnterInfoWidgetState extends State<CoachEnterInfoWidget> {
   Widget _buildStageIndicator(BuildContext context, CoachInfoState state) {
     return Padding(
       padding: ResponsiveUtils.padding(context, horizontal: 16.0),
-      child: Text(
-        '${FFLocalizations.of(context).getText('step')} ${state.total + 1} / 10',
-        style: AppStyles.textCairo(
-          context,
-          fontSize: ResponsiveUtils.fontSize(context, 16),
-          fontWeight: FontWeight.bold,
-          color: FlutterFlowTheme.of(context).primary,
-        ),
+      child: Row(
+        children: [
+          Text(
+            '${FFLocalizations.of(context).getText('step')} ${state.total + 1} / 10',
+            style: AppStyles.textCairo(
+              context,
+              fontSize: ResponsiveUtils.fontSize(context, 16),
+              fontWeight: FontWeight.bold,
+              color: FlutterFlowTheme.of(context).primary,
+            ),
+          ),
+          Expanded(
+            child: LinearProgressIndicator(
+              value: (state.total + 1) / 10,
+              backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
+              color: FlutterFlowTheme.of(context).primary,
+              minHeight: 4,
+              borderRadius: BorderRadius.circular(2),
+            ),
+          ),
+        ],
       ),
     );
   }
@@ -694,93 +954,136 @@ class _CoachEnterInfoWidgetState extends State<CoachEnterInfoWidget> {
             state._subStagesCount.length - 1 &&
         state.currentSubStage == state._subStagesCount[state.currentStage] - 1;
 
-    return Padding(
-      padding: ResponsiveUtils.padding(context, horizontal: 24, vertical: 16),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          if (state.currentStage > 0 || state.currentSubStage > 0)
-            Expanded(
-              child: Padding(
-                padding:
-                    EdgeInsets.only(right: ResponsiveUtils.width(context, 8)),
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        // Show error message if validation failed
+        if (state.validationErrorMessage != null)
+          Padding(
+            padding:
+                ResponsiveUtils.padding(context, horizontal: 24, vertical: 8),
+            child: Container(
+              width: double.infinity,
+              padding: ResponsiveUtils.padding(context,
+                  horizontal: 12, vertical: 12),
+              decoration: BoxDecoration(
+                color: FlutterFlowTheme.of(context).error.withOpacity(0.1),
+                borderRadius: BorderRadius.circular(8),
+                border: Border.all(
+                  color: FlutterFlowTheme.of(context).error.withOpacity(0.3),
+                  width: 1,
+                ),
+              ),
+              child: Text(
+                state.validationErrorMessage!,
+                style: AppStyles.textCairo(
+                  context,
+                  color: FlutterFlowTheme.of(context).error,
+                  fontSize: ResponsiveUtils.fontSize(context, 14),
+                  fontWeight: FontWeight.w500,
+                ),
+                textAlign: TextAlign.center,
+              ),
+            ),
+          ),
+        Container(
+          decoration: BoxDecoration(
+            color: FlutterFlowTheme.of(context).secondaryBackground,
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black.withOpacity(0.05),
+                blurRadius: 5,
+                offset: const Offset(0, -2),
+              )
+            ],
+          ),
+          padding:
+              ResponsiveUtils.padding(context, horizontal: 24, vertical: 16),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              if (state.currentStage > 0 || state.currentSubStage > 0)
+                Expanded(
+                  child: Padding(
+                    padding: EdgeInsets.only(
+                        right: ResponsiveUtils.width(context, 8)),
+                    child: FFButtonWidget(
+                      onPressed: state.previousInput,
+                      text: FFLocalizations.of(context).getText('previous'),
+                      options: FFButtonOptions(
+                        height: ResponsiveUtils.height(context, 45.0),
+                        color: FlutterFlowTheme.of(context).secondaryBackground,
+                        textStyle: AppStyles.textCairo(
+                          context,
+                          color: FlutterFlowTheme.of(context).primary,
+                          fontWeight: FontWeight.w700,
+                          fontSize: ResponsiveUtils.fontSize(context, 14),
+                        ),
+                        elevation: 3.0,
+                        borderSide: BorderSide(
+                          color: FlutterFlowTheme.of(context).primary,
+                          width: 1.0,
+                        ),
+                        borderRadius: BorderRadius.circular(
+                            ResponsiveUtils.width(context, 28.0)),
+                      ),
+                    ),
+                  ),
+                ),
+              SizedBox(width: ResponsiveUtils.width(context, 8)),
+              Expanded(
                 child: FFButtonWidget(
-                  onPressed: state.previousInput,
-                  text: FFLocalizations.of(context).getText('previous'),
+                  icon: state.isDataUploading
+                      ? SizedBox(
+                          width: ResponsiveUtils.width(context, 20),
+                          height: ResponsiveUtils.height(context, 20),
+                          child: CircularProgressIndicator(
+                            color: FlutterFlowTheme.of(context).black,
+                            strokeWidth: 2,
+                          ),
+                        )
+                      : null,
+                  onPressed: () {
+                    if (!state.validateCurrentInput(context: context)) {
+                      // Error message will be displayed from validateCurrentInput
+                      return;
+                    }
+
+                    if (isLastInput) {
+                      if (isEditMode) {
+                        state.updateProfile(context);
+                      } else {
+                        state.createProfile(context);
+                      }
+                    } else {
+                      state.nextInput(context);
+                    }
+                  },
+                  text: isLastInput
+                      ? isEditMode
+                          ? FFLocalizations.of(context).getText('update')
+                          : FFLocalizations.of(context)
+                              .getText('completeProfile')
+                      : FFLocalizations.of(context).getText('next'),
                   options: FFButtonOptions(
                     height: ResponsiveUtils.height(context, 45.0),
-                    color: FlutterFlowTheme.of(context).secondaryBackground,
+                    color: FlutterFlowTheme.of(context).primary,
                     textStyle: AppStyles.textCairo(
                       context,
-                      color: FlutterFlowTheme.of(context).primary,
                       fontWeight: FontWeight.w700,
+                      color: FlutterFlowTheme.of(context).black,
                       fontSize: ResponsiveUtils.fontSize(context, 14),
                     ),
                     elevation: 3.0,
-                    borderSide: BorderSide(
-                      color: FlutterFlowTheme.of(context).primary,
-                      width: 1.0,
-                    ),
                     borderRadius: BorderRadius.circular(
                         ResponsiveUtils.width(context, 28.0)),
                   ),
                 ),
               ),
-            ),
-          SizedBox(width: ResponsiveUtils.width(context, 8)),
-          Expanded(
-            child: FFButtonWidget(
-              icon: state.isDataUploading
-                  ? SizedBox(
-                      width: ResponsiveUtils.width(context, 20),
-                      height: ResponsiveUtils.height(context, 20),
-                      child: CircularProgressIndicator(
-                        color: FlutterFlowTheme.of(context).black,
-                        strokeWidth: 2,
-                      ),
-                    )
-                  : null,
-              onPressed: () {
-                if (!state.validateCurrentInput()) {
-                  showErrorDialog(
-                    FFLocalizations.of(context).getText('emptyOrErrorFields'),
-                    context,
-                  );
-                  return;
-                }
-
-                if (isLastInput) {
-                  if (isEditMode) {
-                    state.updateProfile(context);
-                  } else {
-                    state.createProfile(context);
-                  }
-                } else {
-                  state.nextInput(context);
-                }
-              },
-              text: isLastInput
-                  ? isEditMode
-                      ? FFLocalizations.of(context).getText('update')
-                      : FFLocalizations.of(context).getText('jj2o77x1')
-                  : FFLocalizations.of(context).getText('next'),
-              options: FFButtonOptions(
-                height: ResponsiveUtils.height(context, 45.0),
-                color: FlutterFlowTheme.of(context).primary,
-                textStyle: AppStyles.textCairo(
-                  context,
-                  fontWeight: FontWeight.w700,
-                  color: FlutterFlowTheme.of(context).black,
-                  fontSize: ResponsiveUtils.fontSize(context, 14),
-                ),
-                elevation: 3.0,
-                borderRadius:
-                    BorderRadius.circular(ResponsiveUtils.width(context, 28.0)),
-              ),
-            ),
+            ],
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }

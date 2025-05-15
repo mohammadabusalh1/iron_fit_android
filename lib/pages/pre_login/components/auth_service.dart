@@ -13,7 +13,8 @@ class AuthService {
         FFAppState().isFirstTme = false;
       }
     } catch (e, stackTrace) {
-      Logger.error('Failed to check login status', e, stackTrace);
+      Logger.error('Failed to check login status',
+          error: e, stackTrace: stackTrace);
     }
   }
 
@@ -22,7 +23,8 @@ class AuthService {
       final token = await user.getIdToken();
       return token != null;
     } catch (e, stackTrace) {
-      Logger.error('Failed to validate user session', e, stackTrace);
+      Logger.error('Failed to validate user session',
+          error: e, stackTrace: stackTrace);
       return false;
     }
   }
@@ -49,7 +51,8 @@ class AuthService {
         throw Exception(errorMessage);
       }
     } catch (e, stackTrace) {
-      Logger.error('Navigation error after authentication', e, stackTrace);
+      Logger.error('Navigation error after authentication',
+          error: e, stackTrace: stackTrace);
     }
   }
 }

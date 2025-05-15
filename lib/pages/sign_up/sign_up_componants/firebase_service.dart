@@ -25,27 +25,76 @@ class FirebaseService {
       // If error code is email-already-in-use, return true
       return e.code == 'email-already-in-use';
     } catch (e, stackTrace) {
-      Logger.error(
-          'Unexpected error checking if email is in use', e, stackTrace);
+      Logger.error('Unexpected error checking if email is in use',
+          error: e, stackTrace: stackTrace);
       return false;
     }
   }
 
-  static Future<void> _waitForAuth() async {
+  /// Waits for authentication to become available, and if the user is a coach
+  /// or trainee, waits for the respective document to become available.
+  ///
+  /// If the timeout is reached, navigates to the sign up page.
+  ///
+  /// [context] is an optional parameter that is used to navigate to the sign up
+  /// page if the timeout is reached. If not provided, the function will use
+  /// [FFAppState] to update the state and navigate.
+  static Future<void> _waitForAuth(BuildContext context) async {
     // Check every 100ms until authentication is available
+    const timeout = Duration(seconds: 20); // Timeout after 30 seconds
+    final startTime = DateTime.now();
+
     while (currentUserReference == null) {
+      // Check if timeout has been reached
+      if (DateTime.now().difference(startTime) > timeout) {
+        Logger.warning('Authentication timeout reached, navigating to Sign up');
+        if (context != null && context.mounted) {
+          context.goNamed('signUp');
+        } else {
+          // Fallback if no context is available
+          FFAppState().update(() {});
+        }
+        return;
+      }
       await Future.delayed(const Duration(milliseconds: 100));
     }
 
     if (FFAppState().userType == 'coach') {
       authenticatedCoachStream.listen((_) {});
 
+      final coachStartTime = DateTime.now();
       while (currentCoachDocument == null) {
+        // Check if timeout has been reached
+        if (DateTime.now().difference(coachStartTime) > timeout) {
+          Logger.warning(
+              'Coach authentication timeout reached, navigating to Sign up');
+          if (context != null && context.mounted) {
+            context.goNamed('signUp');
+          } else {
+            // Fallback if no context is available
+            FFAppState().update(() {});
+          }
+          return;
+        }
         await Future.delayed(const Duration(milliseconds: 100));
       }
     } else if (FFAppState().userType == 'trainee') {
       authenticatedTraineeStream.listen((_) {});
+
+      final traineeStartTime = DateTime.now();
       while (currentTraineeDocument == null) {
+        // Check if timeout has been reached
+        if (DateTime.now().difference(traineeStartTime) > timeout) {
+          Logger.warning(
+              'Trainee authentication timeout reached, navigating to Sign up');
+          if (context != null && context.mounted) {
+            context.goNamed('signUp');
+          } else {
+            // Fallback if no context is available
+            FFAppState().update(() {});
+          }
+          return;
+        }
         await Future.delayed(const Duration(milliseconds: 100));
       }
     }
@@ -113,7 +162,7 @@ class FirebaseService {
               gymName: '',
             ));
 
-        await _waitForAuth();
+        await _waitForAuth(context);
 
         try {
           // get coach plans from defultPlans collection
@@ -151,7 +200,8 @@ class FirebaseService {
                 ));
           }
         } catch (e, stackTrace) {
-          Logger.error('Error getting coach plans', e, stackTrace);
+          Logger.error('Error getting coach plans',
+              error: e, stackTrace: stackTrace);
         }
         if (context.mounted) {
           context.pushNamed('CoachEnterInfo', queryParameters: {
@@ -209,7 +259,8 @@ class FirebaseService {
       Logger.info('User account created successfully: ${user.uid}');
       onSuccess(true);
     } on FirebaseAuthException catch (e, stackTrace) {
-      Logger.error('Firebase Auth error creating user account', e, stackTrace);
+      Logger.error('Firebase Auth error creating user account',
+          error: e, stackTrace: stackTrace);
       String errorMessage = 'An error occurred during registration';
 
       // Provide more specific error messages based on Firebase error codes
@@ -230,7 +281,8 @@ class FirebaseService {
       }
       onSuccess(false);
     } catch (e, stackTrace) {
-      Logger.error('Unexpected error creating user account', e, stackTrace);
+      Logger.error('Unexpected error creating user account',
+          error: e, stackTrace: stackTrace);
       if (context.mounted) {
         showErrorDialog(
             FFLocalizations.of(context).getText('2184r6dy'), context);
@@ -302,7 +354,7 @@ class FirebaseService {
               totalPaid: 0,
               gymName: '',
             ));
-        await _waitForAuth();
+        await _waitForAuth(context);
 
         try {
           // get coach plans from defultPlans collection
@@ -340,7 +392,8 @@ class FirebaseService {
                 ));
           }
         } catch (e, stackTrace) {
-          Logger.error('Error getting coach plans', e, stackTrace);
+          Logger.error('Error getting coach plans',
+              error: e, stackTrace: stackTrace);
         }
         if (context.mounted) {
           context.pushNamed('CoachEnterInfo', queryParameters: {
@@ -387,7 +440,7 @@ class FirebaseService {
           }
         }
 
-        await _waitForAuth();
+        await _waitForAuth(context);
         if (context.mounted) {
           context.goNamed('userEnterInfo');
         }
@@ -403,7 +456,8 @@ class FirebaseService {
           'Google sign-in completed successfully for user: ${user.uid}');
       onSuccess(true);
     } on FirebaseAuthException catch (e, stackTrace) {
-      Logger.error('Firebase Auth error during Google sign-in', e, stackTrace);
+      Logger.error('Firebase Auth error during Google sign-in',
+          error: e, stackTrace: stackTrace);
       if (context.mounted) {
         showErrorDialog(
             FFLocalizations.of(context).getText('emailIsAlreadyInUse'),
@@ -411,7 +465,8 @@ class FirebaseService {
       }
       onSuccess(false);
     } catch (e, stackTrace) {
-      Logger.error('Unexpected error during Google sign-in', e, stackTrace);
+      Logger.error('Unexpected error during Google sign-in',
+          error: e, stackTrace: stackTrace);
       if (context.mounted) {
         showErrorDialog(
             FFLocalizations.of(context).getText('2184r6dy'), context);
@@ -481,7 +536,7 @@ class FirebaseService {
               totalPaid: 0,
               gymName: '',
             ));
-        await _waitForAuth();
+        await _waitForAuth(context);
 
         try {
           // get coach plans from defultPlans collection
@@ -519,7 +574,8 @@ class FirebaseService {
                 ));
           }
         } catch (e, stackTrace) {
-          Logger.error('Error getting coach plans', e, stackTrace);
+          Logger.error('Error getting coach plans',
+              error: e, stackTrace: stackTrace);
         }
 
         if (context.mounted) {
@@ -582,7 +638,8 @@ class FirebaseService {
       onSuccess(true);
     } on FirebaseAuthException catch (e, stackTrace) {
       if (!context.mounted) return;
-      Logger.error('Firebase Auth error during Apple sign-in', e, stackTrace);
+      Logger.error('Firebase Auth error during Apple sign-in',
+          error: e, stackTrace: stackTrace);
       String errorMessage = FFLocalizations.of(context).getText('2184r6dy');
 
       // Customize error message based on error code
@@ -598,7 +655,8 @@ class FirebaseService {
       }
       onSuccess(false);
     } catch (e, stackTrace) {
-      Logger.error('Unexpected error during Apple sign-in', e, stackTrace);
+      Logger.error('Unexpected error during Apple sign-in',
+          error: e, stackTrace: stackTrace);
       if (context.mounted) {
         showErrorDialog(
             FFLocalizations.of(context).getText('2184r6dy'), context);

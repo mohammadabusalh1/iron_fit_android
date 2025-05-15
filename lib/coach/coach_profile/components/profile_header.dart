@@ -97,6 +97,7 @@ class ProfileHeader extends StatelessWidget {
                   width: ResponsiveUtils.width(context, 250),
                   child: Text(
                     overflow: TextOverflow.ellipsis,
+                    textAlign: TextAlign.center,
                     maxLines: 1,
                     displayName,
                     style: _getTextStyle(

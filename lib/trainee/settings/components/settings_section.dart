@@ -81,10 +81,26 @@ class SettingsSection extends StatelessWidget {
           onTap: () async {
             if (currentUserEmail.isNotEmpty) {
               try {
+                // Show loading dialog
+                showDialog(
+                  context: context,
+                  barrierDismissible: false,
+                  builder: (BuildContext context) {
+                    return Center(
+                      child: CircularProgressIndicator(
+                        color: FlutterFlowTheme.of(context).primary,
+                      ),
+                    );
+                  },
+                );
+
                 await FirebaseAuth.instance.sendPasswordResetEmail(
                   email: currentUserEmail,
                 );
+
                 if (context.mounted) {
+                  // Dismiss loading dialog
+                  Navigator.of(context).pop();
                   showSuccessDialog(
                       FFLocalizations.of(context)
                           .getText('password_reset_sent'),
@@ -92,6 +108,8 @@ class SettingsSection extends StatelessWidget {
                 }
               } catch (e) {
                 if (context.mounted) {
+                  // Dismiss loading dialog
+                  Navigator.of(context).pop();
                   showErrorDialog(
                       FFLocalizations.of(context)
                           .getText('password_reset_failed'),
@@ -158,7 +176,8 @@ class SettingsSection extends StatelessWidget {
             ),
             decoration: BoxDecoration(
               color: FlutterFlowTheme.of(context).error.withOpacity(0.1),
-              borderRadius: BorderRadius.circular(ResponsiveUtils.width(context, 8)),
+              borderRadius:
+                  BorderRadius.circular(ResponsiveUtils.width(context, 8)),
             ),
             child: Text(
               FFLocalizations.of(context).getText('danger'),

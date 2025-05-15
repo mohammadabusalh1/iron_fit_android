@@ -6,7 +6,7 @@ import 'dart:io' show Platform;
 
 class NotificationTestWidget extends StatelessWidget {
   final NotificationService notificationService = NotificationService();
-  
+
   NotificationTestWidget({Key? key}) : super(key: key);
 
   @override
@@ -32,29 +32,31 @@ class NotificationTestWidget extends StatelessWidget {
               onPressed: () async {
                 try {
                   await notificationService.initializeNotification();
-                  
+
                   if (Platform.isIOS) {
                     // Additional iOS-specific verification
                     final verified = await IOSNotificationHelper.instance
-                        .verifyIOSNotificationsSetup(notificationService.notificationsPlugin);
-                    
+                        .verifyIOSNotificationsSetup(
+                            notificationService.notificationsPlugin);
+
                     ScaffoldMessenger.of(context).showSnackBar(
                       SnackBar(
-                        content: Text(
-                          verified 
-                              ? 'iOS notification service initialized successfully'
-                              : 'iOS notification permissions issue - check settings'
-                        ),
-                        backgroundColor: verified ? Colors.green : Colors.orange,
+                        content: Text(verified
+                            ? 'iOS notification service initialized successfully'
+                            : 'iOS notification permissions issue - check settings'),
+                        backgroundColor:
+                            verified ? Colors.green : Colors.orange,
                       ),
                     );
                   } else {
                     ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(content: Text('Notification service initialized')),
+                      const SnackBar(
+                          content: Text('Notification service initialized')),
                     );
                   }
-                } catch (e) {
-                  Logger.error('Error initializing notifications', e);
+                } catch (e, stackTrace) {
+                  Logger.error('Error initializing notifications',
+                      error: e, stackTrace: stackTrace);
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(content: Text('Error: $e')),
                   );
@@ -69,10 +71,12 @@ class NotificationTestWidget extends StatelessWidget {
                   // Special iOS debug mode test
                   if (Platform.isIOS) {
                     await IOSNotificationHelper.instance
-                        .sendIOSDebugNotification(notificationService.notificationsPlugin);
+                        .sendIOSDebugNotification(
+                            notificationService.notificationsPlugin);
                     ScaffoldMessenger.of(context).showSnackBar(
                       const SnackBar(
-                        content: Text('iOS Debug notification sent - check notification center'),
+                        content: Text(
+                            'iOS Debug notification sent - check notification center'),
                         backgroundColor: Colors.blue,
                       ),
                     );
@@ -82,8 +86,9 @@ class NotificationTestWidget extends StatelessWidget {
                       const SnackBar(content: Text('Test notification sent')),
                     );
                   }
-                } catch (e) {
-                  Logger.error('Error sending test notification', e);
+                } catch (e, stackTrace) {
+                  Logger.error('Error sending test notification',
+                      error: e, stackTrace: stackTrace);
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(content: Text('Error: $e')),
                   );
@@ -104,19 +109,23 @@ class NotificationTestWidget extends StatelessWidget {
                           mainAxisSize: MainAxisSize.min,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text('1. Ensure notification permissions are enabled:'),
+                            Text(
+                                '1. Ensure notification permissions are enabled:'),
                             Padding(
                               padding: EdgeInsets.only(left: 10),
-                              child: Text('• Settings > Notifications > IronFit'),
+                              child:
+                                  Text('• Settings > Notifications > IronFit'),
                             ),
                             SizedBox(height: 8),
                             Text('2. In debug mode:'),
                             Padding(
                               padding: EdgeInsets.only(left: 10),
-                              child: Text('• Physical devices work better than simulators\n• Simulator needs Apple ID signed in\n• Restart app after granting permissions'),
+                              child: Text(
+                                  '• Physical devices work better than simulators\n• Simulator needs Apple ID signed in\n• Restart app after granting permissions'),
                             ),
                             SizedBox(height: 8),
-                            Text('3. Check that your app is in the foreground when testing'),
+                            Text(
+                                '3. Check that your app is in the foreground when testing'),
                           ],
                         ),
                       ),
@@ -149,4 +158,4 @@ class NotificationTestWidget extends StatelessWidget {
       ),
     );
   }
-} 
+}

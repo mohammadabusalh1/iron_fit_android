@@ -65,16 +65,35 @@ class AccountSettings extends StatelessWidget {
             final errorMessage =
                 FFLocalizations.of(context).getText('password_reset_failed');
 
+            // Show loading dialog
+            showDialog(
+              context: context,
+              barrierDismissible: false,
+              builder: (BuildContext context) {
+                return Center(
+                  child: CircularProgressIndicator(
+                    color: FlutterFlowTheme.of(context).primary,
+                  ),
+                );
+              },
+            );
+
             try {
               await FirebaseAuth.instance.sendPasswordResetEmail(
                 email: currentUserEmail,
               );
+
+              // Close loading dialog
+              if (context.mounted) Navigator.of(context).pop();
 
               // Check if context is still valid
               if (context.mounted) {
                 showSuccessDialog(successMessage, context);
               }
             } catch (e) {
+              // Close loading dialog
+              if (context.mounted) Navigator.of(context).pop();
+
               _logger.warning('Error sending password reset email: $e');
               if (context.mounted) {
                 showErrorDialog(errorMessage, context);
@@ -157,14 +176,16 @@ class AccountSettings extends StatelessWidget {
         margin: EdgeInsets.only(bottom: ResponsiveUtils.height(context, 16)),
         decoration: BoxDecoration(
           color: FlutterFlowTheme.of(context).secondaryBackground,
-          borderRadius: BorderRadius.circular(ResponsiveUtils.width(context, 12)),
+          borderRadius:
+              BorderRadius.circular(ResponsiveUtils.width(context, 12)),
           border: Border.all(
             color: FlutterFlowTheme.of(context).primary.withAlpha(15),
           ),
         ),
         child: InkWell(
           onTap: onTap,
-          borderRadius: BorderRadius.circular(ResponsiveUtils.width(context, 12)),
+          borderRadius:
+              BorderRadius.circular(ResponsiveUtils.width(context, 12)),
           child: Padding(
             padding: ResponsiveUtils.padding(
               context,
@@ -177,11 +198,13 @@ class AccountSettings extends StatelessWidget {
                 Row(
                   children: [
                     Container(
-                      padding: EdgeInsets.all(ResponsiveUtils.width(context, 8)),
+                      padding:
+                          EdgeInsets.all(ResponsiveUtils.width(context, 8)),
                       decoration: BoxDecoration(
                         color:
                             FlutterFlowTheme.of(context).primary.withAlpha(30),
-                        borderRadius: BorderRadius.circular(ResponsiveUtils.width(context, 8)),
+                        borderRadius: BorderRadius.circular(
+                            ResponsiveUtils.width(context, 8)),
                       ),
                       child: Icon(
                         icon,
@@ -217,13 +240,16 @@ class AccountSettings extends StatelessWidget {
       builder: (BuildContext context) {
         return Dialog(
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(ResponsiveUtils.width(context, 16)),
+            borderRadius:
+                BorderRadius.circular(ResponsiveUtils.width(context, 16)),
           ),
           child: Container(
-            padding: ResponsiveUtils.padding(context, horizontal: 24, vertical: 24),
+            padding:
+                ResponsiveUtils.padding(context, horizontal: 24, vertical: 24),
             decoration: BoxDecoration(
               color: FlutterFlowTheme.of(context).secondaryBackground,
-              borderRadius: BorderRadius.circular(ResponsiveUtils.width(context, 16)),
+              borderRadius:
+                  BorderRadius.circular(ResponsiveUtils.width(context, 16)),
             ),
             child: Column(
               mainAxisSize: MainAxisSize.min,

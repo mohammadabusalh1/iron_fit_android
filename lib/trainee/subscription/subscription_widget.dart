@@ -87,7 +87,8 @@ class _SubscriptionWidgetState extends State<SubscriptionWidget>
 
       if (mounted) setState(() => _userCoachRecord = userCoachRecord);
     } catch (e, stackTrace) {
-      Logger.error('Error loading subscription data', e, stackTrace);
+      Logger.error('Error loading subscription data',
+          error: e, stackTrace: stackTrace);
     }
   }
 
@@ -152,7 +153,8 @@ class _SubscriptionWidgetState extends State<SubscriptionWidget>
       Logger.debug('Successfully retrieved nutrition plan: ${nutPlanRef.id}');
       return nutPlan;
     } catch (e, stackTrace) {
-      Logger.error('Error fetching nutrition plan', e, stackTrace);
+      Logger.error('Error fetching nutrition plan',
+          error: e, stackTrace: stackTrace);
       return NutPlanRecord.empty();
     }
   }
@@ -217,9 +219,11 @@ class _SubscriptionWidgetState extends State<SubscriptionWidget>
           children: [
             const SubscriptionHeader(),
             SizedBox(
-              width: ResponsiveUtils.width(context, MediaQuery.sizeOf(context).width),
+              width: ResponsiveUtils.width(
+                  context, MediaQuery.sizeOf(context).width),
               child: Padding(
-                padding: ResponsiveUtils.padding(context, horizontal: 20, vertical: 24),
+                padding: ResponsiveUtils.padding(context,
+                    horizontal: 20, vertical: 24),
                 child: Column(
                   mainAxisSize: MainAxisSize.max,
                   children: [
@@ -235,7 +239,8 @@ class _SubscriptionWidgetState extends State<SubscriptionWidget>
                     PaymentHistorySection(
                       subscriptionsRecord: _subscriptionRecord!,
                     ),
-                  ].divide(SizedBox(height: ResponsiveUtils.height(context, 24))),
+                  ].divide(
+                      SizedBox(height: ResponsiveUtils.height(context, 24))),
                 ),
               ),
             ),

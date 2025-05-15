@@ -76,7 +76,8 @@ class _EditUserInfoDialogWidgetState extends State<EditUserInfoDialogWidget>
 
       _animationController.forward();
     } catch (e, stackTrace) {
-      Logger.error('Error initializing dialog widget', e, stackTrace);
+      Logger.error('Error initializing dialog widget',
+          error: e, stackTrace: stackTrace);
     }
   }
 
@@ -101,7 +102,8 @@ class _EditUserInfoDialogWidgetState extends State<EditUserInfoDialogWidget>
       _model.gender = widget.trainee?.gender;
       Logger.debug('Controllers initialized successfully');
     } catch (e, stackTrace) {
-      Logger.error('Error initializing controllers', e, stackTrace);
+      Logger.error('Error initializing controllers',
+          error: e, stackTrace: stackTrace);
       // Continue execution as controllers might be partially initialized
     }
   }
@@ -154,7 +156,8 @@ class _EditUserInfoDialogWidgetState extends State<EditUserInfoDialogWidget>
           await context.pushNamed('userProfile');
         }
       } catch (e, stackTrace) {
-        Logger.error('Error updating profile', e, stackTrace);
+        Logger.error('Error updating profile',
+            error: e, stackTrace: stackTrace);
 
         if (mounted) {
           String errorMessage = FFLocalizations.of(context).getText('2184r6dy');
@@ -266,7 +269,8 @@ class _EditUserInfoDialogWidgetState extends State<EditUserInfoDialogWidget>
                   ),
                   decoration: BoxDecoration(
                     color: FlutterFlowTheme.of(context).secondaryBackground,
-                    borderRadius: BorderRadius.circular(ResponsiveUtils.width(context, 28.0)),
+                    borderRadius: BorderRadius.circular(
+                        ResponsiveUtils.width(context, 28.0)),
                     boxShadow: [
                       BoxShadow(
                         color:
@@ -292,7 +296,8 @@ class _EditUserInfoDialogWidgetState extends State<EditUserInfoDialogWidget>
                     ),
                   ),
                   child: ClipRRect(
-                    borderRadius: BorderRadius.circular(ResponsiveUtils.width(context, 28.0)),
+                    borderRadius: BorderRadius.circular(
+                        ResponsiveUtils.width(context, 28.0)),
                     child: SingleChildScrollView(
                       physics: const BouncingScrollPhysics(),
                       child: Padding(
@@ -352,7 +357,9 @@ class _EditUserInfoDialogWidgetState extends State<EditUserInfoDialogWidget>
                                 icon: Icons.person,
                                 onChanged: (_) {},
                               ),
-                              SizedBox(height: ResponsiveUtils.height(context, 20.0)),
+                              SizedBox(
+                                  height:
+                                      ResponsiveUtils.height(context, 20.0)),
 
                               DateOfBirthField(
                                 dateOfBirthFocusNode:
@@ -367,7 +374,9 @@ class _EditUserInfoDialogWidgetState extends State<EditUserInfoDialogWidget>
                                 },
                               ),
 
-                              SizedBox(height: ResponsiveUtils.height(context, 20.0)),
+                              SizedBox(
+                                  height:
+                                      ResponsiveUtils.height(context, 20.0)),
 
                               GenderField(
                                 initialGender: widget.trainee?.gender,
@@ -380,7 +389,9 @@ class _EditUserInfoDialogWidgetState extends State<EditUserInfoDialogWidget>
                                 },
                               ),
 
-                              SizedBox(height: ResponsiveUtils.height(context, 20.0)),
+                              SizedBox(
+                                  height:
+                                      ResponsiveUtils.height(context, 20.0)),
 
                               Row(
                                 children: [
@@ -402,7 +413,9 @@ class _EditUserInfoDialogWidgetState extends State<EditUserInfoDialogWidget>
                                       onChanged: (_) {},
                                     ),
                                   ),
-                                  SizedBox(width: ResponsiveUtils.width(context, 16.0)),
+                                  SizedBox(
+                                      width:
+                                          ResponsiveUtils.width(context, 16.0)),
                                   Expanded(
                                     child: CustomTextField(
                                       label: FFLocalizations.of(context)
@@ -424,7 +437,9 @@ class _EditUserInfoDialogWidgetState extends State<EditUserInfoDialogWidget>
                                 ],
                               ),
 
-                              SizedBox(height: ResponsiveUtils.height(context, 20.0)),
+                              SizedBox(
+                                  height:
+                                      ResponsiveUtils.height(context, 20.0)),
 
                               // Fitness Goals Section
                               CustomTextField(
@@ -446,7 +461,9 @@ class _EditUserInfoDialogWidgetState extends State<EditUserInfoDialogWidget>
                                 onChanged: (_) {},
                               ),
 
-                              SizedBox(height: ResponsiveUtils.height(context, 32.0)),
+                              SizedBox(
+                                  height:
+                                      ResponsiveUtils.height(context, 32.0)),
 
                               // Save Button
                               SaveButton(
@@ -489,7 +506,8 @@ class _EditUserInfoDialogWidgetState extends State<EditUserInfoDialogWidget>
                       child: Material(
                         color: Colors.transparent,
                         child: InkWell(
-                          borderRadius: BorderRadius.circular(ResponsiveUtils.width(context, 25)),
+                          borderRadius: BorderRadius.circular(
+                              ResponsiveUtils.width(context, 25)),
                           onTap: () {
                             // Trigger haptic feedback
                             HapticFeedback.lightImpact();
@@ -498,7 +516,8 @@ class _EditUserInfoDialogWidgetState extends State<EditUserInfoDialogWidget>
                             });
                           },
                           child: Padding(
-                            padding: ResponsiveUtils.padding(context, horizontal: 12.0, vertical: 12.0),
+                            padding: ResponsiveUtils.padding(context,
+                                horizontal: 12.0, vertical: 12.0),
                             child: Icon(
                               Icons.close_rounded,
                               color: FlutterFlowTheme.of(context).primaryText,

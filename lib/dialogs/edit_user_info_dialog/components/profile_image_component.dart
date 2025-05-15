@@ -5,7 +5,6 @@ import 'package:flutter/services.dart';
 import 'package:iron_fit/flutter_flow/custom_functions.dart';
 import 'package:iron_fit/utils/logger.dart';
 import 'package:iron_fit/utils/responsive_utils.dart';
-import 'package:lottie/lottie.dart';
 import '/backend/firebase_storage/storage.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
@@ -110,8 +109,8 @@ class _ProfileImageComponentState extends State<ProfileImageComponent>
               Logger.info('Previous profile image deleted successfully');
             }
           } catch (e, stackTrace) {
-            Logger.error(
-                'Error deleting previous profile image', e, stackTrace);
+            Logger.error('Error deleting previous profile image',
+                error: e, stackTrace: stackTrace);
           }
 
           Logger.debug('Processing selected media for upload');
@@ -136,8 +135,8 @@ class _ProfileImageComponentState extends State<ProfileImageComponent>
               .toList();
           Logger.info('Profile image upload completed successfully');
         } catch (e, stackTrace) {
-          Logger.error(
-              'Error during profile image upload process', e, stackTrace);
+          Logger.error('Error during profile image upload process',
+              error: e, stackTrace: stackTrace);
           if (mounted) {
             showErrorDialog(
                 '${FFLocalizations.of(context).getText('uploadFailed')}: ${e.toString().substring(0, min(50, e.toString().length))}',
@@ -180,8 +179,8 @@ class _ProfileImageComponentState extends State<ProfileImageComponent>
         }
       }
     } catch (e, stackTrace) {
-      Logger.error(
-          'Unexpected error in profile image selection', e, stackTrace);
+      Logger.error('Unexpected error in profile image selection',
+          error: e, stackTrace: stackTrace);
       if (mounted) {
         showErrorDialog(
             '${FFLocalizations.of(context).getText('errorOccurred')}: ${e.toString().substring(0, min(50, e.toString().length))}',
@@ -221,13 +220,15 @@ class _ProfileImageComponentState extends State<ProfileImageComponent>
                         color: FlutterFlowTheme.of(context)
                             .primary
                             .withOpacity(0.2),
-                        blurRadius: _isHovering 
-                            ? ResponsiveUtils.width(context, 15) 
+                        blurRadius: _isHovering
+                            ? ResponsiveUtils.width(context, 15)
                             : ResponsiveUtils.width(context, 8),
                         spreadRadius: _isHovering ? 2 : 0,
-                        offset: Offset(0, _isHovering 
-                            ? ResponsiveUtils.height(context, 4) 
-                            : ResponsiveUtils.height(context, 2)),
+                        offset: Offset(
+                            0,
+                            _isHovering
+                                ? ResponsiveUtils.height(context, 4)
+                                : ResponsiveUtils.height(context, 2)),
                       ),
                     ],
                   ),
@@ -238,7 +239,8 @@ class _ProfileImageComponentState extends State<ProfileImageComponent>
                         color: FlutterFlowTheme.of(context)
                             .primary
                             .withOpacity(_isHovering ? 0.6 : 0.4),
-                        width: ResponsiveUtils.width(context, _borderAnimation.value),
+                        width: ResponsiveUtils.width(
+                            context, _borderAnimation.value),
                       ),
                     ),
                     clipBehavior: Clip.antiAlias,
@@ -264,7 +266,8 @@ class _ProfileImageComponentState extends State<ProfileImageComponent>
                                     valueColor: AlwaysStoppedAnimation<Color>(
                                       FlutterFlowTheme.of(context).primary,
                                     ),
-                                    strokeWidth: ResponsiveUtils.width(context, 2),
+                                    strokeWidth:
+                                        ResponsiveUtils.width(context, 2),
                                   ),
                                 ),
                               )
@@ -287,13 +290,17 @@ class _ProfileImageComponentState extends State<ProfileImageComponent>
                                             fit: BoxFit.cover,
                                             placeholder: (context, url) =>
                                                 Container(
-                                              color: FlutterFlowTheme.of(context)
-                                                  .alternate
-                                                  .withOpacity(0.5),
+                                              color:
+                                                  FlutterFlowTheme.of(context)
+                                                      .alternate
+                                                      .withOpacity(0.5),
                                               child: Center(
                                                 child: SizedBox(
-                                                  width: ResponsiveUtils.width(context, 30),
-                                                  height: ResponsiveUtils.height(context, 30),
+                                                  width: ResponsiveUtils.width(
+                                                      context, 30),
+                                                  height:
+                                                      ResponsiveUtils.height(
+                                                          context, 30),
                                                   child:
                                                       CircularProgressIndicator(
                                                     valueColor:
@@ -303,7 +310,9 @@ class _ProfileImageComponentState extends State<ProfileImageComponent>
                                                               context)
                                                           .primary,
                                                     ),
-                                                    strokeWidth: ResponsiveUtils.width(context, 2),
+                                                    strokeWidth:
+                                                        ResponsiveUtils.width(
+                                                            context, 2),
                                                   ),
                                                 ),
                                               ),
@@ -314,7 +323,8 @@ class _ProfileImageComponentState extends State<ProfileImageComponent>
                                               color:
                                                   FlutterFlowTheme.of(context)
                                                       .error,
-                                              size: ResponsiveUtils.iconSize(context, 40),
+                                              size: ResponsiveUtils.iconSize(
+                                                  context, 40),
                                             ),
                                           ),
                                   ),
@@ -344,7 +354,8 @@ class _ProfileImageComponentState extends State<ProfileImageComponent>
                                             Icons.camera_alt_rounded,
                                             color: FlutterFlowTheme.of(context)
                                                 .info,
-                                            size: ResponsiveUtils.iconSize(context, 36),
+                                            size: ResponsiveUtils.iconSize(
+                                                context, 36),
                                           ),
                                         ),
                                       ),
@@ -353,22 +364,30 @@ class _ProfileImageComponentState extends State<ProfileImageComponent>
                                   // Edit indicator
                                   if (!_isHovering)
                                     Positioned(
-                                      bottom: ResponsiveUtils.height(context, 0),
+                                      bottom:
+                                          ResponsiveUtils.height(context, 0),
                                       right: ResponsiveUtils.width(context, 0),
                                       child: Container(
-                                        width: ResponsiveUtils.width(context, 36),
-                                        height: ResponsiveUtils.height(context, 36),
+                                        width:
+                                            ResponsiveUtils.width(context, 36),
+                                        height:
+                                            ResponsiveUtils.height(context, 36),
                                         decoration: BoxDecoration(
                                           color: FlutterFlowTheme.of(context)
                                               .primary,
                                           shape: BoxShape.circle,
                                           boxShadow: [
                                             BoxShadow(
-                                              color: FlutterFlowTheme.of(context)
-                                                  .primaryText
-                                                  .withOpacity(0.25),
-                                              blurRadius: ResponsiveUtils.width(context, 4),
-                                              offset: Offset(0, ResponsiveUtils.height(context, 2)),
+                                              color:
+                                                  FlutterFlowTheme.of(context)
+                                                      .primaryText
+                                                      .withOpacity(0.25),
+                                              blurRadius: ResponsiveUtils.width(
+                                                  context, 4),
+                                              offset: Offset(
+                                                  0,
+                                                  ResponsiveUtils.height(
+                                                      context, 2)),
                                             ),
                                           ],
                                         ),
@@ -377,7 +396,8 @@ class _ProfileImageComponentState extends State<ProfileImageComponent>
                                             Icons.edit_rounded,
                                             color: FlutterFlowTheme.of(context)
                                                 .info,
-                                            size: ResponsiveUtils.iconSize(context, 18),
+                                            size: ResponsiveUtils.iconSize(
+                                                context, 18),
                                           ),
                                         ),
                                       ),

@@ -1,16 +1,15 @@
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:iron_fit/utils/logger.dart';
-import 'package:flutter/material.dart';
 import 'dart:io' show Platform;
 
 class NotificationService {
   final FlutterLocalNotificationsPlugin notificationsPlugin =
       FlutterLocalNotificationsPlugin();
   bool _isInitialized = false;
-  
+
   // Android notification channel setup
   static const AndroidNotificationChannel _channel = AndroidNotificationChannel(
-    'high_importance_channel',  // same ID as in AndroidManifest
+    'high_importance_channel', // same ID as in AndroidManifest
     'High Importance Notifications',
     description: 'This channel is used for important notifications.',
     importance: Importance.max,
@@ -31,7 +30,7 @@ class NotificationService {
       } else if (Platform.isAndroid) {
         await _initializeAndroid();
       }
-      
+
       // Common initialization for all platforms
       final initializationSettings = InitializationSettings(
         android: const AndroidInitializationSettings('@mipmap/ic_launcher'),
@@ -58,45 +57,50 @@ class NotificationService {
           ],
         ),
       );
-          
+
       // Initialize with robust error handling
       await notificationsPlugin.initialize(
         initializationSettings,
-        onDidReceiveNotificationResponse: (NotificationResponse response) async {
-          Logger.info('Notification tapped: ${response.id} - ${response.payload}');
-          // Handle notification tap 
+        onDidReceiveNotificationResponse:
+            (NotificationResponse response) async {
+          Logger.info(
+              'Notification tapped: ${response.id} - ${response.payload}');
+          // Handle notification tap
         },
       );
-      
+
       _isInitialized = true;
       Logger.info('Notification service initialized successfully');
-    } catch (e) {
-      Logger.error('Error initializing notification service', e);
+    } catch (e, stackTrace) {
+      Logger.error('Error initializing notification service',
+          error: e, stackTrace: stackTrace);
       // Don't mark as initialized so we can try again
       _isInitialized = false;
     }
   }
-  
+
   Future<void> _initializeIOS() async {
     // Request permissions explicitly for iOS
     final bool? result = await notificationsPlugin
-        .resolvePlatformSpecificImplementation<IOSFlutterLocalNotificationsPlugin>()
+        .resolvePlatformSpecificImplementation<
+            IOSFlutterLocalNotificationsPlugin>()
         ?.requestPermissions(
           alert: true,
           badge: true,
           sound: true,
         );
-    
+
     // Add additional iOS setup that's needed in debug mode
     if (result == false) {
       Logger.warning('iOS notification permissions denied by user');
     } else {
       Logger.info('iOS notification permission granted: $result');
-      
+
       // On debug builds, explicitly configure iOS settings
-      final IOSFlutterLocalNotificationsPlugin? iOSPlugin = 
-          notificationsPlugin.resolvePlatformSpecificImplementation<IOSFlutterLocalNotificationsPlugin>();
-      
+      final IOSFlutterLocalNotificationsPlugin? iOSPlugin =
+          notificationsPlugin.resolvePlatformSpecificImplementation<
+              IOSFlutterLocalNotificationsPlugin>();
+
       if (iOSPlugin != null) {
         // Enable provisional notification permission - allows silent delivery even if user hasn't explicitly approved
         await iOSPlugin.requestPermissions(
@@ -108,13 +112,13 @@ class NotificationService {
       }
     }
   }
-  
+
   Future<void> _initializeAndroid() async {
     // Create notification channel for Android
-    final androidImplementation = notificationsPlugin
-        .resolvePlatformSpecificImplementation<
+    final androidImplementation =
+        notificationsPlugin.resolvePlatformSpecificImplementation<
             AndroidFlutterLocalNotificationsPlugin>();
-            
+
     await androidImplementation?.createNotificationChannel(_channel);
     Logger.info('Android notification channel created: ${_channel.id}');
   }
@@ -141,38 +145,42 @@ class NotificationService {
     );
   }
 
-  Future<void> showSoundNotification({
-      int id = 0, String? title, String? body, String? payLoad}) async {
+  Future<void> showSoundNotification(
+      {int id = 0, String? title, String? body, String? payLoad}) async {
     if (!_isInitialized) {
-      Logger.warning('Notification service not initialized, initializing now...');
+      Logger.warning(
+          'Notification service not initialized, initializing now...');
       await initializeNotification();
     }
-    
+
     try {
       Logger.info('Showing notification: $title - $body');
       // For iOS debugging
       if (Platform.isIOS) {
-        Logger.info('Displaying iOS notification with details: id=$id, title=$title');
+        Logger.info(
+            'Displaying iOS notification with details: id=$id, title=$title');
       }
-      
+
       await notificationsPlugin.show(
-        id, 
-        title, 
-        body, 
+        id,
+        title,
+        body,
         await _notificationDetails(),
         payload: payLoad,
       );
       Logger.info('Notification displayed successfully');
-    } catch (e) {
-      Logger.error('Failed to show notification', e);
+    } catch (e, stackTrace) {
+      Logger.error('Failed to show notification',
+          error: e, stackTrace: stackTrace);
     }
   }
-  
+
   // Test method to verify notifications are working
   Future<void> testNotification() async {
     await showSoundNotification(
       title: 'Test Notification',
-      body: 'This is a test notification to verify the service is working properly.',
+      body:
+          'This is a test notification to verify the service is working properly.',
     );
   }
 
@@ -181,16 +189,17 @@ class NotificationService {
     if (!Platform.isIOS) {
       return true; // Not iOS
     }
-    
+
     try {
-      final iOSPlugin = notificationsPlugin
-          .resolvePlatformSpecificImplementation<IOSFlutterLocalNotificationsPlugin>();
-          
+      final iOSPlugin =
+          notificationsPlugin.resolvePlatformSpecificImplementation<
+              IOSFlutterLocalNotificationsPlugin>();
+
       if (iOSPlugin == null) {
         Logger.error('Could not resolve iOS plugin implementation');
         return false;
       }
-      
+
       // DarwinNotificationSettings has permission status info
       bool? permissionsGranted = await iOSPlugin.requestPermissions(
         alert: true,
@@ -198,13 +207,13 @@ class NotificationService {
         sound: true,
         critical: true,
       );
-      
+
       // Log the result
       if (permissionsGranted == true) {
         Logger.info('iOS notification permissions are granted');
       } else {
         Logger.warning('iOS notification permissions are NOT granted');
-        
+
         // Recommend enabling provisional notifications to work around permission issues
         await iOSPlugin.requestPermissions(
           alert: true,
@@ -212,13 +221,14 @@ class NotificationService {
           sound: true,
           provisional: true,
         );
-        
+
         Logger.info('Requested provisional notifications as fallback');
       }
-      
+
       return permissionsGranted ?? false;
-    } catch (e) {
-      Logger.error('Error checking iOS permission status', e);
+    } catch (e, stackTrace) {
+      Logger.error('Error checking iOS permission status',
+          error: e, stackTrace: stackTrace);
       return false;
     }
   }

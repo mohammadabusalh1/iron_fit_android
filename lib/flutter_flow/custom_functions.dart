@@ -7,7 +7,6 @@ import 'package:iron_fit/utils/logger.dart';
 import 'package:iron_fit/utils/responsive_utils.dart';
 import 'package:intl/intl.dart';
 
-
 DateTime? nowDate() {
   return DateTime.now();
 }
@@ -71,7 +70,8 @@ Future<void> showDebtsModal(
 
     Logger.info('Debts modal closed');
   } catch (e) {
-    Logger.error('Error while showing debts modal', e, StackTrace.current);
+    Logger.error('Error while showing debts modal',
+        error: e, stackTrace: StackTrace.current);
     if (context != null) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
@@ -91,7 +91,8 @@ Widget _buildDebtsModalContent(
   );
 
   return Container(
-    height: ResponsiveUtils.height(context, MediaQuery.of(context).size.height * 0.75),
+    height: ResponsiveUtils.height(
+        context, MediaQuery.of(context).size.height * 0.75),
     decoration: BoxDecoration(
       color: FlutterFlowTheme.of(context).secondaryBackground,
       borderRadius: const BorderRadius.only(
@@ -113,7 +114,8 @@ Widget _buildDebtsModalContent(
         Container(
           width: ResponsiveUtils.width(context, 40),
           height: ResponsiveUtils.height(context, 4),
-          margin: EdgeInsets.symmetric(vertical: ResponsiveUtils.height(context, 12)),
+          margin: EdgeInsets.symmetric(
+              vertical: ResponsiveUtils.height(context, 12)),
           decoration: BoxDecoration(
             color: FlutterFlowTheme.of(context)
                 .secondaryText
@@ -123,7 +125,8 @@ Widget _buildDebtsModalContent(
         ),
         // Header with total balance
         Padding(
-          padding: ResponsiveUtils.padding(context, horizontal: 24.0, vertical: 16.0),
+          padding: ResponsiveUtils.padding(context,
+              horizontal: 24.0, vertical: 16.0),
           child: Column(
             children: [
               Text(
@@ -136,7 +139,8 @@ Widget _buildDebtsModalContent(
               ),
               SizedBox(height: ResponsiveUtils.height(context, 8)),
               Container(
-                padding: ResponsiveUtils.padding(context, horizontal: 16, vertical: 8),
+                padding: ResponsiveUtils.padding(context,
+                    horizontal: 16, vertical: 8),
                 decoration: BoxDecoration(
                   color: totalDebts >= 0
                       ? Colors.green.withOpacity(0.1)
@@ -185,7 +189,8 @@ Widget _buildEmptyDebtState(BuildContext context) {
       mainAxisSize: MainAxisSize.min,
       children: [
         Container(
-          padding: ResponsiveUtils.padding(context, horizontal: 16, vertical: 16),
+          padding:
+              ResponsiveUtils.padding(context, horizontal: 16, vertical: 16),
           decoration: BoxDecoration(
             color: FlutterFlowTheme.of(context).primary.withOpacity(0.1),
             shape: BoxShape.circle,
@@ -252,11 +257,13 @@ Widget _buildDebtsList(
               // Add interaction feedback if needed
             },
             child: Padding(
-              padding: ResponsiveUtils.padding(context, horizontal: 16, vertical: 16),
+              padding: ResponsiveUtils.padding(context,
+                  horizontal: 16, vertical: 16),
               child: Row(
                 children: [
                   Container(
-                    padding: ResponsiveUtils.padding(context, horizontal: 12, vertical: 12),
+                    padding: ResponsiveUtils.padding(context,
+                        horizontal: 12, vertical: 12),
                     decoration: BoxDecoration(
                       color: isIncome
                           ? Colors.green.withOpacity(0.1)
@@ -375,7 +382,8 @@ void showErrorDialog(String message, context) {
                   TextButton(
                     onPressed: () => Navigator.pop(context),
                     style: TextButton.styleFrom(
-                      padding: ResponsiveUtils.padding(context, horizontal: 20, vertical: 10),
+                      padding: ResponsiveUtils.padding(context,
+                          horizontal: 20, vertical: 10),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(8),
                       ),
@@ -402,7 +410,8 @@ void showErrorDialog(String message, context) {
       );
     }
   } catch (e) {
-    Logger.error('Error while showing error dialog', e, StackTrace.current);
+    Logger.error('Error while showing error dialog',
+        error: e, stackTrace: StackTrace.current);
   }
 }
 

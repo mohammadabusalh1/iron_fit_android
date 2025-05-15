@@ -4,6 +4,7 @@ import 'package:iron_fit/componants/Styles.dart';
 import 'package:iron_fit/flutter_flow/flutter_flow_util.dart';
 import 'package:iron_fit/utils/responsive_utils.dart';
 import 'package:lottie/lottie.dart';
+import 'dart:typed_data';
 
 class ProfileImageUploader extends StatelessWidget {
   const ProfileImageUploader({
@@ -11,14 +12,20 @@ class ProfileImageUploader extends StatelessWidget {
     required this.uploadedFileUrl,
     required this.isUploading,
     required this.onImageSelected,
+    this.localImageBytes,
   });
 
   final String uploadedFileUrl;
   final bool isUploading;
   final Function() onImageSelected;
+  final Uint8List? localImageBytes;
 
   @override
   Widget build(BuildContext context) {
+    // Determine if we have an image to display (either local or remote)
+    final bool hasImage =
+        uploadedFileUrl.isNotEmpty || localImageBytes?.length != 0;
+
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
@@ -61,16 +68,19 @@ class ProfileImageUploader extends StatelessWidget {
                   color: FlutterFlowTheme.of(context).primary.withOpacity(0.2),
                   width: 4,
                 ),
-                image: uploadedFileUrl.isNotEmpty
-                    ? DecorationImage(
-                        fit: BoxFit.cover,
-                        image: NetworkImage(
-                          uploadedFileUrl,
-                        ),
-                      )
+                image: hasImage
+                    ? (localImageBytes != null
+                        ? DecorationImage(
+                            fit: BoxFit.cover,
+                            image: MemoryImage(localImageBytes!),
+                          )
+                        : DecorationImage(
+                            fit: BoxFit.cover,
+                            image: NetworkImage(uploadedFileUrl),
+                          ))
                     : null,
               ),
-              child: uploadedFileUrl.isEmpty
+              child: !hasImage
                   ? Lottie.asset(
                       'assets/lottie/profile_placeholder.json',
                       animate: true,
@@ -84,11 +94,11 @@ class ProfileImageUploader extends StatelessWidget {
         ElevatedButton.icon(
           onPressed: isUploading ? null : onImageSelected,
           icon: Icon(
-            uploadedFileUrl.isEmpty ? Icons.add_photo_alternate : Icons.edit,
+            !hasImage ? Icons.add_photo_alternate : Icons.edit,
             size: ResponsiveUtils.iconSize(context, 20),
           ),
           label: Text(
-            uploadedFileUrl.isEmpty
+            !hasImage
                 ? FFLocalizations.of(context).getText('upload_photo')
                 : FFLocalizations.of(context).getText('change_photo'),
             style: AppStyles.textCairo(
@@ -101,7 +111,8 @@ class ProfileImageUploader extends StatelessWidget {
           style: ElevatedButton.styleFrom(
             foregroundColor: FlutterFlowTheme.of(context).primaryBackground,
             backgroundColor: FlutterFlowTheme.of(context).primary,
-            padding: ResponsiveUtils.padding(context, horizontal: 16, vertical: 12),
+            padding:
+                ResponsiveUtils.padding(context, horizontal: 16, vertical: 12),
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(12),
             ),

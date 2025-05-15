@@ -190,7 +190,7 @@ class _RenewSubWidgetState extends State<RenewSubWidget> {
         context.safePop();
       }
     } catch (e, s) {
-      Logger.error('Error renewing subscription: $e', e, s);
+      Logger.error('Error renewing subscription: $e', error: e, stackTrace: s);
       _showErrorDialog(
           FFLocalizations.of(context).getText('error_renewing_subscription'));
     }
@@ -301,7 +301,8 @@ class _RenewSubWidgetState extends State<RenewSubWidget> {
                             textButtonTheme: TextButtonThemeData(
                               style: TextButton.styleFrom(
                                 textStyle: AppStyles.textCairo(context,
-                                    fontSize: ResponsiveUtils.fontSize(context, 16), 
+                                    fontSize:
+                                        ResponsiveUtils.fontSize(context, 16),
                                     fontWeight: FontWeight.w600),
                               ),
                             ),
@@ -404,7 +405,8 @@ class _RenewSubWidgetState extends State<RenewSubWidget> {
                             textButtonTheme: TextButtonThemeData(
                               style: TextButton.styleFrom(
                                 textStyle: AppStyles.textCairo(context,
-                                    fontSize: ResponsiveUtils.fontSize(context, 16), 
+                                    fontSize:
+                                        ResponsiveUtils.fontSize(context, 16),
                                     fontWeight: FontWeight.w600),
                               ),
                             ),

@@ -214,7 +214,8 @@ class _SignUpWidgetState extends State<SignUpWidget>
         }
       });
     } catch (e) {
-      Logger.error('Error during account creation', e, StackTrace.current);
+      Logger.error('Error during account creation',
+          error: e, stackTrace: StackTrace.current);
       if (mounted) {
         showErrorDialog(
             FFLocalizations.of(context).getText('2184r6dy'), context);

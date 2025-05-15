@@ -133,8 +133,8 @@ class TraineeHandlers {
                               context.pushNamed('trainees');
                             }
                           } catch (e) {
-                            Logger.error('Failed to cancel subscription', e,
-                                StackTrace.current);
+                            Logger.error('Failed to cancel subscription',
+                                error: e, stackTrace: StackTrace.current);
                             if (context.mounted) {
                               showErrorDialog(
                                   FFLocalizations.of(context)
@@ -205,7 +205,8 @@ class TraineeHandlers {
           }
           refreshSubscription();
         } catch (e) {
-          Logger.error('Failed to add debt', e, StackTrace.current);
+          Logger.error('Failed to add debt',
+              error: e, stackTrace: StackTrace.current);
           if (context.mounted) {
             showErrorDialog(
                 FFLocalizations.of(context).getText('l7kfx3m8'), context);
@@ -259,7 +260,8 @@ class TraineeHandlers {
           }
           refreshSubscription();
         } catch (e) {
-          Logger.error('Failed to remove debt', e, StackTrace.current);
+          Logger.error('Failed to remove debt',
+              error: e, stackTrace: StackTrace.current);
           if (context.mounted) {
             showErrorDialog(
                 FFLocalizations.of(context).getText('l7kfx3m8'), context);
@@ -490,7 +492,8 @@ class TraineeHandlers {
 
       Logger.info('Bills history view closed');
     } catch (e) {
-      Logger.error('Error while viewing bills history', e, StackTrace.current);
+      Logger.error('Error while viewing bills history',
+          error: e, stackTrace: StackTrace.current);
       if (context.mounted) {
         showErrorDialog(
             FFLocalizations.of(context).getText('errorOccurred'), context);
@@ -1133,8 +1136,8 @@ class TraineeHandlers {
                               Navigator.pop(context, true);
                             }
                           } catch (e) {
-                            Logger.error('Failed to delete training plan', e,
-                                StackTrace.current);
+                            Logger.error('Failed to delete training plan',
+                                error: e, stackTrace: StackTrace.current);
                             if (context.mounted) {
                               showErrorDialog(
                                   FFLocalizations.of(context)
@@ -1275,8 +1278,8 @@ class TraineeHandlers {
                               Navigator.pop(context, true);
                             }
                           } catch (e) {
-                            Logger.error('Failed to delete nutritional plan', e,
-                                StackTrace.current);
+                            Logger.error('Failed to delete nutritional plan',
+                                error: e, stackTrace: StackTrace.current);
                             if (context.mounted) {
                               showErrorDialog(
                                   FFLocalizations.of(context)
@@ -1336,7 +1339,8 @@ class TraineeHandlers {
             FFLocalizations.of(context).getText('plansSaved'), context);
       }
     } catch (e) {
-      Logger.error('Failed to save plans', e, StackTrace.current);
+      Logger.error('Failed to save plans',
+          error: e, stackTrace: StackTrace.current);
       if (context.mounted) {
         showErrorDialog(
             FFLocalizations.of(context).getText('errorOccurred'), context);
@@ -1361,7 +1365,8 @@ class TraineeHandlers {
             FFLocalizations.of(context).getText('notesSaved'), context);
       }
     } catch (e) {
-      Logger.error('Failed to save notes', e, StackTrace.current);
+      Logger.error('Failed to save notes',
+          error: e, stackTrace: StackTrace.current);
       if (context.mounted) {
         showErrorDialog(
             FFLocalizations.of(context).getText('errorOccurred'), context);

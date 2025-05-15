@@ -120,8 +120,8 @@ class _TraineeWidgetState extends State<TraineeWidget> {
                 await UserRecord.getDocumentOnce(_traineeRecord!.user!);
           }
         } catch (e) {
-          Logger.error(
-              'Error loading trainee or user data', e, StackTrace.current);
+          Logger.error('Error loading trainee or user data',
+              error: e, stackTrace: StackTrace.current);
           _hasError = true;
         }
       }
@@ -132,7 +132,8 @@ class _TraineeWidgetState extends State<TraineeWidget> {
         });
       }
     } catch (e) {
-      Logger.error('Failed to load trainee data', e, StackTrace.current);
+      Logger.error('Failed to load trainee data',
+          error: e, stackTrace: StackTrace.current);
       if (mounted) {
         setState(() {
           _isLoadingData = false;
@@ -164,8 +165,8 @@ class _TraineeWidgetState extends State<TraineeWidget> {
                 await UserRecord.getDocumentOnce(_traineeRecord!.user!);
           }
         } catch (e) {
-          Logger.error(
-              'Error loading trainee or user data', e, StackTrace.current);
+          Logger.error('Error loading trainee or user data',
+              error: e, stackTrace: StackTrace.current);
           _hasError = true;
         }
       }
@@ -177,8 +178,8 @@ class _TraineeWidgetState extends State<TraineeWidget> {
       }
       Logger.info('Subscription data refreshed successfully');
     } catch (e) {
-      Logger.error(
-          'Failed to refresh subscription data', e, StackTrace.current);
+      Logger.error('Failed to refresh subscription data',
+          error: e, stackTrace: StackTrace.current);
       if (mounted) {
         setState(() {
           _isLoadingData = false;
@@ -241,7 +242,9 @@ class _TraineeWidgetState extends State<TraineeWidget> {
 
   Widget _buildMainContent() {
     return Container(
-      padding: EdgeInsets.only(top: MediaQuery.of(context).padding.top + ResponsiveUtils.height(context, 80)),
+      padding: EdgeInsets.only(
+          top: MediaQuery.of(context).padding.top +
+              ResponsiveUtils.height(context, 80)),
       decoration: BoxDecoration(
         gradient: LinearGradient(
           begin: Alignment.topCenter,
@@ -257,7 +260,8 @@ class _TraineeWidgetState extends State<TraineeWidget> {
           mainAxisSize: MainAxisSize.max,
           children: [
             Padding(
-              padding: ResponsiveUtils.padding(context, horizontal: 16, vertical: 16),
+              padding: ResponsiveUtils.padding(context,
+                  horizontal: 16, vertical: 16),
               child: Column(
                 children: [
                   TraineeCard(

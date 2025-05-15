@@ -51,7 +51,7 @@ class _MessagesWidgetState extends State<MessagesWidget> {
         _isLoading = false;
       });
     } catch (e, stackTrace) {
-      Logger.error('Failed to get messages', e, stackTrace);
+      Logger.error('Failed to get messages', error: e, stackTrace: stackTrace);
       if (mounted) {
         setState(() => _isLoading = false);
         showErrorDialog(
@@ -75,7 +75,8 @@ class _MessagesWidgetState extends State<MessagesWidget> {
       }
       Logger.info('Successfully deleted old messages');
     } catch (e, stackTrace) {
-      Logger.error('Failed to delete old messages', e, stackTrace);
+      Logger.error('Failed to delete old messages',
+          error: e, stackTrace: stackTrace);
       // Continue execution - non-critical error
     }
   }
@@ -102,7 +103,8 @@ class _MessagesWidgetState extends State<MessagesWidget> {
       Logger.info(
           'Successfully loaded ${listViewAlertRecordList.length} messages');
     } catch (e, stackTrace) {
-      Logger.error('Failed to fetch messages', e, stackTrace);
+      Logger.error('Failed to fetch messages',
+          error: e, stackTrace: stackTrace);
       if (mounted) {
         showErrorDialog(
             FFLocalizations.of(context).getText('2184r6dy'), context);

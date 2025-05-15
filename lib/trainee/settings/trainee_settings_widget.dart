@@ -273,8 +273,9 @@ class _TraineeSettingsWidgetState extends State<TraineeSettingsWidget>
               .prefs
               .remove('notificationsInitialized_$currentUserEmail');
           FFAppState().isLogined = false;
-        } catch (e) {
-          Logger.error('Error clearing shared preferences during logout', e);
+        } catch (e, stackTrace) {
+          Logger.error('Error clearing shared preferences during logout',
+              error: e, stackTrace: stackTrace);
         }
 
         // Stop any streams
@@ -302,7 +303,8 @@ class _TraineeSettingsWidgetState extends State<TraineeSettingsWidget>
           context.goNamed('Login');
         }
       } catch (e, stackTrace) {
-        Logger.error('Error during logout process', e, stackTrace);
+        Logger.error('Error during logout process',
+            error: e, stackTrace: stackTrace);
         // Show error message if logout fails
         // if (context.mounted) {
         //   showErrorDialog(
@@ -568,7 +570,7 @@ class _TraineeSettingsWidgetState extends State<TraineeSettingsWidget>
           }
         }
 
-        Logger.error(logMessage, e, stackTrace);
+        Logger.error(logMessage, error: e, stackTrace: stackTrace);
 
         String errorMessage = FFLocalizations.of(context).getText('2184r6dy');
 
@@ -591,8 +593,8 @@ class _TraineeSettingsWidgetState extends State<TraineeSettingsWidget>
         }
       }
     } catch (e, stackTrace) {
-      Logger.error(
-          'Unexpected error during account deletion process', e, stackTrace);
+      Logger.error('Unexpected error during account deletion process',
+          error: e, stackTrace: stackTrace);
 
       if (mounted) {
         setState(() {
@@ -638,7 +640,8 @@ class _TraineeSettingsWidgetState extends State<TraineeSettingsWidget>
         Logger.info('All subscriptions updated to anonymous successfully');
       }
     } catch (e, stackTrace) {
-      Logger.error('Error updating subscriptions to anonymous', e, stackTrace);
+      Logger.error('Error updating subscriptions to anonymous',
+          error: e, stackTrace: stackTrace);
       // Continue with account deletion even if updating subscriptions fails
     }
   }
@@ -657,7 +660,8 @@ class _TraineeSettingsWidgetState extends State<TraineeSettingsWidget>
       FFAppState().isLogined = false;
       Logger.info('Local storage and app preferences cleared successfully');
     } catch (e, stackTrace) {
-      Logger.error('Error clearing local storage', e, stackTrace);
+      Logger.error('Error clearing local storage',
+          error: e, stackTrace: stackTrace);
       // Continue even if clearing preferences fails
     }
   }
@@ -684,7 +688,8 @@ class _TraineeSettingsWidgetState extends State<TraineeSettingsWidget>
         },
       );
     } catch (e, stackTrace) {
-      Logger.error('Error showing edit profile dialog', e, stackTrace);
+      Logger.error('Error showing edit profile dialog',
+          error: e, stackTrace: stackTrace);
       if (context.mounted) {
         showErrorDialog(
             FFLocalizations.of(context).getText('2184r6dy'), context);

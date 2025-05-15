@@ -49,7 +49,7 @@ class CoachTraineesCache {
     lastFetchTime = DateTime.now();
   }
 
-  static Future<void> clear() async{
+  static Future<void> clear() async {
     cachedCoach = null;
     cachedSubscriptions = {
       'active': [],
@@ -187,7 +187,8 @@ class _TraineesWidgetState extends State<TraineesWidget>
       Logger.debug('Loaded ${data.length} active subscriptions');
       checkAllLoaded();
     }, onError: (error, stackTrace) {
-      Logger.error('Error loading active subscriptions', error, stackTrace);
+      Logger.error('Error loading active subscriptions',
+          error: error, stackTrace: stackTrace);
       _loadingStates['active']!.value = false;
       checkAllLoaded();
     });
@@ -202,7 +203,8 @@ class _TraineesWidgetState extends State<TraineesWidget>
       Logger.debug('Loaded ${data.length} inactive subscriptions');
       checkAllLoaded();
     }, onError: (error, stackTrace) {
-      Logger.error('Error loading inactive subscriptions', error, stackTrace);
+      Logger.error('Error loading inactive subscriptions',
+          error: error, stackTrace: stackTrace);
       _loadingStates['inactive']!.value = false;
       checkAllLoaded();
     });
@@ -217,7 +219,8 @@ class _TraineesWidgetState extends State<TraineesWidget>
       Logger.debug('Loaded ${data.length} subscription requests');
       checkAllLoaded();
     }, onError: (error, stackTrace) {
-      Logger.error('Error loading subscription requests', error, stackTrace);
+      Logger.error('Error loading subscription requests',
+          error: error, stackTrace: stackTrace);
       _loadingStates['requests']!.value = false;
       checkAllLoaded();
     });
@@ -232,7 +235,8 @@ class _TraineesWidgetState extends State<TraineesWidget>
       Logger.debug('Loaded ${data.length} deleted subscriptions');
       checkAllLoaded();
     }, onError: (error, stackTrace) {
-      Logger.error('Error loading deleted subscriptions', error, stackTrace);
+      Logger.error('Error loading deleted subscriptions',
+          error: error, stackTrace: stackTrace);
       _loadingStates['deleted']!.value = false;
       checkAllLoaded();
     });
@@ -652,7 +656,7 @@ class _TraineesWidgetState extends State<TraineesWidget>
           failureCount++;
           failedNames.add(subscription.name);
           Logger.error('Error setting alert for trainee ${subscription.name}',
-              e, stacktrace);
+              error: e, stackTrace: stacktrace);
         }
       }
     }
@@ -687,7 +691,8 @@ class _TraineesWidgetState extends State<TraineesWidget>
           _prefetchAllSubscriptionData(currentCoachDocument!.reference);
         }
       } catch (e, stackTrace) {
-        Logger.error('Error restoring subscription', e, stackTrace);
+        Logger.error('Error restoring subscription',
+            error: e, stackTrace: stackTrace);
         if (mounted) {
           String errorMessage = FFLocalizations.of(context)
               .getText('error_restoring_subscription');
@@ -966,8 +971,8 @@ class _TraineesWidgetState extends State<TraineesWidget>
                         FFLocalizations.of(context).getText('2184r6dy'),
                         context);
                   }
-                  Logger.error(
-                      'Error permanently deleting subscription', e, stackTrace);
+                  Logger.error('Error permanently deleting subscription',
+                      error: e, stackTrace: stackTrace);
                 }
               },
               style: ElevatedButton.styleFrom(

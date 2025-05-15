@@ -28,7 +28,7 @@ class CoachProfileCache {
     lastFetchTime = DateTime.now();
   }
 
-  static Future<void> clear() async{
+  static Future<void> clear() async {
     Logger.info('Clearing coach profile cache');
     cachedCoachProfile = null;
     lastFetchTime = null;
@@ -374,9 +374,9 @@ class _CoachProfileWidgetState extends State<CoachProfileWidget>
             SubscriptionCard(coach: coachProfileCoachRecord)
                 .animate(controller: _animationController)
                 .fadeIn(duration: const Duration(milliseconds: 600))
-                .moveY(
-                    begin: 20,
-                    end: 0,
+                .slideY(
+                    begin: 0.2,
+                    end: 0.0,
                     duration: const Duration(milliseconds: 600),
                     curve: Curves.easeOutQuint),
             SizedBox(height: ResponsiveUtils.height(context, 24)),
@@ -391,9 +391,9 @@ class _CoachProfileWidgetState extends State<CoachProfileWidget>
                 .fadeIn(
                     delay: const Duration(milliseconds: 200),
                     duration: const Duration(milliseconds: 600))
-                .moveY(
-                    begin: 20,
-                    end: 0,
+                .slideY(
+                    begin: 0.2,
+                    end: 0.0,
                     delay: const Duration(milliseconds: 200),
                     duration: const Duration(milliseconds: 600),
                     curve: Curves.easeOutQuint),
@@ -518,7 +518,7 @@ class _CoachProfileWidgetState extends State<CoachProfileWidget>
                   .animate()
                   .slideY(
                     begin: 0.2,
-                    end: 0,
+                    end: 0.0,
                     delay: const Duration(milliseconds: 600),
                     duration: const Duration(milliseconds: 400),
                     curve: Curves.easeOutQuint,
@@ -536,10 +536,10 @@ class _CoachProfileWidgetState extends State<CoachProfileWidget>
         .fadeIn(
             delay: const Duration(milliseconds: 400),
             duration: const Duration(milliseconds: 600))
-        .moveY(
-            begin: 20,
-            end: 0,
-            delay: const Duration(milliseconds: 400),
+        .slideY(
+            begin: 0.2,
+            end: 0.0,
+            delay: const Duration(milliseconds: 600),
             duration: const Duration(milliseconds: 600),
             curve: Curves.easeOutQuint);
   }
@@ -818,7 +818,7 @@ class _CoachProfileWidgetState extends State<CoachProfileWidget>
             duration: const Duration(milliseconds: 600))
         .slideY(
             begin: 0.2,
-            end: 0,
+            end: 0.0,
             delay: const Duration(milliseconds: 600),
             duration: const Duration(milliseconds: 600),
             curve: Curves.easeOutQuint);

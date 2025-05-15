@@ -265,8 +265,9 @@ class TrainingDayUtils {
         // Take only the requested page size
         return filteredResults.take(pageSize).map((item) => item.$1).toList();
       }
-    } catch (e) {
-      Logger.error('Error fetching exercises', e, StackTrace.current);
+    } catch (e, stackTrace) {
+      Logger.error('Error fetching exercises',
+          error: e, stackTrace: stackTrace);
       return [];
     }
   }

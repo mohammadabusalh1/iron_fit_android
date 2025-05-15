@@ -125,7 +125,8 @@ class _TimerWidgetState extends State<TimerWidget> {
         );
       }
     } catch (e, stackTrace) {
-      Logger.error('Error updating user progress', e, stackTrace);
+      Logger.error('Error updating user progress',
+          error: e, stackTrace: stackTrace);
       if (mounted) {
         showErrorDialog(
             FFLocalizations.of(context).getText('error_general'), context);
@@ -143,7 +144,7 @@ class _TimerWidgetState extends State<TimerWidget> {
       _setupTraineeStream();
       Logger.debug('TimerWidget initialized successfully');
     } catch (e) {
-      Logger.error('Error initializing TimerWidget', e);
+      Logger.error('Error initializing TimerWidget', error: e);
     }
   }
 
@@ -289,7 +290,7 @@ class _TimerWidgetState extends State<TimerWidget> {
                 Logger.info('Timer started successfully');
               }
             } catch (e) {
-              Logger.error('Error starting timer', e);
+              Logger.error('Error starting timer', error: e);
               if (mounted) {
                 showErrorDialog(
                     FFLocalizations.of(context).getText('error_starting_timer'),
@@ -343,7 +344,7 @@ class _TimerWidgetState extends State<TimerWidget> {
               }
               Logger.info('Timer completed successfully');
             } catch (e) {
-              Logger.error('Error handling timer completion', e);
+              Logger.error('Error handling timer completion', error: e);
               if (mounted) {
                 setState(() {
                   isTimerRunning = false;

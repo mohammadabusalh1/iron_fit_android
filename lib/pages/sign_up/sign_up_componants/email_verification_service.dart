@@ -52,14 +52,15 @@ class EmailVerificationService {
       Logger.info('Verification email sent: ${sendReport.toString()}');
       return true;
     } on MailerException catch (e) {
-      Logger.error('Failed to send verification email to $recipientEmail', e);
+      Logger.error('Failed to send verification email to $recipientEmail',
+          error: e);
       for (var p in e.problems) {
         Logger.error('Problem: ${p.code}: ${p.msg}');
       }
       return false;
     } catch (e, stackTrace) {
-      Logger.error(
-          'Unexpected error sending verification email', e, stackTrace);
+      Logger.error('Unexpected error sending verification email',
+          error: e, stackTrace: stackTrace);
       return false;
     }
   }
@@ -132,13 +133,14 @@ class EmailVerificationService {
           'Welcome email sent to $recipientEmail: ${sendReport.toString()}');
       return true;
     } on MailerException catch (e) {
-      Logger.error('Failed to send welcome email to $recipientEmail', e);
+      Logger.error('Failed to send welcome email to $recipientEmail', error: e);
       for (var p in e.problems) {
-        Logger.error('Problem: ${p.code}: ${p.msg}');
+        Logger.error('Problem: ${p.code}: ${p.msg}', error: e);
       }
       return false;
     } catch (e, stackTrace) {
-      Logger.error('Unexpected error sending welcome email', e, stackTrace);
+      Logger.error('Unexpected error sending welcome email',
+          error: e, stackTrace: stackTrace);
       return false;
     }
   }
@@ -332,7 +334,8 @@ class EmailVerificationService {
               ),
             ),
           ],
-          contentPadding: ResponsiveUtils.padding(context, horizontal: 20, vertical: 20),
+          contentPadding:
+              ResponsiveUtils.padding(context, horizontal: 20, vertical: 20),
         );
       },
     );

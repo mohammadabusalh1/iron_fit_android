@@ -54,7 +54,8 @@ class GoalsStep extends StatelessWidget {
           child: Opacity(
             opacity: value,
             child: Container(
-              padding: ResponsiveUtils.padding(context, horizontal: 24, vertical: 24),
+              padding: ResponsiveUtils.padding(context,
+                  horizontal: 24, vertical: 24),
               decoration: BoxDecoration(
                 gradient: LinearGradient(
                   colors: [
@@ -82,7 +83,8 @@ class GoalsStep extends StatelessWidget {
                   Row(
                     children: [
                       Container(
-                        padding: ResponsiveUtils.padding(context, horizontal: 12, vertical: 12),
+                        padding: ResponsiveUtils.padding(context,
+                            horizontal: 12, vertical: 12),
                         decoration: BoxDecoration(
                           color: FlutterFlowTheme.of(context)
                               .primary
@@ -109,7 +111,8 @@ class GoalsStep extends StatelessWidget {
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
-                            SizedBox(height: ResponsiveUtils.height(context, 4)),
+                            SizedBox(
+                                height: ResponsiveUtils.height(context, 4)),
                             Text(
                               localizations.getText(
                                   'goal_subtitle' /* Choose a goal that matches your fitness journey */),
@@ -252,13 +255,15 @@ class _GoalCard extends StatelessWidget {
               child: Stack(
                 children: [
                   Padding(
-                    padding: ResponsiveUtils.padding(context, horizontal: 16, vertical: 16),
+                    padding: ResponsiveUtils.padding(context,
+                        horizontal: 16, vertical: 16),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Container(
-                          padding: ResponsiveUtils.padding(context, horizontal: 12, vertical: 12),
+                          padding: ResponsiveUtils.padding(context,
+                              horizontal: 12, vertical: 12),
                           decoration: BoxDecoration(
                             color: isSelected
                                 ? FlutterFlowTheme.of(context)
@@ -281,9 +286,11 @@ class _GoalCard extends StatelessWidget {
                         Text(
                           title,
                           textAlign: TextAlign.center,
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
                           style: AppStyles.textCairo(
                             context,
-                            fontSize: ResponsiveUtils.fontSize(context, 16),
+                            fontSize: ResponsiveUtils.fontSize(context, 14),
                             fontWeight: FontWeight.bold,
                             color: isSelected
                                 ? FlutterFlowTheme.of(context).primary
@@ -298,7 +305,8 @@ class _GoalCard extends StatelessWidget {
                       top: ResponsiveUtils.height(context, 8),
                       right: ResponsiveUtils.width(context, 8),
                       child: Container(
-                        padding: ResponsiveUtils.padding(context, horizontal: 4, vertical: 4),
+                        padding: ResponsiveUtils.padding(context,
+                            horizontal: 4, vertical: 4),
                         decoration: BoxDecoration(
                           color: FlutterFlowTheme.of(context).primary,
                           shape: BoxShape.circle,

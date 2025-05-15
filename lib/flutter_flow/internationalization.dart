@@ -4130,8 +4130,8 @@ final kTranslationsMap = <Map<String, Map<String, String>>>[
       "ar": "اظهار الكل",
     },
     "pleaseWait": {
-      "en": "Please Wait",
-      "ar": "يرجى الانتظار",
+      "en": "Please Wait...",
+      "ar": "يرجى الانتظار...",
     },
     "selectUserTypeDescription": {
       "en":
@@ -4293,52 +4293,139 @@ final kTranslationsMap = <Map<String, Map<String, String>>>[
   },
   {
     "validation_errors": {
-      "en": "Validation Errors",
-      "ar": "أخطاء التحقق",
+      "en": "Please Fix These Issues",
+      "ar": "يرجى إصلاح هذه المشاكل",
     },
     "error_email_required": {
-      "en": "Email is required",
-      "ar": "البريد الإلكتروني مطلوب",
+      "en": "Please enter your email address to continue",
+      "ar": "يرجى إدخال بريدك الإلكتروني للمتابعة",
     },
     "error_invalid_email": {
-      "en": "Please enter a valid email",
-      "ar": "يرجى إدخال بريد إلكتروني صالح",
+      "en": "This email format doesn't look right. Please check and try again.",
+      "ar": "صيغة البريد الإلكتروني غير صحيحة، يرجى التحقق والمحاولة مرة أخرى.",
     },
     "error_name_required": {
-      "en": "Name is required",
-      "ar": "الاسم مطلوب",
+      "en": "We need your name to personalize your experience",
+      "ar": "نحتاج إلى اسمك لتخصيص تجربتك",
     },
     "error_start_date_required": {
-      "en": "Start date is required",
-      "ar": "تاريخ البدء مطلوب",
+      "en": "Please select when you'd like to start",
+      "ar": "يرجى تحديد موعد البدء المفضل لديك",
     },
     "error_end_date_required": {
-      "en": "End date is required",
-      "ar": "تاريخ الانتهاء مطلوب",
+      "en": "Please choose when your subscription should end",
+      "ar": "يرجى اختيار موعد انتهاء اشتراكك",
     },
     "error_goal_required": {
-      "en": "Goal is required",
-      "ar": "الهدف مطلوب",
+      "en": "Select a fitness goal to help us customize your plan",
+      "ar": "اختر هدفًا للياقة البدنية لمساعدتنا في تخصيص خطتك",
     },
     "error_level_required": {
-      "en": "Level is required",
-      "ar": "المستوى مطلوب",
+      "en": "Tell us about your experience level to tailor your workouts",
+      "ar": "أخبرنا عن مستوى خبرتك لتخصيص تمارينك",
     },
     "error_paid_amount_required": {
-      "en": "Paid amount is required",
-      "ar": "المبلغ المدفوع مطلوب",
+      "en": "Please enter the payment amount to continue",
+      "ar": "يرجى إدخال مبلغ الدفع للمتابعة",
     },
     "error_invalid_paid_amount": {
-      "en": "Please enter a valid paid amount",
-      "ar": "يرجى إدخال مبلغ مدفوع صالح",
+      "en": "The amount doesn't seem right. Please enter a valid number.",
+      "ar": "المبلغ لا يبدو صحيحًا. يرجى إدخال رقم صالح.",
     },
     "error_debts_amount_required": {
-      "en": "Debts amount is required",
-      "ar": "مبلغ الديون مطلوب",
+      "en": "Please enter any outstanding balance amount",
+      "ar": "يرجى إدخال مبلغ الرصيد المستحق",
     },
     "error_invalid_debts_amount": {
-      "en": "Please enter a valid debts amount",
-      "ar": "يرجى إدخال مبلغ ديون صالح",
+      "en":
+          "This amount doesn't look valid. Please double-check and try again.",
+      "ar":
+          "هذا المبلغ لا يبدو صالحًا. يرجى التحقق مرة أخرى والمحاولة مرة أخرى.",
+    },
+    "error_empty_field": {
+      "en": "This information is needed - please fill in {field}",
+      "ar": "هذه المعلومات مطلوبة - يرجى ملء {field}",
+    },
+    "error_empty_email": {
+      "en": "Enter your email to access your account",
+      "ar": "أدخل بريدك الإلكتروني للوصول إلى حسابك",
+    },
+    "error_empty_password": {
+      "en": "Your password is needed to secure your account",
+      "ar": "كلمة المرور مطلوبة لتأمين حسابك",
+    },
+    "error_password_length": {
+      "en": "Your password should be at least 6 characters for better security",
+      "ar": "يجب أن تكون كلمة المرور 6 أحرف على الأقل لحماية أفضل",
+    },
+    "error": {
+      "en": "We've Encountered an Issue",
+      "ar": "لقد واجهنا مشكلة",
+    },
+    "dataLoadError": {
+      "en": "We couldn't load your data right now",
+      "ar": "لم نتمكن من تحميل بياناتك الآن",
+    },
+    "pleaseReviewYourCoach": {
+      "en":
+          "Check with your coach about your training plan or try refreshing the page",
+      "ar": "تحقق مع مدربك بشأن خطة التدريب الخاصة بك أو حاول تحديث الصفحة",
+    },
+    "emptyOrErrorFields": {
+      "en":
+          "Some information is missing or incorrect. Please review the fields highlighted in red.",
+      "ar":
+          "بعض المعلومات مفقودة أو غير صحيحة. يرجى مراجعة الحقول المميزة باللون الأحمر.",
+    },
+    "invalidFormat": {
+      "en": "Please check the format of the information you entered",
+      "ar": "يرجى التحقق من تنسيق المعلومات التي أدخلتها",
+    },
+    "permissionDenied": {
+      "en":
+          "You don't have permission to make this change. Please contact support.",
+      "ar": "ليس لديك إذن لإجراء هذا التغيير. يرجى الاتصال بالدعم.",
+    },
+    "dateOfBirth_required": {
+      "en": "Your birth date helps us customize your fitness plan",
+      "ar": "تاريخ ميلادك يساعدنا على تخصيص خطة اللياقة البدنية الخاصة بك",
+    },
+    "gender_required": {
+      "en": "Please select your gender to personalize your experience",
+      "ar": "يرجى تحديد جنسك لتخصيص تجربتك",
+    },
+    "height_required": {
+      "en":
+          "Your height helps us calculate the right workout intensity for you",
+      "ar": "طولك يساعدنا على حساب شدة التمرين المناسبة لك",
+    },
+    "invalid_height_range": {
+      "en":
+          "The height you entered seems unusual. Please enter a value between 100cm and 250cm.",
+      "ar":
+          "الطول الذي أدخلته يبدو غير عادي. يرجى إدخال قيمة بين 100 سم و 250 سم.",
+    },
+    "invalid_weight_range": {
+      "en":
+          "The weight you entered seems unusual. Please check and enter a realistic value.",
+      "ar": "الوزن الذي أدخلته يبدو غير عادي. يرجى التحقق وإدخال قيمة واقعية.",
+    },
+    "defaultErrorMessage": {
+      "en": "We're having trouble right now",
+      "ar": "نواجه مشكلة في الوقت الحالي",
+    },
+    "l7kfx3m8": {
+      "en": "Oops! We hit a snag",
+      "ar": "عذراً! واجهنا مشكلة",
+    },
+    "2184r6dy": {
+      "en":
+          "Something unexpected happened. Try refreshing the page or check your internet connection.",
+      "ar": "حدث شيء غير متوقع. حاول تحديث الصفحة أو تحقق من اتصالك بالإنترنت.",
+    },
+    "2ic7dbdd": {
+      "en": "Try Again",
+      "ar": "حاول مرة أخرى",
     },
     "level": {
       "en": "Level",
@@ -4686,5 +4773,104 @@ final kTranslationsMap = <Map<String, Map<String, String>>>[
       "en": "Please enter calories",
       "ar": "الرجاء إدخال السعرات الحرارية"
     },
+    "error_creating_subscription": {
+      "en": "Error creating subscription",
+      "ar": "خطأ في إنشاء الاشتراك"
+    },
+  },
+  {
+    "pleaseEnterFullName": {
+      "en": "Please enter your full name",
+      "ar": "الرجاء إدخال اسمك الكامل"
+    },
+    "pleaseEnterDateOfBirth": {
+      "en": "Please enter your date of birth",
+      "ar": "الرجاء إدخال تاريخ ميلادك"
+    },
+    "invalidDateFormat": {
+      "en": "Invalid date format. Please use YYYY-MM-DD format",
+      "ar": "صيغة التاريخ غير صالحة. الرجاء استخدام صيغة YYYY-MM-DD"
+    },
+    "pleaseEnterYearsOfExperience": {
+      "en": "Please enter your years of experience",
+      "ar": "الرجاء إدخال سنوات خبرتك"
+    },
+    "pleaseEnterValidYearsNumber": {
+      "en": "Please enter a valid number for years of experience",
+      "ar": "الرجاء إدخال رقم صالح لسنوات الخبرة"
+    },
+    "yearsExperienceRange": {
+      "en": "Years of experience must be between 0 and 99",
+      "ar": "يجب أن تكون سنوات الخبرة بين 0 و 99"
+    },
+    "pleaseProvideAboutInfo": {
+      "en": "Please provide information about yourself",
+      "ar": "الرجاء تقديم معلومات عن نفسك"
+    },
+    "descriptionMinLength": {
+      "en": "Your description must be at least 10 characters long",
+      "ar": "يجب أن يكون وصفك 10 أحرف على الأقل"
+    },
+    "pleaseSelectSpecialization": {
+      "en": "Please select at least one specialization",
+      "ar": "الرجاء اختيار تخصص واحد على الأقل"
+    },
+    "pleaseEnterPrice": {
+      "en": "Please enter your price",
+      "ar": "الرجاء إدخال السعر الخاص بك"
+    },
+    "pleaseEnterValidPrice": {
+      "en": "Please enter a valid number for price",
+      "ar": "الرجاء إدخال رقم صالح للسعر"
+    },
+    "priceMustBeGreaterThanZero": {
+      "en": "Price must be greater than zero",
+      "ar": "يجب أن يكون السعر أكبر من صفر"
+    },
+    "pleaseEnterGymName": {
+      "en": "Please enter the gym name",
+      "ar": "الرجاء إدخال اسم النادي"
+    },
+    "pleaseEnterCountry": {
+      "en": "Please enter the country",
+      "ar": "الرجاء إدخال الدولة"
+    },
+    "pleaseEnterCity": {
+      "en": "Please enter the city",
+      "ar": "الرجاء إدخال المدينة"
+    },
+    "pleaseEnterAddress": {
+      "en": "Please enter the address",
+      "ar": "الرجاء إدخال العنوان"
+    },
+    "pleaseEnterGymPhone": {
+      "en": "Please enter the gym phone number",
+      "ar": "الرجاء إدخال رقم هاتف النادي"
+    },
+    "pleaseEnterGymEmail": {
+      "en": "Please enter the gym email",
+      "ar": "الرجاء إدخال البريد الإلكتروني للنادي"
+    },
+    "pleaseEnterValidEmail": {
+      "en": "Please enter a valid email address",
+      "ar": "الرجاء إدخال عنوان بريد إلكتروني صالح"
+    },
+    "authenticationTimeout": {
+      "en": "Authentication timeout",
+      "ar": "توقف التحقق"
+    },
+    "authenticationTakingTooLong": {
+      "en": "Authentication taking too long",
+      "ar": "التحقق يستغرق وقتًا، يرجى التحلي بالصبر والضغط على تم."
+    },
+    "pleaseWait": {"en": "Please wait", "ar": "الرجاء الإنتظار"},
+    "dataLoadingTimeout": {
+      "en": "Data loading timeout",
+      "ar": "توقف تحميل البيانات"
+    },
+    "dataLoadingTakingTooLong": {
+      "en": "Data loading taking too long",
+      "ar": "تحميل البيانات يستغرق وقتًا، يرجى التحلي بالصبر والضغط على تم."
+    }
   }
 ].reduce((a, b) => a..addAll(b));

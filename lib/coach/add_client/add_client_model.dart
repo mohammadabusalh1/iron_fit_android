@@ -33,6 +33,16 @@ class AddClientModel extends ChangeNotifier {
   final FormFieldController<String> nutritionalPlanController =
       FormFieldController(null);
 
+  // Validation error states
+  String? emailError;
+  String? nameError;
+  String? paidError;
+  String? debtsError;
+  String? startDateError;
+  String? endDateError;
+  String? goalError;
+  String? levelError;
+
   // Selected plan references
   PlansRecord? selectedTrainingPlan;
   NutPlanRecord? selectedNutritionalPlan;
@@ -63,17 +73,20 @@ class AddClientModel extends ChangeNotifier {
   // Form field update methods
   void updateStartDate(String date) {
     startDateTextController.text = date;
+    startDateError = null;
     notifyListeners();
   }
 
   void updateEndDate(String date) {
     endDateTextController.text = date;
+    endDateError = null;
     notifyListeners();
   }
 
   void updateLevelValue(String? value) {
     if (value != null) {
       levelValueController.value = value;
+      levelError = null;
       notifyListeners();
     }
   }

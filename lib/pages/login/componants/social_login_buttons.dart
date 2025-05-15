@@ -10,11 +10,13 @@ import 'package:animate_do/animate_do.dart';
 class SocialLoginButtons extends StatelessWidget {
   final VoidCallback onGooglePressed;
   final VoidCallback onApplePressed;
+  final bool isLoading;
 
   const SocialLoginButtons({
     super.key,
     required this.onGooglePressed,
     required this.onApplePressed,
+    this.isLoading = false,
   });
 
   @override
@@ -29,8 +31,10 @@ class SocialLoginButtons extends StatelessWidget {
               width: ResponsiveUtils.width(context, 24),
               height: ResponsiveUtils.height(context, 24),
             ),
-            text: FFLocalizations.of(context).getText('m4fuhw1y' /* Continue with Google */),
-            onPressed: onGooglePressed,
+            text: FFLocalizations.of(context)
+                .getText('m4fuhw1y' /* Continue with Google */),
+            onPressed: isLoading ? null : onGooglePressed,
+            isDisabled: isLoading,
           ),
         ),
         SizedBox(height: ResponsiveUtils.height(context, 12)),
@@ -43,8 +47,10 @@ class SocialLoginButtons extends StatelessWidget {
                 size: ResponsiveUtils.iconSize(context, 26),
                 color: FlutterFlowTheme.of(context).primaryText,
               ),
-              text: FFLocalizations.of(context).getText('continueWithApple' /* Continue with Apple */),
-              onPressed: onApplePressed,
+              text: FFLocalizations.of(context)
+                  .getText('continueWithApple' /* Continue with Apple */),
+              onPressed: isLoading ? null : onApplePressed,
+              isDisabled: isLoading,
             ),
           ),
       ],
@@ -55,19 +61,22 @@ class SocialLoginButtons extends StatelessWidget {
 class _SocialButton extends StatelessWidget {
   final Widget icon;
   final String text;
-  final VoidCallback onPressed;
+  final VoidCallback? onPressed;
+  final bool isDisabled;
 
   const _SocialButton({
     required this.icon,
     required this.text,
     required this.onPressed,
+    this.isDisabled = false,
   });
 
   @override
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(ResponsiveUtils.width(context, 16.0)),
+        borderRadius:
+            BorderRadius.circular(ResponsiveUtils.width(context, 16.0)),
         boxShadow: [
           BoxShadow(
             color: FlutterFlowTheme.of(context).primaryText.withOpacity(0.08),
@@ -78,14 +87,18 @@ class _SocialButton extends StatelessWidget {
         ],
       ),
       child: InkWell(
-        onTap: onPressed,
-        borderRadius: BorderRadius.circular(ResponsiveUtils.width(context, 16.0)),
+        onTap: isDisabled ? null : onPressed,
+        borderRadius:
+            BorderRadius.circular(ResponsiveUtils.width(context, 16.0)),
         child: Container(
           width: double.infinity,
           height: ResponsiveUtils.height(context, 55),
           decoration: BoxDecoration(
-            color: FlutterFlowTheme.of(context).secondaryBackground,
-            borderRadius: BorderRadius.circular(ResponsiveUtils.width(context, 16)),
+            color: isDisabled
+                ? FlutterFlowTheme.of(context).alternate.withOpacity(0.2)
+                : FlutterFlowTheme.of(context).secondaryBackground,
+            borderRadius:
+                BorderRadius.circular(ResponsiveUtils.width(context, 16)),
             border: Border.all(
               color: FlutterFlowTheme.of(context).alternate.withOpacity(0.6),
               width: 1,
@@ -103,7 +116,9 @@ class _SocialButton extends StatelessWidget {
                   fontSize: ResponsiveUtils.fontSize(context, 15),
                   fontWeight: FontWeight.w600,
                   letterSpacing: 0.3,
-                  color: FlutterFlowTheme.of(context).primaryText,
+                  color: isDisabled
+                      ? FlutterFlowTheme.of(context).secondaryText
+                      : FlutterFlowTheme.of(context).primaryText,
                 ),
               ),
             ],

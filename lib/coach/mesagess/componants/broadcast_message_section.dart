@@ -182,7 +182,8 @@ class _BroadcastMessageSectionState extends State<BroadcastMessageSection> {
 
       widget.onMessageSent();
     } catch (e, stackTrace) {
-      Logger.error('Failed to send broadcast message', e, stackTrace);
+      Logger.error('Failed to send broadcast message',
+          error: e, stackTrace: stackTrace);
 
       if (mounted) {
         Navigator.of(context).pop();

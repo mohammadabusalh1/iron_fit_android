@@ -2,6 +2,8 @@ import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/form_field_controller.dart';
 import 'user_enter_info_widget.dart' show UserEnterInfoWidget;
 import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart';
+import 'package:image_picker/image_picker.dart';
 
 class UserEnterInfoModel extends FlutterFlowModel<UserEnterInfoWidget> {
   ///  State fields for stateful widgets in this page.
@@ -11,6 +13,9 @@ class UserEnterInfoModel extends FlutterFlowModel<UserEnterInfoWidget> {
   FFUploadedFile uploadedLocalFile =
       FFUploadedFile(bytes: Uint8List.fromList([]));
   String uploadedFileUrl = '';
+
+  // New property to store local image
+  XFile? localImageFile;
 
   // State field(s) for FullName widget.
   FocusNode? fullNameFocusNode;

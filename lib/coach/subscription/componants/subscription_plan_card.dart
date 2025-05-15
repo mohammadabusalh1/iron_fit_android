@@ -60,7 +60,8 @@ class SubscriptionPlanCard extends StatelessWidget {
         width: screenWidth,
         decoration: BoxDecoration(
           color: theme.secondaryBackground,
-          borderRadius: BorderRadius.circular(ResponsiveUtils.width(context, 16)),
+          borderRadius:
+              BorderRadius.circular(ResponsiveUtils.width(context, 16)),
         ),
         child: Padding(
           padding: EdgeInsetsDirectional.fromSTEB(
@@ -112,7 +113,8 @@ class SubscriptionPlanCard extends StatelessWidget {
                 ),
                 child: Column(
                   mainAxisSize: MainAxisSize.max,
-                  children: featureWidgets.divide(SizedBox(height: ResponsiveUtils.height(context, 12))),
+                  children: featureWidgets.divide(
+                      SizedBox(height: ResponsiveUtils.height(context, 12))),
                 ),
               ),
               Padding(
@@ -137,7 +139,8 @@ class SubscriptionPlanCard extends StatelessWidget {
                       fontWeight: FontWeight.bold,
                     ),
                     elevation: 0,
-                    borderRadius: BorderRadius.circular(ResponsiveUtils.width(context, 25)),
+                    borderRadius: BorderRadius.circular(
+                        ResponsiveUtils.width(context, 25)),
                   ),
                 ),
               ),
@@ -267,8 +270,8 @@ class SubscriptionPlanCard extends StatelessWidget {
                 updateSubscriptionDate(endDate);
               } catch (e, stackTrace) {
                 // Log the error
-                Logger.error(
-                    'Error updating coach record after payment', e, stackTrace);
+                Logger.error('Error updating coach record after payment',
+                    error: e, stackTrace: stackTrace);
 
                 // Notify the user
                 functions.showErrorDialog(
@@ -277,7 +280,7 @@ class SubscriptionPlanCard extends StatelessWidget {
             },
             onError: (error) {
               // Log and show a user-friendly message
-              Logger.error('PayPal payment error', error);
+              Logger.error('PayPal payment error', error: error);
               functions.showErrorDialog(
                   FFLocalizations.of(context).getText('2184r6dy'), context);
             },
@@ -295,8 +298,8 @@ class SubscriptionPlanCard extends StatelessWidget {
       );
     } catch (e, stackTrace) {
       // Log unexpected errors
-      Logger.error(
-          'Unexpected error during subscription process', e, stackTrace);
+      Logger.error('Unexpected error during subscription process',
+          error: e, stackTrace: stackTrace);
       functions.showErrorDialog(
           FFLocalizations.of(context).getText('2184r6dy'), context);
     }

@@ -220,8 +220,8 @@ class _NotificationButtonState extends State<NotificationButton> {
                                 });
                               } catch (e, stackTrace) {
                                 if (context.mounted) context.pop();
-                                Logger.error('Error accepting subscription', e,
-                                    stackTrace);
+                                Logger.error('Error accepting subscription',
+                                    error: e, stackTrace: stackTrace);
                               }
                             },
                           ),
@@ -254,8 +254,8 @@ class _NotificationButtonState extends State<NotificationButton> {
                                   if (context.mounted) context.pop();
                                 });
                               } catch (e, stackTrace) {
-                                Logger.error('Error rejecting subscription', e,
-                                    stackTrace);
+                                Logger.error('Error rejecting subscription',
+                                    error: e, stackTrace: stackTrace);
                                 if (context.mounted) {
                                   ScaffoldMessenger.of(context).showSnackBar(
                                     SnackBar(
@@ -388,8 +388,8 @@ class _NotificationButtonState extends State<NotificationButton> {
                             } catch (e, stackTrace) {
                               Logger.error(
                                   'Error marking notifications as read',
-                                  e,
-                                  stackTrace);
+                                  error: e,
+                                  stackTrace: stackTrace);
                             }
                           },
                           style: TextButton.styleFrom(
@@ -427,7 +427,8 @@ class _NotificationButtonState extends State<NotificationButton> {
         await notification.reference.update({'trainees': trainees});
       }
     } catch (e, stackTrace) {
-      Logger.error('Error showing notifications dialog', e, stackTrace);
+      Logger.error('Error showing notifications dialog',
+          error: e, stackTrace: stackTrace);
     }
   }
 
@@ -446,7 +447,8 @@ class _NotificationButtonState extends State<NotificationButton> {
               notification.reference.id);
         }
       } catch (e, stackTrace) {
-        Logger.error('Error showing sound notification', e, stackTrace);
+        Logger.error('Error showing sound notification',
+            error: e, stackTrace: stackTrace);
       }
     }
   }
@@ -469,8 +471,8 @@ class _NotificationButtonState extends State<NotificationButton> {
               subscription.reference.id);
         }
       } catch (e, stackTrace) {
-        Logger.error(
-            'Error showing subscription sound notification', e, stackTrace);
+        Logger.error('Error showing subscription sound notification',
+            error: e, stackTrace: stackTrace);
       }
     }
   }
@@ -481,8 +483,8 @@ class _NotificationButtonState extends State<NotificationButton> {
       stream: NotificationManager.streamUnReaddNotifications(widget.trainee),
       builder: (context, snapshot) {
         if (snapshot.hasError) {
-          Logger.error('Error streaming unread notifications', snapshot.error,
-              snapshot.stackTrace);
+          Logger.error('Error streaming unread notifications',
+              error: snapshot.error, stackTrace: snapshot.stackTrace);
           return const SizedBox();
         }
 
@@ -500,16 +502,16 @@ class _NotificationButtonState extends State<NotificationButton> {
                   doc, false, context))
               .toList();
         } catch (e, stackTrace) {
-          Logger.error(
-              'Error creating unread notification items', e, stackTrace);
+          Logger.error('Error creating unread notification items',
+              error: e, stackTrace: stackTrace);
         }
 
         return StreamBuilder<List<AlertRecord>>(
           stream: NotificationManager.streamReaddNotifications(widget.trainee),
           builder: (context, snapshot) {
             if (snapshot.hasError) {
-              Logger.error('Error streaming read notifications', snapshot.error,
-                  snapshot.stackTrace);
+              Logger.error('Error streaming read notifications',
+                  error: snapshot.error, stackTrace: snapshot.stackTrace);
               return const SizedBox();
             }
 
@@ -524,8 +526,8 @@ class _NotificationButtonState extends State<NotificationButton> {
                       doc, true, context))
                   .toList();
             } catch (e, stackTrace) {
-              Logger.error(
-                  'Error creating read notification items', e, stackTrace);
+              Logger.error('Error creating read notification items',
+                  error: e, stackTrace: stackTrace);
             }
 
             return StreamBuilder<List<SubscriptionsRecord>>(
@@ -534,7 +536,7 @@ class _NotificationButtonState extends State<NotificationButton> {
               builder: (context, snapshot) {
                 if (snapshot.hasError) {
                   Logger.error('Error streaming subscription notifications',
-                      snapshot.error, snapshot.stackTrace);
+                      error: snapshot.error, stackTrace: snapshot.stackTrace);
                   return const SizedBox();
                 }
 
@@ -555,7 +557,7 @@ class _NotificationButtonState extends State<NotificationButton> {
                       .toList();
                 } catch (e, stackTrace) {
                   Logger.error('Error creating subscription notification items',
-                      e, stackTrace);
+                      error: e, stackTrace: stackTrace);
                 }
 
                 notificationCount =

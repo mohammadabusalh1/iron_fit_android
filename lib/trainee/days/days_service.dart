@@ -205,8 +205,9 @@ class DaysService {
             },
             traineeDoc.reference,
           );
-        } catch (updateError) {
-          Logger.error('Failed to update user document', updateError);
+        } catch (updateError, stackTrace) {
+          Logger.error('Failed to update user document',
+              error: updateError, stackTrace: stackTrace);
           throw Exception('Failed to update user progress');
         }
       } else {
@@ -215,7 +216,8 @@ class DaysService {
         throw Exception(error);
       }
     } catch (e, stackTrace) {
-      Logger.error('Error updating user progress', e, stackTrace);
+      Logger.error('Error updating user progress',
+          error: e, stackTrace: stackTrace);
       throw Exception('Failed to update user progress');
     }
   }
