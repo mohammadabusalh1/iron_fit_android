@@ -324,7 +324,6 @@ class FirebaseNotificationService {
   Future<String?> getFcmToken() async {
     try {
       final token = await _messaging.getToken();
-      Logger.info('FCM Token: $token');
       return token;
     } catch (e) {
       Logger.error('Error getting FCM token: $e');

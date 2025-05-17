@@ -5,6 +5,7 @@ import 'dart:math';
 import 'package:crypto/crypto.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
+import 'package:iron_fit/backend/backend.dart';
 import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 
 /// Generates a cryptographically secure random nonce, to be included in a
@@ -24,7 +25,70 @@ String sha256ofString(String input) {
   return digest.toString();
 }
 
-Future<UserCredential> appleSignIn() async {
+Future<UserCredential?> appleSignUp() async {
+  if (kIsWeb) {
+    final provider = OAuthProvider("apple.com")
+      ..addScope('email')
+      ..addScope('name');
+
+    // Sign in the user with Firebase.
+    return await FirebaseAuth.instance.signInWithPopup(provider);
+  }
+  // To prevent replay attacks with the credential returned from Apple, we
+  // include a nonce in the credential request. When signing in in with
+  // Firebase, the nonce in the id token returned by Apple, is expected to
+  // match the sha256 hash of `rawNonce`.
+  final rawNonce = generateNonce();
+  final nonce = sha256ofString(rawNonce);
+
+  // Request credential for the currently signed in Apple account.
+  final appleCredential = await SignInWithApple.getAppleIDCredential(
+    scopes: [
+      AppleIDAuthorizationScopes.email,
+      AppleIDAuthorizationScopes.fullName,
+    ],
+    nonce: nonce,
+  );
+
+  // Create an `OAuthCredential` from the credential returned by Apple.
+  final oauthCredential = OAuthProvider("apple.com").credential(
+    idToken: appleCredential.identityToken,
+    rawNonce: rawNonce,
+    accessToken: appleCredential.authorizationCode,
+  );
+
+  // Sign in the user with Firebase. If the nonce we generated earlier does
+  // not match the nonce in `appleCredential.identityToken`, sign in will fail.
+  final user =
+      await FirebaseAuth.instance.signInWithCredential(oauthCredential);
+
+  final email = user.user?.email;
+
+  if (email == null) {
+    return null;
+  }
+
+  final userWithEmail = await queryUserRecord(
+    queryBuilder: (q) => q.where('email', isEqualTo: email),
+  ).first;
+
+  if (userWithEmail.isNotEmpty) {
+    return null;
+  }
+
+  final displayName = [appleCredential.givenName, appleCredential.familyName]
+      .where((name) => name != null)
+      .join(' ');
+
+  // The display name does not automatically come with the user.
+  if (displayName.isNotEmpty) {
+    await user.user?.updateDisplayName(displayName);
+  }
+
+  return user;
+}
+
+Future<UserCredential?> appleSignIn() async {
   if (kIsWeb) {
     final provider = OAuthProvider("apple.com")
       ..addScope('email')
@@ -72,3 +136,4 @@ Future<UserCredential> appleSignIn() async {
 
   return user;
 }
+

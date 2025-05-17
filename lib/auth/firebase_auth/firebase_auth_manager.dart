@@ -158,8 +158,13 @@ class FirebaseAuthManager extends AuthManager
       _signInOrCreateAccount(context, anonymousSignInFunc, 'ANONYMOUS');
 
   @override
-  Future<BaseAuthUser?> signInWithApple(BuildContext context) =>
-      _signInOrCreateAccount(context, appleSignIn, 'APPLE');
+  Future<BaseAuthUser?> signInWithApple(BuildContext context,
+      {bool isLogin = false}) {
+    if (isLogin) {
+      return _signInOrCreateAccount(context, appleSignIn, 'APPLE');
+    }
+    return _signInOrCreateAccount(context, appleSignUp, 'APPLE');
+  }
 
   @override
   Future<BaseAuthUser?> signInWithGoogle(BuildContext context,
@@ -292,8 +297,8 @@ class FirebaseAuthManager extends AuthManager
   ) async {
     try {
       final userCredential = await signInFunc();
-      if (userCredential?.user != null) {
-        await maybeCreateUser(userCredential!.user!);
+      if (userCredential != null && userCredential.user != null) {
+        await maybeCreateUser(userCredential.user!);
       }
       return userCredential == null
           ? null

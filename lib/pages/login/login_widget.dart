@@ -403,7 +403,7 @@ class _LoginWidgetState extends State<LoginWidget> {
 
   Future<void> waitForAuth() async {
     // Define a maximum wait time (in seconds)
-    const maxWaitTimeInSeconds = 20;
+    const maxWaitTimeInSeconds = 10;
     final stopwatch = Stopwatch()..start();
 
     // Check every 100ms until authentication is available or timeout
@@ -415,29 +415,11 @@ class _LoginWidgetState extends State<LoginWidget> {
           setState(() {
             _isLoading = false;
           });
-          // Show timeout dialog
-          await showDialog(
-            context: context,
-            builder: (context) => AlertDialog(
-              title: Text(
-                  FFLocalizations.of(context).getText('authenticationTimeout')),
-              content: Text(FFLocalizations.of(context)
-                  .getText('authenticationTakingTooLong')),
-              actions: [
-                TextButton(
-                  onPressed: () {
-                    Navigator.pop(context);
-                    // Refresh the login page
-                    Navigator.pushReplacement(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const LoginWidget()),
-                    );
-                  },
-                  child: Text(FFLocalizations.of(context).getText('ok')),
-                ),
-              ],
-            ),
+          // Show timeout dialog with improved UI
+          await _showTimeoutDialog(
+            'authenticationTimeout',
+            'authenticationTakingTooLong',
+            Icons.timer_off_outlined,
           );
           return;
         }
@@ -446,7 +428,15 @@ class _LoginWidgetState extends State<LoginWidget> {
     }
 
     if (FFAppState().userType == 'coach') {
-      authenticatedCoachStream.listen((_) {});
+      authenticatedCoachStream.listen((coachDoc) {
+        if (coachDoc == null) {
+          Logger.warning('Coach document not found or stream returned null');
+        } else {
+          Logger.info('Coach document loaded successfully: ${coachDoc.reference.id}');
+        }
+      }, onError: (error) {
+        Logger.error('Error in authenticatedCoachStream', error: error);
+      });
 
       stopwatch.reset();
       while (currentCoachDocument == null) {
@@ -456,29 +446,11 @@ class _LoginWidgetState extends State<LoginWidget> {
             setState(() {
               _isLoading = false;
             });
-            // Show timeout dialog
-            await showDialog(
-              context: context,
-              builder: (context) => AlertDialog(
-                title: Text(
-                    FFLocalizations.of(context).getText('dataLoadingTimeout')),
-                content: Text(FFLocalizations.of(context)
-                    .getText('dataLoadingTakingTooLong')),
-                actions: [
-                  TextButton(
-                    onPressed: () {
-                      Navigator.pop(context);
-                      // Refresh the login page
-                      Navigator.pushReplacement(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => const LoginWidget()),
-                      );
-                    },
-                    child: Text(FFLocalizations.of(context).getText('ok')),
-                  ),
-                ],
-              ),
+            // Show timeout dialog with improved UI
+            await _showTimeoutDialog(
+              'dataLoadingTimeout',
+              'dataLoadingTakingTooLong',
+              Icons.cloud_off_outlined,
             );
             return;
           }
@@ -486,7 +458,15 @@ class _LoginWidgetState extends State<LoginWidget> {
         await Future.delayed(const Duration(milliseconds: 100));
       }
     } else if (FFAppState().userType == 'trainee') {
-      authenticatedTraineeStream.listen((_) {});
+      authenticatedTraineeStream.listen((traineeDoc) {
+        if (traineeDoc == null) {
+          Logger.warning('Trainee document not found or stream returned null');
+        } else {
+          Logger.info('Trainee document loaded successfully: ${traineeDoc.reference.id}');
+        }
+      }, onError: (error) {
+        Logger.error('Error in authenticatedTraineeStream', error: error);
+      });
 
       stopwatch.reset();
       while (currentTraineeDocument == null) {
@@ -496,29 +476,11 @@ class _LoginWidgetState extends State<LoginWidget> {
             setState(() {
               _isLoading = false;
             });
-            // Show timeout dialog
-            await showDialog(
-              context: context,
-              builder: (context) => AlertDialog(
-                title: Text(
-                    FFLocalizations.of(context).getText('dataLoadingTimeout')),
-                content: Text(FFLocalizations.of(context)
-                    .getText('dataLoadingTakingTooLong')),
-                actions: [
-                  TextButton(
-                    onPressed: () {
-                      Navigator.pop(context);
-                      // Refresh the login page
-                      Navigator.pushReplacement(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => const LoginWidget()),
-                      );
-                    },
-                    child: Text(FFLocalizations.of(context).getText('ok')),
-                  ),
-                ],
-              ),
+            // Show timeout dialog with improved UI
+            await _showTimeoutDialog(
+              'dataLoadingTimeout', 
+              'dataLoadingTakingTooLong',
+              Icons.cloud_off_outlined,
             );
             return;
           }
@@ -528,10 +490,223 @@ class _LoginWidgetState extends State<LoginWidget> {
     }
   }
 
+  /// Shows a styled timeout dialog with appropriate icon and messaging
+  Future<void> _showTimeoutDialog(
+    String titleKey, 
+    String contentKey,
+    IconData icon,
+  ) async {
+    if (!mounted) return;
+    
+    final title = FFLocalizations.of(context).getText(titleKey);
+    final content = FFLocalizations.of(context).getText(contentKey);
+    final okText = FFLocalizations.of(context).getText('ok');
+    final retryText = FFLocalizations.of(context).getText('retry');
+    
+    return showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext dialogContext) {
+        return Dialog(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(
+                ResponsiveUtils.width(context, 16.0)),
+          ),
+          elevation: 0,
+          backgroundColor: Colors.transparent,
+          child: Container(
+            padding: ResponsiveUtils.padding(context,
+                horizontal: 20.0, vertical: 20.0),
+            decoration: BoxDecoration(
+              color: FlutterFlowTheme.of(context).secondaryBackground,
+              shape: BoxShape.rectangle,
+              borderRadius: BorderRadius.circular(
+                  ResponsiveUtils.width(context, 16.0)),
+              boxShadow: [
+                BoxShadow(
+                  color: FlutterFlowTheme.of(context).black.withOpacity(0.3),
+                  blurRadius: ResponsiveUtils.width(context, 10.0),
+                  offset: Offset(0.0, ResponsiveUtils.height(context, 5.0)),
+                ),
+              ],
+            ),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Container(
+                  padding: ResponsiveUtils.padding(context,
+                      horizontal: 16.0, vertical: 16.0),
+                  decoration: BoxDecoration(
+                    color: FlutterFlowTheme.of(context)
+                        .error
+                        .withOpacity(0.1),
+                    shape: BoxShape.circle,
+                  ),
+                  child: Icon(
+                    icon,
+                    color: FlutterFlowTheme.of(context).error,
+                    size: ResponsiveUtils.iconSize(context, 40.0),
+                  ),
+                ),
+                SizedBox(height: ResponsiveUtils.height(context, 20.0)),
+                Text(
+                  title,
+                  style: AppStyles.textCairo(
+                    context,
+                    fontSize: ResponsiveUtils.fontSize(context, 20),
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                SizedBox(height: ResponsiveUtils.height(context, 10.0)),
+                Text(
+                  content,
+                  textAlign: TextAlign.center,
+                  style: AppStyles.textCairo(
+                    context,
+                    fontSize: ResponsiveUtils.fontSize(context, 14),
+                    color: FlutterFlowTheme.of(context).secondaryText,
+                  ),
+                ),
+                SizedBox(height: ResponsiveUtils.height(context, 24.0)),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Expanded(
+                      child: FFButtonWidget(
+                        onPressed: () {
+                          Navigator.pop(dialogContext);
+                          // Refresh the login page
+                          context.goNamed('Login');
+                        },
+                        text: okText,
+                        options: FFButtonOptions(
+                          height: ResponsiveUtils.height(context, 45.0),
+                          padding: ResponsiveUtils.padding(
+                            context,
+                            horizontal: 0.0,
+                            vertical: 0.0,
+                          ),
+                          iconPadding: ResponsiveUtils.padding(
+                            context,
+                            horizontal: 0.0,
+                            vertical: 0.0,
+                          ),
+                          color: FlutterFlowTheme.of(context).primary,
+                          textStyle: AppStyles.textCairo(
+                            context,
+                            fontWeight: FontWeight.w700,
+                            fontSize: ResponsiveUtils.fontSize(context, 16),
+                            color: FlutterFlowTheme.of(context).primaryBackground,
+                          ),
+                          elevation: 2.0,
+                          borderSide: const BorderSide(
+                            color: Colors.transparent,
+                            width: 1.0,
+                          ),
+                          borderRadius: BorderRadius.circular(
+                              ResponsiveUtils.width(context, 8.0)),
+                        ),
+                      ),
+                    ),
+                    SizedBox(width: ResponsiveUtils.width(context, 12.0)),
+                    Expanded(
+                      child: FFButtonWidget(
+                        onPressed: () {
+                          Navigator.pop(dialogContext);
+                          // Try again with current user credentials
+                          setState(() {
+                            _isLoading = true;
+                          });
+                          if (FFAppState().userType == 'coach') {
+                            _handleCoachSignIn();
+                          } else {
+                            _handleTraineeSignIn();
+                          }
+                        },
+                        text: retryText,
+                        options: FFButtonOptions(
+                          height: ResponsiveUtils.height(context, 45.0),
+                          padding: ResponsiveUtils.padding(
+                            context,
+                            horizontal: 0.0,
+                            vertical: 0.0,
+                          ),
+                          iconPadding: ResponsiveUtils.padding(
+                            context,
+                            horizontal: 0.0,
+                            vertical: 0.0,
+                          ),
+                          color: FlutterFlowTheme.of(context).secondaryBackground,
+                          textStyle: AppStyles.textCairo(
+                            context,
+                            fontWeight: FontWeight.w700,
+                            fontSize: ResponsiveUtils.fontSize(context, 16),
+                            color: FlutterFlowTheme.of(context).primary,
+                          ),
+                          elevation: 0.0,
+                          borderSide: BorderSide(
+                            color: FlutterFlowTheme.of(context).primary,
+                            width: 1.0,
+                          ),
+                          borderRadius: BorderRadius.circular(
+                              ResponsiveUtils.width(context, 8.0)),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+        );
+      },
+    );
+  }
+
   Future<void> _handleCoachSignIn() async {
     try {
       if (!mounted) return;
+      
+      // Ensure the coach document is loaded correctly
+      try {
+        // Try to fetch the coach document directly
+        final coachQuery = await queryCoachRecord(
+          queryBuilder: (q) => q.where('user', isEqualTo: currentUserReference),
+          singleRecord: true,
+        ).first;
+        
+        if (coachQuery.isNotEmpty) {
+          // Manually set the current coach document
+          currentCoachDocument = coachQuery.first;
+          Logger.info('Coach document loaded manually: ${currentCoachDocument?.reference.id}');
+        } else {
+          Logger.warning('No coach document found for current user');
+        }
+      } catch (e) {
+        Logger.error('Error loading coach document', error: e);
+      }
+      
       await waitForAuth();
+      
+      // If coach document is still null after waitForAuth, try one more time
+      if (currentCoachDocument == null) {
+        Logger.warning('Coach document still null after waitForAuth, trying again');
+        try {
+          await Future.delayed(const Duration(seconds: 1));
+          final coachQuery = await queryCoachRecord(
+            queryBuilder: (q) => q.where('user', isEqualTo: currentUserReference),
+            singleRecord: true,
+          ).first;
+          
+          if (coachQuery.isNotEmpty) {
+            currentCoachDocument = coachQuery.first;
+            Logger.info('Coach document loaded on retry: ${currentCoachDocument?.reference.id}');
+          }
+        } catch (e) {
+          Logger.error('Error on retry loading coach document', error: e);
+        }
+      }
+      
       context.goNamed('CoachHome');
     } catch (e) {
       Logger.error('Error signing in as coach', error: e);
@@ -541,7 +716,57 @@ class _LoginWidgetState extends State<LoginWidget> {
   Future<void> _handleTraineeSignIn() async {
     try {
       if (!mounted) return;
+      
+      // Ensure the trainee document is loaded correctly
+      try {
+        // Try to fetch the trainee document directly
+        final traineeQuery = await queryTraineeRecord(
+          queryBuilder: (q) => q.where('user', isEqualTo: currentUserReference),
+          singleRecord: true,
+        ).first;
+        
+        if (traineeQuery.isNotEmpty) {
+          // Manually set the current trainee document
+          currentTraineeDocument = traineeQuery.first;
+          Logger.info('Trainee document loaded manually: ${currentTraineeDocument?.reference.id}');
+        } else {
+          Logger.warning('No trainee document found for current user');
+        }
+      } catch (e) {
+        Logger.error('Error loading trainee document', error: e);
+      }
+      
       await waitForAuth();
+      
+      // If trainee document is still null after waitForAuth, try one more time
+      if (currentTraineeDocument == null) {
+        Logger.warning('Trainee document still null after waitForAuth, trying again');
+        try {
+          await Future.delayed(const Duration(seconds: 1));
+          final traineeQuery = await queryTraineeRecord(
+            queryBuilder: (q) => q.where('user', isEqualTo: currentUserReference),
+            singleRecord: true,
+          ).first;
+          
+          if (traineeQuery.isNotEmpty) {
+            currentTraineeDocument = traineeQuery.first;
+            Logger.info('Trainee document loaded on retry: ${currentTraineeDocument?.reference.id}');
+          }
+        } catch (e) {
+          Logger.error('Error on retry loading trainee document', error: e);
+        }
+      }
+      
+      // Update FCM token
+      try {
+        final fcmToken = await FirebaseNotificationService.instance.getFcmToken();
+        if (fcmToken != null && currentUserDocument != null) {
+          await currentUserDocument!.reference.update({'fcmToken': fcmToken});
+        }
+      } catch (e) {
+        Logger.error('Error updating FCM token', error: e);
+      }
+      
       context.goNamed('UserHome');
     } catch (e) {
       Logger.error('Error signing in as trainee', error: e);
@@ -769,17 +994,103 @@ class _LoginWidgetState extends State<LoginWidget> {
       if (role == 'coach') {
         Logger.info('Navigating to Coach Home');
         FFAppState().userType = 'coach';
+        
+        // Ensure the coach document is loaded correctly
+        try {
+          // Try to fetch the coach document directly
+          final coachQuery = await queryCoachRecord(
+            queryBuilder: (q) => q.where('user', isEqualTo: currentUserReference),
+            singleRecord: true,
+          ).first;
+          
+          if (coachQuery.isNotEmpty) {
+            // Manually set the current coach document
+            currentCoachDocument = coachQuery.first;
+            Logger.info('Coach document loaded manually: ${currentCoachDocument?.reference.id}');
+          } else {
+            Logger.warning('No coach document found for user: ${user.uid}');
+          }
+        } catch (e) {
+          Logger.error('Error loading coach document', error: e);
+        }
+        
         await waitForAuth();
+        
+        // If coach document is still null after waitForAuth, try one more time
+        if (currentCoachDocument == null) {
+          Logger.warning('Coach document still null after waitForAuth, trying again');
+          try {
+            await Future.delayed(const Duration(seconds: 1));
+            final coachQuery = await queryCoachRecord(
+              queryBuilder: (q) => q.where('user', isEqualTo: currentUserReference),
+              singleRecord: true,
+            ).first;
+            
+            if (coachQuery.isNotEmpty) {
+              currentCoachDocument = coachQuery.first;
+              Logger.info('Coach document loaded on retry: ${currentCoachDocument?.reference.id}');
+            }
+          } catch (e) {
+            Logger.error('Error on retry loading coach document', error: e);
+          }
+        }
+        
+        final fcmToken = await FirebaseNotificationService.instance.getFcmToken();
+        if (fcmToken != null && currentUserDocument != null) {
+          await currentUserDocument!.reference.update({'fcmToken': fcmToken});
+        }
+        
         context.goNamed('CoachHome');
       } else if (role == 'trainee') {
         Logger.info('Navigating to User Home');
         FFAppState().userType = 'trainee';
+        
+        // Ensure the trainee document is loaded correctly
+        try {
+          // Try to fetch the trainee document directly
+          final traineeQuery = await queryTraineeRecord(
+            queryBuilder: (q) => q.where('user', isEqualTo: currentUserReference),
+            singleRecord: true,
+          ).first;
+          
+          if (traineeQuery.isNotEmpty) {
+            // Manually set the current trainee document
+            currentTraineeDocument = traineeQuery.first;
+            Logger.info('Trainee document loaded manually: ${currentTraineeDocument?.reference.id}');
+          } else {
+            Logger.warning('No trainee document found for user: ${user.uid}');
+          }
+        } catch (e) {
+          Logger.error('Error loading trainee document', error: e);
+        }
+        
         await waitForAuth();
+        
+        // If trainee document is still null after waitForAuth, try one more time
+        if (currentTraineeDocument == null) {
+          Logger.warning('Trainee document still null after waitForAuth, trying again');
+          try {
+            await Future.delayed(const Duration(seconds: 1));
+            final traineeQuery = await queryTraineeRecord(
+              queryBuilder: (q) => q.where('user', isEqualTo: currentUserReference),
+              singleRecord: true,
+            ).first;
+            
+            if (traineeQuery.isNotEmpty) {
+              currentTraineeDocument = traineeQuery.first;
+              Logger.info('Trainee document loaded on retry: ${currentTraineeDocument?.reference.id}');
+            }
+          } catch (e) {
+            Logger.error('Error on retry loading trainee document', error: e);
+          }
+        }
+        
         final fcmToken =
             await FirebaseNotificationService.instance.getFcmToken();
-        if (fcmToken != null) {
+        if (fcmToken != null && currentUserDocument != null) {
           await currentUserDocument!.reference.update({'fcmToken': fcmToken});
         }
+        
         context.goNamed('UserHome');
       }
     } catch (e) {
@@ -819,7 +1130,7 @@ class _LoginWidgetState extends State<LoginWidget> {
 
       Logger.info('Attempting Apple sign-in');
       // Attempt to sign in with Apple
-      final user = await authManager.signInWithApple(context);
+      final user = await authManager.signInWithApple(context, isLogin: true);
 
       if (!mounted) return;
 
@@ -845,18 +1156,104 @@ class _LoginWidgetState extends State<LoginWidget> {
       if (role == 'coach') {
         Logger.info('Navigating to Coach Home');
         FFAppState().userType = 'coach';
+        
+        // Ensure the coach document is loaded correctly
+        try {
+          // Try to fetch the coach document directly
+          final coachQuery = await queryCoachRecord(
+            queryBuilder: (q) => q.where('user', isEqualTo: currentUserReference),
+            singleRecord: true,
+          ).first;
+          
+          if (coachQuery.isNotEmpty) {
+            // Manually set the current coach document
+            currentCoachDocument = coachQuery.first;
+            Logger.info('Coach document loaded manually: ${currentCoachDocument?.reference.id}');
+          } else {
+            Logger.warning('No coach document found for user: ${user.uid}');
+          }
+        } catch (e) {
+          Logger.error('Error loading coach document', error: e);
+        }
+        
         await waitForAuth();
-        context.goNamed('CoachEnterInfo');
+        
+        // If coach document is still null after waitForAuth, try one more time
+        if (currentCoachDocument == null) {
+          Logger.warning('Coach document still null after waitForAuth, trying again');
+          try {
+            await Future.delayed(const Duration(seconds: 1));
+            final coachQuery = await queryCoachRecord(
+              queryBuilder: (q) => q.where('user', isEqualTo: currentUserReference),
+              singleRecord: true,
+            ).first;
+            
+            if (coachQuery.isNotEmpty) {
+              currentCoachDocument = coachQuery.first;
+              Logger.info('Coach document loaded on retry: ${currentCoachDocument?.reference.id}');
+            }
+          } catch (e) {
+            Logger.error('Error on retry loading coach document', error: e);
+          }
+        }
+        
+        final fcmToken = await FirebaseNotificationService.instance.getFcmToken();
+        if (fcmToken != null && currentUserDocument != null) {
+          await currentUserDocument!.reference.update({'fcmToken': fcmToken});
+        }
+        
+        context.goNamed('CoachHome');
       } else if (role == 'trainee') {
         Logger.info('Navigating to User Home');
         FFAppState().userType = 'trainee';
+        
+        // Ensure the trainee document is loaded correctly
+        try {
+          // Try to fetch the trainee document directly
+          final traineeQuery = await queryTraineeRecord(
+            queryBuilder: (q) => q.where('user', isEqualTo: currentUserReference),
+            singleRecord: true,
+          ).first;
+          
+          if (traineeQuery.isNotEmpty) {
+            // Manually set the current trainee document
+            currentTraineeDocument = traineeQuery.first;
+            Logger.info('Trainee document loaded manually: ${currentTraineeDocument?.reference.id}');
+          } else {
+            Logger.warning('No trainee document found for user: ${user.uid}');
+          }
+        } catch (e) {
+          Logger.error('Error loading trainee document', error: e);
+        }
+        
         await waitForAuth();
+        
+        // If trainee document is still null after waitForAuth, try one more time
+        if (currentTraineeDocument == null) {
+          Logger.warning('Trainee document still null after waitForAuth, trying again');
+          try {
+            await Future.delayed(const Duration(seconds: 1));
+            final traineeQuery = await queryTraineeRecord(
+              queryBuilder: (q) => q.where('user', isEqualTo: currentUserReference),
+              singleRecord: true,
+            ).first;
+            
+            if (traineeQuery.isNotEmpty) {
+              currentTraineeDocument = traineeQuery.first;
+              Logger.info('Trainee document loaded on retry: ${currentTraineeDocument?.reference.id}');
+            }
+          } catch (e) {
+            Logger.error('Error on retry loading trainee document', error: e);
+          }
+        }
+        
         final fcmToken =
             await FirebaseNotificationService.instance.getFcmToken();
-        if (fcmToken != null) {
+        if (fcmToken != null && currentUserDocument != null) {
           await currentUserDocument!.reference.update({'fcmToken': fcmToken});
         }
-        context.goNamed('userEnterInfo');
+        
+        context.goNamed('UserHome');
       }
     } catch (e) {
       _incrementLoginAttempts();

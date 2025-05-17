@@ -60,7 +60,15 @@ class FirebaseService {
     }
 
     if (FFAppState().userType == 'coach') {
-      authenticatedCoachStream.listen((_) {});
+      authenticatedCoachStream.listen((coachDoc) {
+        if (coachDoc == null) {
+          Logger.warning('Coach document not found or stream returned null');
+        } else {
+          Logger.info('Coach document loaded successfully: ${coachDoc.reference.id}');
+        }
+      }, onError: (error) {
+        Logger.error('Error in authenticatedCoachStream', error: error);
+      });
 
       final coachStartTime = DateTime.now();
       while (currentCoachDocument == null) {
@@ -79,7 +87,15 @@ class FirebaseService {
         await Future.delayed(const Duration(milliseconds: 100));
       }
     } else if (FFAppState().userType == 'trainee') {
-      authenticatedTraineeStream.listen((_) {});
+      authenticatedTraineeStream.listen((traineeDoc) {
+        if (traineeDoc == null) {
+          Logger.warning('Trainee document not found or stream returned null');
+        } else {
+          Logger.info('Trainee document loaded successfully: ${traineeDoc.reference.id}');
+        }
+      }, onError: (error) {
+        Logger.error('Error in authenticatedTraineeStream', error: error);
+      });
 
       final traineeStartTime = DateTime.now();
       while (currentTraineeDocument == null) {
@@ -162,7 +178,44 @@ class FirebaseService {
               gymName: '',
             ));
 
+        // Explicitly fetch the coach document to ensure it's loaded
+        try {
+          final coachQuery = await queryCoachRecord(
+            queryBuilder: (q) => q.where('user', isEqualTo: currentUserReference),
+            singleRecord: true,
+          ).first;
+          
+          if (coachQuery.isNotEmpty) {
+            // Manually set the current coach document
+            currentCoachDocument = coachQuery.first;
+            Logger.info('Coach document loaded manually: ${currentCoachDocument?.reference.id}');
+          } else {
+            Logger.warning('No coach document found for user: ${user.uid}');
+          }
+        } catch (e) {
+          Logger.error('Error loading coach document', error: e);
+        }
+
         await _waitForAuth(context);
+        
+        // If coach document is still null after waitForAuth, try one more time
+        if (currentCoachDocument == null) {
+          Logger.warning('Coach document still null after waitForAuth, trying again');
+          try {
+            await Future.delayed(const Duration(seconds: 1));
+            final coachQuery = await queryCoachRecord(
+              queryBuilder: (q) => q.where('user', isEqualTo: currentUserReference),
+              singleRecord: true,
+            ).first;
+            
+            if (coachQuery.isNotEmpty) {
+              currentCoachDocument = coachQuery.first;
+              Logger.info('Coach document loaded on retry: ${currentCoachDocument?.reference.id}');
+            }
+          } catch (e) {
+            Logger.error('Error on retry loading coach document', error: e);
+          }
+        }
 
         try {
           // get coach plans from defultPlans collection
@@ -220,6 +273,24 @@ class FirebaseService {
               progress: 0,
             ));
 
+        // Explicitly fetch the trainee document to ensure it's loaded
+        try {
+          final traineeQuery = await queryTraineeRecord(
+            queryBuilder: (q) => q.where('user', isEqualTo: currentUserReference),
+            singleRecord: true,
+          ).first;
+          
+          if (traineeQuery.isNotEmpty) {
+            // Manually set the current trainee document
+            currentTraineeDocument = traineeQuery.first;
+            Logger.info('Trainee document loaded manually: ${currentTraineeDocument?.reference.id}');
+          } else {
+            Logger.warning('No trainee document found for user: ${user.uid}');
+          }
+        } catch (e) {
+          Logger.error('Error loading trainee document', error: e);
+        }
+
         // Handle anonymous subscriptions
         final subscriptions = await querySubscriptionsRecord(
           queryBuilder: (subscriptionRecord) => subscriptionRecord
@@ -251,6 +322,27 @@ class FirebaseService {
         final today = DateTime.now().toIso8601String();
         await prefs.setString('weight_reminder_last_shown', today);
 
+        await _waitForAuth(context);
+        
+        // If trainee document is still null after waitForAuth, try one more time
+        if (currentTraineeDocument == null) {
+          Logger.warning('Trainee document still null after waitForAuth for Google sign-in, trying again');
+          try {
+            await Future.delayed(const Duration(seconds: 1));
+            final traineeQuery = await queryTraineeRecord(
+              queryBuilder: (q) => q.where('user', isEqualTo: currentUserReference),
+              singleRecord: true,
+            ).first;
+            
+            if (traineeQuery.isNotEmpty) {
+              currentTraineeDocument = traineeQuery.first;
+              Logger.info('Trainee document loaded on retry for Google sign-in: ${currentTraineeDocument?.reference.id}');
+            }
+          } catch (e) {
+            Logger.error('Error on retry loading trainee document for Google sign-in', error: e);
+          }
+        }
+        
         if (context.mounted) {
           context.goNamed('userEnterInfo');
         }
@@ -354,7 +446,45 @@ class FirebaseService {
               totalPaid: 0,
               gymName: '',
             ));
+            
+        // Explicitly fetch the coach document to ensure it's loaded
+        try {
+          final coachQuery = await queryCoachRecord(
+            queryBuilder: (q) => q.where('user', isEqualTo: currentUserReference),
+            singleRecord: true,
+          ).first;
+          
+          if (coachQuery.isNotEmpty) {
+            // Manually set the current coach document
+            currentCoachDocument = coachQuery.first;
+            Logger.info('Coach document loaded manually for Google sign-in: ${currentCoachDocument?.reference.id}');
+          } else {
+            Logger.warning('No coach document found for Google user: ${user.uid}');
+          }
+        } catch (e) {
+          Logger.error('Error loading coach document for Google sign-in', error: e);
+        }
+        
         await _waitForAuth(context);
+        
+        // If coach document is still null after waitForAuth, try one more time
+        if (currentCoachDocument == null) {
+          Logger.warning('Coach document still null after waitForAuth for Google sign-in, trying again');
+          try {
+            await Future.delayed(const Duration(seconds: 1));
+            final coachQuery = await queryCoachRecord(
+              queryBuilder: (q) => q.where('user', isEqualTo: currentUserReference),
+              singleRecord: true,
+            ).first;
+            
+            if (coachQuery.isNotEmpty) {
+              currentCoachDocument = coachQuery.first;
+              Logger.info('Coach document loaded on retry for Google sign-in: ${currentCoachDocument?.reference.id}');
+            }
+          } catch (e) {
+            Logger.error('Error on retry loading coach document for Google sign-in', error: e);
+          }
+        }
 
         try {
           // get coach plans from defultPlans collection
@@ -412,6 +542,24 @@ class FirebaseService {
               progress: 0,
             ));
 
+        // Explicitly fetch the trainee document to ensure it's loaded
+        try {
+          final traineeQuery = await queryTraineeRecord(
+            queryBuilder: (q) => q.where('user', isEqualTo: currentUserReference),
+            singleRecord: true,
+          ).first;
+          
+          if (traineeQuery.isNotEmpty) {
+            // Manually set the current trainee document
+            currentTraineeDocument = traineeQuery.first;
+            Logger.info('Trainee document loaded manually for Google sign-in: ${currentTraineeDocument?.reference.id}');
+          } else {
+            Logger.warning('No trainee document found for Google user: ${user.uid}');
+          }
+        } catch (e) {
+          Logger.error('Error loading trainee document for Google sign-in', error: e);
+        }
+
         // Handle anonymous subscriptions
         final subscriptions = await querySubscriptionsRecord(
           queryBuilder: (subscriptionRecord) => subscriptionRecord
@@ -441,6 +589,26 @@ class FirebaseService {
         }
 
         await _waitForAuth(context);
+        
+        // If trainee document is still null after waitForAuth, try one more time
+        if (currentTraineeDocument == null) {
+          Logger.warning('Trainee document still null after waitForAuth for Google sign-in, trying again');
+          try {
+            await Future.delayed(const Duration(seconds: 1));
+            final traineeQuery = await queryTraineeRecord(
+              queryBuilder: (q) => q.where('user', isEqualTo: currentUserReference),
+              singleRecord: true,
+            ).first;
+            
+            if (traineeQuery.isNotEmpty) {
+              currentTraineeDocument = traineeQuery.first;
+              Logger.info('Trainee document loaded on retry for Google sign-in: ${currentTraineeDocument?.reference.id}');
+            }
+          } catch (e) {
+            Logger.error('Error on retry loading trainee document for Google sign-in', error: e);
+          }
+        }
+        
         if (context.mounted) {
           context.goNamed('userEnterInfo');
         }
@@ -536,7 +704,45 @@ class FirebaseService {
               totalPaid: 0,
               gymName: '',
             ));
+            
+        // Explicitly fetch the coach document to ensure it's loaded
+        try {
+          final coachQuery = await queryCoachRecord(
+            queryBuilder: (q) => q.where('user', isEqualTo: currentUserReference),
+            singleRecord: true,
+          ).first;
+          
+          if (coachQuery.isNotEmpty) {
+            // Manually set the current coach document
+            currentCoachDocument = coachQuery.first;
+            Logger.info('Coach document loaded manually for Apple sign-in: ${currentCoachDocument?.reference.id}');
+          } else {
+            Logger.warning('No coach document found for Apple user: ${user.uid}');
+          }
+        } catch (e) {
+          Logger.error('Error loading coach document for Apple sign-in', error: e);
+        }
+        
         await _waitForAuth(context);
+        
+        // If coach document is still null after waitForAuth, try one more time
+        if (currentCoachDocument == null) {
+          Logger.warning('Coach document still null after waitForAuth for Apple sign-in, trying again');
+          try {
+            await Future.delayed(const Duration(seconds: 1));
+            final coachQuery = await queryCoachRecord(
+              queryBuilder: (q) => q.where('user', isEqualTo: currentUserReference),
+              singleRecord: true,
+            ).first;
+            
+            if (coachQuery.isNotEmpty) {
+              currentCoachDocument = coachQuery.first;
+              Logger.info('Coach document loaded on retry for Apple sign-in: ${currentCoachDocument?.reference.id}');
+            }
+          } catch (e) {
+            Logger.error('Error on retry loading coach document for Apple sign-in', error: e);
+          }
+        }
 
         try {
           // get coach plans from defultPlans collection
@@ -595,6 +801,24 @@ class FirebaseService {
               progress: 0,
             ));
 
+        // Explicitly fetch the trainee document to ensure it's loaded
+        try {
+          final traineeQuery = await queryTraineeRecord(
+            queryBuilder: (q) => q.where('user', isEqualTo: currentUserReference),
+            singleRecord: true,
+          ).first;
+          
+          if (traineeQuery.isNotEmpty) {
+            // Manually set the current trainee document
+            currentTraineeDocument = traineeQuery.first;
+            Logger.info('Trainee document loaded manually for Apple sign-in: ${currentTraineeDocument?.reference.id}');
+          } else {
+            Logger.warning('No trainee document found for Apple user: ${user.uid}');
+          }
+        } catch (e) {
+          Logger.error('Error loading trainee document for Apple sign-in', error: e);
+        }
+
         // Handle anonymous subscriptions
         final subscriptions = await querySubscriptionsRecord(
           queryBuilder: (subscriptionRecord) => subscriptionRecord
@@ -620,6 +844,27 @@ class FirebaseService {
               'isAnonymous': false,
               'email': FieldValue.delete(),
             });
+          }
+        }
+
+        await _waitForAuth(context);
+        
+        // If trainee document is still null after waitForAuth, try one more time
+        if (currentTraineeDocument == null) {
+          Logger.warning('Trainee document still null after waitForAuth for Apple sign-in, trying again');
+          try {
+            await Future.delayed(const Duration(seconds: 1));
+            final traineeQuery = await queryTraineeRecord(
+              queryBuilder: (q) => q.where('user', isEqualTo: currentUserReference),
+              singleRecord: true,
+            ).first;
+            
+            if (traineeQuery.isNotEmpty) {
+              currentTraineeDocument = traineeQuery.first;
+              Logger.info('Trainee document loaded on retry for Apple sign-in: ${currentTraineeDocument?.reference.id}');
+            }
+          } catch (e) {
+            Logger.error('Error on retry loading trainee document for Apple sign-in', error: e);
           }
         }
 

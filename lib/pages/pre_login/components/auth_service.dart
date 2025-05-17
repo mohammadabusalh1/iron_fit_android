@@ -39,10 +39,10 @@ class AuthService {
       if (!context.mounted) return;
 
       if (user.role == 'coach') {
-        context.pushNamed('CoachHome');
+        context.goNamed('CoachHome');
         Logger.info('Coach logged in: ${currentUser.uid}');
       } else if (user.role == 'trainee') {
-        context.pushNamed('UserHome');
+        context.goNamed('UserHome');
         Logger.info('Trainee logged in: ${currentUser.uid}');
       } else {
         final errorMessage = FFLocalizations.of(context)
